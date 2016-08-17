@@ -3,17 +3,17 @@ import time
 import logging
 import globals
 
-class Fitbit():
+class Myfox():
 	def __init__(self):
-		self.name = 'fitbit'
+		self.name = 'myfox'
 
 	def isvalid(self,name):
 		if name.lower() == self.name:
 			return True
-		if name.lower() == 'charge hr':
+		if name.lower().find("myfox") != -1:
 			return True
 			
 	def parse(self,data):
 		return {}
 
-globals.COMPATIBILITY.append(Fitbit)
+globals.COMPATIBILITY.append(Myfox)
