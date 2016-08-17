@@ -82,7 +82,6 @@ class ScanDelegate(DefaultDelegate):
 							return
 
 			if not findDevice:
-				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 				if globals.EXCLUDE_MODE:
 					globals.EXCLUDE_MODE = False
 					logging.debug('It\'s a known packet and I am in exclude mode, i delete the device')
@@ -90,7 +89,6 @@ class ScanDelegate(DefaultDelegate):
 					return
 				if mac.upper() not in globals.KNOWN_DEVICES:
 					if not globals.LEARN_MODE:
-						logging.debug('It\'s a unknown packet and this device is not Included and I\'am not in learn mode')
 						return
 					else:
 						logging.debug('It\'s a unknown packet and I don\'t known this device so I learn')
@@ -157,7 +155,7 @@ def read_socket():
 			if message['cmd'] == 'add':
 				logging.debug('Add device : '+str(message['device']))
 				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = 1
+					globals.KNOWN_DEVICES[message['device']['id']] = {'state' : 1}
 			elif message['cmd'] == 'remove':
 				logging.debug('Remove device : '+str(message['device']))
 				if 'id' in message['device']:
