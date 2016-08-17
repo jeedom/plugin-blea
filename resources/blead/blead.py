@@ -47,8 +47,6 @@ class ScanDelegate(DefaultDelegate):
 			rssi = dev.rssi
 			name = ''
 			data =''
-			action={}
-			findDevice=False
 			logging.debug(dev.getScanData())
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
@@ -57,7 +55,6 @@ class ScanDelegate(DefaultDelegate):
 					data = value
 			for device in globals.COMPATIBILITY:
 				if device().isvalid(name):
-					findDevice = True;
 					logging.debug('This is a ' + device().name + ' device')
 					action = device().parse(data)
 					action['id'] = mac.upper()
@@ -80,40 +77,9 @@ class ScanDelegate(DefaultDelegate):
 							jeedom_com.send_change_immediate({'learn_mode' : 0});
 							globals.LEARN_MODE = False
 							return
-
-			if not findDevice:
-				if globals.EXCLUDE_MODE:
-					globals.EXCLUDE_MODE = False
-					logging.debug('It\'s a known packet and I am in exclude mode, i delete the device')
-					jeedom_com.send_change_immediate({'exclude_mode' : 0, 'deviceId' : mac });
-					return
-				if mac.upper() not in globals.KNOWN_DEVICES:
-					if not globals.LEARN_MODE:
-						return
-					else:
-						logging.debug('It\'s a unknown packet and I don\'t known this device so I learn')
-						action['id'] = mac.upper()
-						action['rssi'] = rssi
-						action['name'] = name
-						action['learn'] = 1
-						jeedom_com.add_changes('devices::'+mac.upper(),action)
-						jeedom_com.send_change_immediate({'learn_mode' : 0});
-						globals.LEARN_MODE = False
-						return
-
-				if 'rssi' not in globals.KNOWN_DEVICES[mac.upper()] or rssi > (globals.KNOWN_DEVICES[mac.upper()]['rssi']*1.10) or rssi < (globals.KNOWN_DEVICES[mac.upper()]['rssi']*0.9):
-					action['id'] = mac.upper()
-					action['rssi'] = rssi
-					action['name'] = name
-					globals.KNOWN_DEVICES[mac.upper()]['rssi'] = action['rssi']
-					logging.debug(action)		
-
-			try:
-				if len(action) > 1:
 					jeedom_com.add_changes('devices::'+action['id'],action)
-			except Exception, e:
-				pass
-
+				else:
+					logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 					
 def listen(_device):
 	global scanner
@@ -128,8 +94,8 @@ def listen(_device):
 			except Exception, e:
 				logging.error("Exception on socket : %s" % str(e))
 			try:
-				#if globals.LEARN_MODE == True:
-				scanner.clear()
+				if globals.LEARN_MODE == True:
+					scanner.clear()
 				scanner.start()
 				scanner.process(0.3)
 				scanner.stop()
@@ -156,7 +122,7 @@ def read_socket():
 			if message['cmd'] == 'add':
 				logging.debug('Add device : '+str(message['device']))
 				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = {'state' : 1}
+					globals.KNOWN_DEVICES[message['device']['id']] = 1
 			elif message['cmd'] == 'remove':
 				logging.debug('Remove device : '+str(message['device']))
 				if 'id' in message['device']:

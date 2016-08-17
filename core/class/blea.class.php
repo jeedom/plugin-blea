@@ -27,7 +27,7 @@ class blea extends eqLogic {
 			'page' => 'blea',
 			'message' => __('Nouveau module detecté', __FILE__),
 		));
-		if (!isset($_def['id'])) {
+		if (!isset($_def['id']) || !isset($_def['type'])){
 			log::add('blea', 'error', 'Information manquante pour ajouter l\'équipement : ' . print_r($_def, true));
 			event::add('jeedom::alert', array(
 				'level' => 'danger',
@@ -39,23 +39,17 @@ class blea extends eqLogic {
 		$device = self::devicesParameters($_def['type']);
 		$blea = blea::byLogicalId($_def['id'], 'blea');
 		if (!is_object($blea)) {
-			$name = 'BLE ' . $_def['id'];
-			if (isset($_def['name'])) {
-				$name .= ' ' . $_def['name'];
-			}
 			$eqLogic = new blea();
-			$eqLogic->setName($name);
+			$eqLogic->setName('BLE ' . $_def['id']);
 		}
 		$eqLogic->setLogicalId($_def['id']);
 		$eqLogic->setEqType_name('blea');
 		$eqLogic->setIsEnable(1);
 		$eqLogic->setIsVisible(1);
-		if (is_array($device) && count($device) > 0) {
-			$eqLogic->setConfiguration('device', $_def['type']);
-			$model = $eqLogic->getModelListParam();
-			if (count($model) > 0) {
-				$eqLogic->setConfiguration('iconModel', array_keys($model)[0]);
-			}
+		$eqLogic->setConfiguration('device', $_def['type']);
+		$model = $eqLogic->getModelListParam();
+		if (count($model) > 0) {
+			$eqLogic->setConfiguration('iconModel', array_keys($model)[0]);
 		}
 		$eqLogic->save();
 
@@ -66,7 +60,7 @@ class blea extends eqLogic {
 		));
 		return $eqLogic;
 	}
-
+	
 	public static function devicesParameters($_device = '') {
 		$return = array();
 		foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
@@ -127,7 +121,7 @@ class blea extends eqLogic {
 		}
 		return $return;
 	}
-
+	
 	public static function dependancy_install() {
 		log::remove('blea_update');
 		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install.sh';
@@ -205,32 +199,32 @@ class blea extends eqLogic {
 	}
 
 	public static function excludedDevice($_logical_id = null) {
-		$eqLogic = eqlogic::byLogicalId($_logical_id, 'blea');
-		if (is_object($eqLogic)) {
-			event::add('jeedom::alert', array(
-				'level' => 'warning',
-				'page' => 'blea',
-				'message' => __('Le module ', __FILE__) . $eqLogic->getHumanName() . __(' vient d\'être exclu', __FILE__),
-			));
-			sleep(3);
-			if (config::byKey('autoRemoveExcludeDevice', 'blea') == 1) {
-				$eqLogic->remove();
-				event::add('blea::includeDevice', '');
+			$eqLogic = eqlogic::byLogicalId($_logical_id, 'blea');
+			if (is_object($eqLogic)) {
+				event::add('jeedom::alert', array(
+					'level' => 'warning',
+					'page' => 'blea',
+					'message' => __('Le module ', __FILE__) . $eqLogic->getHumanName() . __(' vient d\'être exclu', __FILE__),
+				));
+				sleep(3);
+				if (config::byKey('autoRemoveExcludeDevice', 'blea') == 1) {
+					$eqLogic->remove();
+					event::add('blea::includeDevice', '');
+				}
+				sleep(3);
+				event::add('jeedom::alert', array(
+					'level' => 'warning',
+					'page' => 'blea',
+					'message' => '',
+				));
+				return;
 			}
-			sleep(3);
+			sleep(2);
 			event::add('jeedom::alert', array(
 				'level' => 'warning',
 				'page' => 'blea',
 				'message' => '',
 			));
-			return;
-		}
-		sleep(2);
-		event::add('jeedom::alert', array(
-			'level' => 'warning',
-			'page' => 'blea',
-			'message' => '',
-		));
 		return;
 	}
 
@@ -262,7 +256,7 @@ class blea extends eqLogic {
 			socket_write($socket, $value, strlen($value));
 			socket_close($socket);
 		}
-
+		
 	}
 
 /*     * *********************Methode d'instance************************* */
@@ -309,35 +303,24 @@ class blea extends eqLogic {
 				);
 			}
 		}
-		$json = self::devicesParameters($_conf);
-		if (isset($json['parameters'])) {
-			$param = true;
+		$json=self::devicesParameters($_conf);
+		if (isset($json['parameters'])){
+			$param =true;
 		}
-		return [$modelList, $param];
+		return [$modelList,$param];
 	}
-
+	
 	public function postSave() {
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device')) {
 			$this->applyModuleConfiguration();
 		} else {
 			$this->allowDevice();
 		}
-		$cmd = $this->getCmd(null, 'rssi');
-		if (!is_object($cmd)) {
-			$cmd = new bleaCmd();
-			$cmd->setLogicalId('rssi');
-			$cmd->setIsVisible(1);
-			$cmd->setName(__('Signal', __FILE__));
-		}
-		$cmd->setType('info');
-		$cmd->setSubType('numeric');
-		$cmd->setEqLogic_id($this->getId());
-		$cmd->save();
 	}
 
 	public function preRemove() {
 		$this->disallowDevice();
-	}
+	}		
 
 	public function allowDevice() {
 		$value = array('apikey' => config::byKey('api'), 'cmd' => 'add');
@@ -383,7 +366,7 @@ class blea extends eqLogic {
 			socket_close($socket);
 		}
 	}
-
+	
 	public function applyModuleConfiguration() {
 		$this->setConfiguration('applyDevice', $this->getConfiguration('device'));
 		$this->save();
@@ -539,6 +522,6 @@ class bleaCmd extends cmd {
 	/*     * *********************Methode d'instance************************* */
 
 	public function execute($_options = null) {
-
+		
 	}
 }
