@@ -105,6 +105,7 @@ class ScanDelegate(DefaultDelegate):
 					action['id'] = mac.upper()
 					action['rssi'] = rssi
 					action['name'] = name
+					globals.KNOWN_DEVICES[mac.upper()]['rssi'] = action['rssi']
 					logging.debug(action)		
 
 			try:
