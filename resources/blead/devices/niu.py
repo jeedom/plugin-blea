@@ -17,7 +17,6 @@ class Niu():
 		buttontrame = data[34:36]
 		batterytrame = data[28:30]
 		colortrame = data[24:28]
-		print colortrame
 		battery = str(int(batterytrame,16))
 		if colortrame == '0001':
 		   color = 'No color'
