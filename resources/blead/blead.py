@@ -94,6 +94,9 @@ class ScanDelegate(DefaultDelegate):
 						return
 					else:
 						logging.debug('It\'s a unknown packet and I don\'t known this device so I learn')
+						action['id'] = mac.upper()
+						action['rssi'] = rssi
+						action['name'] = name
 						action['learn'] = 1
 						jeedom_com.add_changes('devices::'+mac.upper(),action)
 						jeedom_com.send_change_immediate({'learn_mode' : 0});
@@ -154,7 +157,7 @@ def read_socket():
 			if message['cmd'] == 'add':
 				logging.debug('Add device : '+str(message['device']))
 				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = {'state' : 1}
+					globals.KNOWN_DEVICES[message['device']['id']] = 1
 			elif message['cmd'] == 'remove':
 				logging.debug('Remove device : '+str(message['device']))
 				if 'id' in message['device']:
