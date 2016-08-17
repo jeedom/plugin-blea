@@ -30,6 +30,7 @@ $result = json_decode(file_get_contents("php://input"), true);
 if (!is_array($result)) {
 	die();
 }
+log::add('blea', 'debug', print_r($result, true));
 
 if (isset($result['learn_mode'])) {
 	if ($result['learn_mode'] == 1) {
@@ -117,7 +118,7 @@ if (isset($result['devices'])) {
 			if (!is_array($value)) {
 				$cmd->event($value);
 			}
-			if ($logicalId == 'battery'){
+			if ($logicalId == 'battery') {
 				$blea->batteryStatus($value);
 			}
 		}
