@@ -48,6 +48,7 @@ class ScanDelegate(DefaultDelegate):
 			name = ''
 			data =''
 			logging.debug(dev.getScanData())
+			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
 					name = value
@@ -55,17 +56,17 @@ class ScanDelegate(DefaultDelegate):
 					data = value
 			for device in globals.COMPATIBILITY:
 				if device().isvalid(name):
+					findDevice=True
 					logging.debug('This is a ' + device().name + ' device')
-					action = device().parse(data)
-					action['id'] = mac.upper()
-					action['rssi'] = rssi
-					action['type'] = device().name
-					logging.debug(action)
 					if globals.EXCLUDE_MODE:
 						globals.EXCLUDE_MODE = False
 						logging.debug('It\'s a known packet and I am in exclude mode, i delete the device')
 						jeedom_com.send_change_immediate({'exclude_mode' : 0, 'deviceId' : mac });
 						return
+					action = device().parse(data)
+					action['id'] = mac.upper()
+					action['type'] = device().name
+					logging.debug(action)	
 					if action['id'] not in globals.KNOWN_DEVICES:
 						if not globals.LEARN_MODE:
 							logging.debug('It\'s a known packet but not decoded because this device is not Included and I\'am not in learn mode')
@@ -77,9 +78,16 @@ class ScanDelegate(DefaultDelegate):
 							jeedom_com.send_change_immediate({'learn_mode' : 0});
 							globals.LEARN_MODE = False
 							return
-					jeedom_com.add_changes('devices::'+action['id'],action)
-				else:
-					logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
+					if 'rssi' not in globals.KNOWN_DEVICES or (globals.KNOWN_DEVICES['rssi']*1.1) < rssi or (globals.KNOWN_DEVICES['rssi']*0.9) > rssi:
+						globals.KNOWN_DEVICES['rssi'] = rssi
+						action['rssi'] = rssi
+
+					if len(action) > 2:
+						jeedom_com.add_changes('devices::'+action['id'],action)
+					
+
+			if not findDevice and globals.LEARN_MODE:
+				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 					
 def listen(_device):
 	global scanner
@@ -87,6 +95,7 @@ def listen(_device):
 	logging.info("Start listening...")
 	scanner = Scanner(int(_device[-1:])).withDelegate(ScanDelegate())
 	logging.info("Preparing Scanner...")
+	lastClearTimestamp = int(time.time())
 	try:
 		while 1:
 			try:
@@ -94,8 +103,9 @@ def listen(_device):
 			except Exception, e:
 				logging.error("Exception on socket : %s" % str(e))
 			try:
-				if globals.LEARN_MODE == True:
+				if globals.LEARN_MODE == True or (lastClearTimestamp + 60)  < int(time.time()) :
 					scanner.clear()
+					lastClearTimestamp = int(time.time())
 				scanner.start()
 				scanner.process(0.3)
 				scanner.stop()
@@ -122,7 +132,7 @@ def read_socket():
 			if message['cmd'] == 'add':
 				logging.debug('Add device : '+str(message['device']))
 				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = 1
+					globals.KNOWN_DEVICES[message['device']['id']] = {}
 			elif message['cmd'] == 'remove':
 				logging.debug('Remove device : '+str(message['device']))
 				if 'id' in message['device']:
