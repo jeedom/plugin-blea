@@ -66,7 +66,7 @@ class ScanDelegate(DefaultDelegate):
 					action = device().parse(data)
 					action['id'] = mac.upper()
 					action['type'] = device().name
-					logging.debug(action)	
+					logging.debug(action)
 					if action['id'] not in globals.KNOWN_DEVICES:
 						if not globals.LEARN_MODE:
 							logging.debug('It\'s a known packet but not decoded because this device is not Included and I\'am not in learn mode')
@@ -78,14 +78,13 @@ class ScanDelegate(DefaultDelegate):
 							jeedom_com.send_change_immediate({'learn_mode' : 0});
 							globals.LEARN_MODE = False
 							return
-					if 'rssi' not in globals.KNOWN_DEVICES or (globals.KNOWN_DEVICES['rssi']*1.1) < rssi or (globals.KNOWN_DEVICES['rssi']*0.9) > rssi:
-						globals.KNOWN_DEVICES['rssi'] = rssi
+					if 'rssi' not in globals.KNOWN_DEVICES[action['id']] or (globals.KNOWN_DEVICES[action['id']]['rssi']*1.1) > rssi or (globals.KNOWN_DEVICES[action['id']]['rssi']*0.9) < rssi:
+						globals.KNOWN_DEVICES[action['id']]['rssi'] = rssi
 						action['rssi'] = rssi
 
 					if len(action) > 2:
 						jeedom_com.add_changes('devices::'+action['id'],action)
 					
-
 			if not findDevice and globals.LEARN_MODE:
 				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 					
@@ -103,7 +102,7 @@ def listen(_device):
 			except Exception, e:
 				logging.error("Exception on socket : %s" % str(e))
 			try:
-				if globals.LEARN_MODE == True or (lastClearTimestamp + 60)  < int(time.time()) :
+				if globals.LEARN_MODE == True or (lastClearTimestamp + 30)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
 				scanner.start()
