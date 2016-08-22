@@ -32,14 +32,22 @@ class Niu():
 		   color = 'Lagoon'
 		elif colortrame == '0007':
 		   color = 'Softberry'
+		else:
+			color = 'No color'
 		if buttontrame == '01':
-		   button = ' appui simple'
+		   button = 'simple appui'
 		elif buttontrame == '02':
-		   button = ' double appui'
+		   button = 'double appui'
 		elif buttontrame == '03':
-		   button = ' appui long'
+		   button = 'appui long'
 		elif buttontrame == '04':
-		   button = ' relachement'
+		   button = 'relachement'
+		elif buttontrame == '05':
+		   button = 'triple appui'
+		elif buttontrame == '06':
+		   button = 'quadruple appui'
+		elif buttontrame == '07':
+		   button = 'quintuple appui'
 		action['color'] = color
 		action['battery'] = battery
 		action['button'] = button
