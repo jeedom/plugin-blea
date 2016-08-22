@@ -25,15 +25,6 @@
                 "unite": "",
                 "logicalId": "button"
             },
-			{
-                "name": "Couleur",
-                "type": "info",
-                "subtype": "string",
-                "isVisible": 0,
-                "isHistorized": 1,
-                "unite": "",
-                "logicalId": "color"
-            },
             {
                 "name": "Rssi",
                 "type": "info",
