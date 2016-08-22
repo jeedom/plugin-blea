@@ -66,7 +66,7 @@ if (isset($result['exclude_mode'])) {
 			event::add('jeedom::alert', array(
 				'level' => 'warning',
 				'page' => 'blea',
-				'message' => __('Un Bouton blea est en cours d\'exclusion. Logical ID : ', __FILE__) . $result['deviceId'],
+				'message' => __('Un device Blea est en cours d\'exclusion. Logical ID : ', __FILE__) . $result['deviceId'],
 			));
 			sleep(2);
 			blea::excludedDevice($result['deviceId']);

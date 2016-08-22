@@ -49,7 +49,10 @@ class blea extends eqLogic {
 		$eqLogic->setConfiguration('device', $_def['type']);
 		$model = $eqLogic->getModelListParam();
 		if (count($model) > 0) {
-			$eqLogic->setConfiguration('iconModel', array_keys($model)[0]);
+			$eqLogic->setConfiguration('iconModel', array_keys($model[0])[0]);
+			if ($_def['type'] == 'niu'){
+				$eqLogic->setConfiguration('iconModel', 'niu/niu_' . strtolower($_def['color']));
+			}
 		}
 		$eqLogic->save();
 

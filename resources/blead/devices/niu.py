@@ -19,35 +19,37 @@ class Niu():
 		colortrame = data[24:28]
 		battery = str(int(batterytrame,16))
 		if colortrame == '0001':
-		   color = 'No color'
+			color = 'No color'
 		elif colortrame == '0002':
-		   color = 'White'
+			color = 'White'
 		elif colortrame == '0003':
-		   color = 'Tech Blue'
+			color = 'TechBlue'
 		elif colortrame == '0004':
-		   color = 'Cozy Grey'
+			color = 'CozyGrey'
 		elif colortrame == '0005':
-		   color = 'Wazabi'
+			color = 'Wazabi'
 		elif colortrame == '0006':
-		   color = 'Lagoon'
+			color = 'Lagoon'
 		elif colortrame == '0007':
-		   color = 'Softberry'
+			color = 'Softberry'
 		else:
 			color = 'No color'
 		if buttontrame == '01':
-		   button = 'simple appui'
+			button = 'simple appui'
 		elif buttontrame == '02':
-		   button = 'double appui'
+			button = 'double appui'
 		elif buttontrame == '03':
-		   button = 'appui long'
+			button = 'appui long'
 		elif buttontrame == '04':
-		   button = 'relachement'
+			button = 'relachement'
 		elif buttontrame == '05':
-		   button = 'triple appui'
+			button = 'triple appui'
 		elif buttontrame == '06':
-		   button = 'quadruple appui'
+			button = 'quadruple appui'
 		elif buttontrame == '07':
-		   button = 'quintuple appui'
+			button = 'quintuple appui'
+		else:
+			button = ''
 		action['color'] = color
 		action['battery'] = battery
 		action['button'] = button
