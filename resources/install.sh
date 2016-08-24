@@ -8,6 +8,7 @@ echo 66 > /tmp/dependancy_blea_in_progress
 sudo apt-get install -y libglib2.0-dev
 echo 75 > /tmp/dependancy_blea_in_progress
 sudo pip install bluepy
+sudo connmanctl enable bluetooth
 echo 100 > /tmp/dependancy_blea_in_progress
 echo "Everything is successfully installed!"
 rm /tmp/dependancy_blea_in_progress
