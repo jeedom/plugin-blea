@@ -111,7 +111,7 @@ function addCmdToTable(_cmd) {
     tr += '<td class="expertModeVisible"><input class="cmdAttr form-control input-sm" data-l1key="logicalId" value="0" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
     
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="id" placeholder="{{ID}}" style="margin-top : 5px;margin-right:2px;width:24%;display:inline-block;">';
-    tr += ' <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="group" style="width : 20%; display : inline-block;" placeholder="{{Groupe}}">';
+    tr += ' <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="group" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;" placeholder="{{Groupe}}">';
 
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateValue" placeholder="{{Valeur retour d\'état}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
     tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateTime" placeholder="{{Durée avant retour d\'état (min)}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
