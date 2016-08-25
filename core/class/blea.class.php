@@ -50,7 +50,7 @@ class blea extends eqLogic {
 		$model = $eqLogic->getModelListParam();
 		if (count($model) > 0) {
 			$eqLogic->setConfiguration('iconModel', array_keys($model[0])[0]);
-			if ($_def['type'] == 'niu'){
+			if ($_def['type'] == 'niu') {
 				$eqLogic->setConfiguration('iconModel', 'niu/niu_' . strtolower($_def['color']));
 			}
 		}
@@ -144,15 +144,9 @@ class blea extends eqLogic {
 		$cmd .= ' --loglevel=' . log::convertLogLevel(log::getLogLevel('blea'));
 		$cmd .= ' --device=' . $port;
 		$cmd .= ' --socketport=' . config::byKey('socketport', 'blea');
-		if (config::byKey('jeeNetwork::mode') == 'slave') {
-			$cmd .= ' --sockethost=' . network::getNetworkAccess('internal', 'ip', '127.0.0.1');
-			$cmd .= ' --callback=' . config::byKey('jeeNetwork::master::ip') . '/plugins/blea/core/php/jeeBlea.php';
-			$cmd .= ' --apikey=' . config::byKey('jeeNetwork::master::apikey');
-		} else {
-			$cmd .= ' --sockethost=127.0.0.1';
-			$cmd .= ' --callback=' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/blea/core/php/jeeBlea.php';
-			$cmd .= ' --apikey=' . config::byKey('api');
-		}
+		$cmd .= ' --sockethost=127.0.0.1';
+		$cmd .= ' --callback=' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/blea/core/php/jeeBlea.php';
+		$cmd .= ' --apikey=' . config::byKey('api');
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
 		$result = exec($cmd . ' >> ' . log::getPathToLog('blea') . ' 2>&1 &');
 		$i = 0;
@@ -170,14 +164,7 @@ class blea extends eqLogic {
 		}
 		message::removeAll('blea', 'unableStartDeamon');
 		sleep(2);
-		if (config::byKey('jeeNetwork::mode') == 'slave') {
-			$jsonrpc = jeeNetwork::getJsonRpcMaster();
-			if (!$jsonrpc->sendRequest('deamonStart', array('plugin' => 'blea'))) {
-				throw new Exception($jsonrpc->getError());
-			}
-		} else {
-			self::sendIdToDeamon();
-		}
+		self::sendIdToDeamon();
 		config::save('exclude_mode', 0, 'blea');
 		config::save('include_mode', 0, 'blea');
 		return true;
@@ -243,14 +230,6 @@ class blea extends eqLogic {
 				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'excludein'));
 			} else {
 				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'excludeout'));
-			}
-		}
-		if (config::byKey('jeeNetwork::mode') == 'master') {
-			foreach (jeeNetwork::byPlugin('blea') as $jeeNetwork) {
-				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-				socket_connect($socket, $jeeNetwork->getRealIp(), config::byKey('socketport', 'blea'));
-				socket_write($socket, $value, strlen($value));
-				socket_close($socket);
 			}
 		}
 		if (config::byKey('port', 'blea', 'none') != 'none') {
@@ -332,14 +311,6 @@ class blea extends eqLogic {
 				'id' => $this->getLogicalId(),
 			);
 			$value = json_encode($value);
-			if (config::byKey('jeeNetwork::mode') == 'master') {
-				foreach (jeeNetwork::byPlugin('blea') as $jeeNetwork) {
-					$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-					socket_connect($socket, $jeeNetwork->getRealIp(), config::byKey('socketport', 'blea'));
-					socket_write($socket, $value, strlen($value));
-					socket_close($socket);
-				}
-			}
 			if (config::byKey('port', 'blea', 'none') != 'none') {
 				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 				socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
@@ -354,14 +325,6 @@ class blea extends eqLogic {
 			return;
 		}
 		$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
-		if (config::byKey('jeeNetwork::mode') == 'master') {
-			foreach (jeeNetwork::byPlugin('blea') as $jeeNetwork) {
-				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-				socket_connect($socket, $jeeNetwork->getRealIp(), config::byKey('socketport', 'blea'));
-				socket_write($socket, $value, strlen($value));
-				socket_close($socket);
-			}
-		}
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
