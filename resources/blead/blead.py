@@ -111,6 +111,8 @@ def listen(_device):
 			except queue.Empty:
 				continue
 			except Exception, e:
+				if str(e).find('disconnect') <> -1:
+					pass
 				logging.error("Exception on ble : "+str(e))
 				shutdown()
 			time.sleep(0.02)
