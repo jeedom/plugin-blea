@@ -111,10 +111,7 @@ def listen(_device):
 			except queue.Empty:
 				continue
 			except Exception, e:
-				if str(e).find('Device disconnected') <> -1:
-					pass
-				logging.error("Exception on ble : "+str(e))
-				shutdown()
+				pass
 			time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")
