@@ -102,7 +102,7 @@ def listen(_device):
 			except Exception, e:
 				logging.error("Exception on socket : %s" % str(e))
 			try:
-				if globals.LEARN_MODE == True or (lastClearTimestamp + 30)  < int(time.time()) :
+				if globals.LEARN_MODE == True or (lastClearTimestamp + 55)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
 				scanner.start()
@@ -111,8 +111,7 @@ def listen(_device):
 			except queue.Empty:
 				continue
 			except Exception, e:
-				logging.error("Exception on ble : "+str(e))
-				shutdown()
+				pass
 			time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")

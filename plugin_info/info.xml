@@ -6,7 +6,6 @@
     <author>Ludovic SARAKHA</author>
     <require>2.4</require>
     <category>automation protocol</category>
-    <allowRemote>1</allowRemote>
     <hasOwnDeamon>1</hasOwnDeamon>
     <hasDependency>1</hasDependency>
 </info>

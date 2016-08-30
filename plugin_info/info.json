@@ -1,0 +1,11 @@
+{
+	"id" : "blea",
+	"name" : "Bluetooth Advertisement",
+	"description" : "Plugin pour la gestion de la sécurité",
+	"licence" : "AGPL",
+	"author" : "Ludovic SARAKHA",
+	"require" : "2.4",
+	"category" : "automation protocol",
+	"hasOwnDeamon" : true,
+	"hasDependency" : true
+}

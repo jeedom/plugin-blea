@@ -13,7 +13,11 @@
                 "isVisible": 0,
                 "isHistorized": 0,
                 "unite": "dbm",
-                "logicalId": "rssi"
+                "logicalId": "rssi",
+                "configuration" : {
+                    "returnStateValue" : 0,
+                    "returnStateTime" : 1
+                }
             }
         ],
 		"compatibility": []

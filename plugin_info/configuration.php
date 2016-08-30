@@ -24,66 +24,32 @@ if (!isConnect()) {
 ?>
 <form class="form-horizontal">
     <fieldset>
-		<legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
-		<?php if (config::byKey('jeeNetwork::mode') == 'master') {?>
-			<div class="form-group">
-				<label class="col-lg-4 control-label">{{Supprimer automatiquement les périphériques exclus}}</label>
-				<div class="col-lg-3">
-					<input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
-				</div>
-			</div>
-<?php }
-?>
-        <legend><i class="icon loisir-darth"></i> {{Démon local}}</legend>
+        <legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
         <div class="form-group">
-            <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
-                <div class="col-sm-2">
-                    <select class="configKey form-control" data-l1key="port">
-                        <option value="none">{{Aucun}}</option>
-                        <?php
+            <label class="col-lg-4 control-label">{{Supprimer automatiquement les périphériques exclus}}</label>
+            <div class="col-lg-3">
+             <input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
+         </div>
+     </div>
+     <legend><i class="icon loisir-darth"></i> {{Démon local}}</legend>
+     <div class="form-group">
+        <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
+        <div class="col-sm-2">
+            <select class="configKey form-control" data-l1key="port">
+                <option value="none">{{Aucun}}</option>
+                <?php
 foreach (jeedom::getBluetoothMapping() as $name => $value) {
 	echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
 }
 ?>
-                   </select>
-           </div>
+           </select>
        </div>
-       <div class="form-group expertModeVisible">
-        <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)}}</label>
-        <div class="col-lg-2">
-            <input class="configKey form-control" data-l1key="socketport" placeholder="{{55008}}" />
-        </div>
+   </div>
+   <div class="form-group expertModeVisible">
+    <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)}}</label>
+    <div class="col-lg-2">
+        <input class="configKey form-control" data-l1key="socketport" placeholder="{{55008}}" />
     </div>
+</div>
 </fieldset>
 </form>
-
-<?php
-if (config::byKey('jeeNetwork::mode') == 'master') {
-	foreach (jeeNetwork::byPlugin('niu') as $jeeNetwork) {
-		?>
-        <form class="form-horizontal slaveConfig" data-slave_id="<?php echo $jeeNetwork->getId(); ?>">
-            <fieldset>
-                <legend><i class="icon loisir-darth"></i> {{Démon sur l'esclave}} <?php echo $jeeNetwork->getName() ?></legend>
-                <div class="form-group">
-                    <label class="col-lg-4 control-label">{{Port Bluetooth}}</label>
-                    <div class="col-lg-4">
-                        <select class="slaveConfigKey form-control" data-l1key="port">
-							<option value="hci0">{{Hci0}}</option>
-							<option value="hci1">{{Hci1}}</option>
-							<option value="hci2">{{Hci2}}</option>
-							<option value="hci3">{{Hci3}}</option>
-                     </select>
-                 </div>
-             </div>
-             <div class="form-group expertModeVisible">
-                <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)}}</label>
-                <div class="col-lg-2">
-                    <input class="slaveConfigKey form-control" data-l1key="socketport" placeholder="{{55008}}"/>
-                </div>
-            </div>
-        </fieldset>
-    </form>
-    <?php
-}
-}
-?>
