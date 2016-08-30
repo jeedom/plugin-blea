@@ -525,6 +525,29 @@ class blea_remote {
 	public function remove() {
 		return DB::remove($this);
 	}
+	
+	public function execCmd($_cmd) {
+	  $ip=$this->getConfiguration('remoteIp');
+      $port=$this->getConfiguration('remotePort');
+      $user=$this->getConfiguration('remoteUser');
+      $pass=$this->getConfiguration('remotePassword');
+      if (!$connection = ssh2_connect($ip,$port)) {
+        log::add('blea', 'error', 'connexion SSH KO');
+      }else{
+        if (!ssh2_auth_password($connection,$user,$pass)){
+          log::add('blea', 'error', 'Authentification SSH KO');
+        }else{
+          log::add('blea', 'debug', 'Commande par SSH');
+          $result = ssh2_exec($connection, $_cmd);
+          stream_set_blocking($result, true);
+          $result = stream_get_contents($result);
+
+          $closesession = ssh2_exec($connection, 'exit');
+          stream_set_blocking($closesession, true);
+          stream_get_contents($closesession);
+        }
+      }
+	}
 
 	/*     * **********************Getteur Setteur*************************** */
 
