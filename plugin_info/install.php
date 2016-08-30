@@ -18,12 +18,24 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function blea_update() {
+function blea_install() {
+	$sql = file_get_contents(dirname(__FILE__) . '/install.sql');
+	DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
+	foreach (blea::byType('blea') as $blea) {
+		$jeelink->save();
+	}
+}
 
+function blea_update() {
+	$sql = file_get_contents(dirname(__FILE__) . '/install.sql');
+	DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
+	foreach (blea::byType('blea') as $blea) {
+		$blea->save();
+	}
 }
 
 function blea_remove() {
-
+	DB::Prepare('DROP TABLE IF EXISTS `blea_remote`', array(), DB::FETCH_TYPE_ROW);
 }
 
 ?>
