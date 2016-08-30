@@ -491,3 +491,65 @@ class bleaCmd extends cmd {
 
 	}
 }
+
+class blea_remote {
+	/*     * *************************Attributs****************************** */
+	private $id;
+	private $remoteName;
+	private $configuration;
+
+	/*     * ***********************Methode static*************************** */
+
+	public static function byId($_id) {
+		$values = array(
+			'id' => $_id,
+		);
+		$sql = 'SELECT ' . DB::buildField(__CLASS__) . '
+		FROM blea_remote
+		WHERE id=:id';
+		return DB::Prepare($sql, $values, DB::FETCH_TYPE_ROW, PDO::FETCH_CLASS, __CLASS__);
+	}
+
+	public static function all() {
+		$sql = 'SELECT ' . DB::buildField(__CLASS__) . '
+		FROM blea_remote';
+		return DB::Prepare($sql, array(), DB::FETCH_TYPE_ALL, PDO::FETCH_CLASS, __CLASS__);
+	}
+
+	/*     * *********************Methode d'instance************************* */
+
+	public function save() {
+		return DB::save($this);
+	}
+
+	public function remove() {
+		return DB::remove($this);
+	}
+
+	/*     * **********************Getteur Setteur*************************** */
+
+	public function getId() {
+		return $this->id;
+	}
+
+	public function setId($id) {
+		$this->id = $id;
+	}
+
+	public function getName() {
+		return $this->remoteName;
+	}
+
+	public function setName($name) {
+		$this->remoteName = $name;
+	}
+
+	public function getConfiguration($_key = '', $_default = '') {
+		return utils::getJsonAttr($this->configuration, $_key, $_default);
+	}
+
+	public function setConfiguration($_key, $_value) {
+		$this->configuration = utils::setJsonAttr($this->configuration, $_key, $_value);
+	}
+
+}

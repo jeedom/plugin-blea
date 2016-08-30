@@ -39,6 +39,34 @@ try {
 		}
 		ajax::success($blea->getModelListParam(init('conf')));
 	}
+	
+	if (init('action') == 'save_bleaRemote') {
+		$bleaRemoteSave = jeedom::fromHumanReadable(json_decode(init('blea_remote'), true));
+		$blea_remote = blea_remote::byId($bleaRemoteSave['id']);
+		if (!is_object($blea_remote)) {
+			$blea_remote = new blea_remote();
+		}
+		utils::a2o($blea_remote, $bleaRemoteSave);
+		$blea_remote->save();
+		ajax::success(utils::o2a($blea_remote));
+	}
+
+	if (init('action') == 'get_bleaRemote') {
+		$blea_remote = blea_remote::byId(init('id'));
+		if (!is_object($blea_remote)) {
+			throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
+		}
+		ajax::success(jeedom::toHumanReadable(utils::o2a($blea_remote)));
+	}
+
+	if (init('action') == 'remove_bleaRemote') {
+		$blea_remote = blea_remote::byId(init('id'));
+		if (!is_object($blea_remote)) {
+			throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
+		}
+		$blea_remote->remove();
+		ajax::success();
+	}
 
 	throw new Exception('Aucune methode correspondante');
 	/*     * *********Catch exeption*************** */

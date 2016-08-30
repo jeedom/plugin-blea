@@ -25,6 +25,11 @@
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=health').dialog('open');
 });
 
+$('#bt_remoteblea').on('click', function () {
+    $('#md_modal').dialog({title: "{{Gestion des antennes bluetooth (pour plugin utilisant le bluetooth)}}"});
+    $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote').dialog('open');
+});
+
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').on('change', function () {
   if($('.li_eqLogic.active').attr('data-eqlogic_id') != ''){
    getModelListParam($(this).value(),$('.li_eqLogic.active').attr('data-eqlogic_id'));
