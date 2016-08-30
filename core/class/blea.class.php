@@ -536,11 +536,11 @@ class blea_remote {
 		$this->id = $id;
 	}
 
-	public function getName() {
+	public function getRemoteName() {
 		return $this->remoteName;
 	}
 
-	public function setName($name) {
+	public function setRemoteName($name) {
 		$this->remoteName = $name;
 	}
 

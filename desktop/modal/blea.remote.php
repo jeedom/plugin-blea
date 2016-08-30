@@ -31,7 +31,7 @@ $remotes = blea_remote::all();
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
-	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '"><a>' . $remote->getName() . '</a></li>';
+	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '"><a>' . $remote->getRemoteName() . '</a></li>';
 }
 ?>
 			</ul>
