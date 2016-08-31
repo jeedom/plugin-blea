@@ -561,7 +561,7 @@ class blea_remote {
           log::add('blea', 'error', 'Authentification SSH KO');
         }else{
           log::add('blea', 'debug', 'Envoie de fichier');
-          $result = ssh2_scp_send($connection, $_local, $_remote, 0777);
+          $result = ssh2_scp_send($connection, $_local, $_target, 0777);
           stream_set_blocking($result, true);
           $result = stream_get_contents($result);
 
