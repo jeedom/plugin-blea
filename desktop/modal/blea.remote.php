@@ -21,6 +21,8 @@ if (!isConnect('admin')) {
 }
 
 $remotes = blea_remote::all();
+$id = init('id');
+sendVarToJS('plugin', $id);
 ?>
 <div id='div_bleaRemoteAlert' style="display: none;"></div>
 <div class="row row-overflow">
@@ -82,7 +84,13 @@ foreach ($remotes as $remote) {
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
 							</div>
 						</div>
-					</fieldset>
+						<div class="form-group">
+						<label class="col-sm-3 control-label">{{Envoie des fichiers nécessaires}}</label>
+						<div class="col-sm-3">
+							<a class="btn btn-danger bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
+						</div>
+						</div>
+						</fieldset>
 				</form>
 	</div>
 </div>
