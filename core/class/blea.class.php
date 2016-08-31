@@ -548,6 +548,29 @@ class blea_remote {
         }
       }
 	}
+	
+	public function sendFiles($_local,$_target) {
+	  $ip=$this->getConfiguration('remoteIp');
+      $port=$this->getConfiguration('remotePort');
+      $user=$this->getConfiguration('remoteUser');
+      $pass=$this->getConfiguration('remotePassword');
+      if (!$connection = ssh2_connect($ip,$port)) {
+        log::add('blea', 'error', 'connexion SSH KO');
+      }else{
+        if (!ssh2_auth_password($connection,$user,$pass)){
+          log::add('blea', 'error', 'Authentification SSH KO');
+        }else{
+          log::add('blea', 'debug', 'Envoie de fichier');
+          $result = ssh2_scp_send($connection, $_local, $_remote, 0777);
+          stream_set_blocking($result, true);
+          $result = stream_get_contents($result);
+
+          $closesession = ssh2_exec($connection, 'exit');
+          stream_set_blocking($closesession, true);
+          stream_get_contents($closesession);
+        }
+      }
+	}
 
 	/*     * **********************Getteur Setteur*************************** */
 
