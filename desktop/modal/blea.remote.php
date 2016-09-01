@@ -84,12 +84,16 @@ foreach ($remotes as $remote) {
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
 							</div>
 						</div>
-						<div class="form-group">
+						<?php
+						if (method_exists( $id ,'sendRemoteFiles')){
+							echo '<div class="form-group">
 						<label class="col-sm-3 control-label">{{Envoie des fichiers nécessaires}}</label>
 						<div class="col-sm-3">
 							<a class="btn btn-danger bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
 						</div>
-						</div>
+						</div>';
+						}
+						?>
 						</fieldset>
 				</form>
 	</div>
@@ -152,6 +156,29 @@ foreach ($remotes as $remote) {
 				}
 				$('#div_bleaRemoteAlert').showAlert({message: '{{Sauvegarde réussie}}', level: 'success'});
 				displaybleaRemote(data.result.id);
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=sendFiles]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "sendRemoteFiles",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
 			}
 		});
 	});

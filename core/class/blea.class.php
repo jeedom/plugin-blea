@@ -537,7 +537,8 @@ class blea_remote {
         if (!ssh2_auth_password($connection,$user,$pass)){
           log::add('blea', 'error', 'Authentification SSH KO');
         }else{
-          log::add('blea', 'debug', 'Commande par SSH');
+          log::add('blea', 'debug', 'Commande par SSH (' . $_cmd .') sur ' . $ip);
+		  $cmd = "echo '" . $pass . "' | sudo -S " . $_cmd;
           $result = ssh2_exec($connection, $_cmd);
           stream_set_blocking($result, true);
           $result = stream_get_contents($result);
@@ -560,11 +561,8 @@ class blea_remote {
         if (!ssh2_auth_password($connection,$user,$pass)){
           log::add('blea', 'error', 'Authentification SSH KO');
         }else{
-          log::add('blea', 'debug', 'Envoie de fichier');
-          $result = ssh2_scp_send($connection, $_local, $_target, 0777);
-          stream_set_blocking($result, true);
-          $result = stream_get_contents($result);
-
+          log::add('blea', 'debug', 'Envoie de fichier sur ' . $ip);
+          $result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
           $closesession = ssh2_exec($connection, 'exit');
           stream_set_blocking($closesession, true);
           stream_get_contents($closesession);
