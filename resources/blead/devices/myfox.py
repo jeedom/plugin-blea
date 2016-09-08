@@ -7,13 +7,15 @@ class Myfox():
 	def __init__(self):
 		self.name = 'myfox'
 
-	def isvalid(self,name):
+	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:
 			return True
 		if name.lower().find("myfox") != -1:
 			return True
 			
 	def parse(self,data):
-		return {}
+		action={}
+		action['present'] = 1
+		return action
 
 globals.COMPATIBILITY.append(Myfox)

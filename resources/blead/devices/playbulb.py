@@ -3,14 +3,12 @@ import time
 import logging
 import globals
 
-class Fitbit():
+class Playbulb():
 	def __init__(self):
-		self.name = 'fitbit'
+		self.name = 'playbulb'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() == self.name:
-			return True
-		if name.lower() == 'charge hr':
+		if manuf == '4d49504f57':
 			return True
 			
 	def parse(self,data):
@@ -18,4 +16,4 @@ class Fitbit():
 		action['present'] = 1
 		return action
 
-globals.COMPATIBILITY.append(Fitbit)
+globals.COMPATIBILITY.append(Playbulb)

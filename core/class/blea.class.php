@@ -40,7 +40,7 @@ class blea extends eqLogic {
 		$blea = blea::byLogicalId($_def['id'], 'blea');
 		if (!is_object($blea)) {
 			$eqLogic = new blea();
-			$eqLogic->setName('BLE ' . $_def['type'] . ' ' . $_def['id']);
+			$eqLogic->setName('BLE ' . $_def['name'] . ' ' . $_def['id']);
 		}
 		$eqLogic->setLogicalId($_def['id']);
 		$eqLogic->setEqType_name('blea');

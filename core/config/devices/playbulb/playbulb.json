@@ -1,7 +1,7 @@
 {
-    "fitbit": {
-        "name": "Fitbit",
-        "groupe" : "Santé",
+    "playbulb": {
+        "name": "Playbulb",
+		"groupe" : "Lumière",
         "commands": [
 			{
                 "name": "Present",

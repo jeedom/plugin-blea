@@ -7,7 +7,7 @@ class Niu():
 	def __init__(self):
 		self.name = 'niu'
 
-	def isvalid(self,name):
+	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:
 			return True
 			

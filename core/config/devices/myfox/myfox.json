@@ -1,8 +1,24 @@
 {
     "myfox": {
-        "name": "myfox",
-		"groupe" : "Autres",
+        "name": "Myfox",
+		"groupe" : "Sécurité",
         "commands": [
+			{
+                "name": "Present",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "present",
+                "configuration" : {
+                    "returnStateValue" : 0,
+                    "returnStateTime" : 1
+                }
+            },
             {
                 "name": "Rssi",
                 "type": "info",
@@ -13,11 +29,7 @@
                 "isVisible": 0,
                 "isHistorized": 0,
                 "unite": "dbm",
-                "logicalId": "rssi",
-                "configuration" : {
-                    "returnStateValue" : 0,
-                    "returnStateTime" : 1
-                }
+                "logicalId": "rssi"
             }
         ],
 		"compatibility": []
