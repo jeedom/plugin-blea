@@ -43,11 +43,14 @@ class Niu():
 		elif buttontrame == '04':
 			button = 'relachement'
 		elif buttontrame == '05':
-			button = 'triple appui'
+			buttontrame = '02'
+			button = 'double appui'
 		elif buttontrame == '06':
-			button = 'quadruple appui'
+			buttontrame = '02'
+			button = 'double appui'
 		elif buttontrame == '07':
-			button = 'quintuple appui'
+			buttontrame = '02'
+			button = 'double appui'
 		else:
 			button = ''
 		action['color'] = color
