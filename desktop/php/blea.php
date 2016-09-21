@@ -2,8 +2,9 @@
 if (!isConnect('admin')) {
 	throw new Exception('Error 401 Unauthorized');
 }
-sendVarToJS('eqType', 'blea');
-$eqLogics = eqLogic::byType('blea');
+$plugin = plugin::byId('camera');
+sendVarToJS('eqType', $plugin->getId());
+$eqLogics = eqLogic::byType($plugin->getId());
 function sortByOption($a, $b) {
 	return strcmp($a['name'], $b['name']);
 }
@@ -86,8 +87,8 @@ if (config::byKey('exclude_mode', 'blea', 0) == 1) {
 <legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
- foreach ($eqLogics as $eqLogic) {
-$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+foreach ($eqLogics as $eqLogic) {
+	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
 	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
 	echo "<center>";
 	$alternateImg = $eqLogic->getConfiguration('iconModel');
@@ -96,7 +97,7 @@ $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:st
 	} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
 		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="105" width="95" />';
 	} else {
-		echo '<img class="lazy" src="plugins/blea/doc/images/blea_icon.png" height="105" width="95" />';
+		echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
 	}
 	echo "</center>";
 	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
