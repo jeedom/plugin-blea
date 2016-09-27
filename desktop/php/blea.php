@@ -2,7 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('Error 401 Unauthorized');
 }
-$plugin = plugin::byId('camera');
+$plugin = plugin::byId('blea');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 function sortByOption($a, $b) {
