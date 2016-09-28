@@ -578,6 +578,7 @@ class blea_remote {
 
 	public function setId($id) {
 		$this->id = $id;
+		return $this;
 	}
 
 	public function getRemoteName() {
@@ -586,6 +587,7 @@ class blea_remote {
 
 	public function setRemoteName($name) {
 		$this->remoteName = $name;
+		return $this;
 	}
 
 	public function getConfiguration($_key = '', $_default = '') {
@@ -594,6 +596,7 @@ class blea_remote {
 
 	public function setConfiguration($_key, $_value) {
 		$this->configuration = utils::setJsonAttr($this->configuration, $_key, $_value);
+		return $this;
 	}
 
 }
