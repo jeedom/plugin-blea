@@ -17,7 +17,7 @@
  */
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 
-if (!jeedom::apiAccess(init('apikey'))) {
+if (!jeedom::apiAccess(init('apikey', 'blea'))) {
 	echo 'Clef API non valide, vous n\'etes pas autorisé à effectuer cette action';
 	die();
 }
@@ -112,7 +112,7 @@ if (isset($result['devices'])) {
 			if (!is_array($value)) {
 				$cmd->event($value);
 			}
-			if ($logicalId == 'battery'){
+			if ($logicalId == 'battery') {
 				$blea->batteryStatus($value);
 			}
 		}

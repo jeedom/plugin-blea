@@ -146,7 +146,7 @@ class blea extends eqLogic {
 		$cmd .= ' --socketport=' . config::byKey('socketport', 'blea');
 		$cmd .= ' --sockethost=127.0.0.1';
 		$cmd .= ' --callback=' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/blea/core/php/jeeBlea.php';
-		$cmd .= ' --apikey=' . config::byKey('api');
+		$cmd .= ' --apikey=' . jeedom::getApiKey('blea');
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
 		$result = exec($cmd . ' >> ' . log::getPathToLog('blea') . ' 2>&1 &');
 		$i = 0;
@@ -221,15 +221,15 @@ class blea extends eqLogic {
 	public static function changeIncludeState($_state, $_mode) {
 		if ($_mode == 1) {
 			if ($_state == 1) {
-				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'learnin'));
+				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin'));
 			} else {
-				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'learnout'));
+				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout'));
 			}
 		} else {
 			if ($_state == 1) {
-				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'excludein'));
+				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'excludein'));
 			} else {
-				$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'excludeout'));
+				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'excludeout'));
 			}
 		}
 		if (config::byKey('port', 'blea', 'none') != 'none') {
@@ -305,7 +305,7 @@ class blea extends eqLogic {
 	}
 
 	public function allowDevice() {
-		$value = array('apikey' => config::byKey('api'), 'cmd' => 'add');
+		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'add');
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
 				'id' => $this->getLogicalId(),
@@ -324,7 +324,7 @@ class blea extends eqLogic {
 		if ($this->getLogicalId() == '') {
 			return;
 		}
-		$value = json_encode(array('apikey' => config::byKey('api'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
+		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
@@ -525,49 +525,49 @@ class blea_remote {
 	public function remove() {
 		return DB::remove($this);
 	}
-	
-	public function execCmd($_cmd) {
-	  $ip=$this->getConfiguration('remoteIp');
-      $port=$this->getConfiguration('remotePort');
-      $user=$this->getConfiguration('remoteUser');
-      $pass=$this->getConfiguration('remotePassword');
-      if (!$connection = ssh2_connect($ip,$port)) {
-        log::add('blea', 'error', 'connexion SSH KO');
-      }else{
-        if (!ssh2_auth_password($connection,$user,$pass)){
-          log::add('blea', 'error', 'Authentification SSH KO');
-        }else{
-          log::add('blea', 'debug', 'Commande par SSH (' . $_cmd .') sur ' . $ip);
-		  $cmd = "echo '" . $pass . "' | sudo -S " . $_cmd;
-          $result = ssh2_exec($connection, $_cmd);
-          stream_set_blocking($result, true);
-          $result = stream_get_contents($result);
 
-          $closesession = ssh2_exec($connection, 'exit');
-          stream_set_blocking($closesession, true);
-          stream_get_contents($closesession);
-        }
-      }
+	public function execCmd($_cmd) {
+		$ip = $this->getConfiguration('remoteIp');
+		$port = $this->getConfiguration('remotePort');
+		$user = $this->getConfiguration('remoteUser');
+		$pass = $this->getConfiguration('remotePassword');
+		if (!$connection = ssh2_connect($ip, $port)) {
+			log::add('blea', 'error', 'connexion SSH KO');
+		} else {
+			if (!ssh2_auth_password($connection, $user, $pass)) {
+				log::add('blea', 'error', 'Authentification SSH KO');
+			} else {
+				log::add('blea', 'debug', 'Commande par SSH (' . $_cmd . ') sur ' . $ip);
+				$cmd = "echo '" . $pass . "' | sudo -S " . $_cmd;
+				$result = ssh2_exec($connection, $_cmd);
+				stream_set_blocking($result, true);
+				$result = stream_get_contents($result);
+
+				$closesession = ssh2_exec($connection, 'exit');
+				stream_set_blocking($closesession, true);
+				stream_get_contents($closesession);
+			}
+		}
 	}
-	
-	public function sendFiles($_local,$_target) {
-	  $ip=$this->getConfiguration('remoteIp');
-      $port=$this->getConfiguration('remotePort');
-      $user=$this->getConfiguration('remoteUser');
-      $pass=$this->getConfiguration('remotePassword');
-      if (!$connection = ssh2_connect($ip,$port)) {
-        log::add('blea', 'error', 'connexion SSH KO');
-      }else{
-        if (!ssh2_auth_password($connection,$user,$pass)){
-          log::add('blea', 'error', 'Authentification SSH KO');
-        }else{
-          log::add('blea', 'debug', 'Envoie de fichier sur ' . $ip);
-          $result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
-          $closesession = ssh2_exec($connection, 'exit');
-          stream_set_blocking($closesession, true);
-          stream_get_contents($closesession);
-        }
-      }
+
+	public function sendFiles($_local, $_target) {
+		$ip = $this->getConfiguration('remoteIp');
+		$port = $this->getConfiguration('remotePort');
+		$user = $this->getConfiguration('remoteUser');
+		$pass = $this->getConfiguration('remotePassword');
+		if (!$connection = ssh2_connect($ip, $port)) {
+			log::add('blea', 'error', 'connexion SSH KO');
+		} else {
+			if (!ssh2_auth_password($connection, $user, $pass)) {
+				log::add('blea', 'error', 'Authentification SSH KO');
+			} else {
+				log::add('blea', 'debug', 'Envoie de fichier sur ' . $ip);
+				$result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
+				$closesession = ssh2_exec($connection, 'exit');
+				stream_set_blocking($closesession, true);
+				stream_get_contents($closesession);
+			}
+		}
 	}
 
 	/*     * **********************Getteur Setteur*************************** */
