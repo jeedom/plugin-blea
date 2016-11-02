@@ -33,7 +33,7 @@ foreach ($eqLogics as $eqLogic) {
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
    <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
    <div class="eqLogicThumbnailContainer">
-  <?php
+    <?php
 if (config::byKey('include_mode', 'blea', 0) == 1) {
 	echo '<div class="cursor changeIncludeState include card" data-mode="1" data-state="0" style="background-color : #8000FF; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
 	echo '<center>';
@@ -65,18 +65,18 @@ if (config::byKey('exclude_mode', 'blea', 0) == 1) {
 	echo '</div>';
 }
 ?>
- <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-  <center>
-    <i class="fa fa-wrench" style="font-size : 6em;color:#767676;"></i>
-  </center>
-  <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
-</div>
-<div class="cursor" id="bt_healthblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-  <center>
-    <i class="fa fa-medkit" style="font-size : 6em;color:#767676;"></i>
-  </center>
-  <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
-</div>
+   <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
+    <center>
+      <i class="fa fa-wrench" style="font-size : 6em;color:#767676;"></i>
+    </center>
+    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+  </div>
+  <div class="cursor" id="bt_healthblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+    <center>
+      <i class="fa fa-medkit" style="font-size : 6em;color:#767676;"></i>
+    </center>
+    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
+  </div>
 </div>
 <legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
 <div class="eqLogicThumbnailContainer">
@@ -102,61 +102,59 @@ foreach ($eqLogics as $eqLogic) {
 </div>
 
 <div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
-  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
-
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
-    <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
-  </ul>
-
-  <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
-    <div role="tabpanel" class="tab-pane active" id="eqlogictab">
-      <div class="row">
-        <div class="col-sm-6">
-          <form class="form-horizontal">
-            <fieldset>
-              <legend><i class="fa fa-arrow-circle-left eqLogicAction cursor" data-action="returnToThumbnailDisplay"></i> {{Général}}
-                <i class='fa fa-cogs eqLogicAction pull-right cursor expertModeVisible' data-action='configure'></i>
-                <a class="btn btn-xs btn-default pull-right eqLogicAction" data-action="copy"><i class="fa fa-files-o"></i> {{Dupliquer}}</a>
-              </legend>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">{{Nom du device}}</label>
-                <div class="col-sm-4">
-                  <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-                  <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA"/>
-                </div>
+ <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
+ <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
+ <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
+ <a class="btn btn-default eqLogicAction pull-right" data-action="copy"><i class="fa fa-files-o"></i> {{Dupliquer}}</a>
+ <ul class="nav nav-tabs" role="tablist">
+  <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
+  <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
+  <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+</ul>
+<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
+  <div role="tabpanel" class="tab-pane active" id="eqlogictab">
+    <br/>
+    <div class="row">
+      <div class="col-sm-6">
+        <form class="form-horizontal">
+          <fieldset>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Nom du device}}</label>
+              <div class="col-sm-4">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+                <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA"/>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">{{Mac}}</label>
-                <div class="col-sm-4">
-                  <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID"/>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Mac}}</label>
+              <div class="col-sm-4">
+                <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID"/>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label"></label>
-                <div class="col-sm-9">
-                  <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-                  <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"></label>
+              <div class="col-sm-9">
+                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+                <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
               </div>
-              <div class="form-group">
-                <label class="col-sm-3 control-label">{{Objet parent}}</label>
-                <div class="col-sm-4">
-                  <select class="eqLogicAttr form-control" data-l1key="object_id">
-                    <option value="">Aucun</option>
-                    <?php
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">{{Objet parent}}</label>
+              <div class="col-sm-4">
+                <select class="eqLogicAttr form-control" data-l1key="object_id">
+                  <option value="">Aucun</option>
+                  <?php
 foreach (object::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
-                 </select>
-               </div>
+               </select>
              </div>
-             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Catégorie}}</label>
-              <div class="col-sm-9">
-                <?php
+           </div>
+           <div class="form-group">
+            <label class="col-sm-3 control-label">{{Catégorie}}</label>
+            <div class="col-sm-9">
+              <?php
 foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 	echo '<label class="checkbox-inline">';
 	echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
@@ -164,35 +162,37 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 }
 ?>
 
-             </div>
            </div>
-           <div class="form-group expertModeVisible">
-            <label class="col-sm-3 control-label">{{Délai maximum autorisé entre 2 messages (min)}}</label>
-            <div class="col-sm-4">
-              <input class="eqLogicAttr form-control" data-l1key="timeout" />
-            </div>
+         </div>
+         <div class="form-group expertModeVisible">
+          <label class="col-sm-3 control-label">{{Délai maximum autorisé entre 2 messages (min)}}</label>
+          <div class="col-sm-4">
+            <input class="eqLogicAttr form-control" data-l1key="timeout" />
           </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">{{Commentaire}}</label>
-            <div class="col-sm-8">
-              <textarea class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="commentaire" ></textarea>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-    <div class="col-sm-6">
-      <form class="form-horizontal">
-        <fieldset>
-          <legend><i class="fa fa-info-circle"></i>  {{Informations}}
-           <a class="btn btn-primary btn-xs pull-right paramDevice" id="bt_configureDevice" style="display:none"><i class="fa fa-wrench"></i>  {{Configuration}}</a>
-         </legend>
-         <div class="form-group">
-          <label class="col-sm-2 control-label">{{Equipement}}</label>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label">{{Commentaire}}</label>
           <div class="col-sm-8">
-            <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="device">
-              <option value="">Aucun</option>
-              <?php
+            <textarea class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="commentaire" ></textarea>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="col-sm-6">
+    <form class="form-horizontal">
+      <fieldset>
+       <div class="form-group">
+        <div class="col-sm-8">
+         <a class="btn btn-primary btn-xs pull-right paramDevice" id="bt_configureDevice" style="display:none"><i class="fa fa-wrench"></i> {{Configuration des paramètres}}</a>
+       </div>
+     </div>
+     <div class="form-group">
+      <label class="col-sm-2 control-label">{{Equipement}}</label>
+      <div class="col-sm-8">
+        <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="device">
+          <option value="">Aucun</option>
+          <?php
 $groups = array();
 foreach (blea::devicesParameters() as $key => $info) {
 	if (isset($info['groupe'])) {
@@ -218,16 +218,16 @@ foreach ($groups as $group) {
 	echo '</optgroup>';
 }
 ?>
-       </select>
-     </div>
-   </div>
-   <div class="form-group modelList" style="display:none;">
-    <label class="col-sm-2 control-label">{{Modèle}}</label>
-    <div class="col-sm-8">
-     <select class="eqLogicAttr form-control listModel" data-l1key="configuration" data-l2key="iconModel">
-     </select>
-   </div>
+   </select>
  </div>
+</div>
+<div class="form-group modelList" style="display:none;">
+  <label class="col-sm-2 control-label">{{Modèle}}</label>
+  <div class="col-sm-8">
+   <select class="eqLogicAttr form-control listModel" data-l1key="configuration" data-l2key="iconModel">
+   </select>
+ </div>
+</div>
 <div class="form-group expertModeVisible">
   <label class="col-sm-3 control-label">{{Création}}</label>
   <div class="col-sm-3">
@@ -255,8 +255,7 @@ foreach ($groups as $group) {
 
 </div>
 <div role="tabpanel" class="tab-pane" id="commandtab">
-
-<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une commande}}</a><br/><br/>
+  <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Ajouter une commande}}</a><br/><br/>
   <table id="table_cmd" class="table table-bordered table-condensed">
     <thead>
       <tr>
