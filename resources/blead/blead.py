@@ -105,7 +105,7 @@ def listen(_device):
 			except Exception, e:
 				logging.error("Exception on socket : %s" % str(e))
 			try:
-				if globals.LEARN_MODE == True or (lastClearTimestamp + 55)  < int(time.time()) :
+				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
 				scanner.start()
