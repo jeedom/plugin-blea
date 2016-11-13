@@ -17,6 +17,7 @@
 import time
 import logging
 import threading
+import thread
 import requests
 import datetime
 import collections
@@ -34,12 +35,14 @@ import pyudev
 # ------------------------------------------------------------------------------
 
 class jeedom_com():
-	def __init__(self,apikey = '',url = '',cycle = 0.5):
+	def __init__(self,apikey = '',url = '',cycle = 0.5,retry = 3):
 		self.apikey = apikey
 		self.url = url
 		self.cycle = cycle
+		self.retry = retry
 		self.changes = {}
-		self.send_changes_async()
+		if cycle > 0 :
+			self.send_changes_async()
 		logging.debug('Init request module v%s' % (str(requests.__version__),))
 
 	def send_changes_async(self):
@@ -51,13 +54,18 @@ class jeedom_com():
 			start_time = datetime.datetime.now()
 			changes = self.changes
 			self.changes = {}
-			try:
-				logging.debug('Send to jeedom :  %s' % (str(changes),))
-				r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5, 120), verify=False)
-				if r.status_code != requests.codes.ok:
-					logging.error('Error on send request to jeedom, return code %s' % (str(r.status_code),))
-			except Exception as error:
-				logging.error('Error on send request to jeedom %s' % (str(error),))
+			logging.debug('Send to jeedom : '+str(changes))
+			i=0
+			while i < self.retry:
+				try:
+					r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5, 120), verify=False)
+					if r.status_code == requests.codes.ok:
+						break
+				except Exception as error:
+					logging.error('Error on send request to jeedom ' + str(error)+' retry : '+str(i)+'/'+str(self.retry))
+				i = i + 1
+			if r.status_code != requests.codes.ok:
+				logging.error('Error on send request to jeedom, return code %s' % (str(r.status_code),))
 			dt = datetime.datetime.now() - start_time
 			ms = (dt.days * 24 * 60 * 60 + dt.seconds) * 1000 + dt.microseconds / 1000.0
 			timer_duration = self.cycle - ms
@@ -80,19 +88,31 @@ class jeedom_com():
 				tmp_changes[k] = changes
 				changes = tmp_changes
 				tmp_changes = {}
-			self.merge_dict(self.changes,changes)
+			if self.cycle <= 0:
+				self.send_change_immediate(changes)
+			else:
+				self.merge_dict(self.changes,changes)
 		else:
-			self.changes[key] = value
+			if self.cycle <= 0:
+				self.send_change_immediate({key:value})
+			else:
+				self.changes[key] = value
 
 	def send_change_immediate(self,change):
-		try:
-			logging.debug('Send to jeedom :  %s' % (str(change),))
-			r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=False)
-			if r.status_code != requests.codes.ok:
-				logging.error('Error on send request to jeedom, return code %s' % (str(r.status_code),))
-		except Exception as error:
-			logging.error('Error on send request to jeedom %s' % (str(error),))
+		thread.start_new_thread( self.thread_change, (change,))
 
+	def thread_change(self,change):
+		logging.debug('Send to jeedom :  %s' % (str(change),))
+		i=0
+		while i < self.retry:
+			try:
+				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=False)
+				if r.status_code == requests.codes.ok:
+					break
+			except Exception as error:
+				logging.error('Error on send request to jeedom ' + str(error)+' retry : '+str(i)+'/'+str(self.retry))
+			i = i + 1
+		
 	def set_change(self,changes):
 		self.changes = changes
 
@@ -250,11 +270,8 @@ class jeedom_serial():
 		self.port.flushInput()
 
 	def read(self):
-		try:
-			if self.port.inWaiting() != 0:
-				return self.port.read()
-		except IOError, e:
-			logging.error("Serial read error: %s" % (str(e)))
+		if self.port.inWaiting() != 0:
+			return self.port.read()
 		return None
 
 	def readbytes(self,number):
@@ -263,9 +280,9 @@ class jeedom_serial():
 			try:
 				byte = self.port.read()
 			except IOError, e:
-				logging.error("Error: %s" % e)
+				logging.error("Error: " + str(e))
 			except OSError, e:
-				logging.error("Error: %s" % e)
+				logging.error("Error: " + str(e))
 			buf += byte
 		return buf
 

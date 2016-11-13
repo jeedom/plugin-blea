@@ -21,6 +21,7 @@ import time
 import datetime
 import signal
 import json
+import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import devices
 import globals
@@ -236,4 +237,5 @@ try:
 	listen(_device)
 except Exception,e:
 	logging.error('Fatal error : '+str(e))
+	logging.debug(traceback.format_exc())
 	shutdown()
