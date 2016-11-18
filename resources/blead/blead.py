@@ -59,7 +59,6 @@ class ScanDelegate(DefaultDelegate):
 				elif desc == 'Manufacturer':
 					manuf = value
 			for device in globals.COMPATIBILITY:
-				logging.debug(manuf)
 				if device().isvalid(name,manuf):
 					findDevice=True
 					logging.debug('This is a ' + device().name + ' device')
@@ -85,10 +84,8 @@ class ScanDelegate(DefaultDelegate):
 					if 'rssi' not in globals.KNOWN_DEVICES[action['id']] or (globals.KNOWN_DEVICES[action['id']]['rssi']*1.1) > rssi or (globals.KNOWN_DEVICES[action['id']]['rssi']*0.9) < rssi:
 						globals.KNOWN_DEVICES[action['id']]['rssi'] = rssi
 						action['rssi'] = rssi
-
 					if len(action) > 2:
 						jeedom_com.add_changes('devices::'+action['id'],action)
-					
 			if not findDevice and globals.LEARN_MODE:
 				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 					
