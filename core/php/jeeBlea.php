@@ -90,6 +90,11 @@ if (isset($result['devices'])) {
 				log::add('blea', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['id']));
 				continue;
 			}
+			event::add('jeedom::alert', array(
+				'level' => 'warning',
+				'page' => 'blea',
+				'message' => '',
+			));
 			event::add('blea::includeDevice', $blea->getId());
 		}
 		if (!$blea->getIsEnable()) {

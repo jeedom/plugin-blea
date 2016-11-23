@@ -80,6 +80,8 @@ class ScanDelegate(DefaultDelegate):
 							logging.debug('It\'s a known packet and I don\'t known this device so I learn')
 							action['learn'] = 1
 							jeedom_com.add_changes('devices::'+action['id'],action)
+							jeedom_com.send_change_immediate({'learn_mode' : 0});
+							globals.LEARN_MODE = False
 							return
 					if 'rssi' not in globals.KNOWN_DEVICES[action['id']] or (globals.KNOWN_DEVICES[action['id']]['rssi']*1.1) > rssi or (globals.KNOWN_DEVICES[action['id']]['rssi']*0.9) < rssi:
 						globals.KNOWN_DEVICES[action['id']]['rssi'] = rssi
