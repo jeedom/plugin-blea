@@ -1,0 +1,19 @@
+== BLEA (Bluetooth advertisement)
+
+=== Description
+Ce plugin est un plugin permettant de pouvoir recevoir les événements de certains périphériques bluetooth (tel que les NIU de chez Nodon)
+
+image:../images/blea_icon.png[width=256]
+
+'''
+=== Configuration
+include::configuration.asciidoc[]
+
+'''
+=== FAQ
+include::faq.asciidoc[]
+
+'''
+=== Changelog
+include::changelog.asciidoc[]
+
