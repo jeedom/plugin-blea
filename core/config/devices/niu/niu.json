@@ -53,75 +53,15 @@
 		"compatibility": [
             {
                 "manufacturer": "Nodon",
-                "name": "Niu Wasabi",
+                "name": "niu",
 				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-05",
-				"comlink": "2627-nodon-capteur-de-temperature-sans-fils-et-sans-piles-blanc-3700313920183",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
 				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_blanc"
-            },
-			{
-                "manufacturer": "Nodon",
-                "name": "Niu Blanc",
-				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-03",
-				"comlink": "2637-nodon-capteur-de-temperature-enocean-black-3700313920169",
-				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_black"
-            },
-			{
-                "manufacturer": "Nodon",
-                "name": "Niu Gris",
-				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-04",
-				"comlink": "2634-nodon-capteur-de-temperature-enocean-alu-3700313920176",
-				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_alu"
-            },
-			{
-                "manufacturer": "Nodon",
-                "name": "Niu Lagoon",
-				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-02",
-				"comlink": "2635-nodon-capteur-de-temperature-enocean-wood-3700313920145",
-				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_wood"
-            },
-			{
-                "manufacturer": "Nodon",
-                "name": "Niu SoftBerry",
-				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-01",
-				"comlink": "2636-nodon-capteur-de-temperature-enocean-varnish-3700313920152",
-				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_varnish"
-            },
-			{
-                "manufacturer": "Nodon",
-                "name": "Niu TechBlue",
-				"doc": "",
-				"type": "Température",
-				"battery_type": "1x3V CR1216",
-				"ref" : "STP-2-1-01",
-				"comlink": "2636-nodon-capteur-de-temperature-enocean-varnish-3700313920152",
-				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton learn",
-				"imglink": "a5-02-05_nodon_capteur_de_temperature_varnish"
+				"inclusion" : "Mode inclusion auto et appui sur le bouton",
+				"imglink": "niu_wazabi"
             }
         ]
     }

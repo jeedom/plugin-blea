@@ -32,6 +32,19 @@
                 "logicalId": "rssi"
             }
         ],
-		"compatibility": []
+		"compatibility": [
+            {
+                "manufacturer": "Fitbit",
+                "name": "Badge",
+				"doc": "",
+				"type": "Bracelet",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour de la présence",
+				"inclusion" : "Mode inclusion",
+				"imglink": "fitbit"
+            }
+        ]
     }
 }
