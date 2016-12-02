@@ -53,6 +53,20 @@
                 "unite": "",
                 "logicalId": "button"
             },
+			{
+                "name": "Bip On",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:ticatag,handle:0x0012,value:01"
+            },
+			{
+                "name": "Bip Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:ticatag,handle:0x0012,value:00"
+            },
             {
                 "name": "Rssi",
                 "type": "info",

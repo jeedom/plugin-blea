@@ -90,7 +90,7 @@ class ScanDelegate(DefaultDelegate):
 						jeedom_com.add_changes('devices::'+action['id'],action)
 			if not findDevice and globals.LEARN_MODE:
 				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
-					
+
 def listen(_device):
 	global scanner
 	jeedom_socket.open()
@@ -154,8 +154,22 @@ def read_socket():
 				logging.debug('Leave exclude mode')
 				globals.EXCLUDE_MODE = False
 				jeedom_com.send_change_immediate({'exclude_mode' : 0});
+			elif message['cmd'] == 'action':
+				logging.debug('Attempt an action on a device')
+				action_handler(message)
 	except Exception,e:
 		logging.error(str(e))
+
+def action_handler(message):
+	manuf =''
+	if manuf in message['command']:
+		manuf = message['command']['manuf']
+	name = message['command']['name']
+	for device in globals.COMPATIBILITY:
+		if device().isvalid(name,manuf):
+			action = device().action(message)
+			return
+	return
 
 def handler(signum=None, frame=None):
 	logging.debug("Signal %i caught, exiting..." % int(signum))
@@ -225,7 +239,7 @@ logging.info('Cycle : '+str(_cycle))
 
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)	
-
+globals.IFACE_DEVICE = int(_device[-1:])
 try:
 	jeedom_utils.write_pid(str(_pidfile))
 	jeedom_com = jeedom_com(apikey = _apikey,url = _callback,cycle=_cycle)

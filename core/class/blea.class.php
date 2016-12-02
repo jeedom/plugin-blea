@@ -488,7 +488,36 @@ class bleaCmd extends cmd {
 	/*     * *********************Methode d'instance************************* */
 
 	public function execute($_options = null) {
-
+		if ($this->getType() != 'action') {
+			return;
+		}
+		$eqLogic = $this->getEqLogic();
+		$values = explode(',', $this->getLogicalId());
+		foreach ($values as $value) {
+			$value = explode(':', $value);
+			if (count($value) == 2) {
+				switch ($this->getSubType()) {
+					case 'slider':
+						$data[trim($value[0])] = trim(str_replace('#slider#', $_options['slider'], $value[1]));
+						break;
+					case 'color':
+						$data[trim($value[0])] = trim(str_replace('#color#', $_options['color'], $value[1]));
+						break;
+					default:
+						$data[trim($value[0])] = trim($value[1]);
+				}
+			}
+		}
+		if (count($data) == 0) {
+			return;
+		}
+		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
+		if (config::byKey('port', 'blea', 'none') != 'none') {
+			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
+			socket_write($socket, $value, strlen($value));
+			socket_close($socket);
+		}
 	}
 }
 
