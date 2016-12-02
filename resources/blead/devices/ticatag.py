@@ -23,7 +23,7 @@ class Ticatag():
 		action['battery'] = battery
 		buttontrame = data[35:36]
 		if buttontrame == '1':
-			button = 'appui'
+			button = 'simple appui'
 		elif buttontrame == '2':
 			button = 'double appui'
 		elif buttontrame == '3':
