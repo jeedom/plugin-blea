@@ -115,12 +115,12 @@ class blea extends eqLogic {
 
 	public static function dependancy_info() {
 		$return = array();
-		$return['log'] = 'dotti_update';
+		$return['log'] = 'blea_update';
 		$return['progress_file'] = '/tmp/dependancy_blea_in_progress';
-		if (exec('which hcitool | wc -l') != 0) {
-			$return['state'] = 'ok';
-		} else {
+		if (exec('sudo pip list | grep -E "bluepy" | wc -l') < 1 || exec('which hcitool | wc -l') == 0) {
 			$return['state'] = 'nok';
+		} else {
+			$return['state'] = 'ok';
 		}
 		return $return;
 	}
