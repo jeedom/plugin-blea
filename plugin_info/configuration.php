@@ -27,11 +27,15 @@ if (!isConnect('admin')) {
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Supprimer automatiquement les périphériques exclus}}</label>
             <div class="col-lg-3">
-             <input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
-         </div>
-     </div>
-     <legend><i class="icon loisir-darth"></i> {{Démon local}}</legend>
-     <div class="form-group">
+               <input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
+           </div>
+       </div>
+   </fieldset>
+</form>
+<form class="form-horizontal">
+    <fieldset>
+    <legend><i class="icon loisir-darth"></i> {{Démon}}</legend>
+       <div class="form-group">
         <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
         <div class="col-sm-2">
             <select class="configKey form-control" data-l1key="port">
