@@ -1,0 +1,96 @@
+{
+    "smartplug": {
+        "name": "Smartplug",
+		"groupe" : "Boutons",
+        "commands": [
+			{
+                "name": "Present",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "present",
+                "configuration" : {
+                    "returnStateValue" : 0,
+                    "returnStateTime" : 1
+                }
+            },
+			{
+                "name": "Statut",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "status"
+            },
+            {
+                "name": "Consommation",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+				"template": {
+                    "mobile": "badge",
+					"dashboard" : "badge"
+                },
+                "unite": "",
+                "logicalId": "power"
+            },
+			{
+                "name": "On",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:smartplug,id:on,handle:0x002b,value:0f06030001000005ffff"
+            },
+            {
+                "name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:smartplug,id:off,handle:0x002b,value:0f06030000000004ffff"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:smartplug,id:refresh,handle:0x002b,value:0f050400000005ffff"
+            },
+            {
+                "name": "Rssi",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "dbm",
+                "logicalId": "rssi"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Awox",
+                "name": "Smartplug",
+				"doc": "",
+				"type": "Prises",
+				"battery_type": "",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Le relachement est envoyé même après un appui simple ou appui double",
+				"inclusion" : "Mode inclusion auto",
+				"imglink": "smartplug"
+            }
+        ]
+    }
+}
