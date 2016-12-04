@@ -38,6 +38,7 @@
                 "display": {
                     "generic_type": "GENERIC"
                 },
+		   "unite": "kg",
                 "isVisible": 1,
                 "isHistorized": 0,
                 "template": {
@@ -45,21 +46,6 @@
 					"dashboard" : "line"
 },
                 "logicalId": "value"
-            },
-            {
-                "name": "Unité",
-                "type": "info",
-                "subtype": "string",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-                "template": {
-                    "mobile": "line",
-					"dashboard" : "line"
-},
-                "logicalId": "unit"
             }
         ],
 		"compatibility": [
