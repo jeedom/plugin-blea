@@ -4,3 +4,4 @@ import myfox
 import nut
 import ticatag
 import gigaset
+import xiaomiscale
