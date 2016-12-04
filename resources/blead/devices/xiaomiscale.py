@@ -15,7 +15,7 @@ class XiaomiScale():
 	def parse(self,data):
 		action={}
 		action['present'] = 1
-		measured = int((data[4:6] + data[2:4]), 16) * 0.01 / 2
+		measured = int((data[4,5] + data[2,3]), 16) * 0.01 / 2
 		action['value'] = measured
 		return action
 
