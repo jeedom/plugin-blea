@@ -170,12 +170,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
             <input class="eqLogicAttr form-control" data-l1key="timeout" />
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">{{Commentaire}}</label>
-          <div class="col-sm-8">
-            <textarea class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="commentaire" ></textarea>
-          </div>
-        </div>
       </fieldset>
     </form>
   </div>
