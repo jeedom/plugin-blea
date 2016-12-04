@@ -9,7 +9,7 @@ class XiaomiScale():
 		self.name = 'xiaomiscale'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() == self.name:
+		if name == 'MI_SCALE':
 			return True
 			
 	def parse(self,data):
