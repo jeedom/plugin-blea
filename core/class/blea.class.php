@@ -309,6 +309,9 @@ class blea extends eqLogic {
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
 				'id' => $this->getLogicalId(),
+				'delay' => $this->getConfiguration('delay',0),
+				'needsrefresh' => $this->getConfiguration('needsrefresh',0),
+				'name' => $this->getConfiguration('refreshClass','0'),
 			);
 			$value = json_encode($value);
 			if (config::byKey('port', 'blea', 'none') != 'none') {

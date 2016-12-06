@@ -108,6 +108,7 @@ def listen(_device):
 				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
+					logging.error(str(globals.KNOWN_DEVICES))
 				scanner.start()
 				scanner.process(0.3)
 				scanner.stop()
@@ -115,6 +116,10 @@ def listen(_device):
 				continue
 			except Exception, e:
 				pass
+			try:
+				read_device()
+			except Exception, e:
+				logging.error("Exception on read device : %s" % str(e))
 			time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")
@@ -133,7 +138,7 @@ def read_socket():
 			if message['cmd'] == 'add':
 				logging.debug('Add device : '+str(message['device']))
 				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = {}
+					globals.KNOWN_DEVICES[message['device']['id']] = message['device']
 			elif message['cmd'] == 'remove':
 				logging.debug('Remove device : '+str(message['device']))
 				if 'id' in message['device']:
@@ -146,14 +151,6 @@ def read_socket():
 				logging.debug('Leave learn mode')
 				globals.LEARN_MODE = False
 				jeedom_com.send_change_immediate({'learn_mode' : 0});
-			elif message['cmd'] == 'excludein':
-				logging.debug('Enter exclude mode')
-				globals.EXCLUDE_MODE = True
-				jeedom_com.send_change_immediate({'exclude_mode' : 1});
-			elif message['cmd'] == 'excludeout':
-				logging.debug('Leave exclude mode')
-				globals.EXCLUDE_MODE = False
-				jeedom_com.send_change_immediate({'exclude_mode' : 0});
 			elif message['cmd'] == 'action':
 				logging.debug('Attempt an action on a device')
 				action_handler(message)
@@ -170,6 +167,33 @@ def action_handler(message):
 			action = device().action(message)
 			return
 	return
+
+def read_device():
+	now = datetime.datetime.utcnow()
+	result = {}
+	try:
+		for device in globals.KNOWN_DEVICES:
+			mac = globals.KNOWN_DEVICES[device]['id']
+			if not 'needsrefresh' in globals.KNOWN_DEVICES[device]:
+				continue
+			if globals.KNOWN_DEVICES[device]['needsrefresh'] <> 1:
+				continue
+			if mac in globals.LAST_TIME_READ and now < (globals.LAST_TIME_READ[mac]+datetime.timedelta(milliseconds=int(globals.KNOWN_DEVICES[device]['delay'])*1000)):
+				continue
+			else :
+				globals.LAST_TIME_READ[mac] = now
+				for compatible in globals.COMPATIBILITY:
+					if compatible().name.lower() == str(globals.KNOWN_DEVICES[device]['name']).lower():
+						result = compatible().read(mac)
+						break
+				if result :
+					if mac in globals.LAST_STATE and result == globals.LAST_STATE[mac]:
+						continue
+					else:
+						globals.LAST_STATE[mac] = result
+						jeedom_com.add_changes('devices::'+mac,result)
+	except Exception,e:
+		logging.error(str(e))
 
 def handler(signum=None, frame=None):
 	logging.debug("Signal %i caught, exiting..." % int(signum))
