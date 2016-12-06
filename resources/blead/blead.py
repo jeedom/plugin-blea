@@ -108,7 +108,6 @@ def listen(_device):
 				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
-					logging.error(str(globals.KNOWN_DEVICES))
 				scanner.start()
 				scanner.process(0.3)
 				scanner.stop()
