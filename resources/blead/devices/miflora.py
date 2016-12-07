@@ -27,9 +27,9 @@ class Miflora():
 				break
 			except Exception,e:
 				logging.debug(str(e))
-				if i >= 12 :
+				if i >= 40 :
 					return
-				time.sleep(0.05)
+				time.sleep(0.5)
 		return conn
 
 	def read(self,mac):
