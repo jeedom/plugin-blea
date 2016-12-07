@@ -34,6 +34,7 @@ class Miflora():
 		action={}
 		try:
 			conn = self.connect(mac)
+			logging.debug('Connected...')
 			batteryFirm = conn.readCharacteristic(56)
 			value = 'A01F'
 			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]

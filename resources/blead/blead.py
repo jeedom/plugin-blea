@@ -146,9 +146,22 @@ def read_socket():
 				logging.debug('Leave learn mode')
 				globals.LEARN_MODE = False
 				jeedom_com.send_change_immediate({'learn_mode' : 0});
-			elif message['cmd'] == 'action':
+			elif message['cmd'] == 'action' or message['cmd'] == 'refresh':
 				logging.debug('Attempt an action on a device')
 				action_handler(message)
+			elif message['cmd'] == 'logdebug':
+				logging.info('Passage du demon en mode debug force')
+				log = logging.getLogger()
+				for hdlr in log.handlers[:]:
+					log.removeHandler(hdlr)
+				jeedom_utils.set_log_level('debug')
+				logging.debug('<----- La preuve ;)')
+			elif message['cmd'] == 'lognormal':
+				logging.info('Passage du demon en mode de log initial')
+				log = logging.getLogger()
+				for hdlr in log.handlers[:]:
+					log.removeHandler(hdlr)
+				jeedom_utils.set_log_level(globals.LOG_LEVEL)
 	except Exception,e:
 		logging.error(str(e))
 
@@ -157,6 +170,14 @@ def action_handler(message):
 	if manuf in message['command']:
 		manuf = message['command']['manuf']
 	name = message['command']['name']
+	result = {}
+	if message['cmd'] == 'refresh':
+		for compatible in globals.COMPATIBILITY:
+			classname = message['command']['device']['name']
+			if compatible().name.lower() == classname.lower():
+				logging.debug('Attempt to refresh values')
+				result = compatible().read(message['device']['id'])
+				break
 	for device in globals.COMPATIBILITY:
 		if device().isvalid(name,manuf):
 			action = device().action(message)
@@ -245,7 +266,7 @@ _socket_port = int(_socket_port)
 _cycle = float(_cycle)
 
 jeedom_utils.set_log_level(_log_level)
-
+globals.LOG_LEVEL = _log_level
 logging.info('Start blead')
 logging.info('Log level : '+str(_log_level))
 logging.info('Socket port : '+str(_socket_port))

@@ -5,7 +5,8 @@
 		"configuration" : {
 			"needsrefresh" : 1,
 			"name" : "miflora",
-			"delay" : 300
+			"delay" : 300,
+			"hasSpecificModal" : 1
 		},
         "commands": [
 			{

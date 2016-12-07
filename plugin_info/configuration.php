@@ -30,6 +30,13 @@ if (!isConnect('admin')) {
                <input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
            </div>
        </div>
+	   <div class="form-group">
+	<label class="col-lg-4"></label>
+	<div class="col-lg-8">
+		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fa fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
+		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fa fa-paperclip"></i> {{Remettre niveau de log local}}</a>
+	</div>
+	</div>
    </fieldset>
 </form>
 <form class="form-horizontal">
@@ -56,3 +63,26 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
 </div>
 </fieldset>
 </form>
+<script>
+ $('.changeLogLive').on('click', function () {
+	 $.ajax({// fonction permettant de faire de l'ajax
+            type: "POST", // methode de transmission des données au fichier php
+            url: "plugins/blea/core/ajax/blea.ajax.php", // url du fichier php
+            data: {
+                action: "changeLogLive",
+				level : $(this).attr('data-log')
+            },
+            dataType: 'json',
+            error: function (request, status, error) {
+                handleAjaxError(request, status, error);
+            },
+            success: function (data) { // si l'appel a bien fonctionné
+                if (data.state != 'ok') {
+                    $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                    return;
+                }
+                $('#div_alert').showAlert({message: '{{Réussie}}', level: 'success'});
+            }
+        });
+});
+</script>

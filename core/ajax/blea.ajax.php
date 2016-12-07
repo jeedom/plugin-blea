@@ -67,6 +67,10 @@ try {
 		$blea_remote->remove();
 		ajax::success();
 	}
+	
+	if (init('action') == 'changeLogLive') {
+		ajax::success(blea::changeLogLive(init('level')));
+	}
 
 	throw new Exception('Aucune methode correspondante');
 	/*     * *********Catch exeption*************** */

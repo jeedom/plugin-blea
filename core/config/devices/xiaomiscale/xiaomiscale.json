@@ -2,6 +2,9 @@
     "xiaomiscale": {
         "name": "XiaomiScale",
         "groupe" : "Santé",
+		"configuration" : {
+			"hasspecificmodal" : 1
+		},
         "commands": [
 			{
                 "name": "Present",

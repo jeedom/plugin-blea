@@ -176,6 +176,15 @@ class blea extends eqLogic {
 			usleep(500);
 		}
 	}
+	
+	public static function changeLogLive($_level) {
+		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
+		$value = json_encode($value);
+		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
+		socket_write($socket, $value, strlen($value));
+		socket_close($socket);
+	}
 
 	public static function deamon_stop() {
 		$pid_file = '/tmp/blead.pid';
@@ -511,10 +520,22 @@ class bleaCmd extends cmd {
 				}
 			}
 		}
+		
+		$data['device'] = array(
+				'id' => $eqLogic->getLogicalId(),
+				'delay' => $eqLogic->getConfiguration('delay',0),
+				'needsrefresh' => $eqLogic->getConfiguration('needsrefresh',0),
+				'name' => $eqLogic->getConfiguration('refreshClass','0'),
+		);
 		if (count($data) == 0) {
 			return;
 		}
-		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
+		if ($this->getLogicalId() == 'refresh'){
+			$data['name'] = $eqLogic->getConfiguration('refreshClass','0');
+			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'refresh', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
+		} else {
+			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
+		}
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
