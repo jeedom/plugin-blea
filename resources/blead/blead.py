@@ -97,6 +97,7 @@ def listen(_device):
 	logging.info("Start listening...")
 	scanner = Scanner(int(_device[-1:])).withDelegate(ScanDelegate())
 	logging.info("Preparing Scanner...")
+	jeedom_com.send_change_immediate({'learn_mode' : 0});
 	lastClearTimestamp = int(time.time())
 	try:
 		while 1:
@@ -108,14 +109,13 @@ def listen(_device):
 				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
 					scanner.clear()
 					lastClearTimestamp = int(time.time())
-					logging.error(str(globals.KNOWN_DEVICES))
 				scanner.start()
 				scanner.process(0.3)
 				scanner.stop()
 			except queue.Empty:
 				continue
 			except Exception, e:
-				pass
+				logging.error("Exception on scanner : %s" % str(e))
 			try:
 				read_device()
 			except Exception, e:
