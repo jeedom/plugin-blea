@@ -25,9 +25,11 @@ class Miflora():
 			try:
 				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
-			except Exception as err:
-				if i >= 4 :
+			except Exception,e:
+				logging.debug(str(e))
+				if i >= 12 :
 					return
+				time.sleep(0.05)
 		return conn
 
 	def read(self,mac):
