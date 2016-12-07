@@ -62,11 +62,6 @@ class ScanDelegate(DefaultDelegate):
 				if device().isvalid(name,manuf):
 					findDevice=True
 					logging.debug('This is a ' + device().name + ' device')
-					if globals.EXCLUDE_MODE:
-						globals.EXCLUDE_MODE = False
-						logging.debug('It\'s a known packet and I am in exclude mode, i delete the device')
-						jeedom_com.send_change_immediate({'exclude_mode' : 0, 'deviceId' : mac });
-						return
 					action = device().parse(data)
 					action['id'] = mac.upper()
 					action['type'] = device().name
