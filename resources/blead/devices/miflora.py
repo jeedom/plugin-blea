@@ -1,4 +1,5 @@
 from bluepy.btle import Scanner, DefaultDelegate, Peripheral
+import bluepy.btle as btle
 import time
 import logging
 import globals
@@ -23,7 +24,7 @@ class Miflora():
 		while True:
 			i = i + 1
 			try:
-				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
+				conn = Peripheral(mac,addrType=btle.ADDR_TYPE_RANDOM,iface=globals.IFACE_DEVICE)
 				break
 			except Exception,e:
 				logging.debug(str(e))
