@@ -10,20 +10,116 @@
 		},
         "commands": [
 			{
-                "name": "Present",
+                "name": "Température",
                 "type": "info",
-                "subtype": "binary",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temperature",
+				"display": {
+					"icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "moisture",
+				"display": {
+					"icon": "<i class=\"fa fa-tint\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "lux",
+                "logicalId": "sunlight",
+				"display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Fertilisant",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "uS/cm",
+                "logicalId": "fertility",
+				"display": {
+					"icon": "<i class=\"fa fa-leaf\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Firmware",
+                "type": "info",
+                "subtype": "string",
                 "display": {
                     "generic_type": "GENERIC"
                 },
                 "isVisible": 0,
                 "isHistorized": 0,
                 "unite": "",
-                "logicalId": "present",
-                "configuration" : {
-                    "returnStateValue" : 0,
-                    "returnStateTime" : 1
-                }
+                "logicalId": "firmware"
             },
             {
                 "name": "Rssi",
@@ -36,20 +132,32 @@
                 "isHistorized": 0,
                 "unite": "dbm",
                 "logicalId": "rssi"
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
             }
         ],
 		"compatibility": [
             {
                 "manufacturer": "Xiaomi",
-                "name": "Scale",
+                "name": "Miflora",
 				"doc": "",
 				"type": "Scale",
 				"battery_type": "4x44",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Poids et unité",
+				"remark": "Plantes",
 				"inclusion" : "Mode inclusion",
-				"imglink": "xiaomiscale"
+				"imglink": "miflora"
             }
         ]
     }

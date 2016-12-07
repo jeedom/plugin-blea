@@ -26,10 +26,9 @@ class Miflora():
 				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
 			except Exception,e:
-				logging.debug(str(e))
-				if i >= 40 :
+				if i >= 4 :
 					return
-				time.sleep(0.5)
+				time.sleep(0.05)
 		return conn
 
 	def read(self,mac):
@@ -37,12 +36,20 @@ class Miflora():
 		try:
 			conn = self.connect(mac)
 			logging.debug('Connected...')
-			batteryFirm = conn.readCharacteristic(56)
+			batteryFirm = conn.readCharacteristic(0x0038)
 			value = 'A01F'
 			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-			conn.writeCharacteristic(51,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
-			datas = conn.readCharacteristic(53)
+			conn.writeCharacteristic(0x0033,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+			datas = conn.readCharacteristic(0x0035)
 			conn.disconnect()
+			battery, firmware = struct.unpack('<B6s',batteryFirm)
+			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
+			temperature = temperature /10
+			action['battery'] = battery
+			action['firmware'] = firmware
+			action['sunlight'] = sunlight
+			action['moisture'] = moisture
+			action['fertility'] = fertility
 		except Exception,e:
 			logging.error(str(e))
 		return action
