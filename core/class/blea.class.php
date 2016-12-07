@@ -320,7 +320,7 @@ class blea extends eqLogic {
 				'id' => $this->getLogicalId(),
 				'delay' => $this->getConfiguration('delay',0),
 				'needsrefresh' => $this->getConfiguration('needsrefresh',0),
-				'name' => $this->getConfiguration('refreshClass','0'),
+				'name' => $this->getConfiguration('name','0'),
 			);
 			$value = json_encode($value);
 			if (config::byKey('port', 'blea', 'none') != 'none') {
@@ -525,13 +525,13 @@ class bleaCmd extends cmd {
 				'id' => $eqLogic->getLogicalId(),
 				'delay' => $eqLogic->getConfiguration('delay',0),
 				'needsrefresh' => $eqLogic->getConfiguration('needsrefresh',0),
-				'name' => $eqLogic->getConfiguration('refreshClass','0'),
+				'name' => $eqLogic->getConfiguration('name','0'),
 		);
 		if (count($data) == 0) {
 			return;
 		}
 		if ($this->getLogicalId() == 'refresh'){
-			$data['name'] = $eqLogic->getConfiguration('refreshClass','0');
+			$data['name'] = $eqLogic->getConfiguration('name','0');
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'refresh', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		} else {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
