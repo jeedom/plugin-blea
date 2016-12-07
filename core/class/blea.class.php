@@ -360,7 +360,9 @@ class blea extends eqLogic {
 			'page' => 'blea',
 			'message' => __('Périphérique reconnu, intégration en cours', __FILE__),
 		));
-
+		$this->setConfiguration('needsrefresh', 0);
+		$this->setConfiguration('name', '');
+		$this->setConfiguration('hasspecificmodal', '');
 		if (isset($device['configuration'])) {
 			foreach ($device['configuration'] as $key => $value) {
 				$this->setConfiguration($key, $value);
