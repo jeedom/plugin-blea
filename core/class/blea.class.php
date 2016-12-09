@@ -93,6 +93,9 @@ class blea extends eqLogic {
 		$remoteObject->execCmd([$cmd]);
 	}
 	
+	public static function getLogandStatut($_remoteId) {
+	}
+	
 	public static function stopremote($_remoteId) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		log::add('blea','info','Arret du démon distant ');
