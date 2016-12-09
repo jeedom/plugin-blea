@@ -26,7 +26,7 @@
 });
 
 $('#bt_remoteblea').on('click', function () {
-    $('#md_modal').dialog({title: "{{Gestion des antennes bluetooth (pour plugin utilisant le bluetooth)}}"});
+    $('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 });
 

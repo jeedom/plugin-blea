@@ -63,6 +63,22 @@ class blea extends eqLogic {
 		));
 		return $eqLogic;
 	}
+	
+	public static function sendRemoteFiles($_remoteId) {
+		$remoteObject = blea_remote::byId($_remoteId);
+		$user=$remoteObject->getConfiguration('remoteUser');
+		$script_path = dirname(__FILE__) . '/../../resources';
+		$compress_path = dirname(__FILE__) . '/../../resources/folder-blea.tar.gz';
+		log::add('blea','info','Compression du dossier distant');
+		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
+		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
+		$remoteObject->sendFiles('/tmp/folder-blea.tar.gz','folder-blea.tar.gz');
+		log::add('blea','info','Décompression du dossier distant');
+		$remoteObject->execCmd('tar -zxvf /home/'.$user.'/folder-blea.tar.gz');
+		log::add('blea','info','Installation des dépendances');
+		$result = $remoteObject->execCmd('/home/'.$user.'/install.sh');
+		log::add('blea','info',$result);
+	}
 
 	public static function devicesParameters($_device = '') {
 		$return = array();

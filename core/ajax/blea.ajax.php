@@ -68,6 +68,10 @@ try {
 		ajax::success();
 	}
 	
+	if (init('action') == 'sendRemoteFiles') {
+        ajax::success(blea::sendRemoteFiles(init('remoteId')));
+     }
+	
 	if (init('action') == 'changeLogLive') {
 		ajax::success(blea::changeLogLive(init('level')));
 	}

@@ -58,7 +58,7 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:ticatag,handle:0x0012,value:01"
+                "logicalId": "name:ticatag,handle:0x12,value:01"
             },
             {
                 "name": "Rssi",

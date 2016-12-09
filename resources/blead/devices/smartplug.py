@@ -24,9 +24,10 @@ class Smartplug():
 		while True:
 			i = i + 1
 			try:
-				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
+				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
-			except Exception as err:
+			except Exception, e:
+				logging.error(str(e))
 				if i >= 4 :
 					return
 		return conn
@@ -39,10 +40,13 @@ class Smartplug():
 		arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
 		conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
 		conn.disconnect()
+		logging.debug('Value ' + value + ' written in handle ' +handle)
+		logging.debug('Refreshing ... ')
 		result = self.read(mac)
 		return result
 	
 	def read(self,mac):
+		global result
 		result={}
 		try:
 			conn = self.connect(mac)
@@ -54,25 +58,36 @@ class Smartplug():
 			delegate = NotificationDelegate()
 			conn.setDelegate(delegate)
 			conn.writeCharacteristic(0x2b,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
-			state,power = datas.conn.wait_notif(0.5)
-			result['power'] = power
-			result['status'] = state
-			result['id'] = mac
+			if conn.waitForNotifications(0.5):
+				if result:
+					result['id'] = mac
 			conn.disconnect()
 			logging.debug(str(result))
 			return result
 		except Exception,e:
+			try:
+				conn.disconnect()
+			except Exception,e:
+				pass
 			logging.error(str(e))
 		return result
 		
-	class NotificationDelegate(btle.DefaultDelegate):
-		def __init__(self):
-			btle.DefaultDelegate.__init__(self)
+class NotificationDelegate(btle.DefaultDelegate):
+	def __init__(self):
+		btle.DefaultDelegate.__init__(self)
 
-		def handleNotification(self, cHandle, data):
-			if bytes_data[0:3] == bytearray([0x0f, 0x0f, 0x04]):
-				state = bytes_data[4] == 1
-				power = int(binascii.hexlify(bytes_data[6:10]), 16) / 1000
-				return state,power
+	def handleNotification(self, cHandle, data):
+		state = False
+		global result
+		result  = {}
+		bytes_data = bytearray(data)
+		if bytes_data[0:3] == bytearray([0x0f, 0x0f, 0x04]):
+			state = bytes_data[4] == 1
+			power = int(binascii.hexlify(bytes_data[6:10]), 16) / 1000
+			result['power'] = power
+			if state:
+				result['status'] = 1
+			else:
+				result['status'] = 0
 
 globals.COMPATIBILITY.append(Smartplug)

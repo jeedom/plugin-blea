@@ -38,14 +38,14 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:smartplug,handle:0x002b,value:0f06030001000005ffff"
+                "logicalId": "name:smp-b16-fr,handle:0x2b,value:0f06030001000005ffff"
             },
             {
                 "name": "Off",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:smartplug,handle:0x002b,value:0f06030000000004ffff"
+                "logicalId": "name:smp-b16-fr,handle:0x2b,value:0f06030000000004ffff"
             },
             {
                 "name": "Rafraichir",

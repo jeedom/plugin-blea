@@ -23,7 +23,6 @@ import signal
 import json
 import traceback
 from bluepy.btle import Scanner, DefaultDelegate
-import devices
 import globals
 
 try:
@@ -184,9 +183,17 @@ def action_handler(message):
 			else:
 				globals.LAST_STATE[message['device']['id']] = result
 				jeedom_com.add_changes('devices::'+message['device']['id'],result)
+				return
 	for device in globals.COMPATIBILITY:
 		if device().isvalid(name,manuf):
 			result = device().action(message)
+			if result :
+				if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
+					return
+				else:
+					globals.LAST_STATE[message['device']['id']] = result
+					jeedom_com.add_changes('devices::'+message['device']['id'],result)
+					return
 			return
 	return
 
@@ -277,7 +284,7 @@ logging.info('PID file : '+str(_pidfile))
 logging.info('Apikey : '+str(_apikey))
 logging.info('Callback : '+str(_callback))
 logging.info('Cycle : '+str(_cycle))
-
+import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
 globals.IFACE_DEVICE = int(_device[-1:])
