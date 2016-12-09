@@ -294,11 +294,11 @@ class blea extends eqLogic {
 				);
 			}
 		}
-		$json = self::devicesParameters($_conf);
-		if (isset($json['parameters'])) {
-			$param = true;
+		$needsrefresh = false;
+		if ($this->getConfiguration('needsrefresh',0) != 0) {
+			$needsrefresh = true;
 		}
-		return [$modelList, $param];
+		return [$modelList, $needsrefresh];
 	}
 
 	public function postSave() {

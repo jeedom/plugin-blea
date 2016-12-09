@@ -66,9 +66,9 @@ function getModelListParam(_conf,_id) {
             }
         }
 		if (data.result[1] == true){
-			$(".paramDevice").show();
+			$(".refreshdelay").show();
 		} else {
-			$(".paramDevice").hide();
+			$(".refreshdelay").hide();
 		}
         $(".modelList").show();
         $(".listModel").html(options);

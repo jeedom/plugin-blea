@@ -149,6 +149,15 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 
            </div>
          </div>
+		 <div class="form-group refreshdelay" style="display:none">
+				<label class="col-sm-3 control-label">{{Refresh des infos (en s)}}</label>
+				<div class="col-sm-3">
+				<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
+				</div>
+		</div>
+		 <div class="form-group refreshdelay" style="display:none">
+				<div class="alert alert-info"> {{Inutile de mettre des valeurs trop faible, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}</div>
+         </div>
          <div class="form-group expertModeVisible">
           <label class="col-sm-3 control-label">{{Délai maximum autorisé entre 2 messages (min)}}</label>
           <div class="col-sm-4">

@@ -5,8 +5,8 @@
 		"configuration" : {
 			"needsrefresh" : 1,
 			"name" : "miflora",
-			"delay" : 300,
-			"hasSpecificModal" : 1
+			"battery_type" : "1x3V CR2032",
+			"delay" : 300
 		},
         "commands": [
 			{
@@ -152,7 +152,7 @@
                 "name": "Miflora",
 				"doc": "",
 				"type": "Scale",
-				"battery_type": "4x44",
+				"battery_type": "1x3V CR2032",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Plantes",

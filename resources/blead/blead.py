@@ -178,9 +178,15 @@ def action_handler(message):
 				logging.debug('Attempt to refresh values')
 				result = compatible().read(message['device']['id'])
 				break
+		if result :
+			if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
+				return
+			else:
+				globals.LAST_STATE[message['device']['id']] = result
+				jeedom_com.add_changes('devices::'+message['device']['id'],result)
 	for device in globals.COMPATIBILITY:
 		if device().isvalid(name,manuf):
-			action = device().action(message)
+			result = device().action(message)
 			return
 	return
 
@@ -219,10 +225,6 @@ def shutdown():
 	logging.debug("Shutdown")
 	logging.debug("Removing PID file " + str(_pidfile))
 	try:
-		toggle_dongle()
-	except:
-		pass
-	try:
 		os.remove(_pidfile)
 	except:
 		pass
@@ -230,7 +232,6 @@ def shutdown():
 		jeedom_socket.close()
 	except:
 		pass
-	os.system("sudo pkill -f 'hcidump -R'")
 	logging.debug("Exit 0")
 	sys.stdout.flush()
 	os._exit(0)
@@ -278,7 +279,7 @@ logging.info('Callback : '+str(_callback))
 logging.info('Cycle : '+str(_cycle))
 
 signal.signal(signal.SIGINT, handler)
-signal.signal(signal.SIGTERM, handler)	
+signal.signal(signal.SIGTERM, handler)
 globals.IFACE_DEVICE = int(_device[-1:])
 try:
 	jeedom_utils.write_pid(str(_pidfile))

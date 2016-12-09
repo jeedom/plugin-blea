@@ -1,4 +1,4 @@
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral
+from bluepy import btle
 import time
 import logging
 import globals
@@ -23,35 +23,39 @@ class Miflora():
 		while True:
 			i = i + 1
 			try:
-				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
+				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
 			except Exception,e:
 				if i >= 4 :
 					return
-				time.sleep(0.05)
 		return conn
 
 	def read(self,mac):
-		action={}
+		result={}
 		try:
 			conn = self.connect(mac)
 			logging.debug('Connected...')
-			batteryFirm = conn.readCharacteristic(0x0038)
+			batteryFirm = conn.readCharacteristic(0x38)
+			logging.debug(str(batteryFirm))
 			value = 'A01F'
 			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-			conn.writeCharacteristic(0x0033,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
-			datas = conn.readCharacteristic(0x0035)
+			conn.writeCharacteristic(0x33,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+			datas = conn.readCharacteristic(0x35)
 			conn.disconnect()
 			battery, firmware = struct.unpack('<B6s',batteryFirm)
 			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
-			temperature = temperature /10
-			action['battery'] = battery
-			action['firmware'] = firmware
-			action['sunlight'] = sunlight
-			action['moisture'] = moisture
-			action['fertility'] = fertility
+			temperature = temperature/10
+			result['battery'] = battery
+			result['firmware'] = firmware.replace('\x10','')
+			result['sunlight'] = sunlight
+			result['moisture'] = moisture
+			result['fertility'] = fertility
+			result['temperature'] = temperature
+			result['id'] = mac
+			logging.debug(str(result))
+			return result
 		except Exception,e:
 			logging.error(str(e))
-		return action
+		return result
 
 globals.COMPATIBILITY.append(Miflora)
