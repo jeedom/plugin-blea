@@ -94,6 +94,7 @@ class blea extends eqLogic {
 	}
 	
 	public static function getLogandStatut($_remoteId) {
+		
 	}
 	
 	public static function stopremote($_remoteId) {
