@@ -1,4 +1,4 @@
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral
+from bluepy import btle
 import time
 import logging
 import globals
@@ -42,7 +42,7 @@ class Ticatag():
 		while True:
 			i = i + 1
 			try:
-				conn = Peripheral(mac,iface=globals.IFACE_DEVICE)
+				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
 			except Exception as err:
 				if i >= 4 :

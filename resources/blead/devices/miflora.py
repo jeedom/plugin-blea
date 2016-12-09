@@ -36,7 +36,6 @@ class Miflora():
 			conn = self.connect(mac)
 			logging.debug('Connected...')
 			batteryFirm = conn.readCharacteristic(0x38)
-			logging.debug(str(batteryFirm))
 			value = 'A01F'
 			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
 			conn.writeCharacteristic(0x33,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
@@ -44,7 +43,7 @@ class Miflora():
 			conn.disconnect()
 			battery, firmware = struct.unpack('<B6s',batteryFirm)
 			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
-			temperature = temperature/10
+			temperature = float(temperature)/10
 			result['battery'] = battery
 			result['firmware'] = firmware.replace('\x10','')
 			result['sunlight'] = sunlight

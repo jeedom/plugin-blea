@@ -1,24 +1,13 @@
 {
     "smartplug": {
         "name": "Smartplug",
-		"groupe" : "Boutons",
+		"groupe" : "Prises",
+		"configuration" : {
+			"needsrefresh" : 1,
+			"name" : "smartplug",
+			"delay" : 120
+		},
         "commands": [
-			{
-                "name": "Present",
-                "type": "info",
-                "subtype": "binary",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "unite": "",
-                "logicalId": "present",
-                "configuration" : {
-                    "returnStateValue" : 0,
-                    "returnStateTime" : 1
-                }
-            },
 			{
                 "name": "Statut",
                 "type": "info",
@@ -49,21 +38,21 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:smartplug,id:on,handle:0x002b,value:0f06030001000005ffff"
+                "logicalId": "name:smartplug,handle:0x002b,value:0f06030001000005ffff"
             },
             {
                 "name": "Off",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:smartplug,id:off,handle:0x002b,value:0f06030000000004ffff"
+                "logicalId": "name:smartplug,handle:0x002b,value:0f06030000000004ffff"
             },
             {
                 "name": "Rafraichir",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:smartplug,id:refresh,handle:0x002b,value:0f050400000005ffff"
+                "logicalId": "refresh"
             },
             {
                 "name": "Rssi",

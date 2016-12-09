@@ -6,3 +6,4 @@ import ticatag
 import gigaset
 import xiaomiscale
 import miflora
+import smartplug

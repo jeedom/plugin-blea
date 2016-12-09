@@ -152,7 +152,7 @@
                 "name": "Miflora",
 				"doc": "",
 				"type": "Scale",
-				"battery_type": "1x3V CR2032",
+				"battery_type": "4x44",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Plantes",
