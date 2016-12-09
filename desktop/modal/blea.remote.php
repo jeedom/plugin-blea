@@ -93,6 +93,22 @@ foreach ($remotes as $remote) {
 						</div>
 						</div>';
 						}
+						if (method_exists( $id ,'launchremote')){
+							echo '<div class="form-group">
+						<label class="col-sm-3 control-label">{{Lancement du démon}}</label>
+						<div class="col-sm-3">
+							<a class="btn btn-danger bleaRemoteAction" data-action="launchremote"><i class="fa fa-play"></i> {{Lancer}}</a>
+						</div>
+						</div>';
+						}
+						if (method_exists( $id ,'stopremote')){
+							echo '<div class="form-group">
+						<label class="col-sm-3 control-label">{{Arret du démon}}</label>
+						<div class="col-sm-3">
+							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
+						</div>
+						</div>';
+						}
 						?>
 						</fieldset>
 				</form>
@@ -167,6 +183,52 @@ foreach ($remotes as $remote) {
 			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
 			data: {
 				action: "sendRemoteFiles",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=launchremote]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "launchremote",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=stopremote]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "stopremote",
 				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
 			},
 			dataType: 'json',

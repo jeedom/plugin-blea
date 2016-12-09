@@ -67,17 +67,37 @@ class blea extends eqLogic {
 	public static function sendRemoteFiles($_remoteId) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$user=$remoteObject->getConfiguration('remoteUser');
-		$script_path = dirname(__FILE__) . '/../../resources';
-		$compress_path = dirname(__FILE__) . '/../../resources/folder-blea.tar.gz';
-		log::add('blea','info','Compression du dossier distant');
+		$script_path = dirname(__FILE__) . '/../../resources/';
+		log::add('blea','info','Compression du dossier local');
 		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
 		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
 		$remoteObject->sendFiles('/tmp/folder-blea.tar.gz','folder-blea.tar.gz');
 		log::add('blea','info','Décompression du dossier distant');
-		$remoteObject->execCmd('tar -zxvf /home/'.$user.'/folder-blea.tar.gz');
-		log::add('blea','info','Installation des dépendances');
-		$result = $remoteObject->execCmd('/home/'.$user.'/install.sh');
-		log::add('blea','info',$result);
+		$remoteObject->execCmd(['mkdir /home','mkdir /home/'.$user,'rm -R /home/'.$user.'/blead','mkdir /home/'.$user.'/blead','tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','./home/'.$user.'/blead/resources/install.sh','rm /home/'.$user.'/folder-blea.tar.gz']);
+		log::add('blea','info','Suppression du zip local');
+		exec('rm /tmp/folder-blea.tar.gz');
+	}
+	
+	public static function launchremote($_remoteId) {
+		$remoteObject = blea_remote::byId($_remoteId);
+		$user=$remoteObject->getConfiguration('remoteUser');
+		$device=$remoteObject->getConfiguration('remoteDevice');
+		$script_path = '/home/'.$user.'/blead/resources/blead';
+		$cmd = '/usr/bin/python ' . $script_path . '/blead.py';
+		$cmd .= ' --loglevel=' . log::convertLogLevel(log::getLogLevel('blea'));
+		$cmd .= ' --device=' . $device;
+		$cmd .= ' --socketport=' . config::byKey('socketport', 'blea');
+		$cmd .= ' --sockethost=127.0.0.1';
+		$cmd .= ' --callback=' . network::getNetworkAccess('internal') . '/plugins/blea/core/php/jeeBlea.php';
+		$cmd .= ' --apikey=' . jeedom::getApiKey('blea');
+		log::add('blea','info','Lancement du démon distant ' . $cmd);
+		$remoteObject->execCmd([$cmd]);
+	}
+	
+	public static function stopremote($_remoteId) {
+		$remoteObject = blea_remote::byId($_remoteId);
+		log::add('blea','info','Arret du démon distant ');
+		$remoteObject->execCmd(['kill -9 `cat /tmp/blead.pid`']);
 	}
 
 	public static function devicesParameters($_device = '') {
@@ -608,12 +628,11 @@ class blea_remote {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
 				log::add('blea', 'error', 'Authentification SSH KO');
 			} else {
-				log::add('blea', 'debug', 'Commande par SSH (' . $_cmd . ') sur ' . $ip);
-				$cmd = "echo '" . $pass . "' | sudo -S " . $_cmd;
-				$result = ssh2_exec($connection, $_cmd);
-				stream_set_blocking($result, true);
-				$result = stream_get_contents($result);
-
+				foreach ($_cmd as $cmd){
+					log::add('blea', 'info', 'Commande par SSH (' . $cmd . ') sur ' . $ip);
+					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
+					$result = ssh2_exec($connection, $execmd);
+				}
 				$closesession = ssh2_exec($connection, 'exit');
 				stream_set_blocking($closesession, true);
 				stream_get_contents($closesession);
@@ -632,7 +651,7 @@ class blea_remote {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
 				log::add('blea', 'error', 'Authentification SSH KO');
 			} else {
-				log::add('blea', 'debug', 'Envoie de fichier sur ' . $ip);
+				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
 				$result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
 				$closesession = ssh2_exec($connection, 'exit');
 				stream_set_blocking($closesession, true);
