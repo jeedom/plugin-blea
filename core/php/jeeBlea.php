@@ -110,6 +110,20 @@ if (isset($result['devices'])) {
 				$cmdremote->save();
 			}
 			$cmdremote->event($datas['rssi']);
+			$cmdpresent = $blea->getCmd(null, 'present');
+			if (!is_object($cmdpresent)) {
+				$cmdpresent = new bleaCmd();
+				$cmdpresent->setLogicalId('present');
+				$cmdpresent->setIsVisible(0);
+				$cmdpresent->setName(__('Present', __FILE__));
+				$cmdpresent->setType('info');
+				$cmdpresent->setSubType('binary');
+				$cmdpresent->setConfiguration('returnStateValue',0);
+				$cmdpresent->setConfiguration('returnStateTime',1);
+				$cmdpresent->setEqLogic_id($blea->getId());
+				$cmdpresent->save();
+			}
+			$cmdpresent->event(1);
 		}
 		$remotelist =['rssilocal'];
 		$remotes = blea_remote::all();
@@ -120,7 +134,7 @@ if (isset($result['devices'])) {
 		$cmdrssitoremove=[];
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
-			if ($logicalId == '') {
+			if ($logicalId == '' || $logicalId == 'present') {
 				continue;
 			}
 			if (substr($logicalId,0,4) == 'rssi'){
