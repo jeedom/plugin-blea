@@ -4,6 +4,7 @@ COMPATIBILITY = []
 LAST_STATE={}
 LAST_TIME_READ = {}
 IFACE_DEVICE = 0
+SCAN_ERRORS = 0
 SCANNER = ''
 PENDING_ACTION = False
 log_level = "error"

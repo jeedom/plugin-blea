@@ -112,11 +112,23 @@ def listen():
 				else:
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
+				if globals.SCAN_ERRORS > 0:
+					logging.info("Attempt to recover successful, reseting counter")
+					globals.SCAN_ERRORS = 0
 			except queue.Empty:
 				continue
 			except Exception, e:
 				if not globals.PENDING_ACTION: 
-					logging.error("Exception on scanner : %s" % str(e))
+					if globals.SCAN_ERRORS < 5:
+						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
+						logging.error("Exception on scanner (trying to resolve by myself attempt " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
+						os.system('hciconfig ' + globals.device + ' down')
+						os.system('hciconfig ' + globals.device + ' up')
+						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
+					else:
+						logging.error("Exception on scanner (didn't resolve there is an issue with bluetooth) : %s" % str(e))
+						logging.info("Shutting down due to errors")
+						shutdown()
 				time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")
