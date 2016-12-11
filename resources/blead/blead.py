@@ -100,6 +100,7 @@ def listen():
 	logging.debug('Read Socket Thread Launched')
 	thread.start_new_thread( read_device, ('device',))
 	logging.debug('Read Device Thread Launched')
+	jeedom_com.send_change_immediate({'started' : 1,'source' : globals.daemonname});
 	try:
 		while 1:
 			try:
@@ -107,7 +108,10 @@ def listen():
 					globals.SCANNER.clear()
 					lastClearTimestamp = int(time.time())
 				globals.SCANNER.start()
-				globals.SCANNER.process(0.3)
+				if globals.LEARN_MODE == True:
+					globals.SCANNER.process(3)
+				else:
+					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 			except queue.Empty:
 				continue

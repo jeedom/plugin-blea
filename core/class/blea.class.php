@@ -84,6 +84,8 @@ class blea extends eqLogic {
 		log::add('blea','info','Suppression du zip local');
 		exec('rm /tmp/folder-blea.tar.gz');
 		blea::launchremote($_remoteId);
+		log::add('blea','info','Finie');
+		return True;
 	}
 	
 	public static function getRemoteLog($_remoteId) {
@@ -95,6 +97,7 @@ class blea extends eqLogic {
 		log::add('blea','info','Récupération de la log distante');
 		$remoteObject->getFiles($local,'/tmp/blea');
 		$remoteObject->execCmd(['cat /dev/null > /tmp/blea']);
+		return True;
 	}
 	
 	public static function dependancyRemote($_remoteId) {
@@ -104,6 +107,7 @@ class blea extends eqLogic {
 		log::add('blea','info','Installation des dépendances');
 		$remoteObject->execCmd(['/home/'.$user.'/blead/resources/install.sh']);
 		blea::launchremote($_remoteId);
+		return True;
 	}
 	
 	public static function launchremote($_remoteId) {
@@ -122,12 +126,10 @@ class blea extends eqLogic {
 		$cmd .= ' --daemonname "' . $remoteObject->getRemoteName() . '"';
 		$cmd .= ' >> ' . '/tmp/blea' . ' 2>&1 &';
 		log::add('blea','info','Lancement du démon distant ' . $cmd);
-		$result = $remoteObject->execCmd([$cmd]);
-		log::add('blea','info',$result);
-		usleep(4000000);
-		self::sendIdToDeamon();
+		$remoteObject->execCmd([$cmd]);
 		config::save('exclude_mode', 0, 'blea');
 		config::save('include_mode', 0, 'blea');
+		return True;
 	}
 	
 	public static function remotelearn($_remoteId,$_state) {
@@ -143,6 +145,7 @@ class blea extends eqLogic {
 		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
 		socket_write($socket, $value, strlen($value));
 		socket_close($socket);
+		return True;
 	}
 	
 	public static function stopremote($_remoteId) {
@@ -155,6 +158,7 @@ class blea extends eqLogic {
 		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
 		socket_write($socket, $value, strlen($value));
 		socket_close($socket);
+		return True;
 	}
 
 	public static function devicesParameters($_device = '') {
@@ -257,8 +261,6 @@ class blea extends eqLogic {
 			return false;
 		}
 		message::removeAll('blea', 'unableStartDeamon');
-		sleep(2);
-		self::sendIdToDeamon();
 		config::save('exclude_mode', 0, 'blea');
 		config::save('include_mode', 0, 'blea');
 		return true;

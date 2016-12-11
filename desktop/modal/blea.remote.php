@@ -83,7 +83,7 @@ foreach ($remotes as $remote) {
 						<div class="form-group expertModeVisible">
 							<label class="col-sm-2 control-label">{{Communication}}</label>
 							<div class="col-sm-3">
-								<span class="bleaRemoteAttr label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
+								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
 							</div>
 						</div>
 						<?php
@@ -162,6 +162,32 @@ foreach ($remotes as $remote) {
 				$('.bleaRemote').show();
 				$('.bleaRemoteAttr').value('');
 				$('.bleaRemote').setValues(data.result,'.bleaRemoteAttr');
+			}
+		});
+	}
+	
+	function displaybleaRemoteComm(_id){
+		$('.li_bleaRemote').removeClass('active');
+		$('.li_bleaRemote[data-bleaRemote_id='+_id+']').addClass('active');
+		$.ajax({
+			type: "POST",
+			url: "plugins/blea/core/ajax/blea.ajax.php",
+			data: {
+				action: "get_bleaRemote",
+				id: _id,
+			},
+			dataType: 'json',
+			async: true,
+			global: false,
+			error: function (request, status, error) {
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					return;
+				}
+				$('.bleaRemote').show();
+				$('.bleaRemoteAttrcomm').value('');
+				$('.bleaRemote').setValues(data.result,'.bleaRemoteAttrcomm');
 			}
 		});
 	}
@@ -360,6 +386,6 @@ foreach ($remotes as $remote) {
 		});
 	});
 window.setInterval(function () {
-    displaybleaRemote($('.li_bleaRemote.active').attr('data-bleaRemote_id'));
+    displaybleaRemoteComm($('.li_bleaRemote.active').attr('data-bleaRemote_id'));
 }, 5000);
 </script>

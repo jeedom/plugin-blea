@@ -50,29 +50,10 @@ if (isset($result['learn_mode'])) {
 	die();
 }
 
-if (isset($result['exclude_mode'])) {
-	if ($result['exclude_mode'] == 1) {
-		config::save('exclude_mode', 1, 'blea');
-		event::add('blea::includeState', array(
-			'mode' => 'exclude',
-			'state' => 1)
-		);
-	} else {
-		config::save('exclude_mode', 0, 'blea');
-		event::add('blea::includeState', array(
-			'mode' => 'exclude',
-			'state' => 0)
-		);
-		sleep(1);
-		if (isset($result['deviceId'])) {
-			event::add('jeedom::alert', array(
-				'level' => 'warning',
-				'page' => 'blea',
-				'message' => __('Un device Blea est en cours d\'exclusion. Logical ID : ', __FILE__) . $result['deviceId'],
-			));
-			sleep(2);
-			blea::excludedDevice($result['deviceId']);
-		}
+if (isset($result['started'])) {
+	if ($result['started'] == 1) {
+		log::add('blea','info','Antenna ' . $name . ' alive sending known devices');
+		blea::sendIdToDeamon();
 	}
 	die();
 }
