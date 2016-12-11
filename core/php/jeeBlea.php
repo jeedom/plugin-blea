@@ -31,7 +31,7 @@ if (!is_array($result)) {
 	die();
 }
 if (isset($result['source'])){
-	log::add('blea','info','This is a message from antenna ' . $result['source']);
+	log::add('blea','debug','This is a message from antenna ' . $result['source']);
 }
 if (isset($result['learn_mode'])) {
 	if ($result['learn_mode'] == 1) {

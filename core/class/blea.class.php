@@ -66,7 +66,7 @@ class blea extends eqLogic {
 	public static function cron15() {
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
-			$remote->getRemoteLog($remote->getId());
+			self::getRemoteLog($remote->getId());
 		}
 	}
 	
@@ -89,8 +89,8 @@ class blea extends eqLogic {
 	public static function getRemoteLog($_remoteId) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$name = $remoteObject->getRemoteName();
-		$local = dirname(__FILE__) . '/../../../../log/blea_'.$name;
-		log::add('blea','info','Suppression de la log');
+		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name);
+		log::add('blea','info','Suppression de la log ' . $local);
 		exec('rm '. $local);
 		log::add('blea','info','Récupération de la log distante');
 		$remoteObject->getFiles($local,'/tmp/blea');
@@ -154,26 +154,6 @@ class blea extends eqLogic {
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
 		socket_write($socket, $value, strlen($value));
-		socket_close($socket);
-	}
-	
-	public static function aliveremote($_remoteId) {
-		log::add('blea','info','checking is alive');
-		$remoteObject = blea_remote::byId($_remoteId);
-		$ip = $remoteObject->getConfiguration('remoteIp');
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-		
-		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-		$result = socket_read($socket,2000);
-		if ($result === "") {
-			
-			log::add('blea','info','dead');
-			return False;
-		}
-		else {
-		log::add('blea','info','alive');
-			return True;
-		}
 		socket_close($socket);
 	}
 
@@ -805,7 +785,7 @@ class blea_remote {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
 				log::add('blea', 'error', 'Authentification SSH KO');
 			} else {
-				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
+				log::add('blea', 'info', 'Récupération de fichier depuis ' . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
 				$closesession = ssh2_exec($connection, 'exit');
 				stream_set_blocking($closesession, true);
