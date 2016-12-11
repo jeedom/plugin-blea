@@ -3,6 +3,7 @@ import time
 import logging
 import globals
 import struct
+from multiconnect import Connector
 
 class Miflora():
 	def __init__(self):
@@ -17,28 +18,15 @@ class Miflora():
 		action['present'] = 1
 		return action
 
-	def connect(self,mac):
-		logging.debug('Connecting : '+str(mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
-		i=0
-		while True:
-			i = i + 1
-			try:
-				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
-				break
-			except Exception,e:
-				if i >= 4 :
-					return
-		return conn
-
 	def read(self,mac):
 		result={}
 		try:
-			conn = self.connect(mac)
+			conn = Connector(mac)
+			conn.connect()
 			logging.debug('Connected...')
 			batteryFirm = conn.readCharacteristic(0x38)
 			value = 'A01F'
-			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-			conn.writeCharacteristic(0x33,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+			conn.writeCharacteristic(0x33,value)
 			datas = conn.readCharacteristic(0x35)
 			conn.disconnect()
 			battery, firmware = struct.unpack('<B6s',batteryFirm)

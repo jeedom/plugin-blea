@@ -2,7 +2,7 @@ from bluepy import btle
 import time
 import logging
 import globals
-import struct
+from multiconnect import Connector
 
 class Ticatag():
 	def __init__(self):
@@ -36,26 +36,13 @@ class Ticatag():
 		action['buttonid'] = buttontrame
 		return action
 	
-	def connect(self,mac):
-		logging.debug('Connecting : '+str(mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
-		i=0
-		while True:
-			i = i + 1
-			try:
-				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
-				break
-			except Exception as err:
-				if i >= 4 :
-					return
-		return conn
-	
 	def action(self,message):
 		mac = message['device']['id']
 		handle = message['command']['handle']
 		value = message['command']['value']
-		conn = self.connect(mac)
-		arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-		conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+		conn = Connector(mac)
+		conn.connect()
+		conn.writeCharacteristic(handle,value)
 		conn.disconnect()
 		return
 

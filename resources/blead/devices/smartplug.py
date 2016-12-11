@@ -3,6 +3,7 @@ import time
 import logging
 import globals
 import binascii
+from multiconnect import Connector
 import struct
 
 class Smartplug():
@@ -36,9 +37,9 @@ class Smartplug():
 		mac = message['device']['id']
 		handle = message['command']['handle']
 		value = message['command']['value']
-		conn = self.connect(mac)
-		arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-		conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+		conn = Connector(mac)
+		conn.connect()
+		conn.writeCharacteristic(handle,value)
 		conn.disconnect()
 		logging.debug('Value ' + value + ' written in handle ' +handle)
 		logging.debug('Refreshing ... ')
