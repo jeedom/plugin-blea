@@ -33,7 +33,7 @@ sendVarToJS('plugin', $id);
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
-	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '"><a>' . $remote->getRemoteName() . '</a></li>';
+	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . '</a></li>';
 }
 ?>
 			</ul>
@@ -92,16 +92,14 @@ foreach ($remotes as $remote) {
 						<label class="col-sm-2 control-label">{{Envoie des fichiers nécessaires}}</label>
 						<div class="col-sm-3">
 							<a class="btn btn-warning bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
-						</div>
+						</div>';
+						if (method_exists( $id ,'dependancyRemote')){
+							echo '<label class="col-sm-2 control-label">{{Installation des dépendances}}</label>
+						<div class="col-sm-3">
+							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-spinner"></i> {{Lancer les dépendances}}</a>
 						</div>';
 						}
-						if (method_exists( $id ,'dependancyRemote')){
-							echo '<div class="form-group">
-						<label class="col-sm-2 control-label">{{Installation des dépendances}}</label>
-						<div class="col-sm-3">
-							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-upload"></i> {{Lancer les dépendances}}</a>
-						</div>
-						</div>';
+						echo'</div>';
 						}
 						if (method_exists( $id ,'launchremote')){
 							echo '<div class="form-group">
@@ -112,17 +110,21 @@ foreach ($remotes as $remote) {
 						<div class="col-sm-2">
 							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
 						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="fa fa-file-text-o"></i> {{Log}}</a>
+						</div>
 						</div>';
 						}
 						if (method_exists( $id ,'remotelearn')){
 							echo '<div class="form-group">
 						<label class="col-sm-2 control-label">{{Mettre en learn}}</label>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fa fa-play"></i> {{Inclusion}}</a>
+							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fa fa-sign-in fa-rotate-90"></i> {{Inclusion}}</a>
 						</div>
 						<label class="col-sm-2 control-label">{{Arrêter learn}}</label>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fa fa-play"></i> {{Stop Inclusion}}</a>
+							<a class="btn btn-danger bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fa fa-sign-in fa-rotate-270"></i> {{Stop Inclusion}}</a>
+						</div>
 						</div>';
 						}
 						?>
@@ -149,12 +151,12 @@ foreach ($remotes as $remote) {
 				id: _id,
 			},
 			dataType: 'json',
+			async: true,
+			global: false,
 			error: function (request, status, error) {
-				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
 			},
 			success: function (data) {
 				if (data.state != 'ok') {
-					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
 				$('.bleaRemote').show();
@@ -211,6 +213,29 @@ foreach ($remotes as $remote) {
 					return;
 				}
 				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=getRemoteLog]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "getRemoteLog",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupérée}}', level: 'success'});
 			}
 		});
 	});
@@ -334,4 +359,7 @@ foreach ($remotes as $remote) {
 			}
 		});
 	});
+window.setInterval(function () {
+    displaybleaRemote($('.li_bleaRemote.active').attr('data-bleaRemote_id'));
+}, 5000);
 </script>

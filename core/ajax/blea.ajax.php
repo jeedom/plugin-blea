@@ -72,6 +72,10 @@ try {
         ajax::success(blea::sendRemoteFiles(init('remoteId')));
      }
 	 
+	 if (init('action') == 'getRemoteLog') {
+        ajax::success(blea::getRemoteLog(init('remoteId')));
+     }
+	 
 	 if (init('action') == 'launchremote') {
         ajax::success(blea::launchremote(init('remoteId')));
      }
@@ -86,6 +90,10 @@ try {
 	 
 	 if (init('action') == 'dependancyRemote') {
         ajax::success(blea::dependancyRemote(init('remoteId')));
+     }
+	 
+	 if (init('action') == 'aliveremote') {
+        ajax::success(blea::aliveremote(init('remoteId')));
      }
 	
 	if (init('action') == 'changeLogLive') {

@@ -63,6 +63,13 @@ class blea extends eqLogic {
 		return $eqLogic;
 	}
 	
+	public static function cron15() {
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			$remote->getRemoteLog($remote->getId());
+		}
+	}
+	
 	public static function sendRemoteFiles($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
@@ -77,6 +84,17 @@ class blea extends eqLogic {
 		log::add('blea','info','Suppression du zip local');
 		exec('rm /tmp/folder-blea.tar.gz');
 		blea::launchremote($_remoteId);
+	}
+	
+	public static function getRemoteLog($_remoteId) {
+		$remoteObject = blea_remote::byId($_remoteId);
+		$name = $remoteObject->getRemoteName();
+		$local = dirname(__FILE__) . '/../../../../log/blea_'.$name;
+		log::add('blea','info','Suppression de la log');
+		exec('rm '. $local);
+		log::add('blea','info','Récupération de la log distante');
+		$remoteObject->getFiles($local,'/tmp/blea');
+		$remoteObject->execCmd(['cat /dev/null > /tmp/blea']);
 	}
 	
 	public static function dependancyRemote($_remoteId) {
@@ -95,7 +113,7 @@ class blea extends eqLogic {
 		$device=$remoteObject->getConfiguration('remoteDevice');
 		$script_path = '/home/'.$user.'/blead/resources/blead';
 		$cmd = '/usr/bin/python ' . $script_path . '/blead.py';
-		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('blea'));
+		$cmd .= ' --loglevel debug';
 		$cmd .= ' --device ' . $device;
 		$cmd .= ' --socketport ' . config::byKey('socketport', 'blea');
 		$cmd .= ' --sockethost ""';
@@ -127,10 +145,6 @@ class blea extends eqLogic {
 		socket_close($socket);
 	}
 	
-	public static function getLogandStatut($_remoteId) {
-		
-	}
-	
 	public static function stopremote($_remoteId) {
 		log::add('blea','info','Arret du démon distant');
 		$remoteObject = blea_remote::byId($_remoteId);
@@ -140,6 +154,26 @@ class blea extends eqLogic {
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
 		socket_write($socket, $value, strlen($value));
+		socket_close($socket);
+	}
+	
+	public static function aliveremote($_remoteId) {
+		log::add('blea','info','checking is alive');
+		$remoteObject = blea_remote::byId($_remoteId);
+		$ip = $remoteObject->getConfiguration('remoteIp');
+		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		
+		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+		$result = socket_read($socket,2000);
+		if ($result === "") {
+			
+			log::add('blea','info','dead');
+			return False;
+		}
+		else {
+		log::add('blea','info','alive');
+			return True;
+		}
 		socket_close($socket);
 	}
 
@@ -753,6 +787,26 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
 				$result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
+				$closesession = ssh2_exec($connection, 'exit');
+				stream_set_blocking($closesession, true);
+				stream_get_contents($closesession);
+			}
+		}
+	}
+	
+	public function getFiles($_local, $_target) {
+		$ip = $this->getConfiguration('remoteIp');
+		$port = $this->getConfiguration('remotePort');
+		$user = $this->getConfiguration('remoteUser');
+		$pass = $this->getConfiguration('remotePassword');
+		if (!$connection = ssh2_connect($ip, $port)) {
+			log::add('blea', 'error', 'connexion SSH KO');
+		} else {
+			if (!ssh2_auth_password($connection, $user, $pass)) {
+				log::add('blea', 'error', 'Authentification SSH KO');
+			} else {
+				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
+				$result = ssh2_scp_recv($connection, $_target, $_local);
 				$closesession = ssh2_exec($connection, 'exit');
 				stream_set_blocking($closesession, true);
 				stream_get_contents($closesession);
