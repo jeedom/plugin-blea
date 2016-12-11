@@ -19,6 +19,7 @@ class Playbulb():
 			action['version'] = 'candle'
 			versionDict ={'BTL300_v5' : 'candle',
 						'BTL300_v6': 'candle6',
+						'BTL300': 'candle6',
 						'BTL301W_v5':'sphere',
 						'BTL301WM_V1.7' : 'sphere17',
 						'BTL400_V3.7':'garden',
