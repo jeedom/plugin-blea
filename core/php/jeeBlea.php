@@ -84,7 +84,7 @@ if (isset($result['devices'])) {
 			continue;
 		}
 		if (isset($datas['source'])){
-			log::add('blea','info','This is a message from antenna ' . $datas['source']);
+			log::add('blea','debug','This is a message from antenna ' . $datas['source']);
 			if ($datas['source'] != 'local'){
 				$remotes = blea_remote::all();
 				foreach ($remotes as $remote){
