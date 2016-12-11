@@ -115,6 +115,7 @@ if (isset($result['devices'])) {
 				$cmdpresent = new bleaCmd();
 				$cmdpresent->setLogicalId('present');
 				$cmdpresent->setIsVisible(0);
+				$cmdpresent->setIsHistorized(1);
 				$cmdpresent->setName(__('Present', __FILE__));
 				$cmdpresent->setType('info');
 				$cmdpresent->setSubType('binary');
