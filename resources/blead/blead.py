@@ -67,6 +67,7 @@ class ScanDelegate(DefaultDelegate):
 					action['id'] = mac.upper()
 					action['type'] = device().name
 					action['name'] = name
+					action['rssi'] = rssi
 					logging.debug(action)
 					if action['id'] not in globals.KNOWN_DEVICES:
 						if not globals.LEARN_MODE:
@@ -81,9 +82,6 @@ class ScanDelegate(DefaultDelegate):
 							jeedom_com.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 							globals.LEARN_MODE = False
 							return
-					if 'rssi' not in globals.KNOWN_DEVICES[action['id']] or (globals.KNOWN_DEVICES[action['id']]['rssi']*1.1) > rssi or (globals.KNOWN_DEVICES[action['id']]['rssi']*0.9) < rssi:
-						globals.KNOWN_DEVICES[action['id']]['rssi'] = rssi
-						action['rssi'] = rssi
 					if len(action) > 2:
 						action['source'] = globals.daemonname
 						jeedom_com.add_changes('devices::'+action['id'],action)

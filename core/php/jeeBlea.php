@@ -85,6 +85,15 @@ if (isset($result['devices'])) {
 		}
 		if (isset($datas['source'])){
 			log::add('blea','info','This is a message from antenna ' . $datas['source']);
+			if ($datas['source'] != 'local'){
+				$remotes = blea_remote::all();
+				foreach ($remotes as $remote){
+					if ($remote->getRemoteName() == $datas['source']){
+						$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
+						$remote->save();
+					}
+				}
+			}
 		}
 		$blea = blea::byLogicalId($datas['id'], 'blea');
 		if (!is_object($blea)) {
