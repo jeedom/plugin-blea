@@ -18,18 +18,6 @@
                     "returnStateValue" : 0,
                     "returnStateTime" : 1
                 }
-            },
-            {
-                "name": "Rssi",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-                "unite": "dbm",
-                "logicalId": "rssi"
             }
         ],
 		"compatibility": [

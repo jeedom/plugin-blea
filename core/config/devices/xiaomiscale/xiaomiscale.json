@@ -35,20 +35,8 @@
                 "template": {
                     "mobile": "line",
 					"dashboard" : "line"
-			},
-            {
-                "name": "Rssi",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-                "unite": "dbm",
-                "logicalId": "rssi"
-            }   "logicalId": "value"
-            }
+				}
+			}
         ],
 		"compatibility": [
             {

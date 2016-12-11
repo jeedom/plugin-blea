@@ -106,7 +106,7 @@ if (isset($result['devices'])) {
 		if (!$blea->getIsEnable()) {
 			continue;
 		}
-		if (isset($datas['rssi']) && $datas['source'] != 'local') {
+		if (isset($datas['rssi'])) {
 			$cmdremote = $blea->getCmd(null, 'rssi' . $datas['source']);
 			if (!is_object($cmdremote)) {
 				$cmdremote = new bleaCmd();
@@ -143,8 +143,8 @@ if (isset($result['devices'])) {
 				$remote = blea_remote::byId($antennaId);
 				$antenna = $remote->getRemoteName();
 			}
-			if ($logicalId != 'present' && $logicalId != 'rssi' && $antenna != $datas['source']){
-				//log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
+			if ($logicalId != 'present' && $antenna != $datas['source']){
+				log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
 				continue;
 			}
 			if (!is_array($value)) {
