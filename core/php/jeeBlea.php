@@ -111,10 +111,22 @@ if (isset($result['devices'])) {
 			}
 			$cmdremote->event($datas['rssi']);
 		}
+		$remotelist =['rssilocal'];
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote){
+			$name = $remote->getRemoteName();
+			$remotelist[]='rssi' . $name;
+		}
+		$cmdrssitoremove=[];
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
 			if ($logicalId == '') {
 				continue;
+			}
+			if (substr($logicalId,0,4) == 'rssi'){
+				if (!in_array($logicalId,$remotelist)){
+					$cmdrssitoremove[]=$cmd;
+				}
 			}
 			$path = explode('::', $logicalId);
 			$value = $datas;
@@ -143,6 +155,9 @@ if (isset($result['devices'])) {
 			if ($logicalId == 'battery') {
 				$blea->batteryStatus($value);
 			}
+		}
+		foreach ($cmdrssitoremove as $cmdremove){
+			$cmdremove->remove();
 		}
 	}
 }

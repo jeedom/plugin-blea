@@ -26,7 +26,6 @@ import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
 from threading import Thread
-
 try:
 	from jeedom.jeedom import *
 except ImportError:

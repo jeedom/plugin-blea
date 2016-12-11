@@ -32,6 +32,7 @@ import signal
 import unicodedata
 import pyudev
 
+
 # ------------------------------------------------------------------------------
 
 class jeedom_com():
