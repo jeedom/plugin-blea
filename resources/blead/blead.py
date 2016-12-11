@@ -121,7 +121,7 @@ def listen():
 				if not globals.PENDING_ACTION: 
 					if globals.SCAN_ERRORS < 5:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
-						logging.error("Exception on scanner (trying to resolve by myself attempt " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
+						logging.warning("Exception on scanner (trying to resolve by myself attempt " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
 						os.system('hciconfig ' + globals.device + ' down')
 						os.system('hciconfig ' + globals.device + ' up')
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
