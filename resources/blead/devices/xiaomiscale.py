@@ -12,7 +12,7 @@ class XiaomiScale():
 		if name == 'MI_SCALE':
 			return True
 			
-	def parse(self,data):
+	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
 		measured = int((data[8:10] + data[6:8]), 16) * 0.01 / 2

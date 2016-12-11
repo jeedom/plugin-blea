@@ -12,7 +12,7 @@ class Miflora():
 		if name == 'Flower mate':
 			return True
 			
-	def parse(self,data):
+	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
 		return action

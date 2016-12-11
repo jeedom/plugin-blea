@@ -10,10 +10,10 @@ class Smartplug():
 		self.name = 'smartplug'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower().startswith("smp-b16-"):
+		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
 			return True
 			
-	def parse(self,data):
+	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
 		return action

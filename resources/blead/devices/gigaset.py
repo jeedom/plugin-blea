@@ -13,7 +13,7 @@ class Gigaset():
 		if name.lower() == 'gigaset g-tag':
 			return True
 			
-	def parse(self,data):
+	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
 		return action

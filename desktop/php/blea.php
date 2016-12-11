@@ -96,7 +96,6 @@ foreach ($eqLogics as $eqLogic) {
  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
- <a class="btn btn-default eqLogicAction pull-right" data-action="copy"><i class="fa fa-files-o"></i> {{Dupliquer}}</a>
  <ul class="nav nav-tabs" role="tablist">
   <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
   <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
@@ -164,12 +163,47 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 		 <div class="form-group refreshdelay" style="display:none">
 				<div class="alert alert-info"> {{Inutile de mettre des valeurs trop faible, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}</div>
          </div>
-         <div class="form-group expertModeVisible">
-          <label class="col-sm-3 control-label">{{Délai maximum autorisé entre 2 messages (min)}}</label>
-          <div class="col-sm-4">
-            <input class="eqLogicAttr form-control" data-l1key="timeout" />
+          <div class="form-group nogroup">
+				<label class="col-sm-3 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
+              <div class="col-sm-3">
+                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
+                <option value="local">{{Local}}</option>
+				<?php
+				try{
+					$hasblea = plugin::byId('blea');
+					} catch (Exception $e) {
+				}
+				if ($hasblea != '' && $hasblea->isActive()){
+					$remotes = blea_remote::all();
+					foreach ($remotes as $remote) {
+						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+					}
+				}
+				?>
+				<option value="all">{{Tous}}</option>
+              </select>
+            </div>
           </div>
-        </div>
+		   <div class="form-group nogroup">
+				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, tous n'est pas disponible pour éviter la répétition des infos (de type bouton). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
+              <div class="col-sm-3">
+                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
+                <option value="local">{{Local}}</option>
+				<?php
+				try{
+					$hasblea = plugin::byId('blea');
+					} catch (Exception $e) {
+				}
+				if ($hasblea != '' && $hasblea->isActive()){
+					$remotes = blea_remote::all();
+					foreach ($remotes as $remote) {
+						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+					}
+				}
+				?>
+              </select>
+            </div>
+          </div>
       </fieldset>
     </form>
   </div>

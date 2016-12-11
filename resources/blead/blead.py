@@ -17,6 +17,7 @@ import subprocess
 import os,re
 import logging
 import sys
+import argparse
 import time
 import datetime
 import signal
@@ -24,6 +25,7 @@ import json
 import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
+from threading import Thread
 
 try:
 	from jeedom.jeedom import *
@@ -61,7 +63,7 @@ class ScanDelegate(DefaultDelegate):
 				if device().isvalid(name,manuf):
 					findDevice=True
 					logging.debug('This is a ' + device().name + ' device')
-					action = device().parse(data)
+					action = device().parse(data,mac)
 					action['id'] = mac.upper()
 					action['type'] = device().name
 					action['name'] = name
@@ -73,96 +75,102 @@ class ScanDelegate(DefaultDelegate):
 						else:
 							logging.debug('It\'s a known packet and I don\'t known this device so I learn')
 							action['learn'] = 1
+							if 'version' in action:
+								action['type']= action['version']
 							jeedom_com.add_changes('devices::'+action['id'],action)
-							jeedom_com.send_change_immediate({'learn_mode' : 0});
+							jeedom_com.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 							globals.LEARN_MODE = False
 							return
 					if 'rssi' not in globals.KNOWN_DEVICES[action['id']] or (globals.KNOWN_DEVICES[action['id']]['rssi']*1.1) > rssi or (globals.KNOWN_DEVICES[action['id']]['rssi']*0.9) < rssi:
 						globals.KNOWN_DEVICES[action['id']]['rssi'] = rssi
 						action['rssi'] = rssi
 					if len(action) > 2:
+						action['source'] = globals.daemonname
 						jeedom_com.add_changes('devices::'+action['id'],action)
 			if not findDevice and globals.LEARN_MODE:
 				logging.debug('Unknown packet for ' + name + ' : ' + mac +  ' with rssi : ' + str(rssi) + ' and data ' + data)
 
-def listen(_device):
+def listen():
 	global scanner
 	jeedom_socket.open()
 	logging.info("Start listening...")
-	scanner = Scanner(int(_device[-1:])).withDelegate(ScanDelegate())
+	globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
 	logging.info("Preparing Scanner...")
-	jeedom_com.send_change_immediate({'learn_mode' : 0});
+	jeedom_com.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 	lastClearTimestamp = int(time.time())
+	thread.start_new_thread( read_socket, ('socket',))
+	logging.debug('Read Socket Thread Launched')
+	thread.start_new_thread( read_device, ('device',))
+	logging.debug('Read Device Thread Launched')
 	try:
 		while 1:
 			try:
-				read_socket()
-			except Exception, e:
-				logging.error("Exception on socket : %s" % str(e))
-			try:
 				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
-					scanner.clear()
+					globals.SCANNER.clear()
 					lastClearTimestamp = int(time.time())
-				scanner.start()
-				scanner.process(0.3)
-				scanner.stop()
+				globals.SCANNER.start()
+				globals.SCANNER.process(0.3)
+				globals.SCANNER.stop()
 			except queue.Empty:
 				continue
 			except Exception, e:
-				logging.error("Exception on scanner : %s" % str(e))
-			try:
-				read_device()
-			except Exception, e:
-				logging.error("Exception on read device : %s" % str(e))
-			time.sleep(0.02)
+				if not globals.PENDING_ACTION: 
+					logging.error("Exception on scanner : %s" % str(e))
+				time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")
 		shutdown()
 
-def read_socket():
-	try:
-		global JEEDOM_SOCKET_MESSAGE
-		if not JEEDOM_SOCKET_MESSAGE.empty():
-			logging.debug("Message received in socket JEEDOM_SOCKET_MESSAGE")
-			message = json.loads(jeedom_utils.stripped(JEEDOM_SOCKET_MESSAGE.get()))
-			if message['apikey'] != _apikey:
-				logging.error("Invalid apikey from socket : " + str(message))
-				return
-			logging.debug('Received command from jeedom : '+str(message['cmd']))
-			if message['cmd'] == 'add':
-				logging.debug('Add device : '+str(message['device']))
-				if 'id' in message['device']:
-					globals.KNOWN_DEVICES[message['device']['id']] = message['device']
-			elif message['cmd'] == 'remove':
-				logging.debug('Remove device : '+str(message['device']))
-				if 'id' in message['device']:
-					del globals.KNOWN_DEVICES[message['device']['id']]
-			elif message['cmd'] == 'learnin':
-				logging.debug('Enter in learn mode')
-				globals.LEARN_MODE = True
-				jeedom_com.send_change_immediate({'learn_mode' : 1});
-			elif message['cmd'] == 'learnout':
-				logging.debug('Leave learn mode')
-				globals.LEARN_MODE = False
-				jeedom_com.send_change_immediate({'learn_mode' : 0});
-			elif message['cmd'] == 'action' or message['cmd'] == 'refresh':
-				logging.debug('Attempt an action on a device')
-				action_handler(message)
-			elif message['cmd'] == 'logdebug':
-				logging.info('Passage du demon en mode debug force')
-				log = logging.getLogger()
-				for hdlr in log.handlers[:]:
-					log.removeHandler(hdlr)
-				jeedom_utils.set_log_level('debug')
-				logging.debug('<----- La preuve ;)')
-			elif message['cmd'] == 'lognormal':
-				logging.info('Passage du demon en mode de log initial')
-				log = logging.getLogger()
-				for hdlr in log.handlers[:]:
-					log.removeHandler(hdlr)
-				jeedom_utils.set_log_level(globals.LOG_LEVEL)
-	except Exception,e:
-		logging.error(str(e))
+def read_socket(name):
+	while 1:
+		try:
+			global JEEDOM_SOCKET_MESSAGE
+			if not JEEDOM_SOCKET_MESSAGE.empty():
+				logging.debug("Message received in socket JEEDOM_SOCKET_MESSAGE")
+				message = json.loads(jeedom_utils.stripped(JEEDOM_SOCKET_MESSAGE.get()))
+				if message['apikey'] != globals.apikey:
+					logging.error("Invalid apikey from socket : " + str(message))
+					return
+				logging.debug('Received command from jeedom : '+str(message['cmd']))
+				if message['cmd'] == 'add':
+					logging.debug('Add device : '+str(message['device']))
+					if 'id' in message['device']:
+						globals.KNOWN_DEVICES[message['device']['id']] = message['device']
+				elif message['cmd'] == 'remove':
+					logging.debug('Remove device : '+str(message['device']))
+					if 'id' in message['device']:
+						del globals.KNOWN_DEVICES[message['device']['id']]
+				elif message['cmd'] == 'learnin':
+					logging.debug('Enter in learn mode')
+					globals.LEARN_MODE = True
+					jeedom_com.send_change_immediate({'learn_mode' : 1,'source' : globals.daemonname});
+				elif message['cmd'] == 'learnout':
+					logging.debug('Leave learn mode')
+					globals.LEARN_MODE = False
+					jeedom_com.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
+				elif message['cmd'] == 'action' or message['cmd'] == 'refresh':
+					logging.debug('Attempt an action on a device')
+					thread.start_new_thread( action_handler, (message,))
+					logging.debug('Thread Launched')
+				elif message['cmd'] == 'logdebug':
+					logging.info('Passage du demon en mode debug force')
+					log = logging.getLogger()
+					for hdlr in log.handlers[:]:
+						log.removeHandler(hdlr)
+					jeedom_utils.set_log_level('debug')
+					logging.debug('<----- La preuve ;)')
+				elif message['cmd'] == 'lognormal':
+					logging.info('Passage du demon en mode de log initial')
+					log = logging.getLogger()
+					for hdlr in log.handlers[:]:
+						log.removeHandler(hdlr)
+					jeedom_utils.set_log_level(globals.log_level)
+				elif message['cmd'] == 'stop':
+					logging.info('Arret du demon sur demande socket')
+					shutdown()
+		except Exception,e:
+			logging.error("Exception on socket : %s" % str(e))
+		time.sleep(0.3)
 
 def action_handler(message):
 	manuf =''
@@ -175,54 +183,65 @@ def action_handler(message):
 			classname = message['command']['device']['name']
 			if compatible().name.lower() == classname.lower():
 				logging.debug('Attempt to refresh values')
+				globals.PENDING_ACTION = True
 				result = compatible().read(message['device']['id'])
+				globals.PENDING_ACTION = False
 				break
 		if result :
 			if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
 				return
 			else:
 				globals.LAST_STATE[message['device']['id']] = result
+				result['source'] = globals.daemonname
 				jeedom_com.add_changes('devices::'+message['device']['id'],result)
 				return
 	for device in globals.COMPATIBILITY:
 		if device().isvalid(name,manuf):
+			globals.PENDING_ACTION = True
 			result = device().action(message)
+			globals.PENDING_ACTION = False
 			if result :
 				if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
 					return
 				else:
 					globals.LAST_STATE[message['device']['id']] = result
+					result['source'] = globals.daemonname
 					jeedom_com.add_changes('devices::'+message['device']['id'],result)
 					return
 			return
 	return
 
-def read_device():
-	now = datetime.datetime.utcnow()
-	result = {}
-	try:
-		for device in globals.KNOWN_DEVICES:
-			mac = globals.KNOWN_DEVICES[device]['id']
-			if not 'needsrefresh' in globals.KNOWN_DEVICES[device]:
-				continue
-			if globals.KNOWN_DEVICES[device]['needsrefresh'] <> 1:
-				continue
-			if mac in globals.LAST_TIME_READ and now < (globals.LAST_TIME_READ[mac]+datetime.timedelta(milliseconds=int(globals.KNOWN_DEVICES[device]['delay'])*1000)):
-				continue
-			else :
-				globals.LAST_TIME_READ[mac] = now
-				for compatible in globals.COMPATIBILITY:
-					if compatible().name.lower() == str(globals.KNOWN_DEVICES[device]['name']).lower():
-						result = compatible().read(mac)
-						break
-				if result :
-					if mac in globals.LAST_STATE and result == globals.LAST_STATE[mac]:
-						continue
-					else:
-						globals.LAST_STATE[mac] = result
-						jeedom_com.add_changes('devices::'+mac,result)
-	except Exception,e:
-		logging.error(str(e))
+def read_device(name):
+	while 1:
+		now = datetime.datetime.utcnow()
+		result = {}
+		try:
+			for device in globals.KNOWN_DEVICES:
+				mac = globals.KNOWN_DEVICES[device]['id']
+				if not 'needsrefresh' in globals.KNOWN_DEVICES[device]:
+					continue
+				if globals.KNOWN_DEVICES[device]['needsrefresh'] <> 1:
+					continue
+				if mac in globals.LAST_TIME_READ and now < (globals.LAST_TIME_READ[mac]+datetime.timedelta(milliseconds=int(globals.KNOWN_DEVICES[device]['delay'])*1000)):
+					continue
+				else :
+					globals.LAST_TIME_READ[mac] = now
+					for compatible in globals.COMPATIBILITY:
+						if compatible().name.lower() == str(globals.KNOWN_DEVICES[device]['name']).lower():
+							globals.PENDING_ACTION = True
+							result = compatible().read(mac)
+							globals.PENDING_ACTION = False
+							break
+					if result :
+						if mac in globals.LAST_STATE and result == globals.LAST_STATE[mac]:
+							continue
+						else:
+							globals.LAST_STATE[mac] = result
+							result['source'] = globals.daemonname
+							jeedom_com.add_changes('devices::'+mac,result)
+		except Exception,e:
+			logging.error("Exception on read device : %s" % str(e))
+		time.sleep(1)
 
 def handler(signum=None, frame=None):
 	logging.debug("Signal %i caught, exiting..." % int(signum))
@@ -230,9 +249,9 @@ def handler(signum=None, frame=None):
 	
 def shutdown():
 	logging.debug("Shutdown")
-	logging.debug("Removing PID file " + str(_pidfile))
+	logging.debug("Removing PID file " + str(globals.pidfile))
 	try:
-		os.remove(_pidfile)
+		os.remove(globals.pidfile)
 	except:
 		pass
 	try:
@@ -242,60 +261,65 @@ def shutdown():
 	logging.debug("Exit 0")
 	sys.stdout.flush()
 	os._exit(0)
-	
-_log_level = "error"
-_socket_port = '55008'
-_socket_host = 'localhost'
-_pidfile = '/tmp/blead.pid'
-_device = 'auto'
-_apikey = ''
-_callback = ''
-_cycle = 0.3;
 
-for arg in sys.argv:
-	if arg.startswith("--loglevel="):
-		temp, _log_level = arg.split("=")
-	elif arg.startswith("--socketport="):
-		temp, _socket_port = arg.split("=")
-	elif arg.startswith("--sockethost="):
-		temp, _socket_host = arg.split("=")
-	elif arg.startswith("--device="):
-		temp, _device = arg.split("=")
-	elif arg.startswith("--pidfile="):
-		temp, _pidfile = arg.split("=")
-	elif arg.startswith("--apikey="):
-		temp, _apikey = arg.split("=")
-	elif arg.startswith("--callback="):
-		temp, _callback = arg.split("=")
-	elif arg.startswith("--cycle="):
-		temp, _cycle = arg.split("=")
+parser = argparse.ArgumentParser(description='Blead Daemon for Jeedom plugin')
+parser.add_argument("--device", help="Device", type=str)
+parser.add_argument("--loglevel", help="Log Level for the daemon", type=str)
+parser.add_argument("--pidfile", help="Value to write", type=str)
+parser.add_argument("--callback", help="Value to write", type=str)
+parser.add_argument("--apikey", help="Value to write", type=str)
+parser.add_argument("--socketport", help="Socket Port", type=str)
+parser.add_argument("--sockethost", help="Socket Host", type=str)
+parser.add_argument("--daemonname", help="Daemon Name", type=str)
+parser.add_argument("--cycle", help="Cycle to send event", type=str)
+args = parser.parse_args()
 
-_socket_port = int(_socket_port)
-_cycle = float(_cycle)
+if args.device:
+	globals.device = args.device
+if args.loglevel:
+	globals.log_level = args.loglevel
+if args.pidfile:
+	globals.pidfile = args.pidfile
+if args.callback:
+	globals.callback = args.callback
+if args.apikey:
+	globals.apikey = args.apikey
+if args.cycle:
+	globals.cycle = float(args.cycle)
+if args.socketport:
+	globals.socketport = args.socketport
+if args.sockethost:
+	globals.sockethost = args.sockethost
+if args.daemonname:
+	globals.daemonname = args.daemonname
 
-jeedom_utils.set_log_level(_log_level)
-globals.LOG_LEVEL = _log_level
+globals.socketport = int(globals.socketport)
+globals.cycle = float(globals.cycle)
+
+jeedom_utils.set_log_level(globals.log_level)
 logging.info('Start blead')
-logging.info('Log level : '+str(_log_level))
-logging.info('Socket port : '+str(_socket_port))
-logging.info('Socket host : '+str(_socket_host))
-logging.info('Device : '+str(_device))
-logging.info('PID file : '+str(_pidfile))
-logging.info('Apikey : '+str(_apikey))
-logging.info('Callback : '+str(_callback))
-logging.info('Cycle : '+str(_cycle))
+logging.info('Log level : '+str(globals.log_level))
+logging.info('Socket port : '+str(globals.socketport))
+logging.info('Socket host : '+str(globals.sockethost))
+logging.info('Device : '+str(globals.device))
+logging.info('PID file : '+str(globals.pidfile))
+logging.info('Apikey : '+str(globals.apikey))
+logging.info('Callback : '+str(globals.callback))
+logging.info('Cycle : '+str(globals.cycle))
 import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
-globals.IFACE_DEVICE = int(_device[-1:])
+globals.IFACE_DEVICE = int(globals.device[-1:])
+os.system('hciconfig ' + globals.device + ' down')
+os.system('hciconfig ' + globals.device + ' up')
 try:
-	jeedom_utils.write_pid(str(_pidfile))
-	jeedom_com = jeedom_com(apikey = _apikey,url = _callback,cycle=_cycle)
+	jeedom_utils.write_pid(str(globals.pidfile))
+	jeedom_com = jeedom_com(apikey = globals.apikey,url = globals.callback,cycle=globals.cycle)
 	if not jeedom_com.test():
 		logging.error('Network communication issues. Please fix your Jeedom network configuration.')
 		shutdown()
-	jeedom_socket = jeedom_socket(port=_socket_port,address=_socket_host)
-	listen(_device)
+	jeedom_socket = jeedom_socket(port=globals.socketport,address=globals.sockethost)
+	listen()
 except Exception,e:
 	logging.error('Fatal error : '+str(e))
 	logging.debug(traceback.format_exc())

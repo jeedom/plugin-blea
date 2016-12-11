@@ -1,6 +1,6 @@
 {
     "xiaomiscale": {
-        "name": "XiaomiScale",
+        "name": "MiScale",
         "groupe" : "Santé",
 		"configuration" : {
 			"hasspecificmodal" : 1
@@ -23,6 +23,20 @@
                 }
             },
             {
+                "name": "Poids",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+			},
+            {
                 "name": "Rssi",
                 "type": "info",
                 "subtype": "numeric",
@@ -33,22 +47,7 @@
                 "isHistorized": 0,
                 "unite": "dbm",
                 "logicalId": "rssi"
-            },
-            {
-                "name": "Valeur",
-                "type": "info",
-                "subtype": "numeric",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-		   "unite": "kg",
-                "isVisible": 1,
-                "isHistorized": 0,
-                "template": {
-                    "mobile": "line",
-					"dashboard" : "line"
-},
-                "logicalId": "value"
+            }   "logicalId": "value"
             }
         ],
 		"compatibility": [

@@ -17,3 +17,5 @@ logging.info("Import de la configuration Mi Flora")
 import miflora
 logging.info("Import de la configuration Smartplug (awox)")
 import smartplug
+logging.info("Import de la configuration Playbulb")
+import playbulb

@@ -79,6 +79,14 @@ try {
 	 if (init('action') == 'stopremote') {
         ajax::success(blea::stopremote(init('remoteId')));
      }
+	 
+	 if (init('action') == 'remotelearn') {
+        ajax::success(blea::remotelearn(init('remoteId'), init('state')));
+     }
+	 
+	 if (init('action') == 'dependancyRemote') {
+        ajax::success(blea::dependancyRemote(init('remoteId')));
+     }
 	
 	if (init('action') == 'changeLogLive') {
 		ajax::success(blea::changeLogLive(init('level')));

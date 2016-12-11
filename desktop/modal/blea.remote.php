@@ -48,38 +48,34 @@ foreach ($remotes as $remote) {
 					<fieldset>
 						<legend>{{Général}}</legend>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Nom de l'antenne}}</label>
+							<label class="col-sm-2 control-label">{{Nom}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="id" style="display : none;" />
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="remoteName" placeholder="{{Nom de l'antenne}}"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Ip}}</label>
+							<label class="col-sm-2 control-label">{{Ip}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteIp"/>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Port}}</label>
+							<label class="col-sm-1 control-label">{{Port}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remotePort"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{User}}</label>
+							<label class="col-sm-2 control-label">{{User}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteUser"/>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Password}}</label>
+							<label class="col-sm-1 control-label">{{Password}}</label>
 							<div class="col-sm-3">
-								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remotePassword"/>
+								<input type="password" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remotePassword"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Device}}</label>
+							<label class="col-sm-2 control-label">{{Device}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
 							</div>
@@ -87,26 +83,40 @@ foreach ($remotes as $remote) {
 						<?php
 						if (method_exists( $id ,'sendRemoteFiles')){
 							echo '<div class="form-group">
-						<label class="col-sm-3 control-label">{{Envoie des fichiers nécessaires}}</label>
+						<label class="col-sm-2 control-label">{{Envoie des fichiers nécessaires}}</label>
 						<div class="col-sm-3">
-							<a class="btn btn-danger bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
+							<a class="btn btn-warning bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
+						</div>
+						</div>';
+						}
+						if (method_exists( $id ,'dependancyRemote')){
+							echo '<div class="form-group">
+						<label class="col-sm-2 control-label">{{Installation des dépendances}}</label>
+						<div class="col-sm-3">
+							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-upload"></i> {{Lancer les dépendances}}</a>
 						</div>
 						</div>';
 						}
 						if (method_exists( $id ,'launchremote')){
 							echo '<div class="form-group">
-						<label class="col-sm-3 control-label">{{Lancement du démon}}</label>
-						<div class="col-sm-3">
-							<a class="btn btn-danger bleaRemoteAction" data-action="launchremote"><i class="fa fa-play"></i> {{Lancer}}</a>
+						<label class="col-sm-2 control-label">{{Gestion du démon}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="launchremote"><i class="fa fa-play"></i> {{Lancer}}</a>
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
 						</div>
 						</div>';
 						}
-						if (method_exists( $id ,'stopremote')){
+						if (method_exists( $id ,'remotelearn')){
 							echo '<div class="form-group">
-						<label class="col-sm-3 control-label">{{Arret du démon}}</label>
-						<div class="col-sm-3">
-							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
+						<label class="col-sm-2 control-label">{{Mettre en learn}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fa fa-play"></i> {{Inclusion}}</a>
 						</div>
+						<label class="col-sm-2 control-label">{{Arrêter learn}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fa fa-play"></i> {{Stop Inclusion}}</a>
 						</div>';
 						}
 						?>
@@ -222,6 +232,29 @@ foreach ($remotes as $remote) {
 		});
 	});
 	
+	$('.bleaRemoteAction[data-action=dependancyRemote]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "dependancyRemote",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+			}
+		});
+	});
+	
 	$('.bleaRemoteAction[data-action=stopremote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -230,6 +263,30 @@ foreach ($remotes as $remote) {
 			data: {
 				action: "stopremote",
 				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=remotelearn]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "remotelearn",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+				state: $(this).attr('data-type'),
 			},
 			dataType: 'json',
 			error: function (request, status, error) {

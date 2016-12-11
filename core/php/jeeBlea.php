@@ -30,7 +30,9 @@ $result = json_decode(file_get_contents("php://input"), true);
 if (!is_array($result)) {
 	die();
 }
-
+if (isset($result['source'])){
+	log::add('blea','info','This is a message from antenna ' . $result['source']);
+}
 if (isset($result['learn_mode'])) {
 	if ($result['learn_mode'] == 1) {
 		config::save('include_mode', 1, 'blea');
@@ -76,9 +78,13 @@ if (isset($result['exclude_mode'])) {
 }
 
 if (isset($result['devices'])) {
+	
 	foreach ($result['devices'] as $key => $datas) {
 		if (!isset($datas['id'])) {
 			continue;
+		}
+		if (isset($datas['source'])){
+			log::add('blea','info','This is a message from antenna ' . $datas['source']);
 		}
 		$blea = blea::byLogicalId($datas['id'], 'blea');
 		if (!is_object($blea)) {
@@ -100,7 +106,21 @@ if (isset($result['devices'])) {
 		if (!$blea->getIsEnable()) {
 			continue;
 		}
-
+		if (isset($datas['rssi']) && $datas['source'] != 'local') {
+			$cmdremote = $blea->getCmd(null, 'rssi' . $datas['source']);
+			if (!is_object($cmdremote)) {
+				$cmdremote = new bleaCmd();
+				$cmdremote->setLogicalId('rssi' . $datas['source']);
+				$cmdremote->setIsVisible(0);
+				$cmdremote->setName(__('Rssi '. $datas['source'], __FILE__));
+				$cmdremote->setType('info');
+				$cmdremote->setSubType('numeric');
+				$cmdremote->setUnite('dbm');
+				$cmdremote->setEqLogic_id($blea->getId());
+				$cmdremote->save();
+			}
+			$cmdremote->event($datas['rssi']);
+		}
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
 			if ($logicalId == '') {
@@ -113,6 +133,19 @@ if (isset($result['devices'])) {
 					continue (2);
 				}
 				$value = $value[$key];
+			}
+			if ($logicalId == 'rssi' && $datas['source'] != 'local') {
+				continue;
+			}
+			$antenna = 'local';
+			$antennaId = $blea->getConfiguration('antennareceive','local');
+			if ($antennaId != 'local'){
+				$remote = blea_remote::byId($antennaId);
+				$antenna = $remote->getRemoteName();
+			}
+			if ($logicalId != 'present' && $logicalId != 'rssi' && $antenna != $datas['source']){
+				//log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
+				continue;
 			}
 			if (!is_array($value)) {
 				$cmd->event($value);
