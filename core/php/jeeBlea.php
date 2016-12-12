@@ -134,9 +134,14 @@ if (isset($result['devices'])) {
 				$cmdremote->setType('info');
 				$cmdremote->setSubType('numeric');
 				$cmdremote->setUnite('dbm');
-				$cmdremote->setConfiguration('returnStateValue',0);
+				$cmdremote->setConfiguration('returnStateValue',-100);
 				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->setEqLogic_id($blea->getId());
+				$cmdremote->save();
+			}
+			if ($cmdremote->getConfiguration('returnStateValue') != -100){
+				$cmdremote->setConfiguration('returnStateValue',-100);
+				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->save();
 			}
 			$cmdremote->event($datas['rssi']);
@@ -149,9 +154,14 @@ if (isset($result['devices'])) {
 				$cmdpresent->setName(__('Present', __FILE__));
 				$cmdpresent->setType('info');
 				$cmdpresent->setSubType('binary');
-				$cmdpresent->setConfiguration('returnStateValue',-100);
+				$cmdpresent->setConfiguration('returnStateValue',0);
 				$cmdpresent->setConfiguration('returnStateTime',1);
 				$cmdpresent->setEqLogic_id($blea->getId());
+				$cmdpresent->save();
+			}
+			if ($cmdpresent->getConfiguration('returnStateValue') != 0){
+				$cmdpresent->setConfiguration('returnStateValue',0);
+				$cmdpresent->setConfiguration('returnStateTime',1);
 				$cmdpresent->save();
 			}
 			$cmdpresent->event(1);

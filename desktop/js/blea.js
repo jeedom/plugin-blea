@@ -25,6 +25,11 @@
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=health').dialog('open');
 });
 
+$('#bt_graphblea').on('click', function () {
+    $('#md_modal').dialog({title: "{{Réseau BLEA}}"});
+    $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.graph').dialog('open');
+});
+
 $('#bt_remoteblea').on('click', function () {
     $('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
