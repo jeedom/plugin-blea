@@ -57,6 +57,22 @@ if (isset($result['started'])) {
 	}
 	die();
 }
+if (isset($result['heartbeat'])) {
+	if ($result['heartbeat'] == 1) {
+		log::add('blea','info','This is a heartbeat from antenna ' . $result['source']);
+		if ($result['source'] != 'local'){
+			$remotes = blea_remote::all();
+			foreach ($remotes as $remote){
+				if ($remote->getRemoteName() == $result['source']){
+					$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
+					$remote->save();
+					break;
+				}
+			}
+		}
+	}
+	die();
+}
 
 if (isset($result['devices'])) {
 	
@@ -72,6 +88,7 @@ if (isset($result['devices'])) {
 					if ($remote->getRemoteName() == $datas['source']){
 						$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
 						$remote->save();
+						break;
 					}
 				}
 			}
@@ -102,10 +119,13 @@ if (isset($result['devices'])) {
 				$cmdremote = new bleaCmd();
 				$cmdremote->setLogicalId('rssi' . $datas['source']);
 				$cmdremote->setIsVisible(0);
+				$cmdremote->setIsHistorized(1);
 				$cmdremote->setName(__('Rssi '. $datas['source'], __FILE__));
 				$cmdremote->setType('info');
 				$cmdremote->setSubType('numeric');
 				$cmdremote->setUnite('dbm');
+				$cmdremote->setConfiguration('returnStateValue',0);
+				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->setEqLogic_id($blea->getId());
 				$cmdremote->save();
 			}

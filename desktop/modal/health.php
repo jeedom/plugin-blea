@@ -31,7 +31,7 @@ $eqLogics = blea::byType('blea');
 			<th>{{Type}}</th>
 			<th>{{Statut}}</th>
 			<th>{{Batterie}}</th>
-			<th>{{Rssi (le plus faible)}}</th>
+			<th>{{Rssi}}</th>
 			<th>{{Antenne Emission}}</th>
 			<th>{{Antenne Réception}}</th>
 			<th>{{Présent}}</th>
@@ -71,32 +71,40 @@ foreach ($eqLogics as $eqLogic) {
 		$battery_status = '<span class="label label-primary" style="font-size : 1em;" title="{{Secteur}}"><i class="fa fa-plug"></i></span>';
 	}
 	echo '<td>' . $battery_status . '</td>';
-	$rssi = '-999';
-	$antennaname = '';
+	$rssi ='';
 	$remotes = blea_remote::all();
 	foreach ($remotes as $remote){
 		$name = $remote->getRemoteName();
 		$rssicmd = $eqLogic->getCmd('info', 'rssi' . $name);
 		if (is_object($rssicmd)) {
 			$rssiantenna = $rssicmd->execCmd();
-		}
-		if ( $rssiantenna > $rssi){
-			$rssi = $rssiantenna;
 			$antennaname = $name;
+			$signalLevel = 'success';
+			if ($rssiantenna <= -91) {
+				$signalLevel = 'danger';
+			} elseif ($rssiantenna <= -80) {
+				$signalLevel = 'warning';
+			} else if ($rssiantenna == 0){
+				$rssiantenna = 'no';
+				$signalLevel = 'danger';
+			}
+			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
 		}
 	}
 	$rssicmd = $eqLogic->getCmd('info', 'rssilocal');
 	if (is_object($rssicmd)) {
 		$rssiantenna = $rssicmd->execCmd();
-		if ( $rssiantenna > $rssi){
-			$rssi = $rssiantenna;
-			$antennaname = 'local';
-		}
-	}
-	if ($rssi == -999){
-		$rssi = ' ';
-	} else {
-		$rssi = $rssi . ' dBm (' . ucfirst($antennaname) .')';
+		$antennaname = 'local';
+		$signalLevel = 'success';
+			if ($rssiantenna <= -85) {
+				$signalLevel = 'danger';
+			} elseif ($rssiantenna <= -75) {
+				$signalLevel = 'warning';
+			} else if ($rssiantenna == 0){
+				$rssiantenna = 'no';
+				$signalLevel = 'danger';
+			}
+		$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
 	}
 	$antenna = $eqLogic->getConfiguration('antenna','local');
 	$antennareceive = $eqLogic->getConfiguration('antennareceive','local');
@@ -127,7 +135,7 @@ foreach ($eqLogics as $eqLogic) {
 	} else {
 		$present = '<span class="label label-danger" style="font-size : 1em;" title="{{Absent}}"><i class="fa fa-times"></i></span>';
 	}
-	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $rssi . '</span></td>';
+	echo '<td>' . $rssi . '</td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . ucfirst($antenna) . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . ucfirst($antennareceive) . '</span></td>';
 	echo '<td>' . $present . '</td>';

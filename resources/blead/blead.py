@@ -106,6 +106,7 @@ def listen():
 				if globals.LEARN_MODE == True or (lastClearTimestamp + 19)  < int(time.time()) :
 					globals.SCANNER.clear()
 					lastClearTimestamp = int(time.time())
+					jeedom_com.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
 				globals.SCANNER.start()
 				if globals.LEARN_MODE == True:
 					globals.SCANNER.process(3)

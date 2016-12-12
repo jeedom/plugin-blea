@@ -76,6 +76,10 @@ try {
         ajax::success(blea::getRemoteLog(init('remoteId')));
      }
 	 
+	 if (init('action') == 'getRemoteLogDependancy') {
+        ajax::success(blea::getRemoteLog(init('remoteId'),'_dependancy'));
+     }
+	 
 	 if (init('action') == 'launchremote') {
         ajax::success(blea::launchremote(init('remoteId')));
      }

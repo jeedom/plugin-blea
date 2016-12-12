@@ -33,7 +33,12 @@ sendVarToJS('plugin', $id);
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
-	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . '</a></li>';
+	$icon = '<i class="fa fa-heartbeat" style="color:green"></i>';
+	$last = $remote->getConfiguration('lastupdate','0');
+	if ($last == '0' or time() - strtotime($last)>19){
+		$icon = '<i class="fa fa-deaf" style="color:#b20000"></i>';
+	}
+	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . ' '. $icon.'</a></li>';
 }
 ?>
 			</ul>
@@ -97,6 +102,9 @@ foreach ($remotes as $remote) {
 							echo '<label class="col-sm-2 control-label">{{Installation des dépendances}}</label>
 						<div class="col-sm-3">
 							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-spinner"></i> {{Lancer les dépendances}}</a>
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLogDependancy"><i class="fa fa-file-text-o"></i> {{Log dépendances}}</a>
 						</div>';
 						}
 						echo'</div>';
@@ -215,7 +223,11 @@ foreach ($remotes as $remote) {
 					return;
 				}
 				$('#div_bleaRemoteAlert').showAlert({message: '{{Sauvegarde réussie}}', level: 'success'});
-				displaybleaRemote(data.result.id);
+				$('#md_modal').dialog('close');
+				$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+				$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
+				setTimeout(function() { displaybleaRemote(data.result.id) }, 200);
+				
 			}
 		});
 	});
@@ -250,6 +262,29 @@ foreach ($remotes as $remote) {
 			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
 			data: {
 				action: "getRemoteLog",
+				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
+			},
+			dataType: 'json',
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+			},
+			success: function (data) {
+				if (data.state != 'ok') {
+					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+					return;
+				}
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupérée}}', level: 'success'});
+			}
+		});
+	});
+	
+	$('.bleaRemoteAction[data-action=getRemoteLogDependancy]').on('click',function(){
+		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
+		$.ajax({
+			type: "POST",
+			url: "plugins/"+plugin+"/core/ajax/"+plugin+".ajax.php",
+			data: {
+				action: "getRemoteLogDependancy",
 				remoteId: $('.li_bleaRemote.active').attr('data-bleaRemote_id'),
 			},
 			dataType: 'json',

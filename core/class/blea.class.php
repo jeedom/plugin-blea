@@ -88,15 +88,15 @@ class blea extends eqLogic {
 		return True;
 	}
 	
-	public static function getRemoteLog($_remoteId) {
+	public static function getRemoteLog($_remoteId,$_dependancy='') {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$name = $remoteObject->getRemoteName();
-		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name);
+		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name).$_dependancy;
 		log::add('blea','info','Suppression de la log ' . $local);
 		exec('rm '. $local);
 		log::add('blea','info','Récupération de la log distante');
-		$remoteObject->getFiles($local,'/tmp/blea');
-		$remoteObject->execCmd(['cat /dev/null > /tmp/blea']);
+		$remoteObject->getFiles($local,'/tmp/blea'.$_dependancy);
+		$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
 		return True;
 	}
 	
@@ -105,7 +105,7 @@ class blea extends eqLogic {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$user=$remoteObject->getConfiguration('remoteUser');
 		log::add('blea','info','Installation des dépendances');
-		$remoteObject->execCmd(['/home/'.$user.'/blead/resources/install.sh']);
+		$remoteObject->execCmd(['/home/'.$user.'/blead/resources/install.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
 		blea::launchremote($_remoteId);
 		return True;
 	}
