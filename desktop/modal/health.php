@@ -80,16 +80,19 @@ foreach ($eqLogics as $eqLogic) {
 			$rssiantenna = $rssicmd->execCmd();
 			$antennaname = $name;
 			$signalLevel = 'success';
-			if ($rssiantenna <= -91) {
+			if ($rssiantenna <= -99) {
+				$signalLevel = 'none';
+			}elseif ($rssiantenna <= -85) {
 				$signalLevel = 'danger';
-			} elseif ($rssiantenna <= -80) {
+			} elseif ($rssiantenna <= -75) {
 				$signalLevel = 'warning';
-			} else if ($rssiantenna == 0){
-				$rssiantenna = 'no';
-				$signalLevel = 'danger';
 			}
-			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
-		}
+			if ($signalLevel=='none'){
+				$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
+			} else {
+				$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
+			}
+		}	
 	}
 	$rssicmd = $eqLogic->getCmd('info', 'rssilocal');
 	if (is_object($rssicmd)) {
@@ -98,17 +101,13 @@ foreach ($eqLogics as $eqLogic) {
 		$signalLevel = 'success';
 			if ($rssiantenna <= -99) {
 				$signalLevel = 'none';
-			}
-			elseif ($rssiantenna <= -85) {
+			}elseif ($rssiantenna <= -85) {
 				$signalLevel = 'danger';
 			} elseif ($rssiantenna <= -75) {
 				$signalLevel = 'warning';
-			} else if ($rssiantenna == 0){
-				$rssiantenna = 'no';
-				$signalLevel = 'danger';
 			}
 		if ($signalLevel=='none'){
-			$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
+			$rssi = $rssi . '<span class="label " style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
 		} else {
 			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
 		}
