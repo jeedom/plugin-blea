@@ -54,6 +54,16 @@ if (isset($result['started'])) {
 	if ($result['started'] == 1) {
 		log::add('blea','info','Antenna ' . $name . ' alive sending known devices');
 		blea::sendIdToDeamon();
+		if ($result['source'] != 'local'){
+			$remotes = blea_remote::all();
+			foreach ($remotes as $remote){
+				if ($remote->getRemoteName() == $result['source']){
+					$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
+					$remote->save();
+					break;
+				}
+			}
+		}
 	}
 	die();
 }

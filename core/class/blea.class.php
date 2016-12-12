@@ -70,6 +70,39 @@ class blea extends eqLogic {
 		}
 	}
 	
+	public static function health() {
+        $return = array();
+		$remotes = blea_remote::all();
+		if (count($remotes) !=0){
+			$return[] = array(
+				'test' => __('Nombre d\'antennes', __FILE__),
+				'result' => count($remotes),
+				'advice' =>  '',
+				'state' => True,
+			);
+			foreach ($remotes as $remote){
+				$last = $remote->getConfiguration('lastupdate','0');
+				$name = $remote->getRemoteName();
+				if ($last == '0' or time() - strtotime($last)>19){
+					$result = 'NOK';
+					$advice = 'Vérifier le démon sur votre antenne';
+					$state = False;
+				} else {
+					$result = 'OK';
+					$advice = '';
+					$state = True;
+				}
+				$return[] = array(
+					'test' => __('Démon ' . $name, __FILE__),
+					'result' => $result,
+					'advice' =>  $advice,
+					'state' =>$state,
+				);
+			}
+		}
+        return $return;
+    }
+	
 	public static function sendRemoteFiles($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);

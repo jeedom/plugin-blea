@@ -24,12 +24,6 @@ if (!isConnect('admin')) {
 <form class="form-horizontal">
     <fieldset>
         <legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Supprimer automatiquement les périphériques exclus}}</label>
-            <div class="col-lg-3">
-               <input type="checkbox" class="configKey" data-l1key="autoRemoveExcludeDevice" />
-           </div>
-       </div>
 	   <div class="form-group">
 	<label class="col-lg-4"></label>
 	<div class="col-lg-8">
@@ -56,7 +50,7 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
        </div>
    </div>
    <div class="form-group expertModeVisible">
-    <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)}}</label>
+    <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse)}}</label>
     <div class="col-lg-2">
         <input class="configKey form-control" data-l1key="socketport" placeholder="{{55008}}" />
     </div>
