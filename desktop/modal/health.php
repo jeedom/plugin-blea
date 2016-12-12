@@ -87,9 +87,7 @@ foreach ($eqLogics as $eqLogic) {
 			} elseif ($rssiantenna <= -81) {
 				$signalLevel = 'warning';
 			}
-			if ($signalLevel=='none'){
-				$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
-			} else {
+			if ($signalLevel!='none'){
 				$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
 			}
 		}	
@@ -106,9 +104,7 @@ foreach ($eqLogics as $eqLogic) {
 			} elseif ($rssiantenna <= -81) {
 				$signalLevel = 'warning';
 			}
-		if ($signalLevel=='none'){
-			$rssi = $rssi . '<span class="label " style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
-		} else {
+		if ($signalLevel!='none'){
 			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
 		}
 	}
