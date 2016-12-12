@@ -83,7 +83,9 @@ function load_graph(){
 		for (linkedantenna in eqLogics[eqlogic]['rssi']){
 			signal = eqLogics[eqlogic]['rssi'][linkedantenna];
 			orisignal = signal;
-			if(signal <= -100){
+			if (signal == -200){
+				quality = 200;
+			} else if(signal <= -100){
 				quality = 0;
 			} else if(signal >= -50){
 				quality = 100;
@@ -91,7 +93,7 @@ function load_graph(){
 				quality = 2 * (signal + 100);
 			}
 			lenghtfactor = quality/100;
-			if (lenghtfactor != 999){
+			if (lenghtfactor != 2){
 				haslink=1;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
@@ -151,7 +153,7 @@ function load_graph(){
 	graphics.link(function (link) {
                 dashvalue = '5, 0';
 				color = 'green';
-				if (link.data.signal <= -100) {
+				if (link.data.signal <= -150) {
 					color = 'grey';
 				} else if (link.data.signal <= -91) {
 					color = 'red';

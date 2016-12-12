@@ -80,7 +80,7 @@ foreach ($eqLogics as $eqLogic) {
 			$rssiantenna = $rssicmd->execCmd();
 			$antennaname = $name;
 			$signalLevel = 'success';
-			if ($rssiantenna <= -100) {
+			if ($rssiantenna <= -150) {
 				$signalLevel = 'none';
 			}elseif ($rssiantenna <= -91) {
 				$signalLevel = 'danger';

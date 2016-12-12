@@ -134,13 +134,13 @@ if (isset($result['devices'])) {
 				$cmdremote->setType('info');
 				$cmdremote->setSubType('numeric');
 				$cmdremote->setUnite('dbm');
-				$cmdremote->setConfiguration('returnStateValue',-100);
+				$cmdremote->setConfiguration('returnStateValue',-200);
 				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->setEqLogic_id($blea->getId());
 				$cmdremote->save();
 			}
-			if ($cmdremote->getConfiguration('returnStateValue') != -100){
-				$cmdremote->setConfiguration('returnStateValue',-100);
+			if ($cmdremote->getConfiguration('returnStateValue') != -200){
+				$cmdremote->setConfiguration('returnStateValue',-200);
 				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->save();
 			}
