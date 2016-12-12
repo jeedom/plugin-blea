@@ -53,7 +53,6 @@ if (isset($result['learn_mode'])) {
 if (isset($result['started'])) {
 	if ($result['started'] == 1) {
 		log::add('blea','info','Antenna ' . $name . ' alive sending known devices');
-		blea::sendIdToDeamon();
 		if ($result['source'] != 'local'){
 			$remotes = blea_remote::all();
 			foreach ($remotes as $remote){
@@ -64,6 +63,8 @@ if (isset($result['started'])) {
 				}
 			}
 		}
+		usleep(500);
+		blea::sendIdToDeamon();
 	}
 	die();
 }
