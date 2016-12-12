@@ -150,7 +150,7 @@ class blea extends eqLogic {
 		$device=$remoteObject->getConfiguration('remoteDevice');
 		$script_path = '/home/'.$user.'/blead/resources/blead';
 		$cmd = '/usr/bin/python ' . $script_path . '/blead.py';
-		$cmd .= ' --loglevel debug';
+		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('blea'));
 		$cmd .= ' --device ' . $device;
 		$cmd .= ' --socketport ' . config::byKey('socketport', 'blea');
 		$cmd .= ' --sockethost ""';
@@ -174,10 +174,15 @@ class blea extends eqLogic {
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout');
 		}
 		$value = json_encode($value);
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-		socket_write($socket, $value, strlen($value));
-		socket_close($socket);
+		$last = $remoteObject->getConfiguration('lastupdate','0');
+		if ($last == '0' or time() - strtotime($last)>22){
+				return;
+		} else {
+			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+			socket_write($socket, $value, strlen($value));
+			socket_close($socket);
+		}
 		return True;
 	}
 	
@@ -187,10 +192,15 @@ class blea extends eqLogic {
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
 		$value = json_encode($value);
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-		socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-		socket_write($socket, $value, strlen($value));
-		socket_close($socket);
+		$last = $remoteObject->getConfiguration('lastupdate','0');
+		if ($last == '0' or time() - strtotime($last)>22){
+				return;
+		} else {
+			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+			socket_write($socket, $value, strlen($value));
+			socket_close($socket);
+		}
 		return True;
 	}
 
@@ -306,13 +316,34 @@ class blea extends eqLogic {
 		}
 	}
 	
+	public static function socket_connection($_value,$_allremotes = False) {
+		if (config::byKey('port', 'blea', 'none') != 'none') {
+			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
+			socket_write($socket, $_value, strlen($_value));
+			socket_close($socket);
+		}
+		if ($_allremotes){
+		$remotes = blea_remote::all();
+			foreach ($remotes as $remote) {
+				$ip = $remote->getConfiguration('remoteIp');
+				$last = $remote->getConfiguration('lastupdate','0');
+				if ($last == '0' or time() - strtotime($last)>22){
+					continue;
+				} else {
+					$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+					socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+					socket_write($socket, $_value, strlen($_value));
+					socket_close($socket);
+				}
+			}
+		}
+	}
+	
 	public static function changeLogLive($_level) {
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
 		$value = json_encode($value);
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
-		socket_write($socket, $value, strlen($value));
-		socket_close($socket);
+		self::socket_connection($value,True);
 	}
 
 	public static function deamon_stop() {
@@ -326,55 +357,15 @@ class blea extends eqLogic {
 		sleep(1);
 	}
 
-	public static function excludedDevice($_logical_id = null) {
-		$eqLogic = eqlogic::byLogicalId($_logical_id, 'blea');
-		if (is_object($eqLogic)) {
-			event::add('jeedom::alert', array(
-				'level' => 'warning',
-				'page' => 'blea',
-				'message' => __('Le module ', __FILE__) . $eqLogic->getHumanName() . __(' vient d\'être exclu', __FILE__),
-			));
-			sleep(3);
-			if (config::byKey('autoRemoveExcludeDevice', 'blea') == 1) {
-				$eqLogic->remove();
-				event::add('blea::includeDevice', '');
-			}
-			sleep(3);
-			event::add('jeedom::alert', array(
-				'level' => 'warning',
-				'page' => 'blea',
-				'message' => '',
-			));
-			return;
-		}
-		sleep(2);
-		event::add('jeedom::alert', array(
-			'level' => 'warning',
-			'page' => 'blea',
-			'message' => '',
-		));
-		return;
-	}
-
 	public static function changeIncludeState($_state, $_mode) {
 		if ($_mode == 1) {
 			if ($_state == 1) {
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin'));
+				self::socket_connection($value);
 			} else {
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout'));
+				self::socket_connection($value,True);
 			}
-		} else {
-			if ($_state == 1) {
-				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'excludein'));
-			} else {
-				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'excludeout'));
-			}
-		}
-		if (config::byKey('port', 'blea', 'none') != 'none') {
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
-			socket_write($socket, $value, strlen($value));
-			socket_close($socket);
 		}
 	}
 	public static function getTintedColor($hex, $lum) {
@@ -468,20 +459,7 @@ class blea extends eqLogic {
 				'name' => $this->getConfiguration('name','0'),
 			);
 			$value = json_encode($value);
-			if (config::byKey('port', 'blea', 'none') != 'none') {
-				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-				socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
-				socket_write($socket, $value, strlen($value));
-				socket_close($socket);
-			}
-			$remotes = blea_remote::all();
-			foreach ($remotes as $remote) {
-				$ip = $remote->getConfiguration('remoteIp');
-				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-				socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-				socket_write($socket, $value, strlen($value));
-				socket_close($socket);
-			}
+			self::socket_connection($value,True);
 		}
 	}
 
@@ -490,20 +468,7 @@ class blea extends eqLogic {
 			return;
 		}
 		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
-		if (config::byKey('port', 'blea', 'none') != 'none') {
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
-			socket_write($socket, $value, strlen($value));
-			socket_close($socket);
-		}
-		$remotes = blea_remote::all();
-		foreach ($remotes as $remote) {
-			$ip = $remote->getConfiguration('remoteIp');
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-			socket_write($socket, $value, strlen($value));
-			socket_close($socket);
-		}
+		self::socket_connection($value,True);
 	}
 
 	public function applyModuleConfiguration() {
@@ -702,23 +667,11 @@ class bleaCmd extends cmd {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		}
 		$sender = $eqLogic->getConfiguration('antenna','local');
-		if ($sender == 'local' || $sender == 'all') {
+		if ($sender == 'local'){
 			log::add('blea','info','Envoi depuis local');
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
-			socket_write($socket, $value, strlen($value));
-			socket_close($socket);
-			if ($sender == 'all') {
-				$remotes = blea_remote::all();
-				foreach ($remotes as $remote) {
-					log::add('blea','info','Envoi depuis ' . $remote->getRemoteName());
-					$ip = $remote->getConfiguration('remoteIp');
-					$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-					socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-					socket_write($socket, $value, strlen($value));
-					socket_close($socket);
-				}
-			}
+			self::socket_connection($value);
+		} elseif ($sender == 'all') {
+			self::socket_connection($value,True);
 		} else {
 			$remote = blea_remote::byId($sender);
 			log::add('blea','info','Envoi depuis ' . $remote->getRemoteName());
