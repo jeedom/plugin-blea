@@ -139,7 +139,7 @@ if (isset($result['devices'])) {
 				$cmdpresent->setName(__('Present', __FILE__));
 				$cmdpresent->setType('info');
 				$cmdpresent->setSubType('binary');
-				$cmdpresent->setConfiguration('returnStateValue',0);
+				$cmdpresent->setConfiguration('returnStateValue',-100);
 				$cmdpresent->setConfiguration('returnStateTime',1);
 				$cmdpresent->setEqLogic_id($blea->getId());
 				$cmdpresent->save();

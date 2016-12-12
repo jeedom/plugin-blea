@@ -96,7 +96,10 @@ foreach ($eqLogics as $eqLogic) {
 		$rssiantenna = $rssicmd->execCmd();
 		$antennaname = 'local';
 		$signalLevel = 'success';
-			if ($rssiantenna <= -85) {
+			if ($rssiantenna <= -99) {
+				$signalLevel = 'none';
+			}
+			elseif ($rssiantenna <= -85) {
 				$signalLevel = 'danger';
 			} elseif ($rssiantenna <= -75) {
 				$signalLevel = 'warning';
@@ -104,7 +107,11 @@ foreach ($eqLogics as $eqLogic) {
 				$rssiantenna = 'no';
 				$signalLevel = 'danger';
 			}
-		$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
+		if ($signalLevel=='none'){
+			$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;color:grey">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
+		} else {
+			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
+		}
 	}
 	$antenna = $eqLogic->getConfiguration('antenna','local');
 	$antennareceive = $eqLogic->getConfiguration('antennareceive','local');
