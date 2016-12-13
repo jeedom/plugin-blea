@@ -316,6 +316,29 @@ class blea extends eqLogic {
 		}
 	}
 	
+	public static function saveAntennaPosition($_antennas){
+		$remotes = blea_remote::all();
+		$antennas = json_decode($_antennas, true);
+		foreach ($antennas as $antenna => $position) {
+			$name = $antenna;
+			$x= explode('|',$position)[0];
+			$y= explode('|',$position)[1];
+			if ($name == 'local'){
+				config::save('positionx', $x, 'blea');
+				config::save('positiony', $y, 'blea');
+			} else {
+				foreach ($remotes as $remote) {
+					if ($name == $remote->getRemoteName()){
+						$remote->setConfiguration('positionx',$x);
+						$remote->setConfiguration('positiony',$y);
+						$remote->save();
+						break;
+					}
+				}
+			}
+		}
+	}
+	
 	public static function socket_connection($_value,$_allremotes = False) {
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);

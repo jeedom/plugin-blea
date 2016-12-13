@@ -27,9 +27,12 @@ try {
 	ajax::init();
 
 	if (init('action') == 'changeIncludeState') {
-		log::add('blea','debug',init('state').init('mode'));
 		blea::changeIncludeState(init('state'), init('mode'));
 		ajax::success();
+	}
+	
+	if (init('action') == 'saveAntennaPosition') {
+		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}
 	
 	if (init('action') == 'getModelListParam') {

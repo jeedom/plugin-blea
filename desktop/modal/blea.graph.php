@@ -22,12 +22,19 @@ if (!isConnect('admin')) {
 
 $remotes = blea_remote::all();
 $eqLogics = array();
-$antennas = array('local');
+$antennas = array();
 $remotes = blea_remote::all();
 foreach ($remotes as $remote){
+	$info = array();
 	$name = $remote->getRemoteName();
-	$antennas[]=$name;
+	$info['x'] = $remote->getConfiguration('positionx',999);
+	$info['y'] = $remote->getConfiguration('positiony',999);
+	$antennas[$name]=$info;
 }
+$infolocal=array();
+$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+$antennas['local']=$infolocal;
 foreach (eqLogic::byType('blea') as $eqLogic){
 	$info =array();
 	$info['name'] = $eqLogic->getName();
@@ -59,7 +66,9 @@ sendVarToJS('antennas', $antennas);
     }
 </style>
 <div id="graph_network" class="tab-pane">
-	<div id="graph-node-name"></div>
+<a class="btn btn-success bleaRemoteAction" data-action="saveanttenna"><i class="fa fa-floppy-o"></i> {{Position Antennes}}</a>
+<a class="btn btn-success bleaRemoteAction" data-action="refresh"><i class="fa fa-refresh"></i></a>
+<i class="fa fa-question-circle" style="cursor:pointer;font-size:2em" title="{{Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne local via des pointillés}}"></i>
 </div>
 
 <script>
@@ -67,19 +76,18 @@ load_graph();
 function load_graph(){
     $('#graph_network svg').remove();
 	var graph = Viva.Graph.graph();
-	
 	for (antenna in antennas) {
-		if (antennas[antenna] == 'local'){
-			graph.addNode(antennas[antenna],{url : 'plugins/blea/3rdparty/jeedom.png'});
+		if (antenna == 'local'){
+			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/jeedom.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		} else {
-			graph.addNode(antennas[antenna],{url : 'plugins/blea/3rdparty/antenna.png'});
+			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/antenna.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		}
-		topin = graph.getNode(antennas[antenna]);
+		topin = graph.getNode(antenna);
 		topin.isPinned = true;
 	}
 	for (eqlogic in eqLogics) {
 		haslink = 0;
-		graph.addNode(eqLogics[eqlogic]['name'],{url : 'plugins/blea/core/config/devices/'+eqLogics[eqlogic]['icon']+'.jpg'});
+		graph.addNode(eqLogics[eqlogic]['name'],{url : 'plugins/blea/core/config/devices/'+eqLogics[eqlogic]['icon']+'.jpg',antenna :0});
 		for (linkedantenna in eqLogics[eqlogic]['rssi']){
 			signal = eqLogics[eqlogic]['rssi'][linkedantenna];
 			orisignal = signal;
@@ -129,9 +137,7 @@ function load_graph(){
                 }, function () {
                     highlightRelatedNodes(node.id, false);
                 });
-                return ui;
-              return ui;
-	
+                return ui;	
     })
     .placeNode(function(nodeUI, pos){
 		nodeUI.attr('transform',
@@ -165,13 +171,56 @@ function load_graph(){
                 }
                 return Viva.Graph.svg('line').attr('stroke', color).attr('stroke-dasharray', dashvalue).attr('stroke-width', '0.6px');
             });
+	for (antenna in antennas) {
+		if (parseInt(antennas[antenna]['x']) != 999){
+			layout.setNodePosition(antenna,parseInt(antennas[antenna]['x']),parseInt(antennas[antenna]['y']));
+		}
+}
 	var renderer = Viva.Graph.View.renderer(graph,
     {
         graphics : graphics,
 		layout : layout,
-		prerender: 1200,
+		prerender : 1200,
 		container: document.getElementById('graph_network')
     });
 renderer.run();
+$('.bleaRemoteAction[data-action=refresh]').on('click',function(){
+	$('#md_modal').dialog('close');
+	$('#md_modal').dialog({title: "{{Réseau BLEA}}"});
+	$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.graph&id=blea').dialog('open');
+});
+$('.bleaRemoteAction[data-action=saveanttenna]').on('click',function(){
+	var antenna= {}
+	graph.forEachNode(function (node) {
+	if (node.data.antenna == 1){
+  var position = layout.getNodePosition(node.id);
+  antenna[node.id] = position.x +'|'+position.y;
+	}
+});
+
+$.ajax({// fonction permettant de faire de l'ajax
+            type: "POST", // méthode de transmission des données au fichier php
+            url: "plugins/blea/core/ajax/blea.ajax.php", // url du fichier php
+            data: {
+                action: "saveAntennaPosition",
+				antennas: json_encode(antenna)
+            },
+            dataType: 'json',
+            error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { // si l'appel a bien fonctionné
+        if (data.state != 'ok') {
+            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+            return;
+        }
+		$('#div_alert').showAlert({message: 'Positions des antennes sauvées avec succès', level: 'success'});
+		$('#md_modal').dialog('close');
+		$('#md_modal').dialog({title: "{{Réseau BLEA}}"});
+		$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.graph&id=blea').dialog('open');
+        }
+    });
+});
+
 }
 </script>
