@@ -141,6 +141,19 @@
                 "isVisible": 0,
                 "logicalId": "colorinfo"
             }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Playbulb",
+                "name": "Sphère",
+				"doc": "",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Portée capricieuse, qui peut justifier un traitement des actions un tout petit peu long",
+				"inclusion" : "Mode inclusion",
+				"imglink": "sphere"
+            }
         ]
     }
 }

@@ -457,7 +457,17 @@ class blea extends eqLogic {
 		if ($this->getConfiguration('needsrefresh',0) != 0) {
 			$needsrefresh = true;
 		}
-		return [$modelList, $needsrefresh];
+		$remark = false;
+		$json = self::devicesParameters($_conf);
+		if (isset($json['compatibility'])) {
+			foreach ($json['compatibility'] as $compatibility){
+				if ($compatibility['imglink'] == explode('/',$this->getConfiguration('iconModel'))[1]){
+					$remark = $compatibility['remark'] . ' | ' . $compatibility['inclusion'];
+					break;
+				}
+			}
+		}
+		return [$modelList, $needsrefresh,$remark];
 	}
 
 	public function postSave() {

@@ -218,10 +218,11 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
     <form class="form-horizontal">
       <fieldset>
        <div class="form-group">
+        <label class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-         <a class="btn btn-primary btn-xs pull-right paramDevice" id="bt_configureDevice" style="display:none"><i class="fa fa-wrench"></i> {{Configuration des paramètres}}</a>
-       </div>
-     </div>
+          <a class="btn btn-danger" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
+          </div>
+        </div>
      <div class="form-group">
       <label class="col-sm-2 control-label">{{Equipement}}</label>
       <div class="col-sm-8">
@@ -285,6 +286,8 @@ foreach ($groups as $group) {
 </center>
 </fieldset>
 </form>
+</br>
+<div class="alert alert-info globalRemark" style="display:none"></div>
 </div>
 </div>
 

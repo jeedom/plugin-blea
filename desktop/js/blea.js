@@ -75,6 +75,13 @@ function getModelListParam(_conf,_id) {
 		} else {
 			$(".refreshdelay").hide();
 		}
+		if (data.result[2] != false){
+             $(".globalRemark").show();
+             $(".globalRemark").empty().append(data.result[2]);
+         } else {
+			 $(".globalRemark").empty()
+             $(".globalRemark").hide();
+         }
         $(".modelList").show();
         $(".listModel").html(options);
 		$icon = $('.eqLogicAttr[data-l1key=configuration][data-l2key=iconModel]').value();
@@ -84,6 +91,36 @@ function getModelListParam(_conf,_id) {
     }
 });
 }
+
+ $('#bt_autoDetectModule').on('click', function () {
+
+    bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+        if (result) {
+            $.ajax({
+                type: "POST", // méthode de transmission des données au fichier php
+                url: "plugins/blea/core/ajax/blea.ajax.php", 
+                data: {
+                    action: "autoDetectModule",
+                    id: $('.eqLogicAttr[data-l1key=id]').value(),
+                },
+                dataType: 'json',
+                global: false,
+                error: function (request, status, error) {
+                    handleAjaxError(request, status, error);
+                },
+                success: function (data) { 
+                    if (data.state != 'ok') {
+                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                        return;
+                    }
+                    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                    $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                }
+            });
+        }
+    });
+});
+
 
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=iconModel]').on('change', function () {
   if($(this).value() != '' && $(this).value() != null){

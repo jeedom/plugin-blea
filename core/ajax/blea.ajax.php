@@ -35,6 +35,18 @@ try {
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}
 	
+	if (init('action') == 'autoDetectModule') {
+		$eqLogic = blea::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('Blea eqLogic non trouvé : ', __FILE__) . init('id'));
+		}
+		foreach ($eqLogic->getCmd() as $cmd) {
+			$cmd->remove();
+		}
+		$eqLogic->applyModuleConfiguration();
+		ajax::success();
+	}
+	
 	if (init('action') == 'getModelListParam') {
 		$blea = blea::byId(init('id'));
 		if (!is_object($blea)) {
