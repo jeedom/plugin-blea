@@ -180,7 +180,7 @@ function load_graph(){
     {
         graphics : graphics,
 		layout : layout,
-		prerender : 1200,
+		prerender : 10000,
 		container: document.getElementById('graph_network')
     });
 renderer.run();
