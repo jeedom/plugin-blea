@@ -702,9 +702,9 @@ class bleaCmd extends cmd {
 		$sender = $eqLogic->getConfiguration('antenna','local');
 		if ($sender == 'local'){
 			log::add('blea','info','Envoi depuis local');
-			self::socket_connection($value);
+			blea::socket_connection($value);
 		} elseif ($sender == 'all') {
-			self::socket_connection($value,True);
+			blea::socket_connection($value,True);
 		} else {
 			$remote = blea_remote::byId($sender);
 			log::add('blea','info','Envoi depuis ' . $remote->getRemoteName());
