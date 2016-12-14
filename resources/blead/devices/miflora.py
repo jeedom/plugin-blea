@@ -10,7 +10,7 @@ class Miflora():
 		self.name = 'miflora'
 
 	def isvalid(self,name,manuf=''):
-		if name == 'Flower mate':
+		if name == 'Flower mate' or name == 'Flower care':
 			return True
 			
 	def parse(self,data,mac):
