@@ -47,7 +47,6 @@ if (isset($result['learn_mode'])) {
 			'state' => 0)
 		);
 	}
-	die();
 }
 
 if (isset($result['started'])) {
@@ -66,7 +65,6 @@ if (isset($result['started'])) {
 		usleep(500);
 		blea::sendIdToDeamon();
 	}
-	die();
 }
 if (isset($result['heartbeat'])) {
 	if ($result['heartbeat'] == 1) {
@@ -82,7 +80,6 @@ if (isset($result['heartbeat'])) {
 			}
 		}
 	}
-	die();
 }
 
 if (isset($result['devices'])) {
@@ -109,6 +106,7 @@ if (isset($result['devices'])) {
 			if ($datas['learn'] != 1) {
 				continue;
 			}
+			log::add('blea','info','This is a learn from antenna ' . $datas['source']);
 			$blea = blea::createFromDef($datas);
 			if (!is_object($blea)) {
 				log::add('blea', 'debug', __('Aucun équipement trouvé pour : ', __FILE__) . secureXSS($datas['id']));
@@ -125,6 +123,15 @@ if (isset($result['devices'])) {
 			continue;
 		}
 		if (isset($datas['rssi'])) {
+			if ($datas['rssi']=='same'){
+				foreach ($blea->getCmd() as $cmd){
+					if (substr($cmd->getLogicalId(),0,4) == 'rssi'){
+						$oldrssi = $cmd->execCmd();
+						$cmd->event($oldrssi);
+					}
+				}
+				die();
+			}
 			$cmdremote = $blea->getCmd(null, 'rssi' . $datas['source']);
 			if (!is_object($cmdremote)) {
 				$cmdremote = new bleaCmd();
@@ -135,14 +142,18 @@ if (isset($result['devices'])) {
 				$cmdremote->setType('info');
 				$cmdremote->setSubType('numeric');
 				$cmdremote->setUnite('dbm');
-				$cmdremote->setConfiguration('returnStateValue',-200);
-				$cmdremote->setConfiguration('returnStateTime',1);
 				$cmdremote->setEqLogic_id($blea->getId());
 				$cmdremote->save();
 			}
-			if ($cmdremote->getConfiguration('returnStateValue') != -200){
-				$cmdremote->setConfiguration('returnStateValue',-200);
-				$cmdremote->setConfiguration('returnStateTime',1);
+			if ($blea->getConfiguration('resetRssis',1) == 1){
+				if ($cmdremote->getConfiguration('returnStateValue') != -200){
+					$cmdremote->setConfiguration('returnStateValue',-200);
+					$cmdremote->setConfiguration('returnStateTime',1);
+					$cmdremote->save();
+				}
+			}
+			if ($cmdremote->getConfiguration('repeatEventManagement') != "always"){
+				$cmdremote->setConfiguration('repeatEventManagement',"always");
 				$cmdremote->save();
 			}
 			$cmdremote->event($datas['rssi']);
@@ -155,15 +166,15 @@ if (isset($result['devices'])) {
 				$cmdpresent->setName(__('Present', __FILE__));
 				$cmdpresent->setType('info');
 				$cmdpresent->setSubType('binary');
-				$cmdpresent->setConfiguration('returnStateValue',0);
-				$cmdpresent->setConfiguration('returnStateTime',1);
 				$cmdpresent->setEqLogic_id($blea->getId());
 				$cmdpresent->save();
 			}
-			if ($cmdpresent->getConfiguration('returnStateValue') != 0){
-				$cmdpresent->setConfiguration('returnStateValue',0);
-				$cmdpresent->setConfiguration('returnStateTime',1);
-				$cmdpresent->save();
+			if ($blea->getConfiguration('resetRssis',1) == 1){
+				if ($cmdpresent->getConfiguration('returnStateValue') != 0){
+					$cmdpresent->setConfiguration('returnStateValue',0);
+					$cmdpresent->setConfiguration('returnStateTime',1);
+					$cmdpresent->save();
+				}
 			}
 			$cmdpresent->event(1);
 		}

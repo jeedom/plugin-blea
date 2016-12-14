@@ -1,0 +1,46 @@
+<div class="eqLogic-widget eqLogic dotti" style="min-height : 180px;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+  <span class="statusCmd pull-right" style="position : absolute;left : 2px;z-index: 1030;"></span>
+  <center class="widget-name" style="#hideEqLogicName#">#name_display#  <span style="font-size: 0.85em;position: relative;top:-2px;">#object_name#</span></center>
+  
+<div class="row">
+    <div class="col-xs-12">
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_loadimage_id#" style="display:none;"></span>
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_sendtext_id#" style="display:none;"></span>
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_sendcolor_id#" style="display:none;"></span>
+      <center>
+        <label class="fa fa-circle pixelCircle#uid#" style="color : #000000;font-size:2em; cursor: pointer;"><div style="width:0;height:0;visibility:hidden"><input class="pixelcolor#uid#" type="color" value="#000000" style="width:0;height:0;visibility:hidden"></div></label>
+        <a class="ui-btn ui-mini ui-btn-inline ui-btn-b cmd blackscreen#uid#" data-cmd_id="#cmd_blackscreen_id#"><i class="fa fa-power-off"></i></a>
+		<a class="ui-btn ui-mini ui-btn-inline ui-btn-b sendtext#uid#" id="bt_sendtext#uid#"><i class="fa fa-share-square-o"></i></a>
+	  <div style="width:50%"><input class="name#uid#" id="texte" type='text' style="margin-top:5px;border-radius: 10px;"/></div>
+	  <div class="listImage#uid#" style="width:75%"><select class="memoryload#uid# form-control" style="margin-top:5px;">
+		</select></div>
+     </center>
+    </div>
+  </div>
+
+  <script>
+   if('#loadimage#' != ''){
+			loadimage#id# = json_decode('#loadimage#');
+			loadloadimage#id# = '';
+			for(var i in loadimage#id#){
+				loadloadimage#id# += '<option value="' + loadimage#id#[i] + '">' + loadimage#id#[i].charAt(0).toUpperCase() + loadimage#id#[i].slice(1) + '</option>';
+			}
+			$(".dotti[data-eqLogic_uid=#uid#] .memoryload#uid#").append(loadloadimage#id#);
+		}
+	$('.dotti[data-eqLogic_uid=#uid#] .memoryload#uid#').on('change',function(){
+		jeedom.cmd.execute({id: '#cmd_loadimage_id#', value: {'title': $(this).value()}});
+	});
+	$('#bt_sendtext#uid#').on('click',function(){
+		console.log($('.name#uid#').val());
+		jeedom.cmd.execute({id: '#cmd_sendtext_id#', value: {'message': $('.name#uid#').val()}});
+	});
+	
+   $('.eqLogic[data-eqLogic_uid=#uid#] .cmd').on('click', function() {
+     jeedom.cmd.execute({id: $(this).data('cmd_id')});
+   });
+   $('.pixelcolor#uid#').on('change', function() {
+	$(this).closest('.pixelCircle#uid#').css('color', $(this).val());
+	jeedom.cmd.execute({id: '#cmd_sendcolor_id#', value: {color : $(this).val()}});
+});
+ </script>
+</div>

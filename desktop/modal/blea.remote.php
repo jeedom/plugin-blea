@@ -35,7 +35,7 @@ sendVarToJS('plugin', $id);
 foreach ($remotes as $remote) {
 	$icon = '<i class="fa fa-heartbeat" style="color:green"></i>';
 	$last = $remote->getConfiguration('lastupdate','0');
-	if ($last == '0' or time() - strtotime($last)>22){
+	if ($last == '0' or time() - strtotime($last)>65){
 		$icon = '<i class="fa fa-deaf" style="color:#b20000"></i>';
 	}
 	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . ' '. $icon.'</a></li>';

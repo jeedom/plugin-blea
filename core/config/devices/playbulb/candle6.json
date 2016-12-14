@@ -2,6 +2,10 @@
     "candle6": {
         "name": "Playbulb - Candle (New)",
         "groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"canbelocked" : 1
+		},
 		"commands": [
 			{	
 				"name": "Couleur",
@@ -145,12 +149,12 @@
 		"compatibility": [
             {
                 "manufacturer": "Playbulb",
-                "name": "Candle 6",
+                "name": "Candle",
 				"doc": "",
 				"type": "Lumières",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Portée capricieuse, qui peut justifier un traitement des actions un tout petit peu long",
+				"remark": "Portée capricieuse, qui peut justifier un traitement des actions un tout petit peu long. Peut être détecté à la place d'un autre playbulb si c'est le cas changez dans le menu déroulant",
 				"inclusion" : "Mode inclusion",
 				"imglink": "candle"
             }

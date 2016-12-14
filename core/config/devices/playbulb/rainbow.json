@@ -2,6 +2,10 @@
     "rainbow": {
         "name": "Playbulb - Rainbow",
         "groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"canbelocked" : 1
+		},
 		"commands": [
 			{	
 				"name": "Couleur",
@@ -140,6 +144,19 @@
                 "subtype": "string",
                 "isVisible": 0,
                 "logicalId": "colorinfo"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Playbulb",
+                "name": "Candle",
+				"doc": "",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Portée capricieuse, qui peut justifier un traitement des actions un tout petit peu long. Peut être détecté à la place d'un autre playbulb si c'est le cas changez dans le menu déroulant",
+				"inclusion" : "Mode inclusion",
+				"imglink": "candle"
             }
         ]
     }

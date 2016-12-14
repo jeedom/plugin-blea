@@ -6,7 +6,8 @@
 			"needsrefresh" : 1,
 			"name" : "miflora",
 			"battery_type" : "1x3V CR2032",
-			"delay" : 300
+			"delay" : 300,
+			"cancontrol" : 1
 		},
         "commands": [
 			{

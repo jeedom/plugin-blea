@@ -1,0 +1,136 @@
+{
+    "dotti": {
+        "name": "Dotti",
+        "groupe" : "Afficheur",
+		"configuration" : {
+			"specificmodal" : 1,
+			"specificclass" : 1,
+			"cancontrol" : 1,
+			"specificwidgets" : 1,
+			"canbelocked" : 1
+		},
+        "commands": [
+			{	
+				"name": "Couleur",
+                "type": "action",
+                "subtype": "color",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:sendcolor,handle:0x2a,value:calcul,type:color",
+				"configuration": {
+					"logicalwidget" : "sendcolor"
+				}
+            },
+			{	
+				"name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:blackscreen,handle:0x2a,value:calcul,type:color",
+				"configuration": {
+					"logicalwidget" : "blackscreen"
+				}
+            },
+			{	
+				"name": "Afficher texte",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:sendtext,handle:0x2a,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"title_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "sendtext"
+				}
+			},
+			{	
+				"name": "Nombre en ligne",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:rownumber,handle:0x2a,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"title_placeholder": "Ligne",
+					"message_placeholder": "Nombre"
+				}
+			},
+			{	
+				"name": "Image aléatoire",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:sendrandom,handle:0x2a,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"title_placeholder": "Options",
+					"message_placeholder": "Vide ou liste d'icône sépraré par ;"
+				}
+            },
+			{	
+				"name": "Charger Image",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:loadimage,handle:0x2a,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 0,
+					"title_placeholder": "Nom",
+					"message_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "loadimage"
+				}
+            },
+			{	
+				"name": "Image Précédente",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:lastimage,handle:0x2a,type:display,value:calcul"
+            },
+			{	
+				"name": "Raz priorité",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:resetpriority,handle:0x2a,type:display,value:calcul,callback:no"
+            },
+			{	
+				"name": "Envoie Raw",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:sendraw,handle:0x2a,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_placeholder": "Données brute"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Dotti",
+                "name": "Dotti",
+				"doc": "",
+				"type": "Afficheur",
+				"ref" : "",
+				"comlink": "",
+				"remark": "En cours de developpement",
+				"inclusion" : "Mode inclusion",
+				"imglink": "dotti"
+            }
+        ]
+    }
+}

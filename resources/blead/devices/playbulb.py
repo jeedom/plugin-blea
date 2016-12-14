@@ -25,6 +25,10 @@ class Playbulb():
 						'BTL400_V3.7':'garden',
 						'BTL400':'garden'}
 			version = self.findVersion(mac)
+			logging.debug("Found " + str(version))
+			if not version or version == '':
+				logging.debug("Not able to have consistent info from playbulb device")
+				return
 			if version in versionDict:
 				action['version'] = versionDict[version]
 			else:
@@ -34,13 +38,16 @@ class Playbulb():
 	def findVersion(self,mac):
 		conn = Connector(mac)
 		conn.connect()
+		if not conn.isconnected:
+			return
 		value=''
 		characteristics = conn.getCharacteristics()
 		for char in characteristics:
 			try:
 				if char.supportsRead():
 					value = char.read()
-					if value[0:3] == 'BTL':
+					logging.debug(str(value))
+					if value and value[0:3] == 'BTL' and len(value)>6:
 						break
 			except Exception,e:
 				continue
@@ -54,7 +61,16 @@ class Playbulb():
 		value = message['command']['value']
 		if 'type' in message['command']:
 			type = message['command']['type']
-		conn = Connector(mac)
+		if mac in globals.KEEPED_CONNECTION:
+			logging.debug('Already a connection for ' + mac + ' use it')
+			conn = globals.KEEPED_CONNECTION[mac]
+		else:
+			logging.debug('Creating a new connection for ' + mac)
+			conn = Connector(mac)
+			globals.KEEPED_CONNECTION[mac]=conn
+			conn.connect()
+		if not conn.isconnected:
+			return
 		init = self.read(conn,handle)
 		if type == 'speed':
 			speed = 255-int(value);
@@ -68,27 +84,28 @@ class Playbulb():
 			initeffect = self.read(conn,message['command']['effect'])
 			if str(initeffect)[8:10] == '04':
 				valueprep = str(initeffect)[0:8] + '01' + '00' + str(initeffect)[12:16]
-				conn.writeCharacteristic(message['command']['effect'],valueprep)
+				result = conn.writeCharacteristic(message['command']['effect'],valueprep)
+				if not result:
+					conn.disconnect()
+					logging.debug("Failed to write to device probably bad bluetooth connection")
 		elif type == 'luminosity':
 			value = self.getTintedColor(message['command']['secondary'],value)
 		arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-		while True:
-			i = i + 1
-			try:
-				conn.writeCharacteristic(handle,value)
-				break
-			except Exception,e:
-				if i >= 10 :
-					return
-		color = self.read(conn,handle)
+		result = conn.writeCharacteristic(handle,value)
+		if not result:
+			result = conn.writeCharacteristic(handle,value)
+			if not result:
+				logging.debug("Failed to write to device probably bad bluetooth connection")
 		conn.disconnect()
 		return
 		
 	def read(self,conn,handle):
+		result = conn.readCharacteristic(handle)
+		logging.debug(result)
 		try:
-			value = struct.unpack('<4B',conn.readCharacteristic(handle))
+			value = struct.unpack('<4B',result)
 		except:
-			value = struct.unpack('<8B',conn.readCharacteristic(handle))
+			value = struct.unpack('<8B',result)
 		color=''
 		for x in value:
 			itercolor = "%x" % x

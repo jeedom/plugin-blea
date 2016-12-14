@@ -1,0 +1,33 @@
+{
+    "default": {
+        "name": "Inconnu",
+        "groupe" : "Inconnu",
+        "commands": [
+			{
+                "name": "Raw data",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "rawdata"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Inconnu",
+                "name": "Inconnu",
+				"doc": "",
+				"type": "Defaut",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour les équipements non encore rajouté dans le plugin, pour a minima avoir la présence et les rssi ainsi que la data brute",
+				"inclusion" : "Mode inclusion",
+				"imglink": "default"
+            }
+        ]
+    }
+}

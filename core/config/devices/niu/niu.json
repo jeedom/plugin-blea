@@ -2,6 +2,10 @@
     "niu": {
         "name": "Niu",
 		"groupe" : "Boutons",
+		"configuration" : {
+			"resetRssis" : 0,
+			"battery_type" : "1x3V CR2032"
+		},
         "commands": [
             {
                 "name": "BoutonID",

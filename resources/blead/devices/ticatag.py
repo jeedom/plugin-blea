@@ -42,6 +42,8 @@ class Ticatag():
 		value = message['command']['value']
 		conn = Connector(mac)
 		conn.connect()
+		if not conn.isconnected:
+			return
 		conn.writeCharacteristic(handle,value)
 		conn.disconnect()
 		return

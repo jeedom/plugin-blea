@@ -23,19 +23,25 @@ if (!isConnect('admin')) {
 ?>
 <form class="form-horizontal">
     <fieldset>
-        <legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
-	   <div class="form-group">
-	<label class="col-lg-4"></label>
-	<div class="col-lg-8">
-		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fa fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
-		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fa fa-paperclip"></i> {{Remettre niveau de log local}}</a>
-	</div>
+         <legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
+      <div class="form-group">
+        <label class="col-lg-4 control-label">{{Autoriser l'inclusion de devices inconnus}}</label>
+        <div class="col-lg-3">
+           <input type="checkbox" class="configKey" data-l1key="allowAllinclusion" />
+       </div>
 	</div>
    </fieldset>
 </form>
 <form class="form-horizontal">
     <fieldset>
     <legend><i class="icon loisir-darth"></i> {{Démon}}</legend>
+		 <div class="form-group">
+	<label class="col-lg-4"></label>
+	<div class="col-lg-8">
+		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fa fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
+		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fa fa-paperclip"></i> {{Remettre niveau de log local}}</a>
+	</div>
+	</div>
        <div class="form-group">
         <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
         <div class="col-sm-2">

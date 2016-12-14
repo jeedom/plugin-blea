@@ -1,0 +1,108 @@
+from bluepy.btle import Scanner, DefaultDelegate
+import time
+import logging
+import globals
+from multiconnect import Connector
+
+class Dotti():
+	def __init__(self):
+		self.name = 'dotti'
+
+	def isvalid(self,name,manuf=''):
+		if name.lower().startswith(self.name):
+			return True
+
+	def parse(self,data,mac):
+		action={}
+		action['present'] = 1
+		return action
+		
+	def action(self,message):
+		mac = message['device']['id']
+		if mac not in globals.LAST_STORAGE:
+			globals.LAST_STORAGE[mac]={}
+		handle = message['command']['handle']
+		value = message['command']['value']
+		type = message['command']['type']
+		if mac in globals.KEEPED_CONNECTION:
+			logging.debug('Already a connection for ' + mac + ' use it')
+			conn = globals.KEEPED_CONNECTION[mac]
+		else:
+			logging.debug('Creating a new connection for ' + mac)
+			conn = Connector(mac)
+			globals.KEEPED_CONNECTION[mac]=conn
+			conn.connect()
+		if not conn.isconnected:
+			return
+		try:
+			if type == 'color':
+				logging.debug('Sending Color')
+				data = message['command']['data']
+				conn.writeCharacteristic('0x2a','0601'+self.twoDigitHex(int(data[0]))+self.twoDigitHex(int(data[1]))+self.twoDigitHex(int(data[2]))+'00')
+				colorArray ={}
+				for i in range(64): 
+					colorArray[int(i) + 1] = self.rgb_to_hex((int(data[0]), int(data[1]), int(data[2])))
+				globals.LAST_STORAGE[mac] = colorArray
+				logging.debug('Color sent')
+			elif type == 'display':
+				logging.debug('Sending Display')
+				data = message['command']['data']
+				save_pixel=0
+				total_pixel=0
+				temp={}
+				maxint=0
+				maxhex='#FFFFFF'
+				if len(data) == 64:
+					for pixel, value in data.iteritems():
+						shex = self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2])));
+						if shex not in temp:
+							temp[shex] = 1
+						else:
+							temp[shex] = temp[shex] + 1
+						if temp[shex] > maxint:
+							maxint = temp[shex]
+							maxhex = shex
+					for pixel, value in data.iteritems():
+						total_pixel = total_pixel + 1
+						if mac in globals.LAST_STORAGE:
+							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0],value[1], value[2])).lower():
+								save_pixel = save_pixel + 1
+					if  (maxint+1) > save_pixel and maxint > 2:
+						logging.debug('I use color all screen method to improve display speed in :'+str(maxhex))
+						conn.writeCharacteristic(handle,'0601'+str(maxhex).replace('#','')+'00')
+						colorArray ={}
+						for i in range(64): 
+							colorArray[int(i) + 1] = str(maxhex)
+						globals.LAST_STORAGE[mac] = colorArray
+				save_pixel=0
+				total_pixel=0
+				colorArray ={}
+				for pixel, value in data.iteritems():
+					total_pixel = total_pixel + 1
+					if mac in globals.LAST_STORAGE:
+						if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0], value[1], value[2])).lower():
+							save_pixel = save_pixel + 1
+							continue
+					conn.writeCharacteristic('0x2a','0702'+self.twoDigitHex(int(pixel))+self.twoDigitHex(value[0])+self.twoDigitHex(value[1])+self.twoDigitHex(value[2]))
+					colorArray[int(i) + 1] = self.rgb_to_hex((value[0], value[1], value[2]))
+					time.sleep(0.05)
+				globals.LAST_STORAGE[mac] = colorArray
+				logging.debug('I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
+				logging.debug('Display sent')
+		except Exception,e:
+			logging.debug("Failed to finish : %s" % str(e))
+		conn.disconnect()
+		return
+		
+	def hex_to_rgb(self,value):
+		value = value.lstrip('#')
+		lv = len(value)
+		return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
+	def rgb_to_hex(self,rgb):
+		return '#%02x%02x%02x' % rgb
+	
+	def twoDigitHex(self,number):
+		return '%02x' % number
+
+globals.COMPATIBILITY.append(Dotti)

@@ -2,6 +2,9 @@
     "ticatag": {
         "name": "Ticatag",
 		"groupe" : "Boutons",
+		"configuration" : {
+			"cancontrol" : 1
+		},
         "commands": [
 			{
                 "name": "Present",
@@ -17,7 +20,11 @@
                 "configuration" : {
                     "returnStateValue" : 0,
                     "returnStateTime" : 1
-                }
+                },
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
             },
 			{
                 "name": "Température",
@@ -29,7 +36,15 @@
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "°C",
-                "logicalId": "temperature"
+                "logicalId": "temperature",
+				"display": {
+					"icon": "<i class=\"icon divers-thermometer31\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
             },
             {
                 "name": "BoutonID",
@@ -51,14 +66,26 @@
                 "isVisible": 1,
                 "isHistorized": 1,
                 "unite": "",
-                "logicalId": "button"
+                "logicalId": "button",
+				"display": {
+					"icon": "<i class=\"fa fa-circle-o\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
             },
 			{
                 "name": "Bip",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:ticatag,handle:0x12,value:01"
+                "logicalId": "name:ticatag,handle:0x12,value:01",
+				"display": {
+					"icon": "<i class=\"icon jeedom-alerte\"><\/i>",
+					"generic_type": "DONT"
+				}
             },
             {
                 "name": "Batterie",

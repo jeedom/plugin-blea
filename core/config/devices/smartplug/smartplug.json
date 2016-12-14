@@ -5,7 +5,9 @@
 		"configuration" : {
 			"needsrefresh" : 1,
 			"name" : "smartplug",
-			"delay" : 120
+			"delay" : 120,
+			"cancontrol" : 1,
+			"canbelocked" : 1
 		},
         "commands": [
 			{

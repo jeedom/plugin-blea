@@ -78,7 +78,7 @@ function load_graph(){
 	var graph = Viva.Graph.graph();
 	for (antenna in antennas) {
 		if (antenna == 'local'){
-			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/jeedom.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
+			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/jeeblue.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		} else {
 			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/antenna.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		}

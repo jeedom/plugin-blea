@@ -9,7 +9,7 @@ function sortByOption($a, $b) {
 	return strcmp($a['name'], $b['name']);
 }
 if (config::byKey('include_mode', 'blea', 0) == 1) {
-	echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{Vous etes en mode inclusion. Recliquez sur le bouton d\'inclusion pour sortir de ce mode}}</div>';
+	echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}</div>';
 } else {
 	echo '<div id="div_inclusionAlert"></div>';
 }
@@ -36,17 +36,17 @@ foreach ($eqLogics as $eqLogic) {
     <?php
 if (config::byKey('include_mode', 'blea', 0) == 1) {
 	echo '<div class="cursor changeIncludeState include card" data-mode="1" data-state="0" style="background-color : #8000FF; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo '<center>';
-	echo '<i class="fa fa-sign-in fa-rotate-90" style="font-size : 6em;color:#94ca02;"></i>';
+	echo '<center class="includeicon">';
+	echo '<i class="fa fa-spinner fa-pulse" style="font-size : 6em;color:#94ca02;"></i>';
 	echo '</center>';
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Arrêter inclusion}}</center></span>';
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Arrêter Scan}}</center></span>';
 	echo '</div>';
 } else {
 	echo '<div class="cursor changeIncludeState include card" data-mode="1" data-state="1" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo '<center>';
-	echo '<i class="fa fa-sign-in fa-rotate-90" style="font-size : 6em;color:#94ca02;"></i>';
+	echo '<center class="includeicon">';
+	echo '<i class="fa fa-bullseye" style="font-size : 6em;color:#94ca02;"></i>';
 	echo '</center>';
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Mode inclusion}}</center></span>';
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Lancer Scan}}</center></span>';
 	echo '</div>';
 }
 ?>
@@ -70,7 +70,7 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	</div>
   <div class="cursor" id="bt_remoteblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
 	<center>
-	<i class="fa fa-rss" style="font-size : 6em;color:#767676;"></i>
+	<i class="fa fa-bluetooth" style="font-size : 6em;color:#767676;"></i>
 	</center>
 	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Antennes}}</center></span>
 	</div>
@@ -161,16 +161,34 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 
            </div>
          </div>
-		 <div class="form-group refreshdelay" style="display:none">
-				<label class="col-sm-3 control-label">{{Refresh des infos (en s)}}</label>
+		 <div class="form-group">
+				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, tous n'est pas disponible pour éviter la répétition des infos (de type bouton). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
+              <div class="col-sm-3">
+                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
+                <option value="local">{{Local}}</option>
+				<?php
+				try{
+					$hasblea = plugin::byId('blea');
+					} catch (Exception $e) {
+				}
+				if ($hasblea != '' && $hasblea->isActive()){
+					$remotes = blea_remote::all();
+					foreach ($remotes as $remote) {
+						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+					}
+				}
+				?>
+              </select>
+            </div>
+			 <div class="form-group refreshdelay" style="display:none">
+				<label class="col-sm-3 control-label help" data-help="{{Inutile de mettre des valeurs trop faible, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}">{{Refresh des infos (en s)}}</label>
 				<div class="col-sm-3">
 				<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
 				</div>
+			</div>
+			
 		</div>
-		 <div class="form-group refreshdelay" style="display:none">
-				<div class="alert alert-info"> {{Inutile de mettre des valeurs trop faible, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}</div>
-         </div>
-          <div class="form-group nogroup">
+		<div class="form-group cancontrol" style="display:none">
 				<label class="col-sm-3 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
@@ -190,26 +208,12 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<option value="all">{{Tous}}</option>
               </select>
             </div>
-          </div>
-		   <div class="form-group nogroup">
-				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, tous n'est pas disponible pour éviter la répétition des infos (de type bouton). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
-              <div class="col-sm-3">
-                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
-                <option value="local">{{Local}}</option>
-				<?php
-				try{
-					$hasblea = plugin::byId('blea');
-					} catch (Exception $e) {
-				}
-				if ($hasblea != '' && $hasblea->isActive()){
-					$remotes = blea_remote::all();
-					foreach ($remotes as $remote) {
-						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
-					}
-				}
-				?>
-              </select>
-            </div>
+			<div class="form-group canbelocked" style="display:none">
+				<label class="col-sm-3 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé.}}">{{Garder la connection}}</label>
+				<div class="col-sm-3">
+				 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" />
+				</div>
+			</div>
           </div>
       </fieldset>
     </form>
@@ -221,6 +225,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
         <label class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
           <a class="btn btn-danger" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
+		  <a class="btn btn-warning specificmodal" id="bt_specificmodal" style="display:none"><i class="fa fa-cogs"></i> {{Configuration spécifique}}</a>
           </div>
         </div>
      <div class="form-group">

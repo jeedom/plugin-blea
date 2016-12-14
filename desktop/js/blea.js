@@ -17,7 +17,7 @@
  $('.changeIncludeState').on('click', function () {
 	var mode = $(this).attr('data-mode');
 	var state = $(this).attr('data-state');
-	changeIncludeState(state, mode);	
+	changeIncludeState(state, mode);
 });
 
  $('#bt_healthblea').on('click', function () {
@@ -28,6 +28,11 @@
 $('#bt_graphblea').on('click', function () {
     $('#md_modal').dialog({title: "{{Réseau BLEA}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.graph').dialog('open');
+});
+
+$('#bt_specificmodal').on('click', function () {
+    $('#md_modal').dialog({title: "{{Configuration spécifique}}"});
+    $('#md_modal').load('index.php?v=d&plugin=blea&modal=' +$(this).attr("data-modal") +'&id='+$('.eqLogicAttr[data-l1key=id]').val()).dialog('open');
 });
 
 $('#bt_remoteblea').on('click', function () {
@@ -81,6 +86,22 @@ function getModelListParam(_conf,_id) {
          } else {
 			 $(".globalRemark").empty()
              $(".globalRemark").hide();
+         }
+		 if (data.result[3] != false){
+             $(".specificmodal").show();
+			 $(".specificmodal").attr('data-modal', data.result[3]);
+         } else {
+             $(".specificmodal").hide();
+         }
+		 if (data.result[4] != false){
+             $(".cancontrol").show();
+         } else {
+             $(".cancontrol").hide();
+         }
+		 if (data.result[5] != false){
+             $(".canbelocked").show();
+         } else {
+             $(".canbelocked").hide();
          }
         $(".modelList").show();
         $(".listModel").html(options);
@@ -205,39 +226,18 @@ $('body').on('blea::includeState', function (_event,_options) {
 				$('.include:not(.card)').removeClass('btn-default').addClass('btn-success');
 				$('.include').attr('data-state', 0);
 				$('.include.card').css('background-color','#8000FF');
-				$('.include.card span center').text('{{Arrêter l\'inclusion}}');
-				$('.include:not(.card)').html('<i class="fa fa-sign-in fa-rotate-90"></i> {{Arreter inclusion}}');
-				$('#div_inclusionAlert').showAlert({message: '{{Vous etes en mode inclusion. Recliquez sur le bouton d\'inclusion pour sortir de ce mode}}', level: 'warning'});
+				$('.include.card span center').text('{{Arrêter le scan}}');
+				$('.includeicon').empty().append('<i class="fa fa-spinner fa-pulse" style="font-size : 6em;color:#94ca02;"></i>');
+				$('#div_inclusionAlert').showAlert({message: '{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}', level: 'warning'});
 			}
 		} else {
 			if($('.include').attr('data-state') != 1){
 				$.hideAlert();
 				$('.include:not(.card)').addClass('btn-default').removeClass('btn-success btn-danger');
 				$('.include').attr('data-state', 1);
-				$('.include:not(.card)').html('<i class="fa fa-sign-in fa-rotate-90"></i> {{Mode inclusion}}');
-				$('.include.card span center').text('{{Mode inclusion}}');
+				$('.includeicon').empty().append('<i class="fa fa-bullseye" style="font-size : 6em;color:#94ca02;"></i>');
+				$('.include.card span center').text('{{Lancer Scan}}');
 				$('.include.card').css('background-color','#ffffff');
-			}
-		}
-	} else {
-		if (_options['state'] == 1) {
-			if($('.exclude').attr('data-state') != 0){
-				$.hideAlert();
-				$('.exclude:not(.card)').removeClass('btn-default').addClass('btn-success');
-				$('.exclude').attr('data-state', 0);
-				$('.exclude.card').css('background-color','#8000FF');
-				$('.exclude.card span center').text('{{Arrêter l\'exclusion}}');
-				$('.exclude:not(.card)').html('<i class="fa fa-sign-in fa-rotate-90"></i> {{Arreter inclusion}}');
-				$('#div_inclusionAlert').showAlert({message: '{{Vous etes en mode exclusion. Recliquez sur le bouton d\'exclusion pour sortir de ce mode}}', level: 'warning'});
-			}
-		} else {
-			if($('.exclude').attr('data-state') != 1){
-				$.hideAlert();
-				$('.exclude:not(.card)').addClass('btn-default').removeClass('btn-success btn-danger');
-				$('.exclude').attr('data-state', 1);
-				$('.exclude:not(.card)').html('<i class="fa fa-sign-in fa-rotate-90"></i> {{Mode exclusion}}');
-				$('.exclude.card span center').text('{{Mode exclusion}}');
-				$('.exclude.card').css('background-color','#ffffff');
 			}
 		}
 	}

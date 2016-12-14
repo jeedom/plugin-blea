@@ -1,0 +1,60 @@
+<div class="eqLogic-widget eqLogic dotti" style="width: 170px;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#;" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+  <style  type="text/css">
+    .btn-circle {
+      width: 20px;
+      height: 20px;
+      line-height: 20px; /* adjust line height to align vertically*/
+      padding:0;
+      border-radius: 50%;
+    }
+  </style>
+  <span class="statusCmd pull-right" style="position : absolute;left : 2px;z-index: 1030;"></span>
+  <center><a href="#eqLink#" style="font-size : 1.2em;#hideEqLogicName#">#name_display#  <span style="font-size: 0.85em;position: relative;top:-2px;">#object_name#</span></a></center>
+  
+  <div class="row" style="margin-top:10px">
+    <div class="col-xs-12">
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_loadimage_id#" style="display:none;"></span>
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_sendtext_id#" style="display:none;"></span>
+	<span class="cmd cmd-widget" data-cmd_id="#cmd_sendcolor_id#" style="display:none;"></span>
+      <center>
+	    <label class="fa fa-circle pixelCircle#uid#" style="color : #000000;font-size:2.2em; cursor: pointer;"><input class="pixelcolor#uid#" type="color" value="#000000" style="width:0;height:0;visibility:hidden"/></label>
+        <a class="btn btn-default btn-circle btn-xs cmd blackscreen#uid#" data-cmd_id="#cmd_blackscreen_id#" title="Eteindre" style="margin-top:-15px;margin-left:-7px;"><i class="fa fa-power-off"></i></a>
+		<a class="btn btn-default btn-circle btn-xs picture#uid#" id="bt_dottiScreen#uid#" title="Dessiner" style="margin-top:-15px"><i class="fa fa-paint-brush"></i></a></br>
+		<a class="btn btn-default btn-circle btn-xs sendtext#uid#" id="bt_sendtext#uid#" title="Envoyer Texte" style="margin-top:-1px"><i class="fa fa-share-square-o"></i></a>
+      <input class="name#uid# form control" id="texte" type="text" style="width:30%;color:#cmdColor#;border-radius: 10px;"/>
+	  <select class="memoryload#uid#" style="margin-top:20px;width:50%;color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+		</select>
+     </center>
+    </div>
+  </div>
+
+  <script>
+   if('#loadimage#' != ''){
+			loadimage#id# = json_decode('#loadimage#');
+			loadloadimage#id# = '';
+			for(var i in loadimage#id#){
+				loadloadimage#id# += '<option value="' + loadimage#id#[i] + '">' + loadimage#id#[i].charAt(0).toUpperCase() + loadimage#id#[i].slice(1) + '</option>';
+			}
+			$(".dotti[data-eqLogic_uid=#uid#] .memoryload#uid#").append(loadloadimage#id#);
+		}
+	$('.dotti[data-eqLogic_uid=#uid#] .memoryload#uid#').on('change',function(){
+		jeedom.cmd.execute({id: '#cmd_loadimage_id#', value: {'title': $(this).value()}});
+	});
+	$('#bt_sendtext#uid#').on('click',function(){
+		jeedom.cmd.execute({id: '#cmd_sendtext_id#', value: {'message': $('.name#uid#').val()}});
+	});
+	$('#bt_dottiScreen#uid#').on('click', function () {
+	id = #id#;
+    $('#md_modal').dialog({title: "Dessiner"});
+    $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.dotti&id='+ id+'').dialog('open');
+});
+   $('.eqLogic[data-eqLogic_uid=#uid#] .cmd').on('click', function() {
+     jeedom.cmd.execute({id: $(this).data('cmd_id')});
+   });
+   $('.pixelcolor#uid#').on('change', function() {
+	$(this).closest('.pixelCircle#uid#').css('color', $(this).val());
+	jeedom.cmd.execute({id: '#cmd_sendcolor_id#', value: {color : $(this).val()}});
+});
+
+ </script>
+</div>
