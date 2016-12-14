@@ -49,6 +49,7 @@ class blea extends eqLogic {
 		$eqLogic->setConfiguration('antenna', 'local');
 		$eqLogic->setConfiguration('antennareceive','local');
 		$eqLogic->setConfiguration('canbelocked',0);
+		$eqLogic->setConfiguration('islocked',0);
 		$eqLogic->setConfiguration('cancontrol',0);
 		$eqLogic->setConfiguration('specificmodal',0);
 		$eqLogic->setConfiguration('specificclass',0);
@@ -567,6 +568,7 @@ class blea extends eqLogic {
 	public function applyModuleConfiguration() {
 		$this->setConfiguration('canbelocked',0);
 		$this->setConfiguration('cancontrol',0);
+		$this->setConfiguration('islocked',0);
 		$this->setConfiguration('specificmodal',0);
 		$this->setConfiguration('specificclass',0);
 		$this->setConfiguration('needsrefresh',0);
