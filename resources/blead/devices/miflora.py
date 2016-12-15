@@ -26,10 +26,10 @@ class Miflora():
 			conn.connect()
 			if not conn.isconnected:
 				return
-			batteryFirm = conn.readCharacteristic(0x38)
+			batteryFirm = conn.readCharacteristic('0x38')
 			value = 'A01F'
-			conn.writeCharacteristic(0x33,value)
-			datas = conn.readCharacteristic(0x35)
+			conn.writeCharacteristic('0x33',value)
+			datas = conn.readCharacteristic('0x35')
 			conn.disconnect()
 			battery, firmware = struct.unpack('<B6s',batteryFirm)
 			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
