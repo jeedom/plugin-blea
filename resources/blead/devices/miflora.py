@@ -13,7 +13,8 @@ class Miflora():
 		validname = ['Flower mate','Flower care']
 		if name in validname:
 			return True
-			
+		if manuf == '5701880f10a19243':
+			return True
 	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
