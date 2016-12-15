@@ -540,8 +540,20 @@ class blea extends eqLogic {
 				$islocked = 1;
 				$emitter = blea_remote::byId($this->getConfiguration('antenna','local'))->getRemoteName();
 			}
-		} 
-		$refresher = $this->getConfiguration('antennareceive','local');
+		} else {
+			if ($this->getConfiguration('antenna','local') == 'all'){
+				$emitter = 'all';
+			} else if ($this->getConfiguration('antenna','local') == 'local'){
+				$emitter = 'local';
+			} else {
+				$emitter = blea_remote::byId($this->getConfiguration('antenna','local'))->getRemoteName();
+			}
+		}
+		if ($this->getConfiguration('antennareceive','local') == 'local'){
+			$refresher = 'local';
+		} else {
+			$refresher = blea_remote::byId($this->getConfiguration('antennareceive','local'))->getRemoteName();
+		}
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
 				'id' => $this->getLogicalId(),
