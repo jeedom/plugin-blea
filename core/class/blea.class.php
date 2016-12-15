@@ -185,7 +185,7 @@ class blea extends eqLogic {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		if ($_state == '1'){
-			$allowAll = config::byKey('autoRemoveExcludeDevice', 'blea');
+			$allowAll = config::byKey('allowAllinclusion', 'blea');
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll);
 		} else {
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout');
@@ -313,7 +313,7 @@ class blea extends eqLogic {
 		$cmd .= ' --apikey ' . jeedom::getApiKey('blea');
 		$cmd .= ' --daemonname local';
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
-		$result = exec($cmd . ' >> ' . log::getPathToLog('blea') . ' 2>&1 &');
+		$result = exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');
 		$i = 0;
 		while ($i < 30) {
 			$deamon_info = self::deamon_info();
@@ -406,7 +406,7 @@ class blea extends eqLogic {
 	public static function changeIncludeState($_state, $_mode) {
 		if ($_mode == 1) {
 			if ($_state == 1) {
-				$allowAll = config::byKey('autoRemoveExcludeDevice', 'blea');
+				$allowAll = config::byKey('allowAllinclusion', 'blea');
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll));
 				self::socket_connection($value,True);
 			} else {

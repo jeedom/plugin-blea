@@ -221,7 +221,7 @@ def read_socket(name):
 				elif message['cmd'] == 'learnin':
 					logging.debug('Enter in learn mode')
 					globals.LEARN_MODE_ALL = 0
-					if message['allowAll'] == 1 :
+					if message['allowAll'] == '1' :
 						globals.LEARN_MODE_ALL = 1
 					globals.LEARN_MODE = True
 					globals.LEARN_BEGIN = int(time.time())
