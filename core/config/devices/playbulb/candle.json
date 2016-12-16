@@ -149,6 +149,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "isVisible": 0,
+                "unite": "",
                 "logicalId": "battery"
             },
 			{
