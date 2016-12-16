@@ -129,6 +129,9 @@ if (isset($result['devices'])) {
 						$oldrssi = $cmd->execCmd();
 						$cmd->event($oldrssi);
 					}
+					if ($cmd->getLogicalId() == 'present'){
+						$cmd->event(1);
+					}
 				}
 				die();
 			}
