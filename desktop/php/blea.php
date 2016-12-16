@@ -74,6 +74,12 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	</center>
 	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Antennes}}</center></span>
 	</div>
+	<div class="cursor" id="bt_advancedblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+	<center>
+	<i class="fa fa-cogs" style="font-size : 6em;color:#767676;"></i>
+	</center>
+	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Réglages}}</center></span>
+	</div>
 	
 </div>
 <legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
@@ -209,7 +215,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
               </select>
             </div>
 			<div class="form-group canbelocked" style="display:none">
-				<label class="col-sm-3 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé.}}">{{Garder la connection}}</label>
+				<label class="col-sm-3 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
 				<div class="col-sm-3">
 				 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" />
 				</div>

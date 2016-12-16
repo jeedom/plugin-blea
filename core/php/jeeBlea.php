@@ -145,10 +145,22 @@ if (isset($result['devices'])) {
 				$cmdremote->setEqLogic_id($blea->getId());
 				$cmdremote->save();
 			}
+			$cmdraw = $blea->getCmd(null, 'rawdata');
+			if (!is_object($cmdraw)) {
+				$cmdraw = new bleaCmd();
+				$cmdraw->setLogicalId('rawdata');
+				$cmdraw->setIsVisible(0);
+				$cmdraw->setIsHistorized(0);
+				$cmdraw->setName(__('Données brutes', __FILE__));
+				$cmdraw->setType('info');
+				$cmdraw->setSubType('string');
+				$cmdraw->setEqLogic_id($blea->getId());
+				$cmdraw->save();
+			}
 			if ($blea->getConfiguration('resetRssis',1) == 1){
-				if ($cmdremote->getConfiguration('returnStateValue') != -200){
+				if ($cmdremote->getConfiguration('returnStateValue') != -200 || $cmdremote->getConfiguration('returnStateTime') != 2){
 					$cmdremote->setConfiguration('returnStateValue',-200);
-					$cmdremote->setConfiguration('returnStateTime',1);
+					$cmdremote->setConfiguration('returnStateTime',2);
 					$cmdremote->save();
 				}
 			}
@@ -170,7 +182,7 @@ if (isset($result['devices'])) {
 				$cmdpresent->save();
 			}
 			if ($blea->getConfiguration('resetRssis',1) == 1){
-				if ($cmdpresent->getConfiguration('returnStateValue') != 0){
+				if ($cmdpresent->getConfiguration('returnStateValue') != 0 or $cmdpresent->getConfiguration('returnStateTime') !=1){
 					$cmdpresent->setConfiguration('returnStateValue',0);
 					$cmdpresent->setConfiguration('returnStateTime',1);
 					$cmdpresent->save();

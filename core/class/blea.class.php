@@ -51,7 +51,10 @@ class blea extends eqLogic {
 		$eqLogic->setConfiguration('canbelocked',0);
 		$eqLogic->setConfiguration('islocked',0);
 		$eqLogic->setConfiguration('cancontrol',0);
-		$eqLogic->setConfiguration('specificmodal',0);
+		$eqLogic->setConfiguration('resetRssis',1);
+		$eqLogic->setConfiguration('islocked',0);
+		$eqLogic->setConfiguration('name','0');
+		$eqLogic->setConfiguration('refreshlist',array());
 		$eqLogic->setConfiguration('specificclass',0);
 		$eqLogic->setConfiguration('needsrefresh',0);
 		$eqLogic->setConfiguration('specificwidgets',0);
@@ -161,8 +164,12 @@ class blea extends eqLogic {
 	}
 	
 	public static function launchremote($_remoteId) {
-		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
+		$last = $remoteObject->getConfiguration('lastupdate','0');
+		if ($last != '0' and time() - strtotime($last)<65){
+			blea::stopremote($_remoteId);
+			time.sleep(5);
+		}
 		$user=$remoteObject->getConfiguration('remoteUser');
 		$device=$remoteObject->getConfiguration('remoteDevice');
 		$script_path = '/home/'.$user.'/blead/resources/blead';
@@ -224,7 +231,6 @@ class blea extends eqLogic {
 			socket_write($socket, $value, strlen($value));
 			socket_close($socket);
 		}
-		$remoteObject->execCmd(['fuser -k 55008/tcp >> /dev/null 2>&1 &']);
 		return True;
 	}
 
@@ -560,6 +566,7 @@ class blea extends eqLogic {
 				'delay' => $this->getConfiguration('delay',0),
 				'needsrefresh' => $this->getConfiguration('needsrefresh',0),
 				'name' => $this->getConfiguration('name','0'),
+				'refreshlist' => $this->getConfiguration('refreshlist',array()),
 				'islocked' => $islocked,
 				'emitterallowed' => $emitter,
 				'refresherallowed' => $refresher,
@@ -581,9 +588,12 @@ class blea extends eqLogic {
 		$this->setConfiguration('canbelocked',0);
 		$this->setConfiguration('cancontrol',0);
 		$this->setConfiguration('islocked',0);
+		$this->setConfiguration('name','0');
+		$this->setConfiguration('refreshlist',array());
 		$this->setConfiguration('specificmodal',0);
 		$this->setConfiguration('specificclass',0);
 		$this->setConfiguration('needsrefresh',0);
+		$this->setConfiguration('resetRssis',1);
 		$this->setConfiguration('specificwidgets',0);
 		$this->setConfiguration('applyDevice', $this->getConfiguration('device'));
 		$this->save();
@@ -816,9 +826,9 @@ class bleaCmd extends cmd {
 		if (count($data) == 0) {
 			return;
 		}
-		if ($this->getLogicalId() == 'refresh'){
+		if ($this->getLogicalId() == 'refresh' or $this->getLogicalId() == 'helper'){
 			$data['name'] = $eqLogic->getConfiguration('name','0');
-			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'refresh', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
+			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $this->getLogicalId(), 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		} else {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		}

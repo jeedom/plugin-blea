@@ -7,26 +7,6 @@
 		},
         "commands": [
 			{
-                "name": "Present",
-                "type": "info",
-                "subtype": "binary",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "unite": "",
-                "logicalId": "present",
-                "configuration" : {
-                    "returnStateValue" : 0,
-                    "returnStateTime" : 1
-                },
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-			{
                 "name": "Température",
                 "type": "info",
                 "subtype": "numeric",

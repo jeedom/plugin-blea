@@ -3,6 +3,7 @@ import time
 import logging
 import globals
 from multiconnect import Connector
+import utils
 
 class Dotti():
 	def __init__(self):
@@ -33,12 +34,14 @@ class Dotti():
 			globals.KEEPED_CONNECTION[mac]=conn
 			conn.connect()
 		if not conn.isconnected:
-			return
+			conn.connect()
+			if not conn.isconnected:
+				return
 		try:
 			if type == 'color':
 				logging.debug('Sending Color')
 				data = message['command']['data']
-				conn.writeCharacteristic('0x2a','0601'+self.twoDigitHex(int(data[0]))+self.twoDigitHex(int(data[1]))+self.twoDigitHex(int(data[2]))+'00')
+				conn.writeCharacteristic('0x2a','0601'+utils.twoDigitHex(int(data[0]))+utils.twoDigitHex(int(data[1]))+utils.twoDigitHex(int(data[2]))+'00')
 				colorArray ={}
 				for i in range(64): 
 					colorArray[int(i) + 1] = self.rgb_to_hex((int(data[0]), int(data[1]), int(data[2])))
@@ -66,6 +69,8 @@ class Dotti():
 						total_pixel = total_pixel + 1
 						if mac in globals.LAST_STORAGE:
 							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0],value[1], value[2])).lower():
+								logging.debug(globals.LAST_STORAGE[mac][int(pixel)].lower())
+								logging.debug(self.rgb_to_hex((value[0],value[1], value[2])).lower())
 								save_pixel = save_pixel + 1
 					if  (maxint+1) > save_pixel and maxint > 2:
 						logging.debug('I use color all screen method to improve display speed in :'+str(maxhex))
@@ -83,7 +88,7 @@ class Dotti():
 						if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0], value[1], value[2])).lower():
 							save_pixel = save_pixel + 1
 							continue
-					conn.writeCharacteristic('0x2a','0702'+self.twoDigitHex(int(pixel))+self.twoDigitHex(value[0])+self.twoDigitHex(value[1])+self.twoDigitHex(value[2]))
+					conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+utils.twoDigitHex(value[0])+utils.twoDigitHex(value[1])+utils.twoDigitHex(value[2]))
 					colorArray[int(i) + 1] = self.rgb_to_hex((value[0], value[1], value[2]))
 					time.sleep(0.05)
 				globals.LAST_STORAGE[mac] = colorArray
@@ -101,8 +106,6 @@ class Dotti():
 
 	def rgb_to_hex(self,rgb):
 		return '#%02x%02x%02x' % rgb
-	
-	def twoDigitHex(self,number):
-		return '%02x' % number
+
 
 globals.COMPATIBILITY.append(Dotti)

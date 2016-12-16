@@ -3,18 +3,6 @@
         "name": "Inconnu",
         "groupe" : "Inconnu",
         "commands": [
-			{
-                "name": "Raw data",
-                "type": "info",
-                "subtype": "string",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 0,
-                "isHistorized": 0,
-                "unite": "",
-                "logicalId": "rawdata"
-            }
         ],
 		"compatibility": [
             {

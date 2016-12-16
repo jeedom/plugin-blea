@@ -40,6 +40,11 @@ $('#bt_remoteblea').on('click', function () {
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 });
 
+$('#bt_advancedblea').on('click', function () {
+    $('#md_modal').dialog({title: "{{Réglages avancées}}"});
+    $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.advanced').dialog('open');
+});
+
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').on('change', function () {
   if($('.li_eqLogic.active').attr('data-eqlogic_id') != ''){
    getModelListParam($(this).value(),$('.li_eqLogic.active').attr('data-eqlogic_id'));

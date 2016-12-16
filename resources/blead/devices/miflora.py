@@ -24,7 +24,9 @@ class Miflora():
 			conn = Connector(mac)
 			conn.connect()
 			if not conn.isconnected:
-				return
+				conn.connect()
+				if not conn.isconnected:
+					return
 			batteryFirm = conn.readCharacteristic('0x38')
 			value = 'A01F'
 			conn.writeCharacteristic('0x33',value)

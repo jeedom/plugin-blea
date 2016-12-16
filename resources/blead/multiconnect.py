@@ -11,7 +11,7 @@ class Connector():
 		self.conn = ''
 		self.isconnected = False
 
-	def connect(self,retry=5):
+	def connect(self,retry=4):
 		logging.debug('Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
 		i=0
 		while True:
@@ -43,11 +43,13 @@ class Connector():
 				self.conn.disconnect()
 				break
 			except Exception,e:
-				logging.debug(str(e) + ' attempt ' + str(i) )
-				if i >= 5:
+				if 'str' in str(e) and 'has no attribute' in str(e):
 					self.isconnected = False
 					return
-				time.sleep(1)
+				logging.debug(str(e) + ' attempt ' + str(i) )
+				if i >= 2:
+					self.isconnected = False
+					return
 		if self.mac in globals.KEEPED_CONNECTION:
 			del globals.KEEPED_CONNECTION[self.mac]
 		self.isconnected = False
@@ -113,3 +115,30 @@ class Connector():
 				self.connect()
 		logging.debug('Characteristics gotten... '+ str(self.mac))
 		return char
+		
+	def helper(self):
+		logging.debug('Helper for : ' + str(self.mac))
+		characteristics = self.getCharacteristics()
+		listtype=['x','c','b','B','?','h','H','i','I','l','L','q','Q','f','d','s','p','P']
+		for char in characteristics:
+			handle = str(hex(char.getHandle()))
+			if char.supportsRead():
+				logging.debug(handle + ' readable')
+			else:
+				logging.debug(handle + ' not readable (probably only writable)')
+			if char.supportsRead():
+				try:
+					value = char.read()
+					found = False
+					for type in listtype:
+						for i in range(1,256):
+							try:
+								logging.debug('value for handle (decrypted with ' + type + ' lenght ' + str(i) +') : ' + handle + ' is : ' + str(struct.unpack(str(i)+type,value)))
+								found = True
+							except:
+								continue
+					logging.debug('value for handle (undecrypted) : ' + handle + ' is : ' + value)
+				except Exception,e:
+					logging.debug('unable to read value for handle (probably not readable) '+handle+ ' : '+str(e))
+					continue
+		return
