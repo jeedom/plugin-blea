@@ -198,7 +198,6 @@ class dottiblea extends blea {
 	}
 
 	public static function saveImage($_id, $_name, $_data, $_isjson = false) {
-		$dotti = dottiblea::byId($_id);
 		try {
 			dottiblea::sendDataRealTime($_data, $_id);
 		} catch (Exception $e) {
@@ -344,7 +343,7 @@ class dottiblea extends blea {
 		return $_eqLogic->postToHtml($_version, template_replace($replace, getTemplate('core', $version, 'dotti', 'blea')));
 	}
 	
-	public static function calculateValue($_eqLogic,$_data,$_options=null) {
+	public static function calculateOutputValue($_eqLogic,$_data,$_options=null) {
 		$return =array();
 		$logicalid = $_data['classlogical'];
 		if ($logicalid == 'sendtext') {
@@ -470,6 +469,9 @@ class dottiblea extends blea {
 		}
 		
 		return $_data;
+	}
+	
+	public static function calculateInputValue($_eqLogic,$_datas) {
 	}
 }
 

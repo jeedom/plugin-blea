@@ -3,11 +3,13 @@
         "name": "MiScale",
         "groupe" : "Santé",
 		"configuration" : {
-			"hasspecificmodal" : 1
+			"specificmodal" : 1,
+			"specificclass" : 1,
+			"battery_type": "4x1.5V AA"
 		},
         "commands": [
 			{
-                "name": "Poids",
+                "name": "Dernier Poids",
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
@@ -29,7 +31,7 @@
                 "name": "MiScale",
 				"doc": "",
 				"type": "Scale",
-				"battery_type": "4x44",
+				"battery_type": "4x1.5V AA",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Poids et unité",

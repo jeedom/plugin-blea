@@ -815,7 +815,7 @@ class bleaCmd extends cmd {
 			$data['secondary'] = $eqLogic->getCmd('info',$data['secondary'])->execCmd();
 		}
 		if (isset($data['classlogical'])){
-			$data = $childrenclass->calculateValue($eqLogic,$data,$_options);
+			$data = $childrenclass->calculateOutputValue($eqLogic,$data,$_options);
 		}
 		$data['device'] = array(
 				'id' => $eqLogic->getLogicalId(),

@@ -200,6 +200,13 @@ if (isset($result['devices'])) {
 			$remotelist[]='rssi' . $name;
 		}
 		$cmdrssitoremove=[];
+		if ($blea->getConfiguration('specificclass',0) != 0) {
+			$device= $blea->getConfiguration('device');
+			require_once dirname(__FILE__) . '/../config/devices/'.$device.'/class/'.$device.'.class.php';
+			$class= $device.'blea';
+			$childrenclass = new $class();
+			$datas = $childrenclass->calculateInputValue($blea,$datas);
+		}
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
 			if ($logicalId == '' || $logicalId == 'present') {

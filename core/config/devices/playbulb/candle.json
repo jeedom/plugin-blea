@@ -2,7 +2,7 @@
     "candle": {
         "name": "Playbulb - Candle",
         "groupe" : "Lumières",
-		"battery_type": "3x1.5V AAA",
+		"battery_type": "3x1.5V AA",
 		"configuration" : {
 			"cancontrol" : 1,
 			"name" : "playbulb",

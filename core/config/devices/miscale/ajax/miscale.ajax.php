@@ -17,7 +17,8 @@
  */
 
 try {
-	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+	require_once dirname(__FILE__) . '/../../../../../../../core/php/core.inc.php';
+	require_once dirname(__FILE__) . '/../class/miscale.class.php';
 	include_file('core', 'authentification', 'php');
 
 	if (!isConnect('admin')) {
@@ -25,38 +26,13 @@ try {
 	}
 
 	ajax::init();
-
-	if (init('action') == 'changeIncludeState') {
-		avidsen::changeIncludeState(init('state'));
-		ajax::success();
-	}
-
-	if (init('action') == 'getModelListParam') {
-		$avidsen = avidsen::byId(init('id'));
-		if (!is_object($avidsen)) {
-			ajax::success(array());
-		}
-		ajax::success($avidsen->getModelListParam(init('conf')));
-	}
 	
 	if (init('action') == 'saveUserList') {
-		$avidsen = avidsen::byId(init('id'));
-		if (!is_object($avidsen)) {
+		$blea = blea::byId(init('id'));
+		if (!is_object($blea)) {
 			ajax::success(array());
 		}
-		ajax::success($avidsen->saveUserList(init('userList')));
-	}
-	
-	if (init('action') == 'autoDetectModule') {
-		$eqLogic = avidsen::byId(init('id'));
-		if (!is_object($eqLogic)) {
-			throw new Exception(__('Avidsen eqLogic non trouvé : ', __FILE__) . init('id'));
-		}
-		foreach ($eqLogic->getCmd() as $cmd) {
-			$cmd->remove();
-		}
-		$eqLogic->applyModuleConfiguration();
-		ajax::success();
+		ajax::success(miscaleblea::saveUserList(init('id'),init('userList')));
 	}
 
 	throw new Exception('Aucune methode correspondante');

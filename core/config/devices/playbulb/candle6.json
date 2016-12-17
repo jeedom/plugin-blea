@@ -9,7 +9,7 @@
 			"canbelocked" : 1,
 			"needsrefresh" : 1,
 			"delay" : 36000,
-			"battery_type": "3x1.5V AAA"
+			"battery_type": "3x1.5V AA"
 		},
 		"commands": [
 			{
