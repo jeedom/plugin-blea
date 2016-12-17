@@ -35,7 +35,7 @@ class miscaleblea extends blea {
 			if (!is_object($userweigthCmd)){
 				$userweigthCmd = new bleaCmd();
 				$userweigthCmd->setLogicalId('poids'.$user['name']);
-				$userweigthCmd->setIsVisible(0);
+				$userweigthCmd->setIsVisible(1);
 				$userweigthCmd->setIsHistorized(1);
 				$userweigthCmd->setName(__('Poids ' . $user['name'], __FILE__));
 				$userweigthCmd->setType('info');
@@ -51,7 +51,7 @@ class miscaleblea extends blea {
 			if (!is_object($userimcCmd)){
 				$userimcCmd = new bleaCmd();
 				$userimcCmd->setLogicalId('imc'.$user['name']);
-				$userimcCmd->setIsVisible(0);
+				$userimcCmd->setIsVisible(1);
 				$userimcCmd->setIsHistorized(1);
 				$userimcCmd->setName(__('Imc ' . $user['name'], __FILE__));
 				$userimcCmd->setType('info');
