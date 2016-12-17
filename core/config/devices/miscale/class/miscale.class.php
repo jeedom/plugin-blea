@@ -95,7 +95,7 @@ class miscaleblea extends blea {
 				if ($target != ''){
 					$_datas['poids'.$target] = $poids;
 					$_datas['imc'.$target] = round($poids/($listUsers[$target]['height']*$listUsers[$target]['height']),2);
-					$listUsers[$target]['weigth'] = $poids;
+					$listUsers[$target]['weight'] = $poids;
 					$_eqLogic->setConfiguration('userList',$listUsers);
 					$_eqLogic->save();
 				}
@@ -137,7 +137,7 @@ class miscaleblea extends blea {
 				$userimcCmd->setEqLogic_id($_eqLogic->getId());
 				$userimcCmd->save();
 			}
-			$userimcCmd->event($user['weight']/($user['height']*$user['height']));
+			$userimcCmd->event(round($user['weight']/($user['height']*$user['height']),2));
 		}
 	}
 }
