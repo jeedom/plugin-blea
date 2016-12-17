@@ -67,9 +67,6 @@ class miscaleblea extends blea {
 		$miscale->save();
 		$userlist = $miscale->getConfiguration('userList');
 		foreach ($miscale->getCmd('info') as $cmd){
-			log::add('blea','debug',substr($cmd->getLogicalId(),0,3));
-			
-			log::add('blea','debug',substr($cmd->getLogicalId(),3));
 			if (substr($cmd->getLogicalId(),0,3) == 'imc'){
 				if (!isset($userlist[substr($cmd->getLogicalId(),3)])) {
 					$cmd->remove();
