@@ -45,7 +45,7 @@ $listUsers = $eqLogic->getConfiguration('userList',array());
 foreach ($listUsers as $id => $data) {
 	echo '<tr class="users"><td class="name"><input type="text" class="form-control" value="'.$data['name'].'" readonly/></td>';
 	echo '<td class="height"><input type="text" class="form-control" value="'.$data['height'].'"/></td>';
-	echo '<td class="weight"><input type="text" class="form-control" value="'.$data['weight'].'"/></td><td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-check-circle"></i></a></td></tr>';
+	echo '<td class="weight"><input type="text" class="form-control" value="'.$data['weight'].'"/></td><td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td></tr>';
 	}
 ?>
 	</tbody>
@@ -62,7 +62,7 @@ function addCmdToTable(_cmd) {
     var tr = '<tr class="users"><td class="name"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="height"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="weight"><input type="text" class="form-control" value=""/></td>';
-	tr += '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-check-circle"></i></a></td>';
+	tr += '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td>';
     tr += '</tr>';
     $('#table_userList tbody').append(tr);
 }
