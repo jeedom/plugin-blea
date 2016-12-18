@@ -27,14 +27,18 @@ class Miflora():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			batteryFirm = conn.readCharacteristic('0x38')
+			batteryFirm = bytearray(conn.readCharacteristic('0x38'))
 			value = 'A01F'
 			conn.writeCharacteristic('0x33',value)
 			datas = conn.readCharacteristic('0x35')
 			conn.disconnect()
-			battery, firmware = struct.unpack('<B6s',batteryFirm)
-			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
-			temperature = float(temperature)/10
+			received = bytearray(datas)
+			battery = batteryFirm[0]
+			firmware = "".join(map(chr, batteryFirm[2:]))
+			temperature = float(received[1] * 256 + received[0]) / 10
+			sunlight = received[4] * 256 + received[3]
+			moisture = received[7]
+			fertility = received[9] * 256 + received[8]
 			result['battery'] = battery
 			result['firmware'] = firmware.replace('\x10','')
 			result['sunlight'] = sunlight
@@ -49,3 +53,5 @@ class Miflora():
 		return result
 
 globals.COMPATIBILITY.append(Miflora)
+Contact GitHub API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Status Help
