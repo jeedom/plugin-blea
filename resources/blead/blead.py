@@ -153,8 +153,8 @@ def listen():
 				if globals.SCAN_ERRORS > 0:
 					logging.info("Attempt to recover successful, reseting counter")
 					globals.SCAN_ERRORS = 0
-				#while globals.PENDING_ACTION:
-				#	time.sleep(0.01)
+				while globals.PENDING_ACTION:
+					time.sleep(0.01)
 				for device in globals.KNOWN_DEVICES:
 					if globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] != globals.daemonname:
 						if device in globals.KEEPED_CONNECTION:
