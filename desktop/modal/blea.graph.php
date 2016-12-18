@@ -106,6 +106,19 @@ function load_graph(){
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}
+		if (haslink != 0){
+			for (antenna in antennas){
+				linked = 0;
+				for (linkedantenna in eqLogics[eqlogic]['rssi']){
+					if (antenna == linkedantenna && eqLogics[eqlogic]['rssi'][linkedantenna] != -200){
+						linked = 1;
+					}
+				}
+				if (linked == 0){
+					graph.addLink(antenna,eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: -0.2,signal : -200});
+				}
+			}
+		}
 		if (haslink == 0){
 			graph.addLink('local',eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
 		}
