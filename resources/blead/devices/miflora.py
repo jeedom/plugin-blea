@@ -32,9 +32,14 @@ class Miflora():
 			conn.writeCharacteristic('0x33',value)
 			datas = conn.readCharacteristic('0x35')
 			conn.disconnect()
-			battery, firmware = struct.unpack('<B6s',batteryFirm)
-			temperature, sunlight, moisture, fertility = struct.unpack('<hxIBHxxxxxx',datas)
-			temperature = float(temperature)/10
+			battery = batteryFirm[0]
+			firmware = "".join(map(chr, batteryFirm[2:]))
+			received = bytearray(datas)
+			logging.debug(str(received))
+			temperature = float(received_bytes[1] * 256 + received_bytes[0]) / 10
+			sunlight = received_bytes[4] * 256 + received_bytes[3]
+			moisture = received_bytes[7]
+			fertility = received_bytes[9] * 256 + received_bytes[8]
 			result['battery'] = battery
 			result['firmware'] = firmware.replace('\x10','')
 			result['sunlight'] = sunlight

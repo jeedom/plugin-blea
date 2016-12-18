@@ -318,7 +318,7 @@ def action_handler(message):
 					logging.debug("Refresh failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 				break
-		if len(result) > 2 :
+		if result and len(result) > 2 :
 			if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
 				return
 			else:
