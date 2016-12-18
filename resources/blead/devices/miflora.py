@@ -27,15 +27,15 @@ class Miflora():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			batteryFirm = conn.readCharacteristic('0x38')
+			batteryFirm = bytearray(conn.readCharacteristic('0x38'))
 			value = 'A01F'
 			conn.writeCharacteristic('0x33',value)
 			datas = conn.readCharacteristic('0x35')
 			conn.disconnect()
-			battery = batteryFirm[0]
-			firmware = "".join(map(chr, batteryFirm[2:]))
 			received = bytearray(datas)
 			logging.debug(str(received))
+			battery = batteryFirm[0]
+			firmware = "".join(map(chr, batteryFirm[2:]))
 			temperature = float(received_bytes[1] * 256 + received_bytes[0]) / 10
 			sunlight = received_bytes[4] * 256 + received_bytes[3]
 			moisture = received_bytes[7]

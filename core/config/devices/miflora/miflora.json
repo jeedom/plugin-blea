@@ -15,16 +15,13 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "generic_type": "GENERIC"
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "°C",
                 "logicalId": "temperature",
-				"display": {
-					"icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
-					"generic_type": "DONT"
-				},
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
@@ -35,16 +32,13 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "generic_type": "GENERIC"
-                },
+					"icon": "<i class=\"fa fa-tint\"><\/i>",
+					"generic_type": "DONT"
+				},
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "%",
                 "logicalId": "moisture",
-				"display": {
-					"icon": "<i class=\"fa fa-tint\"><\/i>",
-					"generic_type": "DONT"
-				},
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
@@ -55,16 +49,13 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "generic_type": "GENERIC"
-                },
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"generic_type": "DONT"
+				},
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "lux",
                 "logicalId": "sunlight",
-				"display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
-					"generic_type": "DONT"
-				},
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
@@ -75,16 +66,13 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "generic_type": "GENERIC"
-                },
+					"icon": "<i class=\"fa fa-leaf\"><\/i>",
+					"generic_type": "DONT"
+				},
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "uS/cm",
                 "logicalId": "fertility",
-				"display": {
-					"icon": "<i class=\"fa fa-leaf\"><\/i>",
-					"generic_type": "DONT"
-				},
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
@@ -95,16 +83,13 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "generic_type": "GENERIC"
-                },
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
                 "isVisible": 0,
                 "isHistorized": 0,
                 "unite": "%",
                 "logicalId": "battery",
-				"display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
-					"generic_type": "DONT"
-				},
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
