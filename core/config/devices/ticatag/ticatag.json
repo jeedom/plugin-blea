@@ -36,6 +36,9 @@
                     "mobile": "badge",
 					"dashboard" : "badge"
                 },
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
                 "unite": "",
                 "logicalId": "buttonid"
             },
@@ -50,6 +53,9 @@
 				"display": {
 					"icon": "<i class=\"fa fa-circle-o\"><\/i>",
 					"generic_type": "DONT"
+				},
+				"configuration": {
+                "repeatEventManagement" : "always"
 				},
 				"template": {
 					"dashboard": "line",

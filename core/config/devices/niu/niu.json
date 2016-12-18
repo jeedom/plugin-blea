@@ -17,6 +17,9 @@
                     "mobile": "badge",
 					"dashboard" : "badge"
                 },
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
                 "unite": "",
                 "logicalId": "buttonid"
             },
@@ -27,6 +30,9 @@
                 "isVisible": 1,
                 "isHistorized": 1,
                 "unite": "",
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
                 "logicalId": "button"
             },
             {

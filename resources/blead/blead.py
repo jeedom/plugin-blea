@@ -63,20 +63,20 @@ class ScanDelegate(DefaultDelegate):
 			for device in globals.COMPATIBILITY:
 				if device().isvalid(name,manuf):
 					findDevice=True
-					logging.debug('This is a ' + device().name + ' device')
+					logging.debug('This is a ' + device().name + ' device ' +str(mac))
 					if mac.upper() not in globals.KNOWN_DEVICES:
 						if not globals.LEARN_MODE:
-							logging.debug('It\'s a known packet but not decoded because this device is not Included and I\'am not in learn mode')
+							logging.debug('It\'s a known packet but not decoded because this device is not Included and I\'am not in learn mode ' +str(mac))
 							return
 					if mac.upper() in globals.KNOWN_DEVICES:
 						if globals.LEARN_MODE:
-							logging.debug('Known device and in Learn Mode ignoring')
+							logging.debug('Known device and in Learn Mode ignoring ' +str(mac))
 							return
 					globals.PENDING_ACTION = True
 					try:
 						action = device().parse(data,mac)
 					except:
-						logging.debug('Parse failed')
+						logging.debug('Parse failed ' +str(mac))
 					if not action:
 						return
 					globals.PENDING_ACTION = False
@@ -87,7 +87,7 @@ class ScanDelegate(DefaultDelegate):
 					action['source'] = globals.daemonname
 					action['rawdata'] = str(dev.getScanData())
 					if globals.LEARN_MODE:
-						logging.debug('It\'s a known packet and I don\'t known this device so I learn')
+						logging.debug('It\'s a known packet and I don\'t known this device so I learn ' +str(mac))
 						action['learn'] = 1
 						if 'version' in action:
 							action['type']= action['version']
@@ -104,22 +104,22 @@ class ScanDelegate(DefaultDelegate):
 				action['source'] = globals.daemonname
 				if mac.upper() not in globals.KNOWN_DEVICES:
 					if not globals.LEARN_MODE:
-						logging.debug('It\'s an unknown packet but not sent because this device is not Included and I\'am not in learn mode')
+						logging.debug('It\'s an unknown packet but not sent because this device is not Included and I\'am not in learn mode ' +str(mac))
 						return
 					else:
 						if globals.LEARN_MODE_ALL == 0:
-							logging.debug('It\'s a unknown packet and I don\'t known but i\'m configured to ignore unknow packet')
+							logging.debug('It\'s a unknown packet and I don\'t known but i\'m configured to ignore unknow packet ' +str(mac))
 							return
-						logging.debug('It\'s a unknown packet and I don\'t known this device so I learn')
+						logging.debug('It\'s a unknown packet and I don\'t known this device so I learn ' +str(mac))
 						action['learn'] = 1
 						logging.debug(action)
 						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 				else:
 					if len(action) > 2:
 						if globals.LEARN_MODE:
-							logging.debug('It\'s an unknown packet i know this device but i\'m in learn mode ignoring')
+							logging.debug('It\'s an unknown packet i know this device but i\'m in learn mode ignoring ' +str(mac))
 							return
-						logging.debug('It\'s a unknown packet and I known this device so I send')
+						logging.debug('It\'s a unknown packet and I known this device so I send ' +str(mac))
 						logging.debug(action)
 						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 
@@ -153,8 +153,8 @@ def listen():
 				if globals.SCAN_ERRORS > 0:
 					logging.info("Attempt to recover successful, reseting counter")
 					globals.SCAN_ERRORS = 0
-				while globals.PENDING_ACTION:
-					time.sleep(0.5)
+				#while globals.PENDING_ACTION:
+				#	time.sleep(0.01)
 				for device in globals.KNOWN_DEVICES:
 					if globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] != globals.daemonname:
 						if device in globals.KEEPED_CONNECTION:
@@ -173,6 +173,8 @@ def listen():
 					if globals.SCAN_ERRORS < 5:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
 						logging.warning("Exception on scanner (trying to resolve by myself attempt " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
+						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
+					elif globals.SCAN_ERRORS < 8:
 						os.system('hciconfig ' + globals.device + ' down')
 						os.system('hciconfig ' + globals.device + ' up')
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
