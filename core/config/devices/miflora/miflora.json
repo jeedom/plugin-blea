@@ -117,7 +117,7 @@
                 "isVisible": 1,
                 "isHistorized": 0,
                 "unite": "",
-                "logicalId": "name:miflora,action:refresh"
+                "logicalId": "refresh"
             }
         ],
 		"compatibility": [
