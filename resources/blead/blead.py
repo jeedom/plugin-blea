@@ -308,7 +308,7 @@ def action_handler(message):
 		except Exception,e:
 				logging.debug("Helper failed : %s" % str(e))
 				globals.PENDING_ACTION = False
-	if message['cmd'] == 'refresh':
+	elif message['cmd'] == 'refresh':
 		for compatible in globals.COMPATIBILITY:
 			classname = message['command']['device']['name']
 			if compatible().name.lower() == classname.lower():
