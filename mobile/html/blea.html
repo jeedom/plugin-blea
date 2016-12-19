@@ -1,0 +1,64 @@
+<!--
+* This file is part of Plugin openzwave for jeedom.
+*
+* Plugin openzwave for jeedom is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* Plugin openzwave for jeedom is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with Plugin openzwave for jeedom. If not, see <http://www.gnu.org/licenses/>.
+-->
+<style>
+    #graph_network {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+    #graph_network > svg {
+        height: 100%;
+        width: 100%
+    }
+</style>
+
+<div id="div_inclusionAlert" style="text-align: center;font-size: 2em;"></div>
+<div class="ui-grid-a">
+<div class="cursor changeIncludeState includestop card" data-mode="1" data-state="0" style="display:none;background-color : transparent; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+	<center class="includeicon">
+	<i class="fa fa-spinner fa-pulse" style="font-size : 6em;color:#94ca02;"></i>
+	</center>
+	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Arrêter Scan}}</center></span>
+	</div>
+	<div class="cursor changeIncludeState include card" data-mode="1" data-state="1" style="background-color : transparent; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+	<center class="includeicon">
+	<i class="fa fa-bullseye" style="font-size : 6em;color:#94ca02;"></i>
+	</center>
+	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Lancer Scan}}</center></span>
+	</div>
+</div>
+<span class="health"><i class="fa fa-medkit"></i> {{Santé}}</span>
+<span class="reseau"><i class="fa fa-list-alt"></i> {{Réseau}}</span>
+<table class="healthtable table table-condensed tablesorter" id="table_healthblea">
+	<thead>
+		<tr>
+			<th>{{Image}}</th>
+			<th>{{Nom}}</th>
+			<th>{{Batterie}}</th>
+			<th>{{Présent}}</th>
+			<th>{{Dernière comm}}</th>
+		</tr>
+	</thead>
+	<tbody>
+</tbody>
+</table>
+<div class="graph_network" id="graph_network" class="tab-pane" style="display:none">
+</div>
+
+<script src="core/php/getJS.php?file=plugins/blea/mobile/js/blea.js"></script>
+
+<script type="text/javascript" src="plugins/blea/3rdparty/vivagraph/vivagraph.min.js"></script>

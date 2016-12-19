@@ -31,6 +31,14 @@ try {
 		ajax::success();
 	}
 	
+	if (init('action') == 'getMobileGraph') {
+		ajax::success(blea::getMobileGraph());
+	}
+	
+	if (init('action') == 'getMobileHealth') {
+		ajax::success(blea::getMobileHealth());
+	}
+	
 	if (init('action') == 'saveAntennaPosition') {
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}

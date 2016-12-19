@@ -24,7 +24,7 @@ class blea extends eqLogic {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
 			'page' => 'blea',
-			'message' => __('Nouveau module detecté', __FILE__),
+			'message' => __('Nouveau module detecté ' . $_def['type'], __FILE__),
 		));
 		if (!isset($_def['id']) || !isset($_def['type'])) {
 			log::add('blea', 'error', 'Information manquante pour ajouter l\'équipement : ' . print_r($_def, true));
@@ -70,7 +70,7 @@ class blea extends eqLogic {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
 			'page' => 'blea',
-			'message' => __('Module inclu avec succès', __FILE__),
+			'message' => __('Module inclu avec succès ' .$_def['name'].' ' . $_def['id'], __FILE__),
 		));
 		return $eqLogic;
 	}
@@ -88,6 +88,84 @@ class blea extends eqLogic {
 		$class= $child.'blea';
 		$childrenclass = new $class();
 		$childrenclass->cronDispatcher($_params);
+	}
+	
+	public static function getMobileHealth() {
+		$health='';
+		$eqLogics = blea::byType('blea');
+		foreach ($eqLogics as $eqLogic) {
+			$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+			$alternateImg = $eqLogic->getConfiguration('iconModel');
+			if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
+				$img = '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg" height="30" width="30" style="' . $opacity . '"/>';
+			} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+				$img = '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="30" width="30" style="' . $opacity . '"/>';
+			} else {
+				$img = '<img class="lazy" src="plugins/blea/doc/images/blea_icon.png" height="30" width="30" style="' . $opacity . '"/>';
+			}
+			$health .= '<tr><td>' . $img . '</td><td><span class="label label-success" style="font-size : 0.8em;">'. $eqLogic->getHumanName(true) . '</span></td>';
+			$battery_status = '<span class="label label-success" style="font-size : 1em;">{{OK}}</span>';
+			if ($eqLogic->getStatus('battery') < 20 && $eqLogic->getStatus('battery') != '') {
+				$battery_status = '<span style="font-size : 1em;color:red">' . $eqLogic->getStatus('battery') . '%</span>';
+			} elseif ($eqLogic->getStatus('battery') < 60 && $eqLogic->getStatus('battery') != '') {
+				$battery_status = '<span style="font-size : 1em;color:orange">' . $eqLogic->getStatus('battery') . '%</span>';
+			} elseif ($eqLogic->getStatus('battery') > 60 && $eqLogic->getStatus('battery') != '') {
+				$battery_status = '<span style="font-size : 1em;color:green">' . $eqLogic->getStatus('battery') . '%</span>';
+			} else {
+				$battery_status = '<span style="font-size : 1em;color:grey" title="{{Secteur}}"><i class="fa fa-plug"></i></span>';
+			}
+			$health .= '<td>' . $battery_status . '</td>';
+			$present = 0;
+			$presentcmd = $eqLogic->getCmd('info', 'present');
+			if (is_object($presentcmd)) {
+				$present = $presentcmd->execCmd();
+			}
+			if (in_array($eqLogic->getConfiguration('device','') , array('niu'))){
+				$present =1;
+			}
+			if ($present == 1){
+				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fa fa-check"></i></span>';
+			} else {
+				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fa fa-times"></i></span>';
+			}
+			$health .= '<td>' . $present . '</td>';
+			$health .= '<td><span style="font-size : 0.8em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
+		}
+		return $health;
+	}
+	
+	public static function getMobileGraph() {
+		$remotes = blea_remote::all();
+		$eqLogics = array();
+		$antennas = array();
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote){
+			$info = array();
+			$name = $remote->getRemoteName();
+			$info['x'] = $remote->getConfiguration('positionx',999);
+			$info['y'] = $remote->getConfiguration('positiony',999);
+			$antennas[$name]=$info;
+		}
+		$infolocal=array();
+		$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+		$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+		$antennas['local']=$infolocal;
+		foreach (eqLogic::byType('blea') as $eqLogic){
+			$info =array();
+			$info['name'] = $eqLogic->getName();
+			$info['icon'] = $eqLogic->getConfiguration('iconModel');
+			$info['rssi'] = array();
+			foreach ($eqLogic->getCmd('info') as $cmd) {
+				$logicalId = $cmd->getLogicalId();
+				if (substr($logicalId,0,4) == 'rssi'){
+					$remotename= substr($logicalId,4);
+					$remoterssi = $cmd->execCmd();
+					$info['rssi'][$remotename] = $remoterssi;
+				}
+			}
+		$eqLogics[$eqLogic->getName()]=$info;
+		}
+		return [$eqLogics,$antennas];
 	}
 	
 	public static function health() {
