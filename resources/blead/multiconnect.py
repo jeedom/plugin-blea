@@ -73,14 +73,14 @@ class Connector():
 		logging.debug('Characteristic Readen .... ' + str(self.mac))
 		return result
 
-	def writeCharacteristic(self,handle,value,retry=4):
+	def writeCharacteristic(self,handle,value,retry=4,response=False):
 		logging.debug('Writing Characteristic... ' + str(self.mac))
 		iwriteCharacteristic=0
 		while True:
 			iwriteCharacteristic = iwriteCharacteristic + 1
 			try:
 				arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-				self.conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
+				result = self.conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue),response)
 				break
 			except Exception,e:
 				logging.debug(str(e))
@@ -90,6 +90,8 @@ class Connector():
 				logging.debug('Retry connection ' + str(self.mac))
 				self.connect()
 		logging.debug('Characteristic written... ' + str(self.mac))
+		if result :
+			logging.debug(str(result))
 		return True
 	
 	def getCharacteristics(self,handle='',handleend='',retry=2):

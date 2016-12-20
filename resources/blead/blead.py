@@ -26,6 +26,7 @@ import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
 from threading import Thread
+import thread
 from multiconnect import Connector
 try:
 	from jeedom.jeedom import *
@@ -102,6 +103,7 @@ class ScanDelegate(DefaultDelegate):
 				action['name'] = name
 				action['rssi'] = rssi
 				action['source'] = globals.daemonname
+				action['rawdata'] = str(dev.getScanData())
 				if mac.upper() not in globals.KNOWN_DEVICES:
 					if not globals.LEARN_MODE:
 						logging.debug('It\'s an unknown packet but not sent because this device is not Included and I\'am not in learn mode ' +str(mac))
