@@ -28,11 +28,13 @@ class Notification():
 				while time.time()<timeout:
 					self.conn.conn.waitForNotifications(0.5)
 					time.sleep(0.03)
+				self.conn.disconnect()
 			else:
 				while True:
 					self.conn.conn.waitForNotifications(0.5)
 					time.sleep(0.03)
 		except Exception,e:
+			self.conn.disconnect()
 			logging.debug(str(e))
 
 class NotificationDelegate(btle.DefaultDelegate):

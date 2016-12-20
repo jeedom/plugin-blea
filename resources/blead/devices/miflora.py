@@ -32,27 +32,11 @@ class Miflora():
 			conn.writeCharacteristic('0x33','a01f',response=True)
 			battery = batteryFirm[0]
 			firmware = "".join(map(chr, batteryFirm[2:]))
-			if 1 == 1:
-				notification = Notification(conn,Miflora)
-				conn.writeCharacteristic('0x36','0100',response=True)
-				notification.subscribe(2)
-				result['battery'] = battery
-				result['firmware'] = firmware
-				result['id'] = mac
-				return
-			datas = conn.readCharacteristic('0x35')
-			conn.disconnect()
-			received = bytearray(datas)
-			temperature = float(received[1] * 256 + received[0]) / 10
-			sunlight = received[4] * 256 + received[3]
-			moisture = received[7]
-			fertility = received[9] * 256 + received[8]
+			notification = Notification(conn,Miflora)
+			conn.writeCharacteristic('0x36','0100',response=True)
+			notification.subscribe(2)
 			result['battery'] = battery
 			result['firmware'] = firmware
-			result['sunlight'] = sunlight
-			result['moisture'] = moisture
-			result['fertility'] = fertility
-			result['temperature'] = temperature
 			result['id'] = mac
 			logging.debug(str(result))
 			return result
