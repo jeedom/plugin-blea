@@ -16,15 +16,17 @@ class Itag():
 	def parse(self,data,mac):
 		action={}
 		action['present'] = 1
-		conn = Connector(mac)
-		conn.connect()
-		if not conn.isconnected:
+		if mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[mac.upper()]['emitterallowed'] == globals.daemonname and globals.KNOWN_DEVICES[mac.upper()]['islocked'] == 1:
+			conn = Connector(mac)
 			conn.connect()
 			if not conn.isconnected:
-				return action
-		conn.writeCharacteristic('0x36','0100',response=True)
-		notification = Notification(conn,Itag)
-		notification.subscribe()
+				conn.connect()
+				if not conn.isconnected:
+					return action
+			conn.writeCharacteristic('0x36','0100',response=True)
+			notification = Notification(conn,Itag)
+			notification.subscribe()
+			globals.KEEPED_CONNECTION[mac.upper()]=conn
 		return action
 	
 	def action(self,message):

@@ -28,3 +28,4 @@ def getTintedColor(color,lum):
 		c = int(min(max(0,(c * lum)), 255))
 		rgb = rgb + hex(c)[2:].zfill(2)
 	return rgb
+	

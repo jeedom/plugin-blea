@@ -11,10 +11,11 @@ class Connector():
 		self.conn = ''
 		self.isconnected = False
 
-	def connect(self,retry=4):
+	def connect(self,retry=2):
 		logging.debug('Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
 		i=0
-		while True:
+		timeout = time.time() + 15
+		while time.time()<timeout:
 			i = i + 1
 			try:
 				connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
@@ -55,7 +56,7 @@ class Connector():
 		self.isconnected = False
 		logging.debug('Disconnected...'+ str(self.mac))
 
-	def readCharacteristic(self,handle,retry=4):
+	def readCharacteristic(self,handle,retry=2):
 		logging.debug('Reading Characteristic...'+ str(self.mac))
 		ireadCharacteristic=0
 		while True:
@@ -73,7 +74,7 @@ class Connector():
 		logging.debug('Characteristic Readen .... ' + str(self.mac))
 		return result
 
-	def writeCharacteristic(self,handle,value,retry=4,response=False):
+	def writeCharacteristic(self,handle,value,retry=2,response=False):
 		logging.debug('Writing Characteristic... ' + str(self.mac))
 		iwriteCharacteristic=0
 		while True:

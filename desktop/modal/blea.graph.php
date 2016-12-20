@@ -115,7 +115,7 @@ function load_graph(){
 					}
 				}
 				if (linked == 0){
-					graph.addLink(antenna,eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: -0.2,signal : -200});
+					graph.addLink(antenna,eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: -0.1,signal : -200});
 				}
 			}
 		}

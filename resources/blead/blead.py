@@ -25,7 +25,7 @@ import json
 import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
-from threading import Thread
+from threading import Timer
 import thread
 from multiconnect import Connector
 try:
@@ -174,9 +174,10 @@ def listen():
 				if not globals.PENDING_ACTION and not globals.LEARN_MODE: 
 					if globals.SCAN_ERRORS < 5:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
-						logging.warning("Exception on scanner (trying to resolve by myself attempt " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
-					elif globals.SCAN_ERRORS < 8:
+					elif globals.SCAN_ERRORS >=5 and globals.SCAN_ERRORS< 8:
+						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
+						logging.warning("Exception on scanner (trying to resolve by myself " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
 						os.system('hciconfig ' + globals.device + ' down')
 						os.system('hciconfig ' + globals.device + ' up')
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
