@@ -633,8 +633,8 @@ class blea extends eqLogic {
 				$emitter = blea_remote::byId($this->getConfiguration('antenna','local'))->getRemoteName();
 			}
 		}
-		if ($this->getConfiguration('antennareceive','local') == 'local'){
-			$refresher = 'local';
+		if ($this->getConfiguration('antennareceive','local') == 'local' || $this->getConfiguration('antennareceive','local') == 'all'){
+			$refresher = $this->getConfiguration('antennareceive','local');
 		} else {
 			$refresher = blea_remote::byId($this->getConfiguration('antennareceive','local'))->getRemoteName();
 		}

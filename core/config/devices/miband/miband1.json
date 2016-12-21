@@ -1,0 +1,145 @@
+{
+    "miband1": {
+        "name": "Miband",
+		"groupe" : "Santé",
+		"configuration" : {
+			"needsrefresh" : 1,
+			"name" : "miband1",
+			"battery_type" : "Batterie",
+			"delay" : 18000,
+			"cancontrol" : 1
+		},
+        "commands": [
+			{
+                "name": "Nombre de pas",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "steps",
+                "unite": "pas",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"icon": "<i class=\"icon loisir-runner5\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+			{
+                "name": "Nombre de charges",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "cycle",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Dernière charge",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "lastcharge",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Firmware",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "firmware"
+            },
+			{
+                "name": "Vibration",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:miband1,handle:0x53,value:04",
+				"display": {
+					"icon": "<i class=\"fa fa-rss\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+			{
+                "name": "Vibration + Led",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:miband1,handle:0x53,value:01",
+				"display": {
+					"icon": "<i class=\"icon jeedom-alerte\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Xiaomi",
+                "name": "Miband",
+				"doc": "",
+				"type": "Santé",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
+				"inclusion" : "Mode inclusion auto et appui sur le bouton",
+				"imglink": "miband1"
+            }
+        ]
+    }
+}

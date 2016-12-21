@@ -181,6 +181,8 @@ if (isset($result['devices'])) {
 				$cmdpresent->setName(__('Present', __FILE__));
 				$cmdpresent->setType('info');
 				$cmdpresent->setSubType('binary');
+				$cmdpresent->setTemplate('dashboard','line');
+				$cmdpresent->setTemplate('mobile','line');
 				$cmdpresent->setEqLogic_id($blea->getId());
 				$cmdpresent->save();
 			}
@@ -230,11 +232,11 @@ if (isset($result['devices'])) {
 			}
 			$antenna = 'local';
 			$antennaId = $blea->getConfiguration('antennareceive','local');
-			if ($antennaId != 'local'){
+			if ($antennaId != 'local' && $antennaId != 'all'){
 				$remote = blea_remote::byId($antennaId);
 				$antenna = $remote->getRemoteName();
 			}
-			if ($logicalId != 'present' && $antenna != $datas['source']){
+			if ($logicalId != 'present' && $antenna != 'all' && $antenna != $datas['source']){
 				log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
 				continue;
 			}

@@ -143,7 +143,7 @@ def listen():
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + 28)  < int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + 14)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.LAST_CLEAR = int(time.time())
 				globals.SCANNER.start()

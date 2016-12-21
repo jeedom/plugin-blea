@@ -10,7 +10,7 @@ class Itag():
 		self.name = 'itag'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() == self.name:
+		if name.lower() in [self.name,'mle-15']:
 			return True
 			
 	def parse(self,data,mac):
@@ -23,7 +23,7 @@ class Itag():
 				conn.connect()
 				if not conn.isconnected:
 					return action
-			conn.writeCharacteristic('0x36','0100',response=True)
+			conn.writeCharacteristic('0x36','0100')
 			notification = Notification(conn,Itag)
 			notification.subscribe()
 			globals.KEEPED_CONNECTION[mac.upper()]=conn

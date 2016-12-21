@@ -184,6 +184,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 					}
 				}
 				?>
+				<option value="all">{{Tous}}</option>
               </select>
             </div>
 			 <div class="form-group refreshdelay" style="display:none">
