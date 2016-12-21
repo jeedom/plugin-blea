@@ -75,7 +75,7 @@ class ScanDelegate(DefaultDelegate):
 							return
 					globals.PENDING_ACTION = True
 					try:
-						action = device().parse(data,mac)
+						action = device().parse(data,mac,name)
 					except:
 						logging.debug('Parse failed ' +str(mac))
 					if not action:

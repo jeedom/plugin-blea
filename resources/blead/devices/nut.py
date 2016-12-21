@@ -11,7 +11,7 @@ class Nut():
 		if name.lower() == self.name:
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		return action

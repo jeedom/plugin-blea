@@ -8,17 +8,22 @@ import binascii
 from multiconnect import Connector
 from notification import Notification
 
-class Miband1():
+class Miband():
 	def __init__(self):
-		self.name = 'miband1'
+		self.name = 'miband'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() in ['mi1a',self.name]:
+		if name.lower() in ['mi1a','mi1s',self.name]:
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
+		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
+			if name.lower() in ['mi1a']:
+				action['version'] = 'miband1'
+			elif name.lower() in ['mi1s']:
+				action['version'] = 'miband1s'
 		return action
 	
 	def action(self,message):
@@ -87,4 +92,4 @@ class Miband1():
 		result['source'] = globals.daemonname
 		globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
-globals.COMPATIBILITY.append(Miband1)
+globals.COMPATIBILITY.append(Miband)

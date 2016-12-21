@@ -13,7 +13,7 @@ class Myfox():
 		if name.lower().find("myfox") != -1:
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		return action

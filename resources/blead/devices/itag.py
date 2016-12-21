@@ -13,7 +13,7 @@ class Itag():
 		if name.lower() in [self.name,'mle-15']:
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		if mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[mac.upper()]['emitterallowed'] == globals.daemonname and globals.KNOWN_DEVICES[mac.upper()]['islocked'] == 1:

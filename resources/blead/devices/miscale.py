@@ -12,7 +12,7 @@ class MiScale():
 		if name == 'MI_SCALE':
 			return True
 
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		if data[4:6] in ['22','12','03']:

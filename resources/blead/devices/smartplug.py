@@ -14,7 +14,7 @@ class Smartplug():
 		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		return action

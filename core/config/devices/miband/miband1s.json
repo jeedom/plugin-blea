@@ -1,6 +1,6 @@
 {
-    "miband1": {
-        "name": "Miband",
+    "miband1s": {
+        "name": "Miband1s",
 		"groupe" : "Santé",
 		"configuration" : {
 			"needsrefresh" : 1,
@@ -97,7 +97,7 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:miband,handle:0x53,value:04",
+                "logicalId": "name:miband,handle:0x51,value:04",
 				"display": {
 					"icon": "<i class=\"fa fa-rss\"><\/i>",
 					"generic_type": "DONT"
@@ -108,7 +108,7 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:miband,handle:0x53,value:01",
+                "logicalId": "name:miband,handle:0x51,value:01",
 				"display": {
 					"icon": "<i class=\"icon jeedom-alerte\"><\/i>",
 					"generic_type": "DONT"
@@ -130,7 +130,7 @@
 		"compatibility": [
             {
                 "manufacturer": "Xiaomi",
-                "name": "Miband",
+                "name": "Miband1s",
 				"doc": "",
 				"type": "Santé",
 				"battery_type": "1x3V CR2032",
@@ -138,7 +138,7 @@
 				"comlink": "",
 				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
 				"inclusion" : "Mode inclusion auto et appui sur le bouton",
-				"imglink": "miband1"
+				"imglink": "miband1s"
             }
         ]
     }

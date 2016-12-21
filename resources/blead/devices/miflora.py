@@ -14,7 +14,7 @@ class Miflora():
 		validname = ['Flower mate','Flower care']
 		if name in validname:
 			return True
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		return action

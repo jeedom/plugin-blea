@@ -168,7 +168,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
            </div>
          </div>
 		 <div class="form-group">
-				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, tous n'est pas disponible pour éviter la répétition des infos (de type bouton). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
+				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
                 <option value="local">{{Local}}</option>

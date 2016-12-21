@@ -14,7 +14,7 @@ class Playbulb():
 	def isvalid(self,name,manuf=''):
 		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb'):
 			return True
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:

@@ -11,7 +11,7 @@ class Niu():
 		if name.lower() == self.name:
 			return True
 			
-	def parse(self,data,mac):
+	def parse(self,data,mac,name):
 		action={}
 		logging.debug('Parsing data ' + data)
 		buttontrame = data[34:36]
