@@ -67,7 +67,7 @@
                 "isVisible": 1,
                 "logicalId": "name:playbulb,handle:0x19,value:03,type:effect,color:0x1b",
 				"display": {
-				"icon": "<i class=\"fa nature-weather1\"><\/i>",
+				"icon": "<i class=\"icon nature-wind\"><\/i>",
 				"forceReturnLineBefore": 1
 				}
             },
@@ -99,16 +99,6 @@
                 "logicalId": "name:playbulb,handle:0x19,value:01,type:effect,color:0x1b",
 				"display": {
 				"icon": "<i class=\"icon divers-triangular42\"><\/i>"
-				}
-            },
-			{
-                "name": "Bougie",
-                "type": "action",
-                "subtype": "other",
-                "isVisible": 1,
-                "logicalId": "name:playbulb,handle:0x19,value:04,type:effect,color:0x1b",
-				"display": {
-				"icon": "<i class=\"icon nature-fire14\"><\/i>"
 				}
             },
 			{
