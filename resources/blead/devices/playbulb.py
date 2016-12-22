@@ -23,6 +23,7 @@ class Playbulb():
 						'BTL300_v6': 'candle6',
 						'BTL300': 'candle6',
 						'BTL301W_v5':'sphere',
+						'BTL301W':'sphere',
 						'BTL301WM_V1.7' : 'sphere17',
 						'BTL400_V3.7':'garden',
 						'BTL400':'garden'}
@@ -50,7 +51,6 @@ class Playbulb():
 			try:
 				if char.supportsRead():
 					value = char.read()
-					logging.debug(str(value))
 					if value and value[0:3] == 'BTL' and len(value)>6:
 						break
 			except Exception,e:

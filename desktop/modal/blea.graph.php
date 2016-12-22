@@ -174,10 +174,12 @@ function load_graph(){
 				color = 'green';
 				if (link.data.signal <= -150) {
 					color = 'grey';
-				} else if (link.data.signal <= -91) {
+				} else if (link.data.signal <= -92) {
 					color = 'red';
-				} else if (link.data.signal <= -81) {
+				} else if (link.data.signal <= -86) {
 					color = 'orange';
+				} else if (link.data.signal <= -81) {
+					color = 'yellow';
 				}
                 if (link.data.isdash == 1) {
                     dashvalue = '5, 2';

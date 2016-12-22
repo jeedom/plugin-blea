@@ -246,7 +246,7 @@ class blea extends eqLogic {
 		$last = $remoteObject->getConfiguration('lastupdate','0');
 		if ($last != '0' and time() - strtotime($last)<65){
 			blea::stopremote($_remoteId);
-			time.sleep(5);
+			sleep(5);
 		}
 		$user=$remoteObject->getConfiguration('remoteUser');
 		$device=$remoteObject->getConfiguration('remoteDevice');

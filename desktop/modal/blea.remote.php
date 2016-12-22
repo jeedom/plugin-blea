@@ -26,10 +26,10 @@ sendVarToJS('plugin', $id);
 ?>
 <div id='div_bleaRemoteAlert' style="display: none;"></div>
 <div class="row row-overflow">
-	<div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">
+	<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
 		<div class="bs-sidebar">
 			<ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter une Antenne Bluetooth}}</a>
+				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter Antenne}}</a>
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
@@ -44,14 +44,36 @@ foreach ($remotes as $remote) {
 			</ul>
 		</div>
 	</div>
+	 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 remoteThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
+<legend><i class="fa fa-table"></i>  {{Mes Antennes}}</legend>
 
-	<div class="col-lg-9 col-md-8 col-sm-7 col-xs-7 bleaRemote" style="border-left: solid 1px #EEE; padding-left: 25px;display:none;">
+<div class="eqLogicThumbnailContainer">
+	<div class="cursor bleaRemoteAction pull-left" data-action="add" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
+     <center>
+      <i class="fa fa-plus-circle" style="font-size : 9em;color:#2980b9;"></i>
+    </center>
+    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#2980b9"><center>{{Ajouter}}</center></span>
+  </div>
+  <?php
+foreach ($remotes as $remote) {
+	echo '<div class="eqLogicDisplayCard cursor pull-left" data-remote_id="' . $remote->getId() . '" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+	echo "<center>";
+	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png" height="105" width="95" />';
+	echo "</center>";
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $remote->getRemoteName() . '</center></span>';
+	echo '</div>';
+}
+?>
+</div>
+</div>
+
+	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 bleaRemote" style="border-left: solid 1px #EEE; padding-left: 25px;display:none;">
 		<a class="btn btn-success bleaRemoteAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
 		<a class="btn btn-danger bleaRemoteAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
 
 			<form class="form-horizontal">
 					<fieldset>
-						<legend>{{Général}}</legend>
+						<legend><i class="fa fa-arrow-circle-left returnAction cursor"></i> {{Général}}</legend>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">{{Nom}}</label>
 							<div class="col-sm-3">
@@ -141,11 +163,15 @@ foreach ($remotes as $remote) {
 	</div>
 </div>
 
-
 <script>
 	$('.bleaRemoteAction[data-action=add]').on('click',function(){
 		$('.bleaRemote').show();
+		$('.remoteThumbnailDisplay').hide();
 		$('.bleaRemoteAttr').value('');
+	});
+	
+	$('.eqLogicDisplayCard').on('click',function(){
+		displaybleaRemote($(this).attr('data-remote_id'));
 	});
 
 	function displaybleaRemote(_id){
@@ -168,6 +194,7 @@ foreach ($remotes as $remote) {
 					return;
 				}
 				$('.bleaRemote').show();
+				$('.remoteThumbnailDisplay').hide();
 				$('.bleaRemoteAttr').value('');
 				$('.bleaRemote').setValues(data.result,'.bleaRemoteAttr');
 			}
@@ -202,6 +229,14 @@ foreach ($remotes as $remote) {
 
 	$('.li_bleaRemote').on('click',function(){
 		displaybleaRemote($(this).attr('data-bleaRemote_id'));
+		$('.remoteThumbnailDisplay').hide();
+	});
+	
+	$('.returnAction').on('click',function(){
+		$('.bleaRemote').hide();
+		$('.li_bleaRemote').removeClass('active');
+		setTimeout(function() { $('.remoteThumbnailDisplay').show() }, 100);
+		;
 	});
 
 	$('.bleaRemoteAction[data-action=save]').on('click',function(){
@@ -415,6 +450,10 @@ foreach ($remotes as $remote) {
 						}
 						$('.li_bleaRemote.active').remove();
 						$('.bleaRemote').hide();
+						$('.remoteThumbnailDisplay').show();
+						$('#md_modal').dialog('close');
+						$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+						$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 					}
 				});
 			}

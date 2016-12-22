@@ -82,13 +82,17 @@ foreach ($eqLogics as $eqLogic) {
 			$signalLevel = 'success';
 			if ($rssiantenna <= -150) {
 				$signalLevel = 'none';
-			}elseif ($rssiantenna <= -91) {
+			}elseif ($rssiantenna <= -92) {
 				$signalLevel = 'danger';
-			} elseif ($rssiantenna <= -81) {
+			} elseif ($rssiantenna <= -86) {
 				$signalLevel = 'warning';
+			} elseif ($rssiantenna <= -81) {
+				$signalLevel = 'yellow';
 			}
-			if ($signalLevel!='none'){
-				$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span><br>';
+			if ($signalLevel!='none' && $signalLevel!='yellow'){
+				$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span></br>';
+			} else if ($signalLevel=='yellow'){
+				$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:#cccc00">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span></br>';
 			}
 		}	
 	}
@@ -97,15 +101,20 @@ foreach ($eqLogics as $eqLogic) {
 		$rssiantenna = $rssicmd->execCmd();
 		$antennaname = 'local';
 		$signalLevel = 'success';
-			if ($rssiantenna <= -100) {
+			if ($rssiantenna <= -150) {
 				$signalLevel = 'none';
-			}elseif ($rssiantenna <= -91) {
+			}elseif ($rssiantenna <= -92) {
 				$signalLevel = 'danger';
-			} elseif ($rssiantenna <= -81) {
+			} elseif ($rssiantenna <= -86) {
 				$signalLevel = 'warning';
+			} elseif ($rssiantenna <= -81) {
+				$signalLevel = 'yellow';
 			}
-		if ($signalLevel!='none'){
+			
+		if ($signalLevel!='none' && $signalLevel!='yellow'){
 			$rssi = $rssi . '<span class="label label-'.$signalLevel.'" style="font-size : 0.9em;cursor:default;padding:0px 5px;">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
+		} else if ($signalLevel=='yellow'){
+			$rssi = $rssi . '<span class="label" style="font-size : 0.9em;cursor:default;padding:0px 5px;background-color:#cccc00">' . $rssiantenna .'dBm (' . ucfirst($antennaname) .')</span>';
 		}
 	}
 	$antenna = $eqLogic->getConfiguration('antenna','local');

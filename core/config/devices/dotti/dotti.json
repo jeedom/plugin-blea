@@ -127,7 +127,7 @@
 				"type": "Afficheur",
 				"ref" : "",
 				"comlink": "",
-				"remark": "En cours de developpement",
+				"remark": "Fonctionnera beaucoup mieux avec option garder la connection",
 				"inclusion" : "Mode inclusion",
 				"imglink": "dotti"
             }

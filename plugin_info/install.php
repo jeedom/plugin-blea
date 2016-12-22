@@ -22,7 +22,7 @@ function blea_install() {
 	$sql = file_get_contents(dirname(__FILE__) . '/install.sql');
 	DB::Prepare($sql, array(), DB::FETCH_TYPE_ROW);
 	foreach (blea::byType('blea') as $blea) {
-		$jeelink->save();
+		$blea->save();
 	}
 }
 
