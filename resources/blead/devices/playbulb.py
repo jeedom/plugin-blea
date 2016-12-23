@@ -49,9 +49,9 @@ class Playbulb():
 		for char in characteristics:
 			try:
 				if char.supportsRead():
-					value = char.read()
-					if value and value[0:3] == 'BTL' and len(value)>6:
-						break
+					valueChar = char.read()
+					if valueChar and valueChar[0:3] == 'BTL' and len(valueChar)>6 and len(valueChar)>len(value):
+						value = valueChar
 			except Exception,e:
 				continue
 		conn.disconnect()
