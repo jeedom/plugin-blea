@@ -56,7 +56,7 @@ foreach ($remotes as $remote) {
   </div>
   <?php
 foreach ($remotes as $remote) {
-	echo '<div class="eqLogicDisplayCard cursor pull-left" data-remote_id="' . $remote->getId() . '" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
+	echo '<div class="eqLogicDisplayCard cursor pull-left" data-remote_id="' . $remote->getId() . '" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
 	echo "<center>";
 	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png" height="105" width="95" />';
 	echo "</center>";

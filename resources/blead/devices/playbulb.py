@@ -26,7 +26,8 @@ class Playbulb():
 						'BTL301W':'sphere',
 						'BTL301WM_V1.7' : 'sphere17',
 						'BTL400_V3.7':'garden',
-						'BTL400':'garden'}
+						'BTL400':'garden',
+						'BTL201_V2': 'bluelabel'}
 			version = self.findVersion(mac)
 			logging.debug("Found " + str(version))
 			if not version or version == '':
