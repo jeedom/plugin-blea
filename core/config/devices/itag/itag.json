@@ -32,7 +32,7 @@
 		"compatibility": [
             {
                 "manufacturer": "Itag",
-                "name": "Itag",
+                "name": "Itag Noir",
 				"doc": "",
 				"type": "Boutons",
 				"battery_type": "1x3V CR2032",
@@ -44,7 +44,7 @@
             },
 			{
                 "manufacturer": "Itag",
-                "name": "Itag",
+                "name": "Itag Blanc",
 				"doc": "",
 				"type": "Boutons",
 				"battery_type": "1x3V CR2032",
@@ -56,7 +56,7 @@
             },
 			{
                 "manufacturer": "Itag",
-                "name": "Itag",
+                "name": "Itag Rose",
 				"doc": "",
 				"type": "Boutons",
 				"battery_type": "1x3V CR2032",
@@ -68,7 +68,7 @@
             },
 			{
                 "manufacturer": "Itag",
-                "name": "Itag",
+                "name": "Itag Vert",
 				"doc": "",
 				"type": "Boutons",
 				"battery_type": "1x3V CR2032",
@@ -77,6 +77,18 @@
 				"remark": "Attention pour que le bouton fonctionne il faut cocher garder la connection, a partir de ce moment là la connection est gardée et le bouton n'est plus visible des autres antennes. La connection se fait dès que le bouton est visible dans un délai de 20 secondes (cela se confirme par l'arrêt du clignotement) et cela uniquement sur l'antenne choisi en emission (dans ce cas la il faut bien evidemment choisir la même en réception et émission)",
 				"inclusion" : "Mode inclusion auto et appui sur le bouton",
 				"imglink": "itag_vert"
+            },
+			{
+                "manufacturer": "Itag",
+                "name": "Itag Bleu",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Attention pour que le bouton fonctionne il faut cocher garder la connection, a partir de ce moment là la connection est gardée et le bouton n'est plus visible des autres antennes. La connection se fait dès que le bouton est visible dans un délai de 20 secondes (cela se confirme par l'arrêt du clignotement) et cela uniquement sur l'antenne choisi en emission (dans ce cas la il faut bien evidemment choisir la même en réception et émission)",
+				"inclusion" : "Mode inclusion auto et appui sur le bouton",
+				"imglink": "itag_bleu"
             }
         ]
     }

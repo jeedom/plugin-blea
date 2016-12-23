@@ -365,7 +365,7 @@ class blea extends eqLogic {
 		$return = array();
 		$return['log'] = 'blea_update';
 		$return['progress_file'] = '/tmp/dependancy_blea_in_progress';
-		if (exec('which hcitool | wc -l') == 0) {
+		if (exec('sudo pip list | grep -E "bluepy" | wc -l') < 1) {
 			$return['state'] = 'nok';
 		} else {
 			$return['state'] = 'ok';

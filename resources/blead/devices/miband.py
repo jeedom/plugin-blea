@@ -13,7 +13,7 @@ class Miband():
 		self.name = 'miband'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() in ['mi1a','mi1s',self.name]:
+		if name.lower() in ['mi1a','mi1s', 'mi',self.name]:
 			return True
 			
 	def parse(self,data,mac,name):
@@ -24,6 +24,8 @@ class Miband():
 				action['version'] = 'miband1'
 			elif name.lower() in ['mi1s']:
 				action['version'] = 'miband1s'
+			elif name.lower() in ['mi']:
+				action['version'] = 'mibandcolor'
 		return action
 	
 	def action(self,message):
