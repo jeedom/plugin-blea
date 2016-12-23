@@ -19,22 +19,20 @@ class Playbulb():
 		action['present'] = 1
 		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
 			action['version'] = 'candle'
-			versionDict ={'BTL300_v5' : 'candle',
-						'BTL300_v6': 'candle6',
-						'BTL300': 'candle6',
-						'BTL301W_v5':'sphere',
-						'BTL301W':'sphere',
-						'BTL301WM_V1.7' : 'sphere17',
-						'BTL400_V3.7':'garden',
-						'BTL400':'garden',
-						'BTL201_V2': 'bluelabel'}
+			versionDict ={'btl300_v5' : 'candle',
+						'btl300_v6': 'candle6',
+						'btl301w_v5':'sphere',
+						'btl301w':'sphere',
+						'btl301wm_v1.7' : 'sphere17',
+						'btl400_v3.7':'garden',
+						'btl201_v2': 'bluelabel'}
 			version = self.findVersion(mac)
 			logging.debug("Found " + str(version))
 			if not version or version == '':
 				logging.debug("Not able to have consistent info from playbulb device")
 				return
-			if version in versionDict:
-				action['version'] = versionDict[version]
+			if version.lower() in versionDict:
+				action['version'] = versionDict[version.lower()]
 			else:
 				action['version'] = 'candle'
 		return action
