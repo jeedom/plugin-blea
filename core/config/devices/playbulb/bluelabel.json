@@ -5,7 +5,7 @@
 		"configuration" : {
 			"cancontrol" : 1,
 			"name" : "playbulb",
-			"refreshlist" : {"color":"0x18","effect":"0x16"},
+			"refreshlist" : {"color":"0x1b","effect":"0x19"},
 			"canbelocked" : 1,
 			"needsrefresh" : 1,
 			"delay" : 300
