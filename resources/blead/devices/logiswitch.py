@@ -15,6 +15,7 @@ class LogiSwitch():
 			
 	def parse(self,data,mac,name):
 		result={}
+		result['present'] = 1
 		try:
 			if mac in globals.KEEPED_CONNECTION:
 				logging.debug('Already a connection for ' + mac + ' use it')
@@ -34,7 +35,7 @@ class LogiSwitch():
 			notification.subscribe(2)
 		except Exception,e:
 			logging.error(str(e))
-		return
+		return result
 	
 	def handlenotification(self,conn,handle,data):
 		result={}
