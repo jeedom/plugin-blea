@@ -33,7 +33,7 @@ class LogiSwitch():
 		result={}
 		if hex(handle) == '0x28':
 			received = bytearray(data)
-			button = received[0]
+			button = str(received[0])
 			if button == '2':
 				result['button'] = 1
 				result['buttonlabel'] = 'appui simple'
