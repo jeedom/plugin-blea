@@ -20,13 +20,10 @@ class LogiSwitch():
 				logging.debug('Already a connection for ' + mac + ' use it')
 				conn = globals.KEEPED_CONNECTION[mac]
 			else:
-				if connection != '':
-					conn = connection
-				else:
-					logging.debug('Creating a new connection for ' + mac)
-					conn = Connector(mac)
-					globals.KEEPED_CONNECTION[mac]=conn
-					conn.connect()
+				logging.debug('Creating a new connection for ' + mac)
+				conn = Connector(mac)
+				globals.KEEPED_CONNECTION[mac]=conn
+				conn.connect()
 			if not conn.isconnected:
 				conn.connect()
 				if not conn.isconnected:
