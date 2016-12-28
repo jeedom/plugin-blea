@@ -32,6 +32,7 @@ class LogiSwitch():
 	def handlenotification(self,conn,handle,data):
 		result={}
 		if hex(handle) == '0x28':
+			logging.debug(str(data))
 			received = bytearray(data)
 			button = received[1]
 			logging.debug('button is ' + str(button))
