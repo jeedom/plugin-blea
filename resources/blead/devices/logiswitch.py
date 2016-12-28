@@ -29,10 +29,10 @@ class LogiSwitch():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			conn.writeCharacteristic('0x29','0100',response=True)
-			conn.writeCharacteristic('0x2b','015201',response=True)
+			#conn.writeCharacteristic('0x29','0100',response=True)
+			#conn.writeCharacteristic('0x2b','015201',response=True)
 			notification = Notification(conn,LogiSwitch)
-			notification.subscribe(2)
+			notification.subscribe(5)
 		except Exception,e:
 			logging.error(str(e))
 		return result

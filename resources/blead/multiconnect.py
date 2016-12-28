@@ -38,7 +38,7 @@ class Connector():
 		return
 		
 	def disconnect(self,force=False):
-		if self.mac in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac]['emitterallowed'] == globals.daemonname and force==False:
+		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] == globals.daemonname and force==False:
 			logging.debug('Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
 			return
 		logging.debug('Disconnecting... ' + str(self.mac))
