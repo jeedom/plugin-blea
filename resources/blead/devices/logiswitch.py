@@ -32,9 +32,19 @@ class LogiSwitch():
 	def handlenotification(self,conn,handle,data):
 		result={}
 		if hex(handle) == '0x28':
-			logging.debug(str(data))
 			received = bytearray(data)
-			button = received[1]
-			logging.debug('button is ' + str(button))
+			button = received[0]
+			if button == '2':
+				result['button'] = 1
+				result['buttonlabel'] = 'appui simple'
+			elif button == '4':
+				result['button'] = 2
+				result['buttonlabel'] = 'appui double'
+			elif button == '3':
+				result['button'] = 3
+				result['buttonlabel'] = 'appui long'
+			result['id'] = conn.mac
+			result['source'] = globals.daemonname
+			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
 globals.COMPATIBILITY.append(LogiSwitch)

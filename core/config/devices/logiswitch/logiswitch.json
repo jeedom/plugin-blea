@@ -1,27 +1,84 @@
 {
     "logiswitch": {
-        "name": "Logi Switch",
+        "name": "Logitech Pop",
         "groupe" : "Boutons",
 		"configuration" : {
-			"cancontrol" : 1,
-			"name" : "logiswitch",
-			"canbelocked" : 1,
 			"battery_type": "Batterie"
 		},
 		"commands": [
-			
+			{
+                "name": "BoutonID",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+				"template": {
+                    "mobile": "badge",
+					"dashboard" : "badge"
+                },
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
+                "unite": "",
+                "logicalId": "button"
+            },
+			{
+                "name": "Boutons",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "",
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
+                "logicalId": "buttonlabel"
+            }
         ],
 		"compatibility": [
             {
                 "manufacturer": "Logitech",
-                "name": "Logi Switch",
+                "name": "Logitech Pop rouge",
 				"doc": "",
 				"type": "Boutons",
 				"ref" : "",
 				"comlink": "",
-				"remark": "",
+				"remark": "Ne doit absolument pas être connecté sur un autre appareil",
 				"inclusion" : "Mode inclusion",
 				"imglink": "logiswitch"
+            },
+			{
+                "manufacturer": "Logitech",
+                "name": "Logitech Pop blanc",
+				"doc": "",
+				"type": "Boutons",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Ne doit absolument pas être connecté sur un autre appareil",
+				"inclusion" : "Mode inclusion",
+				"imglink": "logiswitch_blanc"
+            },
+			{
+                "manufacturer": "Logitech",
+                "name": "Logitech Pop vert",
+				"doc": "",
+				"type": "Boutons",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Ne doit absolument pas être connecté sur un autre appareil",
+				"inclusion" : "Mode inclusion",
+				"imglink": "logiswitch_vert"
+            },
+			{
+                "manufacturer": "Logitech",
+                "name": "Logitech Pop gris",
+				"doc": "",
+				"type": "Boutons",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Ne doit absolument pas être connecté sur un autre appareil",
+				"inclusion" : "Mode inclusion",
+				"imglink": "logiswitch_gris"
             }
         ]
     }
