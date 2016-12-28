@@ -56,11 +56,11 @@ class ScanDelegate(DefaultDelegate):
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
-					name = value
+					name = value.strip()
 				elif 'Service Data' in desc:
-					data = value
+					data = value.strip()
 				elif desc == 'Manufacturer':
-					manuf = value
+					manuf = value.strip()
 			for device in globals.COMPATIBILITY:
 				if device().isvalid(name,manuf):
 					findDevice=True
@@ -76,8 +76,8 @@ class ScanDelegate(DefaultDelegate):
 					globals.PENDING_ACTION = True
 					try:
 						action = device().parse(data,mac,name)
-					except:
-						logging.debug('Parse failed ' +str(mac))
+					except Exception, e:
+						logging.debug('Parse failed ' +str(mac) + ' ' + str(e))
 					if not action:
 						return
 					globals.PENDING_ACTION = False

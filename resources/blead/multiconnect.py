@@ -11,16 +11,21 @@ class Connector():
 		self.conn = ''
 		self.isconnected = False
 
-	def connect(self,retry=2):
+	def connect(self,retry=2,type='public'):
 		logging.debug('Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
 		i=0
 		timeout = time.time() + 15
 		while time.time()<timeout:
 			i = i + 1
 			try:
-				connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
-				self.isconnected = True
-				break
+				if type == 'public':
+					connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
+					self.isconnected = True
+					break
+				else:
+					connection = btle.Peripheral(self.mac,addrType = btle.ADDR_TYPE_RANDOM,iface=globals.IFACE_DEVICE)
+					self.isconnected = True
+					break
 			except Exception,e:
 				logging.debug(str(e) + ' attempt ' + str(i) )
 				if i >= retry:

@@ -236,7 +236,7 @@ if (isset($result['devices'])) {
 				$remote = blea_remote::byId($antennaId);
 				$antenna = $remote->getRemoteName();
 			}
-			if ($logicalId != 'present' && $antenna != 'all' && $antenna != $datas['source']){
+			if ($logicalId != 'present' && $antennaId != 'all' && $antenna != $datas['source']){
 				log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
 				continue;
 			}

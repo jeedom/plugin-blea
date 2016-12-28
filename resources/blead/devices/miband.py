@@ -85,6 +85,8 @@ class Miband():
 			return result
 		except Exception,e:
 			logging.error(str(e))
+			conn.disconnect()
+		conn.disconnect()
 		return result
 	
 	def handlenotification(self,conn,handle,data):

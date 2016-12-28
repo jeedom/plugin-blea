@@ -27,7 +27,7 @@ class Playbulb():
 						'btl400_v3.7':'garden',
 						'btl201_v2': 'bluelabel'}
 			version = self.findVersion(mac)
-			logging.debug("Found " + str(version))
+			logging.debug("Found " + str(version).lower())
 			if not version or version == '':
 				logging.debug("Not able to have consistent info from playbulb device")
 				return

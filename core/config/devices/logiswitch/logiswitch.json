@@ -1,0 +1,28 @@
+{
+    "logiswitch": {
+        "name": "Logi Switch",
+        "groupe" : "Boutons",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "logiswitch",
+			"canbelocked" : 1,
+			"battery_type": "Batterie"
+		},
+		"commands": [
+			
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Logitech",
+                "name": "Logi Switch",
+				"doc": "",
+				"type": "Boutons",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"inclusion" : "Mode inclusion",
+				"imglink": "logiswitch"
+            }
+        ]
+    }
+}

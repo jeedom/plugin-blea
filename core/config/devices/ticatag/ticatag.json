@@ -3,7 +3,8 @@
         "name": "Ticatag",
 		"groupe" : "Boutons",
 		"configuration" : {
-			"cancontrol" : 1
+			"cancontrol" : 1,
+			"battery_type" : "1x3V CR2032"
 		},
         "commands": [
 			{

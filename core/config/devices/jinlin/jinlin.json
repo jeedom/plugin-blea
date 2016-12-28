@@ -1,0 +1,22 @@
+{
+    "jinlin": {
+        "name": "Jinlin",
+        "groupe" : "Lumières",
+        "commands": [
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Lyl Smart",
+                "name": "Jinlin",
+				"doc": "",
+				"type": "Lumière",
+				"battery_type": "Batterie",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour de la présence",
+				"inclusion" : "Mode inclusion auto",
+				"imglink": "jinlin"
+            }
+        ]
+    }
+}

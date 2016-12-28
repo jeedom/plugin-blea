@@ -14,7 +14,6 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	echo '<div id="div_inclusionAlert"></div>';
 }
 ?>
-
 <div class="row row-overflow">
   <div class="col-lg-2 col-md-3 col-sm-4">
     <div class="bs-sidebar">
