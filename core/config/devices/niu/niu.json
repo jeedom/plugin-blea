@@ -51,15 +51,75 @@
 		"compatibility": [
             {
                 "manufacturer": "Nodon",
-                "name": "niu",
+                "name": "Niu Wazabi",
 				"doc": "",
 				"type": "Boutons",
 				"battery_type": "1x3V CR2032",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Disponible en plusieurs coloris",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
 				"imglink": "niu_wazabi"
+            },
+			{
+                "manufacturer": "Nodon",
+                "name": "Niu Gris",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Disponible en plusieurs coloris",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
+				"imglink": "niu_cozygrey"
+            },
+			{
+                "manufacturer": "Nodon",
+                "name": "Niu Lagoon",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Disponible en plusieurs coloris",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
+				"imglink": "niu_lagoon"
+            },
+			{
+                "manufacturer": "Nodon",
+                "name": "Niu Softberry",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Disponible en plusieurs coloris",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
+				"imglink": "niu_softberry"
+            },
+			{
+                "manufacturer": "Nodon",
+                "name": "Niu Techblue",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Disponible en plusieurs coloris",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
+				"imglink": "niu_techblue"
+            },
+			{
+                "manufacturer": "Nodon",
+                "name": "Niu Blanc",
+				"doc": "",
+				"type": "Boutons",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Disponible en plusieurs coloris",
+				"inclusion" : "Mode inclusion et appui sur le bouton",
+				"imglink": "niu_white"
             }
         ]
     }

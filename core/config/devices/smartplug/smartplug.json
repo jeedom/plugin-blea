@@ -66,8 +66,8 @@
 				"battery_type": "",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Le relachement est envoyé même après un appui simple ou appui double",
-				"inclusion" : "Mode inclusion auto",
+				"remark": "",
+				"inclusion" : "Mode inclusion",
 				"imglink": "smartplug"
             }
         ]

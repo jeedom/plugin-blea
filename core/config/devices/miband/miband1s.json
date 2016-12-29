@@ -137,7 +137,7 @@
 				"ref" : "",
 				"comlink": "",
 				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
-				"inclusion" : "Mode inclusion auto et appui sur le bouton",
+				"inclusion" : "Mode inclusion",
 				"imglink": "miband1s"
             }
         ]

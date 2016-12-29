@@ -34,9 +34,9 @@
 				"battery_type": "4x1.5V AA",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Poids et unité",
+				"remark": "Gestion de profils complète",
 				"inclusion" : "Mode inclusion",
-				"imglink": "xiaomiscale"
+				"imglink": "miscale"
             }
         ]
     }

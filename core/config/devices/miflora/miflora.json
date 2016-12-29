@@ -125,11 +125,11 @@
                 "manufacturer": "Xiaomi",
                 "name": "Miflora",
 				"doc": "",
-				"type": "Scale",
-				"battery_type": "4x44",
+				"type": "Capteurs",
+				"battery_type": "1x3V CR2032",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Plantes",
+				"remark": "Capteurs de plantes",
 				"inclusion" : "Mode inclusion",
 				"imglink": "miflora"
             }

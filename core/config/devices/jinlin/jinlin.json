@@ -13,8 +13,8 @@
 				"battery_type": "Batterie",
 				"ref" : "",
 				"comlink": "",
-				"remark": "Uniquement pour de la présence",
-				"inclusion" : "Mode inclusion auto",
+				"remark": "Uniquement pour de la présence (le reste viendra)",
+				"inclusion" : "Mode inclusion",
 				"imglink": "jinlin"
             }
         ]

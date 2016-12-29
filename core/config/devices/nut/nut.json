@@ -2,6 +2,10 @@
     "nut": {
         "name": "Nut",
         "groupe" : "Présence",
+		"configuration" : {
+			"cancontrol" : 1,
+			"battery_type" : "1x3V CR2032"
+		},
         "commands": [
         ],
 		"compatibility": [
@@ -14,8 +18,20 @@
 				"ref" : "",
 				"comlink": "",
 				"remark": "Uniquement pour de la présence",
-				"inclusion" : "Mode inclusion auto",
+				"inclusion" : "Mode inclusion",
 				"imglink": "nut"
+            },
+			{
+                "manufacturer": "Nut",
+                "name": "Nut Mini Bleu",
+				"doc": "",
+				"type": "Présence",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"inclusion" : "Mode inclusion",
+				"imglink": "nut_mini_bleu"
             }
         ]
     }
