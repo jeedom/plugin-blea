@@ -236,7 +236,7 @@ class blea extends eqLogic {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$user=$remoteObject->getConfiguration('remoteUser');
 		log::add('blea','info','Installation des dépendances');
-		$remoteObject->execCmd(['/home/'.$user.'/blead/resources/install.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
+		$remoteObject->execCmd(['bash /home/'.$user.'/blead/resources/install.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
 		blea::launchremote($_remoteId);
 		return True;
 	}
