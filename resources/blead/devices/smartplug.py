@@ -4,6 +4,7 @@ import logging
 import globals
 import binascii
 from multiconnect import Connector
+from notification import Notification
 import struct
 
 class Smartplug():
@@ -37,10 +38,19 @@ class Smartplug():
 		mac = message['device']['id']
 		handle = message['command']['handle']
 		value = message['command']['value']
-		conn = Connector(mac)
-		conn.connect()
+		if mac in globals.KEEPED_CONNECTION:
+			logging.debug('Already a connection for ' + mac + ' use it')
+			conn = globals.KEEPED_CONNECTION[mac]
+		else:
+			logging.debug('Creating a new connection for ' + mac)
+			conn = Connector(mac)
+			globals.KEEPED_CONNECTION[mac]=conn
+			conn.connect()
+		if not conn.isconnected:
+			conn.connect()
+			if not conn.isconnected:
+				return
 		conn.writeCharacteristic(handle,value)
-		conn.disconnect()
 		logging.debug('Value ' + value + ' written in handle ' +handle)
 		logging.debug('Refreshing ... ')
 		result = self.read(mac)
@@ -50,36 +60,32 @@ class Smartplug():
 		global result
 		result={}
 		try:
-			conn = self.connect(mac)
-			logging.debug('Connected...')
-			value = '0f050400000005ffff'
-			arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-			svc = conn.getServiceByUUID('0000fff0-0000-1000-8000-00805f9b34fb')
-			cmd_ch = svc.getCharacteristics('0000fff3-0000-1000-8000-00805f9b34fb')[0]
-			delegate = NotificationDelegate()
-			conn.setDelegate(delegate)
-			conn.writeCharacteristic(0x2b,struct.pack('<%dB' % (len(arrayValue)), *arrayValue))
-			if conn.waitForNotifications(0.5):
-				if result:
-					result['id'] = mac
-			conn.disconnect()
-			logging.debug(str(result))
-			return result
+			if mac in globals.KEEPED_CONNECTION:
+				logging.debug('Already a connection for ' + mac + ' use it')
+				conn = globals.KEEPED_CONNECTION[mac]
+			else:
+				logging.debug('Creating a new connection for ' + mac)
+				conn = Connector(mac)
+				globals.KEEPED_CONNECTION[mac]=conn
+				conn.connect()
+			if not conn.isconnected:
+				conn.connect()
+				if not conn.isconnected:
+					return
+			notification = Notification(conn,Smartplug)
+			conn.writeCharacteristic('0x2b','0f050400000005ffff')
+			notification.subscribe(2)
+			return
 		except Exception,e:
 			try:
 				conn.disconnect()
 			except Exception,e:
 				pass
 			logging.error(str(e))
-		return result
+		return
 		
-class NotificationDelegate(btle.DefaultDelegate):
-	def __init__(self):
-		btle.DefaultDelegate.__init__(self)
-
-	def handleNotification(self, cHandle, data):
+	def handlenotification(self,conn,handle,data):
 		state = False
-		global result
 		result  = {}
 		bytes_data = bytearray(data)
 		if bytes_data[0:3] == bytearray([0x0f, 0x0f, 0x04]):
@@ -90,5 +96,8 @@ class NotificationDelegate(btle.DefaultDelegate):
 				result['status'] = 1
 			else:
 				result['status'] = 0
+			result['id'] = conn.mac
+			result['source'] = globals.daemonname
+			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
 globals.COMPATIBILITY.append(Smartplug)

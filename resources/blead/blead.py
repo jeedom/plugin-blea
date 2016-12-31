@@ -236,7 +236,7 @@ def read_socket(name):
 					logging.debug('Leave learn mode')
 					globals.LEARN_MODE = False
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-				elif message['cmd'] in ['action','refresh','helper']:
+				elif message['cmd'] in ['action','refresh','helper','helperrandom']:
 					logging.debug('Attempt an action on a device')
 					thread.start_new_thread( action_handler, (message,))
 					logging.debug('Thread Launched')
@@ -283,7 +283,10 @@ def action_handler(message):
 		manuf = message['command']['manuf']
 	name = message['command']['name']
 	result = {}
-	if message['cmd'] == 'helper':
+	if message['cmd'] == 'helper' or message['cmd'] == 'helperrandom':
+		type ='public'
+		if message['cmd'] == 'helperrandom':
+			type = 'random'
 		try:
 			globals.PENDING_ACTION = True
 			mac = message['device']['id']
@@ -294,9 +297,9 @@ def action_handler(message):
 				logging.debug('Creating a new connection for ' + mac)
 				conn = Connector(mac)
 				globals.KEEPED_CONNECTION[mac]=conn
-				conn.connect()
+				conn.connect(type=type)
 			if not conn.isconnected:
-				conn.connect()
+				conn.connect(type=type)
 				if not conn.isconnected:
 					globals.PENDING_ACTION = False
 					return

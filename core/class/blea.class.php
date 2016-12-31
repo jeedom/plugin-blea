@@ -904,7 +904,7 @@ class bleaCmd extends cmd {
 		if (count($data) == 0) {
 			return;
 		}
-		if ($this->getLogicalId() == 'refresh' or $this->getLogicalId() == 'helper'){
+		if ($this->getLogicalId() == 'refresh' || $this->getLogicalId() == 'helper' || $this->getLogicalId() == 'helperrandom'){
 			$data['name'] = $eqLogic->getConfiguration('name','0');
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $this->getLogicalId(), 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		} else {

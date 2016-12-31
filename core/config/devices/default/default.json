@@ -2,6 +2,9 @@
     "default": {
         "name": "Inconnu",
         "groupe" : "Inconnu",
+		"configuration" : {
+			"cancontrol" : 1
+		},
         "commands": [
         ],
 		"compatibility": [
