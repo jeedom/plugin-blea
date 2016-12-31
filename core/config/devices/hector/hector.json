@@ -117,7 +117,7 @@
 				"battery_type": "1x3V CR2032",
 				"ref" : "",
 				"comlink": "",
-				"remark": "",
+				"remark": "Ne dois pas rester connecté en permanence sur votre téléphone si vous voulez l'interaction dans Jeedom",
 				"inclusion" : "Mode inclusion",
 				"imglink": "hector"
             }
