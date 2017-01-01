@@ -42,10 +42,10 @@ class Hector():
 			result['batteryvoltage'] = round(float(battery)*0.00051029,2)
 			if round(float(battery)*0.00051029,2) > 3:
 				battery = 100
-			elif round(float(battery)*0.00051029,2) < 2.5:
+			elif round(float(battery)*0.00051029,2) < 2:
 				battery = 0
 			else:
-				battery = (round(float(battery)*0.00051029,2) - 2.5) *3/2.5
+				battery = round((float(battery)*0.00051029 - 2) *100,0)
 			result['battery'] = battery
 		except Exception,e:
 			logging.error(str(e))

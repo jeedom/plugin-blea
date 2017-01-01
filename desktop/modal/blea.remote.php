@@ -50,9 +50,9 @@ foreach ($remotes as $remote) {
 <div class="eqLogicThumbnailContainer">
 	<div class="cursor bleaRemoteAction pull-left" data-action="add" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
      <center>
-      <i class="fa fa-plus-circle" style="font-size : 9em;color:#2980b9;"></i>
+      <i class="fa fa-plus-circle" style="font-size : 9em;color:#94ca02;"></i>
     </center>
-    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#2980b9"><center>{{Ajouter}}</center></span>
+    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Ajouter}}</center></span>
   </div>
   <?php
 foreach ($remotes as $remote) {
@@ -60,7 +60,7 @@ foreach ($remotes as $remote) {
 	echo "<center>";
 	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png" height="105" width="95" />';
 	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $remote->getRemoteName() . '</center></span>';
+	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02""><center>' . $remote->getRemoteName() . '</center></span>';
 	echo '</div>';
 }
 ?>
