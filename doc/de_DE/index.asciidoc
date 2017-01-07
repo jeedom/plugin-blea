@@ -6,7 +6,7 @@ Ce plugin est un plugin permettant de pouvoir recevoir les événements de certa
 image:../images/blea_icon.png[width=256]
 
 '''
-=== Configuration
+=== Konfiguration
 include::configuration.asciidoc[]
 
 '''
@@ -14,5 +14,5 @@ include::configuration.asciidoc[]
 include::faq.asciidoc[]
 
 '''
-=== Changelog
+=== Änderungsprotokoll
 include::changelog.asciidoc[]
