@@ -26,110 +26,114 @@ try {
 
 	ajax::init();
 
-	if (init('action') == 'changeIncludeState') {
-		blea::changeIncludeState(init('state'), init('mode'));
-		ajax::success();
-	}
-	
-	if (init('action') == 'getMobileGraph') {
+	switch (init('action')) {
+	    case 'changeIncludeState' :
+		    blea::changeIncludeState(init('state'), init('mode'));
+		    ajax::success();
+		break;
+			
+	    case 'getMobileGraph':
 		ajax::success(blea::getMobileGraph());
-	}
-	
-	if (init('action') == 'getMobileHealth') {
+		break;
+			
+	    case 'getMobileHealth':
 		ajax::success(blea::getMobileHealth());
-	}
-	
-	if (init('action') == 'saveAntennaPosition') {
+		break;
+			
+	    case 'saveAntennaPosition':
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
-	}
-	
-	if (init('action') == 'autoDetectModule') {
+		break;
+			
+	    case 'autoDetectModule':
 		$eqLogic = blea::byId(init('id'));
 		if (!is_object($eqLogic)) {
-			throw new Exception(__('Blea eqLogic non trouvé : ', __FILE__) . init('id'));
+		    throw new Exception(__('Blea eqLogic non trouvé : ', __FILE__) . init('id'));
 		}
 		foreach ($eqLogic->getCmd() as $cmd) {
-			$cmd->remove();
+		    $cmd->remove();
 		}
 		$eqLogic->applyModuleConfiguration();
 		ajax::success();
-	}
-	
-	if (init('action') == 'getModelListParam') {
+		break;
+			
+	    case 'getModelListParam':
 		$blea = blea::byId(init('id'));
 		if (!is_object($blea)) {
-			ajax::success(array());
+		    ajax::success(array());
 		}
 		ajax::success($blea->getModelListParam(init('conf')));
-	}
-	
-	if (init('action') == 'save_bleaRemote') {
+		break;
+			
+	    case 'save_bleaRemote':
 		$bleaRemoteSave = jeedom::fromHumanReadable(json_decode(init('blea_remote'), true));
 		$blea_remote = blea_remote::byId($bleaRemoteSave['id']);
 		if (!is_object($blea_remote)) {
-			$blea_remote = new blea_remote();
+		    $blea_remote = new blea_remote();
 		}
 		utils::a2o($blea_remote, $bleaRemoteSave);
 		$blea_remote->save();
 		ajax::success(utils::o2a($blea_remote));
-	}
-
-	if (init('action') == 'get_bleaRemote') {
+		break;
+			
+	    case 'get_bleaRemote':
 		$blea_remote = blea_remote::byId(init('id'));
 		if (!is_object($blea_remote)) {
-			throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
+		    throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
 		}
 		ajax::success(jeedom::toHumanReadable(utils::o2a($blea_remote)));
-	}
-
-	if (init('action') == 'remove_bleaRemote') {
+		break;
+			
+            case 'remove_bleaRemote':
 		$blea_remote = blea_remote::byId(init('id'));
 		if (!is_object($blea_remote)) {
-			throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
+		    throw new Exception(__('Remote inconnu : ', __FILE__) . init('id'), 9999);
 		}
 		$blea_remote->remove();
 		ajax::success();
-	}
-	
-	if (init('action') == 'sendRemoteFiles') {
-        ajax::success(blea::sendRemoteFiles(init('remoteId')));
-     }
-	 
-	 if (init('action') == 'getRemoteLog') {
-        ajax::success(blea::getRemoteLog(init('remoteId')));
-     }
-	 
-	 if (init('action') == 'getRemoteLogDependancy') {
-        ajax::success(blea::getRemoteLog(init('remoteId'),'_dependancy'));
-     }
-	 
-	 if (init('action') == 'launchremote') {
-        ajax::success(blea::launchremote(init('remoteId')));
-     }
-	 
-	 if (init('action') == 'stopremote') {
-        ajax::success(blea::stopremote(init('remoteId')));
-     }
-	 
-	 if (init('action') == 'remotelearn') {
-        ajax::success(blea::remotelearn(init('remoteId'), init('state')));
-     }
-	 
-	 if (init('action') == 'dependancyRemote') {
-        ajax::success(blea::dependancyRemote(init('remoteId')));
-     }
-	 
-	 if (init('action') == 'aliveremote') {
-        ajax::success(blea::aliveremote(init('remoteId')));
-     }
-	
-	if (init('action') == 'changeLogLive') {
+		break;
+			
+	    case 'sendRemoteFiles':
+		ajax::success(blea::sendRemoteFiles(init('remoteId')));
+		break;
+			
+	    case 'getRemoteLog':
+		ajax::success(blea::getRemoteLog(init('remoteId')));
+		break;
+			
+	    case 'getRemoteLogDependancy':
+		ajax::success(blea::getRemoteLog(init('remoteId'),'_dependancy'));
+		break;
+			
+	    case 'launchremote':
+		ajax::success(blea::launchremote(init('remoteId')));
+		break;
+			
+	    case 'stopremote':
+		ajax::success(blea::stopremote(init('remoteId')));
+		break;
+			
+	    case 'remotelearn':
+		ajax::success(blea::remotelearn(init('remoteId'), init('state')));
+		break;
+			
+	    case 'dependancyRemote':
+		ajax::success(blea::launchremote(init('remoteId')));
+		break;
+			
+	    case 'aliveremote':
+		ajax::success(blea::aliveremote(init('remoteId')));
+		break;
+			
+	    case 'changeLogLive':
 		ajax::success(blea::changeLogLive(init('level')));
+		break;
+			
+	    default:
+		throw new Exception('Aucune methode correspondante');
 	}
-
-	throw new Exception('Aucune methode correspondante');
+	
 	/*     * *********Catch exeption*************** */
 } catch (Exception $e) {
 	ajax::error(displayExeption($e), $e->getCode());
 }
-?>
+ 
