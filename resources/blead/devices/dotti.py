@@ -10,7 +10,7 @@ class Dotti():
 		self.name = 'dotti'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower().startswith(self.name):
+		if self.name in name.lower():
 			return True
 
 	def parse(self,data,mac,name):
