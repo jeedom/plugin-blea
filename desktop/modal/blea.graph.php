@@ -91,7 +91,7 @@ function load_graph(){
 		for (linkedantenna in eqLogics[eqlogic]['rssi']){
 			signal = eqLogics[eqlogic]['rssi'][linkedantenna];
 			orisignal = signal;
-			if (signal == -200){
+			if (signal == -200 || signal == ''){
 				quality = 200;
 			} else if(signal <= -100){
 				quality = 0;

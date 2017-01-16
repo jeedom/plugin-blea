@@ -11,7 +11,7 @@ class Connector():
 		self.conn = ''
 		self.isconnected = False
 
-	def connect(self,retry=2,type='public'):
+	def connect(self,retry=3,type='public'):
 		logging.debug('Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
 		i=0
 		timeout = time.time() + 15
@@ -30,6 +30,9 @@ class Connector():
 				logging.debug(str(e) + ' attempt ' + str(i) )
 				if i >= retry:
 					self.isconnected = False
+					if self.mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[self.mac]
+					self.conn.disconnect()
 					return
 				time.sleep(1)
 		if self.isconnected:
@@ -38,7 +41,7 @@ class Connector():
 		return
 		
 	def disconnect(self,force=False):
-		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] == globals.daemonname and force==False:
+		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] in [globals.daemonname,'all'] and force==False:
 			logging.debug('Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
 			return
 		logging.debug('Disconnecting... ' + str(self.mac))
@@ -51,17 +54,21 @@ class Connector():
 			except Exception,e:
 				if 'str' in str(e) and 'has no attribute' in str(e):
 					self.isconnected = False
+					if self.mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[self.mac]
 					return
 				logging.debug(str(e) + ' attempt ' + str(i) )
 				if i >= 2:
 					self.isconnected = False
+					if self.mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[self.mac]
 					return
 		if self.mac in globals.KEEPED_CONNECTION:
 			del globals.KEEPED_CONNECTION[self.mac]
 		self.isconnected = False
 		logging.debug('Disconnected...'+ str(self.mac))
 
-	def readCharacteristic(self,handle,retry=2):
+	def readCharacteristic(self,handle,retry=1,type='public'):
 		logging.debug('Reading Characteristic...'+ str(self.mac))
 		ireadCharacteristic=0
 		while True:
@@ -73,13 +80,15 @@ class Connector():
 				logging.debug(str(e))
 				if ireadCharacteristic >= retry:
 					self.disconnect(True)
+					if self.mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[self.mac]
 					return False
 				logging.debug('Retry connection '+ str(self.mac))
-				self.connect()
+				self.connect(type=type)
 		logging.debug('Characteristic Readen .... ' + str(self.mac))
 		return result
 
-	def writeCharacteristic(self,handle,value,retry=2,response=False):
+	def writeCharacteristic(self,handle,value,retry=1,response=False,type='public'):
 		logging.debug('Writing Characteristic... ' + str(self.mac))
 		iwriteCharacteristic=0
 		while True:
@@ -92,15 +101,17 @@ class Connector():
 				logging.debug(str(e))
 				if iwriteCharacteristic >= retry:
 					self.disconnect(True)
+					if self.mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[self.mac]
 					return False
 				logging.debug('Retry connection ' + str(self.mac))
-				self.connect()
+				self.connect(type=type)
 		logging.debug('Characteristic written... ' + str(self.mac))
 		if result :
 			logging.debug(str(result))
 		return True
 	
-	def getCharacteristics(self,handle='',handleend='',retry=2):
+	def getCharacteristics(self,handle='',handleend='',retry=1,type='public'):
 		logging.debug('Getting Characteristics... ' + str(self.mac))
 		if handleend == '':
 			handleend = handle
@@ -120,7 +131,7 @@ class Connector():
 					self.disconnect(True)
 					return False
 				logging.debug('Retry connection ' + str(self.mac))
-				self.connect()
+				self.connect(type=type)
 		logging.debug('Characteristics gotten... '+ str(self.mac))
 		return char
 		

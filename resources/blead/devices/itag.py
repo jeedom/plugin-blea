@@ -41,7 +41,7 @@ class Itag():
 		conn.disconnect()
 		return
 	
-	def handlenotification(self,conn,handle,data):
+	def handlenotification(self,conn,handle,data,action={}):
 		result={}
 		result['button'] = 1
 		result['id'] = conn.mac

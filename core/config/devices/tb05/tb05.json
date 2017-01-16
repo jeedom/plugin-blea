@@ -1,0 +1,145 @@
+{
+    "tb05": {
+        "name": "Diffuseur Tb05",
+		"groupe" : "Diffuseur",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "tb05",
+			"canbelocked" : 1
+		},
+        "commands": [
+			{	
+				"name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:0f0000000000000000000d0a",
+				"display": {
+				"icon": "<i class=\"fa fa-power-off\"><\/i>"
+				}
+            },
+			{	
+				"name": "Lumière Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010000000000000000000d0a",
+				"display": {
+				"icon": "<i class=\"icon jeedom-lumiere-off\"><\/i>"
+				}
+            },
+			{	
+				"name": "Lumière On/Toggle",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a",
+				"display": {
+				"icon": "<i class=\"icon jeedom-lumiere-on\"><\/i>"
+				}
+            },
+			{	
+				"name": "Brumisateur On/Toggle",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:020002000000000000000d0a",
+				"display": {
+				"icon": "<i class=\"icon meteo-brouillard\"><\/i>"
+				}
+            },
+			{	
+				"name": "Tout On",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:060201000000000000000d0a",
+				"display": {
+				"icon": "<i class=\"fa fa-cog\"><\/i>"
+				}
+            },
+			{	
+				"name": "Rouge",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:3"
+            },
+			{	
+				"name": "Jaune",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:4"
+            },
+			{	
+				"name": "Vert",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:5"
+            },
+			{	
+				"name": "Cyan",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:6"
+            },
+			{	
+				"name": "Bleu",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:7"
+            },
+			{	
+				"name": "Rose",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:8"
+            },
+			{	
+				"name": "Blanc",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:9"
+            },
+			{	
+				"name": "Arc-en-Ciel",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:tb05,handle:0x25,value:010200000000000000000d0a,repeat:1"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "E-Diffuser",
+                "name": "Tb05",
+				"doc": "",
+				"type": "Diffuseur",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Il est recommandé d'utiliser l'option garder la connection. Obligatoire pour tenter expérimentalement l'accès au couleur direct",
+				"inclusion" : "Mode inclusion",
+				"imglink": "tb05"
+            }
+        ]
+    }
+}

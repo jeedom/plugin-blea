@@ -29,7 +29,7 @@ class LogiSwitch():
 			logging.error(str(e))
 		return result
 	
-	def handlenotification(self,conn,handle,data):
+	def handlenotification(self,conn,handle,data,action={}):
 		result={}
 		if hex(handle) == '0x28':
 			received = bytearray(data)

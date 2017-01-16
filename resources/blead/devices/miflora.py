@@ -44,7 +44,7 @@ class Miflora():
 			logging.error(str(e))
 		return result
 	
-	def handlenotification(self,conn,handle,data):
+	def handlenotification(self,conn,handle,data,action={}):
 		result={}
 		if hex(handle) == '0x35':
 			received = bytearray(data)

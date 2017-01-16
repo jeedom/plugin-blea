@@ -52,7 +52,6 @@ class blea extends eqLogic {
 		$eqLogic->setConfiguration('islocked',0);
 		$eqLogic->setConfiguration('cancontrol',0);
 		$eqLogic->setConfiguration('resetRssis',1);
-		$eqLogic->setConfiguration('islocked',0);
 		$eqLogic->setConfiguration('name','0');
 		$eqLogic->setConfiguration('refreshlist',array());
 		$eqLogic->setConfiguration('specificclass',0);
@@ -608,6 +607,21 @@ class blea extends eqLogic {
 	public function preRemove() {
 		$this->disallowDevice();
 	}
+	
+	public function closestAntenna() {
+		$closest = 'local';
+		$rssicompare = -200;
+		foreach ($this->getCmd() as $cmd){
+			if (substr($cmd->getLogicalId(),0,4) == 'rssi'){
+				$rssi = $cmd->execCmd();
+				if ($rssi > $rssicompare) {
+					$rssicompare = $rssi;
+					$closest = substr($cmd->getLogicalId(),4);
+				}
+			}
+		}
+		return $closest;
+	}
 
 	public function allowDevice() {
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'add');
@@ -915,7 +929,24 @@ class bleaCmd extends cmd {
 			log::add('blea','info','Envoi depuis local');
 			blea::socket_connection($value);
 		} elseif ($sender == 'all') {
-			blea::socket_connection($value,True);
+			$closest = $eqLogic->closestAntenna();
+			if ($closest == 'local'){
+				log::add('blea','info','Envoi depuis local car plus proche');
+				blea::socket_connection($value);
+			} else {
+				$remotes = blea_remote::all();
+				foreach ($remotes as $remote){
+					if ($remote->getRemoteName() == $closest){
+						log::add('blea','info','Envoi depuis ' . $remote->getRemoteName() . ' car plus proche');
+						$ip = $remote->getConfiguration('remoteIp');
+						$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+						socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+						socket_write($socket, $value, strlen($value));
+						socket_close($socket);
+						break;
+					}
+				}
+			}
 		} else {
 			$remote = blea_remote::byId($sender);
 			log::add('blea','info','Envoi depuis ' . $remote->getRemoteName());

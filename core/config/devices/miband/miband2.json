@@ -1,9 +1,9 @@
 {
-    "miband1s": {
-        "name": "Miband1s",
+    "miband2": {
+        "name": "Miband2",
 		"groupe" : "Santé",
 		"configuration" : {
-			"name" : "miband",
+			"name" : "miband2",
 			"battery_type" : "Batterie",
 			"cancontrol" : 1
 		},
@@ -40,18 +40,6 @@
 				"display": {
 					"icon": "<i class=\"fa fa-heartbeat\"><\/i>",
 					"generic_type": "DONT"
-				}
-            },
-			{
-                "name": "Nombre de charges",
-                "type": "info",
-                "subtype": "numeric",
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "cycle",
-				"template": {
-					"dashboard": "line",
-					"mobile": "line"
 				}
             },
 			{
@@ -96,6 +84,23 @@
 				}
             },
 			{
+                "name": "Dernière charge batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "lastchargelevel",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
                 "name": "Firmware",
                 "type": "info",
                 "subtype": "string",
@@ -112,31 +117,31 @@
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:miband,handle:0x51,value:04",
+                "logicalId": "name:miband2,handle:0x25,value:03,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
 					"icon": "<i class=\"fa fa-rss\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
 			{
-                "name": "Vibration + Led",
+                "name": "Vibration Longue Téléphone",
                 "type": "action",
                 "subtype": "other",
                 "isVisible": 1,
-                "logicalId": "name:miband,handle:0x51,value:01",
+                "logicalId": "name:miband2,handle:0x25,value:02,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
-					"icon": "<i class=\"icon jeedom-alerte\"><\/i>",
+					"icon": "<i class=\"fa fa-phone\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
 			{
-                "name": "Vibration 10s",
+                "name": "Vibration Courte Message",
                 "type": "action",
                 "subtype": "other",
-                "isVisible": 0,
-                "logicalId": "name:miband,handle:0x51,value:02",
+                "isVisible": 1,
+                "logicalId": "name:miband2,handle:0x25,value:01,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
-					"icon": "<i class=\"fa fa-clock-o\"><\/i>",
+					"icon": "<i class=\"fa fa-envelope\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -146,7 +151,7 @@
                 "subtype": "other",
                 "isVisible": 0,
                 "isHistorized": 0,
-                "logicalId": "name:miband,handle:0x4e,value:150201,key:aa71c8620120ae850004004c75646f7669630042",
+                "logicalId": "name:miband2,handle:0x2b,value:150201,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"template": {
 					"dashboard": "line",
 					"mobile": "line"
@@ -172,7 +177,7 @@
 		"compatibility": [
             {
                 "manufacturer": "Xiaomi",
-                "name": "Miband1s",
+                "name": "Miband2",
 				"doc": "",
 				"type": "Santé",
 				"battery_type": "Batterie",
@@ -180,7 +185,7 @@
 				"comlink": "",
 				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
 				"inclusion" : "Mode inclusion",
-				"imglink": "miband1s"
+				"imglink": "miband2"
             }
         ]
     }

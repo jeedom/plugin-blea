@@ -1,0 +1,22 @@
+{
+    "noke": {
+        "name": "Noke",
+        "groupe" : "Cadenas",
+        "commands": [
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Noke",
+                "name": "Noke",
+				"doc": "",
+				"type": "Cadenas",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Visible que sur appui du bouton (peut fonctionner via un hack des trames pour récupérer la clé) mais ne sera pas fait car illégal",
+				"inclusion" : "Mode inclusion",
+				"imglink": "noke"
+            }
+        ]
+    }
+}

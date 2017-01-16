@@ -3,12 +3,17 @@ echo 0 > /tmp/dependancy_blea_in_progress
 echo "Launch install of blea dependancy"
 sudo apt-get update
 echo 50 > /tmp/dependancy_blea_in_progress
-sudo apt-get install -y python-pip python-dev build-essential
+sudo apt-get install -y python-pip python-dev build-essential libffi-dev libssl-dev
 echo 66 > /tmp/dependancy_blea_in_progress
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > /tmp/dependancy_blea_in_progress
 sudo pip install pyudev
 sudo pip install pyserial
+echo 80 > /tmp/dependancy_blea_in_progress
+sudo pip install cryptography
+echo 90 > /tmp/dependancy_blea_in_progress
+sudo pip install pycrypto
+echo 95 > /tmp/dependancy_blea_in_progress
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
 sudo git clone https://github.com/IanHarvey/bluepy.git

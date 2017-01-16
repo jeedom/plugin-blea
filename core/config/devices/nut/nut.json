@@ -4,9 +4,41 @@
         "groupe" : "Présence",
 		"configuration" : {
 			"cancontrol" : 1,
-			"battery_type" : "1x3V CR2032"
+			"needsrefresh" : 1,
+			"name" : "miflora",
+			"battery_type" : "1x3V CR2032",
+			"delay" : 18000
 		},
         "commands": [
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
         ],
 		"compatibility": [
             {

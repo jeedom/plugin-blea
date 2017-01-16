@@ -48,11 +48,13 @@ class ScanDelegate(DefaultDelegate):
 		if isNewDev or isNewData:
 			mac = dev.addr
 			rssi = dev.rssi
+			connectable = dev.connectable
+			addrType = dev.addrType
 			name = ''
 			data =''
 			manuf =''
 			action = {}
-			logging.debug(dev.getScanData())
+			logging.debug(str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
@@ -136,9 +138,9 @@ def listen():
 	thread.start_new_thread( read_socket, ('socket',))
 	logging.debug('Read Socket Thread Launched')
 	thread.start_new_thread( read_device, ('device',))
-	logging.debug('Heartbeat Thread Launched')
-	thread.start_new_thread( heartbeat_handler, (19,))
 	logging.debug('Read Device Thread Launched')
+	thread.start_new_thread( heartbeat_handler, (19,))
+	logging.debug('Heartbeat Thread Launched')
 	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname});
 	try:
 		while 1:
@@ -157,19 +159,6 @@ def listen():
 					globals.SCAN_ERRORS = 0
 				while globals.PENDING_ACTION:
 					time.sleep(0.01)
-				for device in globals.KNOWN_DEVICES:
-					if globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] != globals.daemonname:
-						if device in globals.KEEPED_CONNECTION:
-							logging.debug("This antenna should not keep a connection with this device, disconnecting " + str(device))
-							try:
-								globals.KEEPED_CONNECTION[device].disconnect()
-							except Exception, e:
-								logging.debug(str(e))
-							if device in globals.KEEPED_CONNECTION:
-								del globals.KEEPED_CONNECTION[device]
-							logging.debug("Removed from keep connection list " + str(device))
-			except queue.Empty:
-				continue
 			except Exception, e:
 				if not globals.PENDING_ACTION and not globals.LEARN_MODE: 
 					if globals.SCAN_ERRORS < 5:
@@ -187,10 +176,6 @@ def listen():
 						globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 						time.sleep(2)
 						shutdown()
-			if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
-				globals.LEARN_MODE = False
-				logging.debug('Quitting learn mode (60s elapsed)')
-				globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 			time.sleep(0.02)
 	except KeyboardInterrupt:
 		logging.error("KeyboardInterrupt, shutdown")
@@ -263,20 +248,39 @@ def read_socket(name):
 		time.sleep(0.3)
 		
 def heartbeat_handler(delay):
-	while True:
-		time.sleep(30)
+	while 1:
 		for device in globals.KNOWN_DEVICES:
-			action={}
-			if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
-				if device in list(globals.KEEPED_CONNECTION):
-					logging.debug("Virtually send rssi to device connected as they are not seen anymore " + str(device))
-					action['id'] = device
-					action['rssi'] = 'same'
-					action['source'] = globals.daemonname
-					globals.JEEDOM_COM.add_changes('devices::'+device,action)
-		time.sleep(25)
-		globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
-		
+			if globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
+				if device in globals.KEEPED_CONNECTION:
+					logging.debug("This antenna should not keep a connection with this device, disconnecting " + str(device))
+					try:
+						globals.KEEPED_CONNECTION[device].disconnect()
+					except Exception, e:
+						logging.debug(str(e))
+					if device in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[device]
+					logging.debug("Removed from keep connection list " + str(device))
+		if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
+			globals.LEARN_MODE = False
+			logging.debug('Quitting learn mode (60s elapsed)')
+			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
+		if (globals.LAST_VIRTUAL + 60)  < int(time.time()):
+			for device in globals.KNOWN_DEVICES:
+				action={}
+				if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
+					if device in list(globals.KEEPED_CONNECTION):
+						logging.debug("Virtually send rssi to device connected as they are not seen anymore " + str(device))
+						action['id'] = device
+						action['rssi'] = 'same'
+						action['present'] = 1
+						action['source'] = globals.daemonname
+						globals.JEEDOM_COM.add_changes('devices::'+device,action)
+						globals.LAST_VIRTUAL = int(time.time())
+		if (globals.LAST_BEAT + 55)  < int(time.time()):
+			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
+			globals.LAST_BEAT = int(time.time())
+		time.sleep(1)
+
 def action_handler(message):
 	manuf =''
 	if manuf in message['command']:
@@ -355,6 +359,7 @@ def action_handler(message):
 	return
 
 def read_device(name):
+	time.sleep(120)
 	while 1:
 		now = datetime.datetime.utcnow()
 		result = {}

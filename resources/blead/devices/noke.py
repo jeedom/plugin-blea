@@ -1,0 +1,21 @@
+from bluepy import btle
+import time
+import logging
+import globals
+from multiconnect import Connector
+from notification import Notification
+
+class Noke():
+	def __init__(self):
+		self.name = 'noke'
+
+	def isvalid(self,name,manuf=''):
+		if 'noke' in name.lower():
+			return True
+			
+	def parse(self,data,mac,name):
+		action={}
+		action['present'] = 1
+		return action
+
+globals.COMPATIBILITY.append(Noke)

@@ -35,9 +35,31 @@ class Miband():
 		conn = Connector(mac)
 		conn.connect()
 		if not conn.isconnected:
-			return
-		conn.writeCharacteristic(handle,value)
-		conn.disconnect()
+			conn.connect()
+			if not conn.isconnected:
+				return
+		try:
+			if 'key' in message['command']:
+				conn.writeCharacteristic('0x19', message['command']['key'],response=True)
+			if handle == '0x4e':
+				conn.writeCharacteristic(handle,value,response=True)
+				conn.connect()
+				if not conn.isconnected:
+					conn.connect()
+					if not conn.isconnected:
+						return
+				conn.writeCharacteristic('0x51','04')
+				notification = Notification(conn,Miband)
+				notification.subscribe(20)
+				conn.writeCharacteristic('0x4c', '0100',response=True)
+			else:
+				conn.writeCharacteristic(handle,value)
+				if value == '02':
+					time.sleep(10)
+				conn.disconnect()
+		except Exception,e:
+			logging.error(str(e))
+			conn.disconnect()
 		return
 	
 	def read(self,mac):
@@ -82,18 +104,22 @@ class Miband():
 			result['firmware']=firmware
 			result['id'] = mac
 			logging.debug(str(result))
+			conn.disconnect()
 			return result
 		except Exception,e:
 			logging.error(str(e))
 			conn.disconnect()
-		conn.disconnect()
 		return result
 	
-	def handlenotification(self,conn,handle,data):
+	def handlenotification(self,conn,handle,data,action={}):
 		result={}
-		result['button'] = 1
-		result['id'] = conn.mac
-		result['source'] = globals.daemonname
-		globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
+		if hex(handle) == '0x4b':
+			received = bytearray(data)
+			conn.writeCharacteristic('0x51','04')
+			conn.disconnect()
+			result['heartvalue'] = received[1]
+			result['id'] = conn.mac
+			result['source'] = globals.daemonname
+			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
 globals.COMPATIBILITY.append(Miband)

@@ -2,6 +2,7 @@ import logging
 import globals
 import re
 import struct
+from multiconnect import Connector
 
 def tuple_to_hex(value):
 	result=''
@@ -29,3 +30,25 @@ def getTintedColor(color,lum):
 		rgb = rgb + hex(c)[2:].zfill(2)
 	return rgb
 	
+def getConnection(mac,type='public'):
+	isold=False
+	try:
+		if mac in globals.KEEPED_CONNECTION:
+			logging.debug('Already a connection for ' + mac + ' use it')
+			conn = globals.KEEPED_CONNECTION[mac]
+			isold=True
+		else:
+			logging.debug('Creating a new connection for ' + mac)
+			conn = Connector(mac)
+			globals.KEEPED_CONNECTION[mac]=conn
+			conn.connect(type=type)
+			if not conn.isconnected:
+				conn.connect(type=type)
+				if not conn.isconnected:
+					return False,False
+		return conn,isold
+	except Exception,e:
+		logging.error(str(e))
+		if mac in globals.KEEPED_CONNECTION:
+			del globals.KEEPED_CONNECTION[mac]
+		return False,False

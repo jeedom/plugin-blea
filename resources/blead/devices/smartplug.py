@@ -84,7 +84,7 @@ class Smartplug():
 			logging.error(str(e))
 		return
 		
-	def handlenotification(self,conn,handle,data):
+	def handlenotification(self,conn,handle,data,action={}):
 		state = False
 		result  = {}
 		bytes_data = bytearray(data)

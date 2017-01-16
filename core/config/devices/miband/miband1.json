@@ -3,10 +3,8 @@
         "name": "Miband",
 		"groupe" : "Santé",
 		"configuration" : {
-			"needsrefresh" : 1,
 			"name" : "miband",
 			"battery_type" : "Batterie",
-			"delay" : 18000,
 			"cancontrol" : 1
 		},
         "commands": [
@@ -114,6 +112,17 @@
 					"generic_type": "DONT"
 				}
             },
+			{
+                "name": "Vibration 10s",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "logicalId": "name:miband,handle:0x53,value:02",
+				"display": {
+					"icon": "<i class=\"fa fa-clock-o\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
             {
                 "name": "Refresh",
                 "type": "action",
@@ -133,7 +142,7 @@
                 "name": "Miband",
 				"doc": "",
 				"type": "Santé",
-				"battery_type": "1x3V CR2032",
+				"battery_type": "Batterie",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
