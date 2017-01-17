@@ -10,7 +10,7 @@ class Tb05():
 		self.name = 'tb05'
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() == self.name:
+		if name.lower() in [self.name,'bt05']:
 			return True
 			
 	def parse(self,data,mac,name):
