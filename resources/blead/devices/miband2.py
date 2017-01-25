@@ -8,10 +8,6 @@ import binascii
 import base64
 from multiconnect import Connector
 from notification import Notification
-try:
-	from Crypto.Cipher import AES
-except:
-	logging.debug('No crypto ignoring it')
 
 class Miband2():
 	def __init__(self):
@@ -28,25 +24,6 @@ class Miband2():
 			if name.lower() in ['mi band 2','mi2a']:
 				action['version'] = 'miband2'
 		return action
-	
-	def action(self,message):
-		mac = message['device']['id']
-		handle = message['command']['handle']
-		value = message['command']['value']
-		conn = Connector(mac)
-		conn.connect(type='random')
-		if not conn.isconnected:
-			conn.connect(type='random')
-			if not conn.isconnected:
-				return
-		conn.writeCharacteristic('0x51','0100',type='random')
-		notification = Notification(conn,Miband2,{'action':'write','handle':handle,'value':value,'type':'random'})
-		if handle == '0x2b':
-			notification.subscribe(20)
-		else:
-			notification.subscribe(1)
-		conn.writeCharacteristic('0x50', '0200',type='random')
-		return
 	
 	def read(self,mac):
 		result={}
@@ -89,37 +66,5 @@ class Miband2():
 		except Exception,e:
 			logging.error(str(e))
 		return result
-	
-	def handlenotification(self,conn,handle,data,action={}):
-		result={}
-		if hex(handle) == '0x50':
-			conn.writeCharacteristic('0x51','0000',type='random')
-			auth = binascii.hexlify(bytearray(struct.unpack('19B',data)))[-32:]
-			obj = AES.new(binascii.unhexlify('5b4b29dee0ed7cadf3b402d71782024f'), AES.MODE_ECB)
-			ciphertext = obj.encrypt(binascii.unhexlify(auth))
-			conn.writeCharacteristic('0x50','0300'+binascii.hexlify(bytearray(ciphertext)),type='random')
-			if action['handle'] == '0x2b':
-				conn.writeCharacteristic('0x25','03',type=action['type'])
-				conn.writeCharacteristic(action['handle'],action['value'],type=action['type'],response=True)
-				conn.writeCharacteristic('0x29', '0100',response=True)
-			elif action['handle'] == '0x3d':
-				conn.writeCharacteristic('0x3e', '0100')
-				conn.writeCharacteristic('0x41', '0100',response=True)
-				conn.writeCharacteristic(action['handle'],action['value'],type=action['type'])
-			else:
-				conn.writeCharacteristic(action['handle'],action['value'],type=action['type'])
-				conn.disconnect()
-		elif hex(handle) == '0x28':
-			received = bytearray(data)
-			conn.writeCharacteristic('0x25','03',type=action['type'])
-			conn.disconnect()
-			result['heartvalue'] = received[1]
-			result['id'] = conn.mac
-			result['source'] = globals.daemonname
-			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
-		elif hex(handle) == '0x40':
-			conn.disconnect()
-			received = bytearray(data)
-			logging.debug(binascii.hexlify(received))
 
 globals.COMPATIBILITY.append(Miband2)
