@@ -64,6 +64,18 @@
 				"remark": "",
 				"inclusion" : "Mode inclusion",
 				"imglink": "nut_mini_bleu"
+            },
+			{
+                "manufacturer": "Nut",
+                "name": "Nut Mini Rose",
+				"doc": "",
+				"type": "Présence",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"inclusion" : "Mode inclusion",
+				"imglink": "nut_mini_rose"
             }
         ]
     }
