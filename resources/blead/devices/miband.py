@@ -11,6 +11,7 @@ from notification import Notification
 class Miband():
 	def __init__(self):
 		self.name = 'miband'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() in ['mi1a','mi1s', 'mi',self.name]:

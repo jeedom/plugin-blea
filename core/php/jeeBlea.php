@@ -187,9 +187,9 @@ if (isset($result['devices'])) {
 				$cmdpresent->save();
 			}
 			if ($blea->getConfiguration('resetRssis',1) == 1){
-				if ($cmdpresent->getConfiguration('returnStateValue') != 0 or $cmdpresent->getConfiguration('returnStateTime') !=1){
+				if ($cmdpresent->getConfiguration('returnStateValue') != 0 or $cmdpresent->getConfiguration('returnStateTime') !=2){
 					$cmdpresent->setConfiguration('returnStateValue',0);
-					$cmdpresent->setConfiguration('returnStateTime',1);
+					$cmdpresent->setConfiguration('returnStateTime',2);
 					$cmdpresent->save();
 				}
 			}

@@ -9,6 +9,7 @@ from notification import Notification
 class Miflora():
 	def __init__(self):
 		self.name = 'miflora'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		validname = ['Flower mate','Flower care']

@@ -54,7 +54,9 @@ class ScanDelegate(DefaultDelegate):
 			data =''
 			manuf =''
 			action = {}
-			logging.debug(str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
+			onlypresent = False
+			if mac not in globals.IGNORE:
+				logging.debug(str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
@@ -66,6 +68,9 @@ class ScanDelegate(DefaultDelegate):
 			for device in globals.COMPATIBILITY:
 				if device().isvalid(name,manuf):
 					findDevice=True
+					if device().ignoreRepeat and mac in globals.IGNORE:
+						return
+					globals.IGNORE.append(mac)
 					logging.debug('This is a ' + device().name + ' device ' +str(mac))
 					if mac.upper() not in globals.KNOWN_DEVICES:
 						if not globals.LEARN_MODE:
@@ -106,6 +111,9 @@ class ScanDelegate(DefaultDelegate):
 				action['rssi'] = rssi
 				action['source'] = globals.daemonname
 				action['rawdata'] = str(dev.getScanData())
+				if mac in globals.IGNORE:
+					return
+				globals.IGNORE.append(mac)
 				if mac.upper() not in globals.KNOWN_DEVICES:
 					if not globals.LEARN_MODE:
 						logging.debug('It\'s an unknown packet but not sent because this device is not Included and I\'am not in learn mode ' +str(mac))
@@ -145,8 +153,9 @@ def listen():
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + 14)  < int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + 39)  < int(time.time()):
 					globals.SCANNER.clear()
+					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
 				globals.SCANNER.start()
 				if globals.LEARN_MODE:
@@ -250,7 +259,7 @@ def read_socket(name):
 def heartbeat_handler(delay):
 	while 1:
 		for device in globals.KNOWN_DEVICES:
-			if globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
+			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
 				if device in globals.KEEPED_CONNECTION:
 					logging.debug("This antenna should not keep a connection with this device, disconnecting " + str(device))
 					try:
@@ -366,7 +375,7 @@ def read_device(name):
 		try:
 			for device in list(globals.KNOWN_DEVICES):
 				mac = globals.KNOWN_DEVICES[device]['id']
-				if globals.KNOWN_DEVICES[mac]['refresherallowed'] != globals.daemonname:
+				if globals.KNOWN_DEVICES[mac]['refresherallowed'] not in [globals.daemonname,'all']:
 					continue
 				if not 'needsrefresh' in globals.KNOWN_DEVICES[device]:
 					continue
@@ -382,7 +391,13 @@ def read_device(name):
 							try:
 								result = compatible().read(mac)
 							except Exception,e:
-								logging.debug("Refresh failed : %s" % str(e))
+								try:
+									result = compatible().read(mac)
+								except Exception,e:
+									try:
+										result = compatible().read(mac)
+									except Exception,e:
+										logging.debug("Refresh failed : %s" % str(e))
 							globals.PENDING_ACTION = False
 							break
 					if result :
@@ -394,7 +409,7 @@ def read_device(name):
 							globals.JEEDOM_COM.add_changes('devices::'+mac,result)
 		except Exception,e:
 			logging.error("Exception on read device : %s" % str(e))
-		time.sleep(1)
+		time.sleep(5)
 
 def handler(signum=None, frame=None):
 	logging.debug("Signal %i caught, exiting..." % int(signum))

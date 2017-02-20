@@ -7,6 +7,7 @@ import struct
 class MiScale():
 	def __init__(self):
 		self.name = 'miscale'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name == 'MI_SCALE':

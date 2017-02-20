@@ -1,0 +1,92 @@
+{
+    "yeelight_bed": {
+        "name": "Yeelight - Bed",
+        "groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "yeelight_bed",
+			"canbelocked" : 1
+		},
+		"commands": [
+			{
+				"name": "Couleur",
+                "type": "action",
+                "subtype": "color",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:#color#,type:color",
+				"display": {
+				"forceReturnLineBefore": 1
+				}
+            },
+			{	
+				"name": "On",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:434001,type:switch",
+				"display": {
+				"icon": "<i class=\"icon jeedom2-light-bulb2\"><\/i>"
+				}
+            },
+			{	
+				"name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:434002,type:switch",
+				"display": {
+				"icon": "<i class=\"icon jeedom2-light-bulb7\"><\/i>"
+				}
+            },
+			{	
+				"name": "Pair",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:4341FF000000FF,type:switch"
+            },
+			{
+				"name": "Luminosité",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:#slider#,type:brightness",
+				"configuration": {
+						"minValue": 1,
+						"maxValue": 100
+				}
+            },
+			{
+				"name": "Blanc",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:yeelight_bed,handle:0x12,value:#slider#,type:white",
+				"configuration": {
+						"minValue": 1700,
+						"maxValue": 6500
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Yeelight",
+                "name": "Bed",
+				"doc": "",
+				"type": "Lumières",
+				"battery_type": "",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Il faut valider l'appairage en appuyant sur le bouton. Si éteint il faut allumer avant de choisir une couleur",
+				"inclusion" : "Mode inclusion",
+				"imglink": "yeelight_bed"
+            }
+        ]
+    }
+}

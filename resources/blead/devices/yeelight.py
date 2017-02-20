@@ -7,57 +7,19 @@ from multiconnect import Connector
 import struct
 import utils
 
-class Playbulb():
+class Yeelight():
 	def __init__(self):
-		self.name = 'playbulb'
-		self.ignoreRepeat = False
+		self.name = 'yeelight_bed'
+		self.ignoreRepeat = True
+		self.key = 'bbc123456789abc123456789abc12345'
 
 	def isvalid(self,name,manuf=''):
-		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb'):
+		if 'xmctd_' in [name.lower()] or name.lower()==self.name:
 			return True
 	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
-		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
-			action['version'] = 'candle'
-			versionDict ={'btl300_v5' : 'candle',
-						'btl300_v6': 'candle6',
-						'btl301w_v5':'sphere',
-						'btl301w':'sphere',
-						'btl301wm_v1.7' : 'sphere17',
-						'btl400_v3.7':'garden',
-						'btl400m_v1.9':'garden19',
-						'btl201_v2': 'bluelabel'}
-			version = self.findVersion(mac)
-			logging.debug("Found " + str(version).lower())
-			if not version or version == '':
-				logging.debug("Not able to have consistent info from playbulb device")
-				return
-			if version.lower() in versionDict:
-				action['version'] = versionDict[version.lower()]
-			else:
-				action['version'] = 'candle'
 		return action
-	
-	def findVersion(self,mac):
-		conn = Connector(mac)
-		conn.connect()
-		if not conn.isconnected:
-			conn.connect()
-			if not conn.isconnected:
-				return
-		value=''
-		characteristics = conn.getCharacteristics()
-		for char in characteristics:
-			try:
-				if char.supportsRead():
-					valueChar = char.read()
-					if valueChar and valueChar[0:3] == 'BTL' and len(valueChar)>6 and len(valueChar)>len(value):
-						value = valueChar
-			except Exception,e:
-				continue
-		conn.disconnect()
-		return value
 	
 	def action(self,message):
 		type =''
@@ -78,39 +40,30 @@ class Playbulb():
 			conn.connect()
 			if not conn.isconnected:
 				return
-		if type == 'speed':
-			init = utils.tuple_to_hex(struct.unpack('8B',conn.readCharacteristic(handle)))
-			speed = 255-int(value);
-			if speed == 0: 
-				speed = 1
-			value = str(init)[0:12]+ hex(speed)[2:].zfill(2)+ str(init)[14:16]
-		elif type == 'effect':
-			init = utils.tuple_to_hex(struct.unpack('8B',conn.readCharacteristic(handle)))
-			initcolor = utils.tuple_to_hex(struct.unpack('4B',conn.readCharacteristic(message['command']['color'])))
-			value = str(initcolor) + value + '00' + str(init)[12:16]
-		elif type == 'color':
-			initeffect = utils.tuple_to_hex(struct.unpack('8B',conn.readCharacteristic(message['command']['effect'])))
-			if str(initeffect)[8:10] == '04':
-				valueprep = str(initeffect)[0:8] + 'ff' + '00' + str(initeffect)[12:16]
-				result = conn.writeCharacteristic(message['command']['effect'],valueprep)
-				if not result:
-					conn.disconnect()
-					logging.debug("Failed to write to device probably bad bluetooth connection")
-		elif type == 'luminosity':
-			value = utils.getTintedColor(message['command']['secondary'],value)
-		arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
-		result = conn.writeCharacteristic(handle,value)
-		if not result:
-			result = conn.writeCharacteristic(handle,value)
-			if not result:
-				logging.debug("Failed to write to device probably bad bluetooth connection")
-		data={}
-		data = self.read(mac,conn)
-		if len(data)>2:
-			data['source'] = globals.daemonname
-			if type == 'luminosity':
-				data['luminosity'] = luminosityvalue
-			globals.JEEDOM_COM.add_changes('devices::'+mac,data)
+		if type == 'pair':
+			conn.writeCharacteristic('0x12','4367'+self.key)
+			time.sleep(5)
+		if type == 'switch':
+			conn.writeCharacteristic('0x12','4367'+self.key)
+			conn.writeCharacteristic(handle,value.ljust(36,'0'))
+		if type == 'color':
+			conn.writeCharacteristic('0x12','4367'+self.key)
+			if value == '000000':
+				conn.writeCharacteristic(handle,('434002').ljust(36,'0'))
+			else:
+				conn.writeCharacteristic(handle,('4341'+value).ljust(36,'0'))
+		if type == 'brightness':
+			init = utils.tuple_to_hex(struct.unpack('18B',conn.readCharacteristic('0x12')))
+			conn.writeCharacteristic('0x12','4367'+self.key)
+			if str(init)[0:4]=='4343':
+				logging.debug(str(init)[0:8])
+				conn.writeCharacteristic(handle,str(init)[0:8]+ hex(int(value))[2:].zfill(2)+ str(init)[10:36])
+			else:
+				conn.writeCharacteristic(handle,str(init)[0:12]+ hex(int(value))[2:].zfill(2)+ str(init)[14:36])
+		if type == 'white':
+			conn.writeCharacteristic('0x12','4367'+self.key)
+			logging.debug('4343'+ (hex(int(value))[2:].zfill(4)+ '00').ljust(36,'0'))
+			conn.writeCharacteristic(handle,('4343'+ hex(int(value))[2:].zfill(4)+ '00').ljust(36,'0'))
 		conn.disconnect()
 		return
 	
@@ -187,4 +140,4 @@ class Playbulb():
 		result['id'] = mac
 		return result
 
-globals.COMPATIBILITY.append(Playbulb)
+globals.COMPATIBILITY.append(Yeelight)

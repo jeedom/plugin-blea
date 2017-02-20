@@ -6,6 +6,7 @@ import globals
 class Gigaset():
 	def __init__(self):
 		self.name = 'gigaset g-tag'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

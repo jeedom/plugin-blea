@@ -6,6 +6,7 @@ import globals
 class Niu():
 	def __init__(self):
 		self.name = 'niu'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

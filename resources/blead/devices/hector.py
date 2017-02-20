@@ -8,6 +8,7 @@ from multiconnect import Connector
 class Hector():
 	def __init__(self):
 		self.name = 'hector'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

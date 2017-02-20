@@ -6,6 +6,7 @@ import globals
 class Jinlin():
 	def __init__(self):
 		self.name = 'jinlin'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

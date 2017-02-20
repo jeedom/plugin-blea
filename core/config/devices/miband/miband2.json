@@ -183,7 +183,7 @@
 				"battery_type": "Batterie",
 				"ref" : "",
 				"comlink": "",
-				"remark": "En cours, fonctionne en présece.Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
+				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
 				"inclusion" : "Mode inclusion",
 				"imglink": "miband2"
             }

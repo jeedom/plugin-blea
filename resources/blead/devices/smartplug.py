@@ -10,6 +10,7 @@ import struct
 class Smartplug():
 	def __init__(self):
 		self.name = 'smartplug'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':

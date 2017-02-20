@@ -7,6 +7,7 @@ from multiconnect import Connector
 class Nut():
 	def __init__(self):
 		self.name = 'nut'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

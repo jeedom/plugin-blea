@@ -9,7 +9,7 @@ Afin d'utiliser le plugin, vous devez le télécharger, l'installer et l'activer
 
 image:../images/gestion.jpg[width=580]
 
-Sur cette page vous avez peu de choses à faire. Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK). Puis à la fin de rafraîchir la page.
+Sur cette page vous avez peu de choses à faire. Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK). Puis à la fin de rafraichir la page.
 
 [IMPORTANT]
 La chose la plus importante ici est de sélectionner votre Contrôlleur Bluetooth 
@@ -21,7 +21,7 @@ Vous pouvez aussi vérifier l'état des dépendances et les relancer. En cas de 
 
 == Le plugin
 
-Rendez-vous dans le menu plugins/protocole pour retrouver le plugin.
+Rendez vous dans le menu plugins/protocole pour retrouver le plugin.
 
 image:../images/blea_screenshot1.jpg[width=580]
 
@@ -41,7 +41,7 @@ image:../images/blea_screenshot2.jpg[width=580]
 
 == Equipement
 
-Lorsque vous cliquez sur un de vos modules, vous arrivez sur la page de configuration de celui-ci. Comme partout dans Jeedom
+Lorsque que vous cliquez sur un de vos modules, vous arrivez sur la page de configuration de celui-ci. Comme partout dans Jeedom
 vous pouvez ici sur la partie gauche:
 
 * Donner un nom au module
@@ -58,7 +58,7 @@ vous pouvez ici sur la partie gauche:
 
 Sur la partie droite vous trouverez :
 
-* Le profil de l'équipement (généralement auto-détecté si le module le permet)
+* Le profil de l'équipement (généralement auto détecté si le module le permet)
 
 * Choisir un modèle si pour ce profil plusieurs modèles sont disponibles
 
@@ -70,7 +70,7 @@ Pour le moment seuls certains modules spécifiques sont reconnus.
 
 === Cas des NIU
 
-Les NIU s'incluent très facilement, mettez Jeedom en Inclusion puis appuyez sur le bouton (aussi simple que cela).
+Les NIU s'incluent très facilement, mettez Jeedom en Inclusion puis appuyer sur le bouton (aussi simple que cela).
 
 Une fois le NIU créé vous obtiendrez ceci :
 
@@ -92,7 +92,7 @@ image:../images/blea_commands_niu.jpg[width=580]
 
 04 : relachement
 
-* Boutons : donne une représentation textuelle du type d'appui
+* Boutons : donne une représenation textuel du type d'appui
 
 * Rssi : donne la valeur d'intensité du signal
 
@@ -100,11 +100,11 @@ image:../images/blea_commands_niu.jpg[width=580]
 
 === Cas d'autres modules
 
-* D'autres modules peuvent être inclus du type beacon NUT, bracelet fitbit... etc
+* D'autres modules peuvent etre inclus du type (beacon NUT, bracelet fitbit etccc)
 
-Ils permettront une détection de présence avec une détection sur un créneau de 1 minute
-
-
+Ils permettront une detection de présence avec une detection sur un créneau de 1 minute
 
 
-Bien évidemment de nombreux autres modules seront rajoutés.
+
+
+Bien evidemment de nombreux autres modules seront rajoutés.

@@ -8,6 +8,7 @@ from notification import Notification
 class Itag():
 	def __init__(self):
 		self.name = 'itag'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() in [self.name,'mle-15']:

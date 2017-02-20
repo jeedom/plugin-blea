@@ -8,6 +8,7 @@ from notification import Notification
 class LogiSwitch():
 	def __init__(self):
 		self.name = 'logiswitch'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if 'logi switch' in name.lower():

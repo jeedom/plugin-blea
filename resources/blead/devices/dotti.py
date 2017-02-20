@@ -8,6 +8,7 @@ import utils
 class Dotti():
 	def __init__(self):
 		self.name = 'dotti'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if self.name in name.lower():

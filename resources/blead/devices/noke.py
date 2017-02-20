@@ -8,6 +8,7 @@ from notification import Notification
 class Noke():
 	def __init__(self):
 		self.name = 'noke'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if 'noke' in name.lower():

@@ -7,6 +7,7 @@ from multiconnect import Connector
 class Ticatag():
 	def __init__(self):
 		self.name = 'ticatag'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

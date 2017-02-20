@@ -8,6 +8,7 @@ from multiconnect import Connector
 class Tb05():
 	def __init__(self):
 		self.name = 'tb05'
+		self.ignoreRepeat = True
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() in [self.name,'bt05']:

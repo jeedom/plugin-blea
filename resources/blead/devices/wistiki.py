@@ -6,6 +6,7 @@ import globals
 class Wistiki():
 	def __init__(self):
 		self.name = 'wistiki'
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() == self.name:

@@ -1,0 +1,183 @@
+{
+    "garden19": {
+        "name": "Playbulb - Garden version 1.9",
+        "groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "playbulb",
+			"refreshlist" : {"color":"0x23","effect":"0x21","battery":"0x2e","hasbatteryinfo":1},
+			"canbelocked" : 1,
+			"needsrefresh" : 1,
+			"delay" : 7200,
+			"battery_type": "Batterie"
+		},
+		"commands": [
+			{
+                "name": "Mode en cours",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "logicalId": "mode"
+            },
+			{
+				"name": "Couleur",
+                "type": "action",
+                "subtype": "color",
+                "isVisible": 1,
+                "unite": "",
+				"value": "Couleur Info",
+                "logicalId": "name:playbulb,handle:0x23,value:00#color#,type:color,effect:0x21"
+            },
+			{	
+				"name": "Blanc Froid",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:playbulb,handle:0x23,value:ffffffff,type:color,effect:0x21",
+				"display": {
+				"icon": "<i class=\"fa fa-snowflake-o\"><\/i>"
+				}
+            },
+			{	
+				"name": "Blanc Chaud",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:playbulb,handle:0x23,value:ff000000,type:color,effect:0x21",
+				"display": {
+				"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+				}
+            },
+			{
+                "name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x23,value:00000000",
+				"display": {
+				"icon": "<i class=\"fa fa-power-off\"><\/i>"
+				}
+            },
+			{
+                "name": "Fondu Arc-En-Ciel",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:03,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"icon nature-wind\"><\/i>",
+				"forceReturnLineBefore": 1
+				}
+            },
+			{
+                "name": "Flash Arc-En-Ciel",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:02,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"fa nature-weather1\"><\/i>"
+				}
+            },
+			{
+                "name": "Flash uni",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:00,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"icon jeedom-alerte\"><\/i>"
+				}
+            },
+			{
+                "name": "Fondu uni",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:01,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"icon divers-triangular42\"><\/i>"
+				}
+            },
+			{
+                "name": "Bougie",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:04,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"icon nature-fire14\"><\/i>"
+				}
+            },
+			{
+                "name": "Aucun",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "name:playbulb,handle:0x21,value:ff,type:effect,color:0x23",
+				"display": {
+				"icon": "<i class=\"fa fa-times\"><\/i>"
+				}
+            },
+			{
+                "name": "Vitesse",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+				"value": "Vitesse Info",
+                "logicalId": "name:playbulb,handle:0x21,value:#slider#,type:speed",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				},
+				"display": {
+				"forceReturnLineBefore": 1
+				}
+            },
+			{
+                "name": "Couleur Info",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "logicalId": "color"
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "unite": "",
+                "logicalId": "battery"
+            },
+			{
+                "name": "Vitesse Info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "logicalId": "speed"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Playbulb",
+                "name": "Garden v1.9",
+				"doc": "",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Portée capricieuse, qui peut justifier un traitement des actions un tout petit peu long. Peut être détecté à la place d'un autre playbulb si c'est le cas changez dans le menu déroulant",
+				"inclusion" : "Mode inclusion",
+				"imglink": "garden19"
+            }
+        ]
+    }
+}
