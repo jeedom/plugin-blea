@@ -15,9 +15,9 @@ Sur cette page vous avez peu de choses à faire. Il est très vivement recommand
 La chose la plus importante ici est de sélectionner votre Contrôlleur Bluetooth 
 
 L'autre option disponible sur cette page est : *Supprimer automatiquement les périphériques exclus*. Celle-ci permet de supprimer
-les équipements de Jeedom lorsqu'il sont exclus.
+les équipements de Jeedom lorsqu'ils sont exclus.
 
-Vous pouvez aussi vérifier l'état des dépendances et les relancer. En cas de soucis avec le plugin toujours relancer les dépendances même si OK dans le doute.
+Vous pouvez aussi vérifier l'état des dépendances et les relancer. En cas de soucis avec le plugin, toujours relancer les dépendances même si OK dans le doute.
 
 == Le plugin
 
@@ -25,54 +25,54 @@ Rendez vous dans le menu plugins/protocole pour retrouver le plugin.
 
 image:../images/blea_screenshot1.jpg[width=580]
 
-Sur cette page vous pourrez voir les modules déjà inclus. 
+Sur cette page, vous pourrez voir les modules déjà inclus. 
 
-Sur la partie haute de cette page vous avez plusieurs boutons (visibles selon que vous êtes en mode expert ou non)
+Sur la partie haute de cette page, vous avez plusieurs boutons (visibles selon que vous êtes en mode expert ou non).
 
-* Bouton Inclusion : Ce bouton permet de mettre Jeedom en Inclusion
+* Bouton Inclusion : ce bouton permet de mettre Jeedom en Inclusion.
 
-* Bouton Exclusion : Ce bouton permet de mettre Jeedom en Exclusion
+* Bouton Exclusion : ce bouton permet de mettre Jeedom en Exclusion.
 
-* Bouton Configuation : Ce bouton permet d'ouvrir la fenêtre de configuration du plugin
+* Bouton Configuation : ce bouton permet d'ouvrir la fenêtre de configuration du plugin.
 
-* Bouton Santé : Ce bouton permet d'avoir un aperçu Santé de tous vos modules
+* Bouton Santé : ce bouton permet d'avoir un aperçu Santé de tous vos modules.
 
 image:../images/blea_screenshot2.jpg[width=580]
 
 == Equipement
 
 Lorsque que vous cliquez sur un de vos modules, vous arrivez sur la page de configuration de celui-ci. Comme partout dans Jeedom
-vous pouvez ici sur la partie gauche:
+vous pouvez ici sur la partie gauche :
 
-* Donner un nom au module
+* Donner un nom au module.
 
-* L'activer/le rendre visible ou non
+* L'activer/le rendre visible ou non.
 
-* Choisir son objet parent
+* Choisir son objet parent.
 
-* Lui attribuer une catégorie
+* Lui attribuer une catégorie.
 
-* Definir un delai de surveillance de communication pour certains modules
+* Definir un delai de surveillance de communication pour certains modules.
 
-* Mettre un commentaire
+* Mettre un commentaire.
 
 Sur la partie droite vous trouverez :
 
-* Le profil de l'équipement (généralement auto détecté si le module le permet)
+* Le profil de l'équipement (généralement auto détecté si le module le permet).
 
-* Choisir un modèle si pour ce profil plusieurs modèles sont disponibles
+* Choisir un modèle si pour ce profil plusieurs modèles sont disponibles.
 
-*  Voir le visuel
+*  Voir le visuel.
 
 == Quels modules
 
-Pour le moment seuls certains modules spécifiques sont reconnus. 
+Pour le moment, seuls certains modules spécifiques sont reconnus. 
 
 === Cas des NIU
 
 Les NIU s'incluent très facilement, mettez Jeedom en Inclusion puis appuyer sur le bouton (aussi simple que cela).
 
-Une fois le NIU créé vous obtiendrez ceci :
+Une fois le NIU créé, vous obtiendrez ceci :
 
 image:../images/blea_screenshot3.jpg[width=580]
 
@@ -82,7 +82,7 @@ Vous aurez ainsi 4 commandes :
 image:../images/blea_commands_niu.jpg[width=580]
 
 
-* BoutonId : donne une représenation numérique du type d'appui (idéal pour les scénarios)
+* BoutonId : donne une représentation numérique du type d'appui (idéal pour les scénarios)
 
 01 : simple appui
 
@@ -92,7 +92,7 @@ image:../images/blea_commands_niu.jpg[width=580]
 
 04 : relachement
 
-* Boutons : donne une représenation textuel du type d'appui
+* Boutons : donne une représentation textuelle du type d'appui
 
 * Rssi : donne la valeur d'intensité du signal
 
@@ -100,11 +100,11 @@ image:../images/blea_commands_niu.jpg[width=580]
 
 === Cas d'autres modules
 
-* D'autres modules peuvent etre inclus du type (beacon NUT, bracelet fitbit etccc)
+* D'autres modules peuvent être inclus du type (beacon NUT, bracelet fitbit etccc)
 
-Ils permettront une detection de présence avec une detection sur un créneau de 1 minute
-
-
+Ils permettront une détection de présence avec une détection sur un créneau de 1 minute.
 
 
-Bien evidemment de nombreux autres modules seront rajoutés.
+
+
+Bien évidemment de nombreux autres modules seront rajoutés.
