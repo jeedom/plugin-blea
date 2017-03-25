@@ -492,7 +492,7 @@ signal.signal(signal.SIGTERM, handler)
 globals.IFACE_DEVICE = int(globals.device[-1:])
 try:
 	jeedom_utils.write_pid(str(globals.pidfile))
-	globals.JEEDOM_COM = jeedom_com(apikey = globals.apikey,url = globals.callback,cycle=globals.cycle)
+	globals.JEEDOM_COM = jeedom_com(apikey = globals.apikey,url = globals.callback,cycle=globals.cycle,retry=3,threshold=globals.RSSI_THRESHOLD)
 	if not globals.JEEDOM_COM.test():
 		logging.error('Network communication issues. Please fix your Jeedom network configuration.')
 		shutdown()

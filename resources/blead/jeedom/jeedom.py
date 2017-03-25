@@ -31,17 +31,20 @@ from SocketServer import (TCPServer, StreamRequestHandler)
 import signal
 import unicodedata
 import pyudev
+from collections import defaultdict
 
 
 # ------------------------------------------------------------------------------
 
 class jeedom_com():
-	def __init__(self,apikey = '',url = '',cycle = 0.5,retry = 3):
+	def __init__(self,apikey = '',url = '',cycle = 0.5,retry = 3,threshold = 0):
 		self.apikey = apikey
 		self.url = url
 		self.cycle = cycle
 		self.retry = retry
 		self.changes = {}
+		self.devrssis = defaultdict(int)
+		self.rssithreshold = threshold
 		if cycle > 0 :
 			self.send_changes_async()
 		logging.debug('Init request module v%s' % (str(requests.__version__),))
@@ -81,6 +84,11 @@ class jeedom_com():
 		
 	def add_changes(self,key,value):
 		if key.find('::') != -1:
+			if self.rssithreshold != 0:
+				if key in self.devrssis and abs(self.devrssis[key] - value['rssi']) < self.rssithreshold:
+					return
+				else:
+					self.devrssis[key] = value['rssi']
 			tmp_changes = {}
 			changes = value
 			for k in reversed(key.split('::')):
