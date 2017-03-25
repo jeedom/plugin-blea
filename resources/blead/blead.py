@@ -153,7 +153,7 @@ def listen():
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + 39)  < int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + globals.SCAN_INTERVAL)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
@@ -448,6 +448,7 @@ parser.add_argument("--socketport", help="Socket Port", type=str)
 parser.add_argument("--sockethost", help="Socket Host", type=str)
 parser.add_argument("--daemonname", help="Daemon Name", type=str)
 parser.add_argument("--cycle", help="Cycle to send event", type=str)
+parser.add_argument("--scaninterval", help="Seconds between each scan", type=str)
 args = parser.parse_args()
 
 if args.device:
@@ -462,6 +463,8 @@ if args.apikey:
 	globals.apikey = args.apikey
 if args.cycle:
 	globals.cycle = float(args.cycle)
+if args.scaninterval:
+	globals.SCAN_INTERVAL = int(args.scaninterval)
 if args.socketport:
 	globals.socketport = args.socketport
 if args.sockethost:
@@ -482,6 +485,7 @@ logging.info('PID file : '+str(globals.pidfile))
 logging.info('Apikey : '+str(globals.apikey))
 logging.info('Callback : '+str(globals.callback))
 logging.info('Cycle : '+str(globals.cycle))
+logging.info('Scan interval : '+str(globals.SCAN_INTERVAL))
 import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)

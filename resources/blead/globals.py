@@ -7,6 +7,7 @@ LAST_VIRTUAL = int(time.time())
 LAST_BEAT = int(time.time())
 LEARN_BEGIN = int(time.time())
 LAST_CLEAR = int(time.time())
+SCAN_INTERVAL = 39
 COMPATIBILITY = []
 LAST_STATE={}
 PRESENT={}
