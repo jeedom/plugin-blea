@@ -48,11 +48,11 @@
         "Logical ID (info) ou Commande brute (action)": "Logical ID (info) or raw Command (action)",
         "Paramètres": "Settings",
         "Options": "Options",
-        "Configuration des paramètres": "Configuration des paramètres"
+        "Configuration des paramètres": "Parameters configuration"
     },
     "plugins\/blea\/desktop\/js\/blea.js": {
-        "Santé BLEA": "Santé BLEA",
-        "Gestion des antennes bluetooth (pour plugin utilisant le bluetooth)": "Gestion des antennes bluetooth (pour plugin utilisant le bluetooth)",
+        "Santé BLEA": "BLEA Health",
+        "Gestion des antennes bluetooth (pour plugin utilisant le bluetooth)": "Antenna management (for the bluetooth plugin)",
         "Commande": "Command",
         "ID": "ID",
         "Groupe": "Group",
@@ -63,10 +63,10 @@
         "Inverser": "Invert",
         "Arrêter l\\'inclusion": "Stop inclusion",
         "Arreter inclusion": "Stop inclusion",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "You are in inclusion mode. Please click again on the inclusion button to exit this mode (otherwise it will remain active 1 minute)",
         "Mode inclusion": "Inclusion mode",
-        "Arrêter l\\'exclusion": "Arrêter l\\'exclusion",
-        "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode",
+        "Arrêter l\\'exclusion": "Stop exclusion",
+        "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "You are in exclusion mode. Please click again on the exclusion button to exit this mode",
         "Mode exclusion": "Inclusion mode",
         "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "A device comes \\\\ to be included\\\\/excluded. Please refresh the page"
     },
