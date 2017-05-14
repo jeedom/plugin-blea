@@ -117,6 +117,28 @@
 					"title_disable": 0,
 					"message_placeholder": "Données brute"
 				}
+            },
+			{	
+				"name": "Mode heure",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:changemodetime,handle:0x2a,type:mode,value:040502",
+				"configuration": {
+					"logicalwidget" : "changemodetime"
+				}
+            },
+			{	
+				"name": "Mode batterie",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dotti,classlogical:changemodebat,handle:0x2a,type:mode,value:040504",
+				"configuration": {
+					"logicalwidget" : "changemodebat"
+				}
             }
         ],
 		"compatibility": [

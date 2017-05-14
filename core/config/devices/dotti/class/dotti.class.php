@@ -359,6 +359,10 @@ class dottiblea extends blea {
 			}
 			$return = self::sendData($_eqLogic,'display', self::text2array($_options['message'], $options['color']), $options['priority'], $options['timeout']);
 		}
+		elseif ($logicalid == 'changemodebat' || $logicalid == 'changemodetime') {
+			$value = array('type' => $_data['type'], 'data' => $_data);
+			$return = $value;
+		}
 		elseif ($logicalid == 'rownumber') {
 			if (!is_numeric($_options['message'])) {
 				throw new Exception(__('Le champs message doit être un numérique : ', __FILE__) . $_options['message']);

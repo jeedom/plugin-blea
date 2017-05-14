@@ -39,7 +39,12 @@ class Dotti():
 			if not conn.isconnected:
 				return
 		try:
-			if type == 'color':
+			if type == 'mode':
+				logging.debug('Changing Mode')
+				data = message['command']['value']
+				conn.writeCharacteristic('0x2a',data)
+				globals.LAST_STORAGE[mac]={}
+			elif type == 'color':
 				logging.debug('Sending Color')
 				data = message['command']['data']
 				conn.writeCharacteristic('0x2a','0601'+utils.twoDigitHex(int(data[0]))+utils.twoDigitHex(int(data[1]))+utils.twoDigitHex(int(data[2]))+'00')
