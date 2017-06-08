@@ -16,6 +16,18 @@
 				"remark": "Uniquement pour de la présence",
 				"inclusion" : "Mode inclusion",
 				"imglink": "wistiki"
+            },
+            {
+                "manufacturer": "Wistiki",
+                "name": "Aha",
+                "doc": "",
+                "type": "Présence",
+                "battery_type": "1x3V CR2032",
+                "ref" : "",
+                "comlink": "",
+                "remark": "Uniquement pour de la présence",
+                "inclusion" : "Mode inclusion",
+                "imglink": "aha"
             }
         ]
     }
