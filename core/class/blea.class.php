@@ -182,7 +182,7 @@ class blea extends eqLogic {
 				$name = $remote->getRemoteName();
 				if ($last == '0' or time() - strtotime($last)>19){
 					$result = 'NOK';
-					$advice = 'Vérifier le démon sur votre antenne';
+					$advice = __('Vérifier le démon sur votre antenne',__FILE__);
 					$state = False;
 				} else {
 					$result = 'OK';
@@ -209,12 +209,12 @@ class blea extends eqLogic {
 		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
 		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
 		$remoteObject->sendFiles('/tmp/folder-blea.tar.gz','folder-blea.tar.gz');
-		log::add('blea','info','Décompression du dossier distant');
+		log::add('blea','info',__('Décompression du dossier distant',__FILE__));
 		$remoteObject->execCmd(['mkdir /home','mkdir /home/'.$user,'rm -R /home/'.$user.'/blead','mkdir /home/'.$user.'/blead','tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
-		log::add('blea','info','Suppression du zip local');
+		log::add('blea','info',__('Suppression du zip local',__FILE__));
 		exec('rm /tmp/folder-blea.tar.gz');
 		blea::launchremote($_remoteId);
-		log::add('blea','info','Finie');
+		log::add('blea','info',__('Finie',__FILE__));
 		return True;
 	}
 	
@@ -224,7 +224,7 @@ class blea extends eqLogic {
 		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name).$_dependancy;
 		log::add('blea','info','Suppression de la log ' . $local);
 		exec('rm '. $local);
-		log::add('blea','info','Récupération de la log distante');
+		log::add('blea','info',__('Récupération de la log distante',__FILE__));
 		$remoteObject->getFiles($local,'/tmp/blea'.$_dependancy);
 		$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
 		return True;
@@ -234,7 +234,7 @@ class blea extends eqLogic {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
 		$user=$remoteObject->getConfiguration('remoteUser');
-		log::add('blea','info','Installation des dépendances');
+		log::add('blea','info',__('Installation des dépendances',__FILE__));
 		$remoteObject->execCmd(['bash /home/'.$user.'/blead/resources/install.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
 		blea::launchremote($_remoteId);
 		return True;
@@ -288,7 +288,7 @@ class blea extends eqLogic {
 	}
 	
 	public static function stopremote($_remoteId) {
-		log::add('blea','info','Arret du démon distant');
+		log::add('blea','info',__('Arret du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
@@ -407,7 +407,7 @@ class blea extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('blea', 'error', 'Impossible de lancer le démon blea, vérifiez la log', 'unableStartDeamon');
+			log::add('blea', 'error', __('Impossible de lancer le démon blea, vérifiez la log',__FILE__), 'unableStartDeamon');
 			return false;
 		}
 		message::removeAll('blea', 'unableStartDeamon');
@@ -931,13 +931,13 @@ class bleaCmd extends cmd {
 		} elseif ($sender == 'all') {
 			$closest = $eqLogic->closestAntenna();
 			if ($closest == 'local'){
-				log::add('blea','info','Envoi depuis local car plus proche');
+				log::add('blea','info',__('Envoi depuis local car plus proche',__FILE__));
 				blea::socket_connection($value);
 			} else {
 				$remotes = blea_remote::all();
 				foreach ($remotes as $remote){
 					if ($remote->getRemoteName() == $closest){
-						log::add('blea','info','Envoi depuis ' . $remote->getRemoteName() . ' car plus proche');
+						log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName() . __(' car plus proche',__FILE__));
 						$ip = $remote->getConfiguration('remoteIp');
 						$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 						socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
@@ -949,7 +949,7 @@ class bleaCmd extends cmd {
 			}
 		} else {
 			$remote = blea_remote::byId($sender);
-			log::add('blea','info','Envoi depuis ' . $remote->getRemoteName());
+			log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName());
 			$ip = $remote->getConfiguration('remoteIp');
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
@@ -1007,7 +1007,7 @@ class blea_remote {
 				return;
 			} else {
 				foreach ($_cmd as $cmd){
-					log::add('blea', 'info', 'Commande par SSH (' . $cmd . ') sur ' . $ip);
+					log::add('blea', 'info', __('Commande par SSH (',__FILE__) . $cmd . ') __(sur ',__FILE__) . $ip);
 					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
 					$result = ssh2_exec($connection, $execmd);
 				}
@@ -1056,7 +1056,7 @@ class blea_remote {
 				log::add('blea', 'error', 'Authentification SSH KO');
 				return;
 			} else {
-				log::add('blea', 'info', 'Récupération de fichier depuis ' . $ip);
+				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
 				$closesession = ssh2_exec($connection, 'exit');
 				stream_set_blocking($closesession, true);
