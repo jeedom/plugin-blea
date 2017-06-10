@@ -1007,7 +1007,7 @@ class blea_remote {
 				return;
 			} else {
 				foreach ($_cmd as $cmd){
-					log::add('blea', 'info', __('Commande par SSH (',__FILE__) . $cmd . ') __(sur ',__FILE__) . $ip);
+					log::add('blea', 'info', __('Commande par SSH ',__FILE__) . $cmd .  __('sur ',__FILE__) . $ip);
 					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
 					$result = ssh2_exec($connection, $execmd);
 				}
