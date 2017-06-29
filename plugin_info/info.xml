@@ -4,7 +4,7 @@
     <name>Bluetooth Advertisement</name>
     <licence>AGPL</licence>
     <author>Ludovic SARAKHA</author>
-    <require>2.4</require>
+    <require>3.0</require>
     <category>automation protocol</category>
     <hasOwnDeamon>1</hasOwnDeamon>
     <hasDependency>1</hasDependency>
