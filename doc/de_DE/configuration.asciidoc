@@ -1,6 +1,6 @@
 == Plugin Konfiguration:
 
-.. Installation/Création
+.. Installation/Einrichtung
 
 [TIP]
 Afin d'utiliser le plugin, vous devez le télécharger, l'installer et l'activer comme tout plugin Jeedom.
