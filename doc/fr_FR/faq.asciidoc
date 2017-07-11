@@ -1,0 +1,10 @@
+[panel,primary]
+.Aucun port n'est présent pour le daemon.
+--
+Il faut que le package bluez soit installé. Si ce n'est pas le cas :
+
+apt-get install bluez
+
+Ensuite relancez les pres-requis.
+--
+
