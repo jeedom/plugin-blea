@@ -7,6 +7,8 @@ sudo apt-get install -y python-pip python-dev build-essential
 echo 66 > /tmp/dependancy_blea_in_progress
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > /tmp/dependancy_blea_in_progress
+sudo apt-get install bluez
+echo 80 > /tmp/dependancy_blea_in_progress
 sudo pip install pyudev
 sudo pip install pyserial
 echo 95 > /tmp/dependancy_blea_in_progress
