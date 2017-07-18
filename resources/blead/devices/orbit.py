@@ -19,14 +19,14 @@ class Orbit():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf=''):
-		if name.lower() in ['orbit','orbit',self.name]:
+		if name.lower() in ['Orbit',self.name]:
 			return True
 			
 	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
-			if name.lower() in ['orbit','orbit']:
+			if name.lower() in ['Orbit']:
 				action['version'] = 'orbit'
 		return action
 	
@@ -41,7 +41,7 @@ class Orbit():
 			if not conn.isconnected:
 				return
 		conn.writeCharacteristic('0x51','0100',type='random')
-		notification = Notification(conn,orbit,{'action':'write','handle':handle,'value':value,'type':'random'})
+		notification = Notification(conn,Orbit,{'action':'write','handle':handle,'value':value,'type':'random'})
 		if handle == '0x2b':
 			notification.subscribe(20)
 		else:
@@ -83,7 +83,7 @@ class Orbit():
 				result['lastcharge'] = day+'/'+month+'/'+year+' '+hour+'h'+minutes+'min'+seconds+'s'
 			result['id'] = mac
 			#conn.writeCharacteristic('0x51','0100',type='random')
-			#notification = Notification(conn,orbit,{'action':'write','handle':'0x3d','value':'02','type':'random'})
+			#notification = Notification(conn,Orbit,{'action':'write','handle':'0x3d','value':'02','type':'random'})
 			#notification.subscribe(10)
 			#conn.writeCharacteristic('0x50', '0200',type='random')
 			logging.debug(str(result))
@@ -123,4 +123,4 @@ class Orbit():
 			received = bytearray(data)
 			logging.debug(binascii.hexlify(received))
 
-globals.COMPATIBILITY.append(orbit)
+globals.COMPATIBILITY.append(Orbit)
