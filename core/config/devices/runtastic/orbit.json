@@ -1,0 +1,126 @@
+{
+    "orbit": {
+        "name": "Orbit",
+		"groupe" : "Santé",
+		"configuration" : {
+			"name" : "orbit",
+			"battery_type" : "Batterie",
+			"cancontrol" : 1
+		},
+        "commands": [
+			{
+                "name": "Nombre de pas",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "steps",
+                "unite": "pas",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"icon": "<i class=\"icon loisir-runner5\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+			{
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Dernière charge",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "lastcharge",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Dernière charge batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "lastchargelevel",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Firmware",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "firmware"
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Runtastic",
+                "name": "Orbit",
+				"doc": "",
+				"type": "Santé",
+				"battery_type": "Batterie",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Selon les firmwares peut ne plus fonctionner. Attention si le bracelet est connecté à votre smartphone il est plus visible en bluetooth",
+				"inclusion" : "Mode inclusion",
+				"imglink": "orbit"
+            }
+        ]
+    }
+}
