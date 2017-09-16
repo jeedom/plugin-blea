@@ -8,5 +8,7 @@
 	"mobile" : "blea",
 	"category" : "automation protocol",
 	"hasOwnDeamon" : true,
-	"hasDependency" : true
+	"hasDependency" : true,
+	"changelog" : "https://github.com/jeedom/plugin-blea/blob/stable/doc/#language#/changelog.asciidoc",
+	"documentation" : "https://github.com/jeedom/plugin-blea/blob/stable/doc/#language#/index.asciidoc"
 }
