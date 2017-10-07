@@ -52,13 +52,49 @@
             },
 			{
                 "manufacturer": "Nut",
+                "name": "Nut Mini Blanc",
+				"doc": "",
+				"type": "Présence",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour de la présence",
+				"inclusion" : "Mode inclusion",
+				"imglink": "nut_mini_blanc"
+            },
+			{
+                "manufacturer": "Nut",
+                "name": "Nut Mini Rose",
+				"doc": "",
+				"type": "Présence",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour de la présence",
+				"inclusion" : "Mode inclusion",
+				"imglink": "nut_mini_rose"
+            },
+			{
+                "manufacturer": "Nut",
+                "name": "Nut Mini Vert",
+				"doc": "",
+				"type": "Présence",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement pour de la présence",
+				"inclusion" : "Mode inclusion",
+				"imglink": "nut_mini_vert"
+            },
+			{
+                "manufacturer": "Nut",
                 "name": "Nut Mini Bleu",
 				"doc": "",
 				"type": "Présence",
 				"battery_type": "1x3V CR2032",
 				"ref" : "",
 				"comlink": "",
-				"remark": "",
+				"remark": "Uniquement pour de la présence",
 				"inclusion" : "Mode inclusion",
 				"imglink": "nut_mini_bleu"
             }
