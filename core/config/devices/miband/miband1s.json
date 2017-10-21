@@ -5,6 +5,7 @@
 		"configuration" : {
 			"name" : "miband",
 			"battery_type" : "Batterie",
+			"xiaomi" : 1,
 			"cancontrol" : 1
 		},
         "commands": [

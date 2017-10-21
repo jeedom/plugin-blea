@@ -3,12 +3,13 @@ echo 0 > /tmp/dependancy_blea_in_progress
 echo "Launch install of blea dependancy"
 sudo apt-get update
 echo 50 > /tmp/dependancy_blea_in_progress
-sudo apt-get install -y python-pip python-dev build-essential
+sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth
 echo 66 > /tmp/dependancy_blea_in_progress
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > /tmp/dependancy_blea_in_progress
 sudo pip install pyudev
 sudo pip install pyserial
+sudo pip install requests
 echo 95 > /tmp/dependancy_blea_in_progress
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1

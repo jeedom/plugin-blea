@@ -5,6 +5,7 @@
 		"configuration" : {
 			"cancontrol" : 1,
 			"name" : "yeelight_bed",
+			"xiaomi" : 1,
 			"canbelocked" : 1
 		},
 		"commands": [

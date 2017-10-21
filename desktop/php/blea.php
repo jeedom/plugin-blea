@@ -268,22 +268,6 @@ foreach ($groups as $group) {
    </select>
  </div>
 </div>
-<div class="form-group expertModeVisible">
-  <label class="col-sm-3 control-label">{{Création}}</label>
-  <div class="col-sm-3">
-    <span class="eqLogicAttr label label-default" data-l1key="configuration" data-l2key="createtime" title="{{Date de création de l'équipement}}" style="font-size : 1em;cursor : default;"></span>
-  </div>
-  <label class="col-sm-3 control-label">{{Communication}}</label>
-  <div class="col-sm-3">
-    <span class="eqLogicAttr label label-default" data-l1key="status" data-l2key="lastCommunication" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
-  </div>
-</div>
-<div class="form-group expertModeVisible">
- <label class="col-sm-3 control-label">{{Statut}}</label>
- <div class="col-sm-2">
-  <span class="eqLogicAttr label label-default" style="font-size : 1em;cursor : default;" data-l1key="status" data-l2key="state"></span>
-</div>
-</div>
 
 <center>
   <img src="core/img/no_image.gif" data-original=".jpg" id="img_device" class="img-responsive" style="max-height : 250px;"  onerror="this.src='plugins/openenocean/doc/images/openenocean_icon.png'"/>

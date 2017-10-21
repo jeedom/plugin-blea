@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <id>blea</id>
+    <name>Bluetooth Advertisement</name>
+    <licence>AGPL</licence>
+    <author>Ludovic SARAKHA</author>
+    <require>3.0</require>
+    <category>automation protocol</category>
+    <hasOwnDeamon>1</hasOwnDeamon>
+    <hasDependency>1</hasDependency>
+</info>
+
