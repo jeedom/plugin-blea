@@ -10,9 +10,5 @@ image:../images/blea_icon.png[width=256]
 include::configuration.asciidoc[]
 
 '''
-=== FAQ
-include::faq.asciidoc[]
-
-'''
 === Änderungsprotokoll
 include::changelog.asciidoc[]

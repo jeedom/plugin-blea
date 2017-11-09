@@ -12,7 +12,7 @@ image:../images/gestion.jpg[width=580]
 Sur cette page vous avez peu de choses à faire. Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK). Puis à la fin de rafraichir la page.
 
 [IMPORTANT]
-La chose la plus importante ici est de sélectionner votre Contrôlleur Bluetooth 
+La chose la plus importante ici est de sélectionner votre Contrôleur Bluetooth 
 
 L'autre option disponible sur cette page est : *Supprimer automatiquement les périphériques exclus*. Celle-ci permet de supprimer
 les équipements de Jeedom lorsqu'ils sont exclus.
@@ -21,19 +21,19 @@ Vous pouvez aussi vérifier l'état des dépendances et les relancer. En cas de 
 
 == Le plugin
 
-Rendez vous dans le menu plugins/protocole pour retrouver le plugin.
+Rendez vous dans le menu Plugins > Protocole Domotique pour retrouver le plugin.
 
 image:../images/blea_screenshot1.jpg[width=580]
 
 Sur cette page, vous pourrez voir les modules déjà inclus. 
 
-Sur la partie haute de cette page, vous avez plusieurs boutons (visibles selon que vous êtes en mode expert ou non).
+Sur la partie haute de cette page, vous avez plusieurs boutons.
 
 * Bouton Inclusion : ce bouton permet de mettre Jeedom en Inclusion.
 
 * Bouton Exclusion : ce bouton permet de mettre Jeedom en Exclusion.
 
-* Bouton Configuation : ce bouton permet d'ouvrir la fenêtre de configuration du plugin.
+* Bouton Configuration : ce bouton permet d'ouvrir la fenêtre de configuration du plugin.
 
 * Bouton Santé : ce bouton permet d'avoir un aperçu Santé de tous vos modules.
 
@@ -100,7 +100,7 @@ image:../images/blea_commands_niu.jpg[width=580]
 
 === Cas d'autres modules
 
-* D'autres modules peuvent être inclus du type (beacon NUT, bracelet fitbit etccc)
+* D'autres modules peuvent être inclus du type beacon NUT, bracelet fitbit, etc.
 
 Ils permettront une détection de présence avec une détection sur un créneau de 1 minute.
 
