@@ -13,7 +13,7 @@ include::configuration.asciidoc[]
 === Changelog
 include::changelog.asciidoc[]
 
-...
+'''
 === Liste des équipements compatibles
-include::ttps://github.com/jeedom/documentation/blob/master/blea/fr_FR/equipement.compatible.asciidoc[]
+include::https://github.com/jeedom/documentation/blob/master/blea/fr_FR/equipement.compatible.asciidoc[]
 
