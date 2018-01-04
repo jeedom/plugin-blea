@@ -286,9 +286,9 @@ foreach ($groups as $group) {
     <thead>
       <tr>
         <th style="width: 300px;">{{Nom}}</th>
-        <th style="width: 130px;" class="expertModeVisible">Type</th>
-        <th class="expertModeVisible">{{Logical ID (info) ou Commande brute (action)}}</th>
-        <th >{{Paramètres}}</th>
+        <th style="width: 130px;">Type</th>
+        <th>{{Logical ID (info) ou Commande brute (action)}}</th>
+        <th>{{Paramètres}}</th>
         <th style="width: 100px;">{{Options}}</th>
         <th></th>
       </tr>
