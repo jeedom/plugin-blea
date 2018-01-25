@@ -11,7 +11,7 @@ image:../images/gestion.jpg[width=580]
 
 Sur cette page vous avez peu de choses à faire. Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK). Puis à la fin de rafraichir la page.
 
-[IMPORTANT]
+[IMPORTANTE]
 La chose la plus importante ici est de sélectionner votre Contrôleur Bluetooth 
 
 L'autre option disponible sur cette page est : *Supprimer automatiquement les périphériques exclus*. Celle-ci permet de supprimer
