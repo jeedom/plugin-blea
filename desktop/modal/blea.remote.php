@@ -107,7 +107,7 @@ foreach ($remotes as $remote) {
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
 							</div>
 						</div>
-						<div class="form-group expertModeVisible">
+						<div class="form-group">
 							<label class="col-sm-2 control-label">{{Communication}}</label>
 							<div class="col-sm-3">
 								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
