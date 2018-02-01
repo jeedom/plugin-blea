@@ -80,6 +80,7 @@ class ScanDelegate(DefaultDelegate):
 						if globals.LEARN_MODE:
 							logging.debug('Known device and in Learn Mode ignoring ' +str(mac))
 							return
+						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
 					globals.PENDING_ACTION = True
 					try:
 						action = device().parse(data,mac,name)
@@ -295,6 +296,8 @@ def action_handler(message):
 	if manuf in message['command']:
 		manuf = message['command']['manuf']
 	name = message['command']['name']
+	if 'localname' in globals.KNOWN_DEVICES[message['device']['id']]:
+		message['device']['localname'] = globals.KNOWN_DEVICES[message['device']['id']]['localname']
 	result = {}
 	if message['cmd'] == 'helper' or message['cmd'] == 'helperrandom':
 		type ='public'
