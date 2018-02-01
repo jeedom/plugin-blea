@@ -2,7 +2,51 @@
     "gigaset": {
         "name": "Gigaset G-Tag",
 		"groupe" : "Présence",
+		"configuration" : {
+			"needsrefresh" : 1,
+			"name" : "Gigaset G-Tag",
+			"battery_type" : "1x3V CR2032",
+			"delay" : 18000,
+			"cancontrol" : 1
+		},
         "commands": [
+			{
+                "name": "Présence",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "present"
+            },
+						{
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery"
+            }
+
         ],
 		"compatibility": [
             {
@@ -16,7 +60,7 @@
 				"remark": "Uniquement pour de la présence",
 				"inclusion" : "Mode inclusion",
 				"imglink": "gigaset"
-            }
-        ]
+			}
+		]
     }
 }
