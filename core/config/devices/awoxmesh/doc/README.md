@@ -117,51 +117,55 @@ Format : `name:awoxmesh,cmd:COMMANDE,value:VALEUR` (ex: `name:awoxmesh,cmd:power
   
 *Note: `name:awoxmesh` est obligatoire pour chaque commande.*
 
-`COMMANDE` de base:
-    * `power` : on/off  
-	> `VALEUR` : 1 ou 0 (pour on/off)
-    * `setWhiteTemperature` : température de blanc  
-	> `VALEUR` : entre 0 (min) et 100 (max)
-    * `setWhiteBrightness` : luminosité blanc  
-	> `VALEUR` : entre 0 (min) et 100 (max) 
-    * `setWhite` : temp et luminosité de blanc  
-	> `VALEUR` : *température*-*luminosité* ex: 50-100 (blanc neutre luminosité max)
-    * `setColor` : couleur  
-	> `VALEUR` : *#XXYYZZ*  
+`COMMANDE` de base: 
+
+  * `power` : on/off  
+    > `VALEUR` : 1 ou 0 (pour on/off)
+  * `setWhiteTemperature` : température de blanc  
+    > `VALEUR` : entre 0 (min) et 100 (max)
+  * `setWhiteBrightness` : luminosité blanc  
+    > `VALEUR` : entre 0 (min) et 100 (max) 
+  * `setWhite` : temp et luminosité de blanc  
+    > `VALEUR` : *température*-*luminosité* ex: 50-100 (blanc neutre luminosité max)
+  * `setColor` : couleur  
+    > `VALEUR` : *#XXYYZZ*  
 	ex: #00FF00 (couleur au format html [voir ici](https://html-color-codes.info/))
-    * `setColorBrightness` : luminosité couleur  
-	> `VALEUR` : entre 0 (min) et 100 (max)
-    * `setColorLight` : couleur et luminosité  
-	> `VALEUR` : *couleur*-*luminosité*  
+  * `setColorBrightness` : luminosité couleur  
+    > `VALEUR` : entre 0 (min) et 100 (max)
+  * `setColorLight` : couleur et luminosité  
+    > `VALEUR` : *couleur*-*luminosité*  
 	ex: #00FF00-100 (vert luminosité max)
-    * `setSequence` : séquence prédéfinie  
-	> `VALEUR` : entre 0 et 6
-    * `setSequenceColorDuration` : durée couleur pour séquence  
-	> `VALEUR` : *X* (en miliseconds)
-    * `setSequenceFadeDuration` : temps de transistion pour séquence  
-	> `VALEUR` : *X* (en miliseconds)
-    * `playScenario` : scénario simple  
-	> `VALEUR` : color/white/power*&*duration|color/white/power*&*duration|...|X  (X: nombre d'itération)  
+  * `setSequence` : séquence prédéfinie  
+    > `VALEUR` : entre 0 et 6
+  * `setSequenceColorDuration` : durée couleur pour séquence  
+    > `VALEUR` : *X* (en miliseconds)
+  * `setSequenceFadeDuration` : temps de transistion pour séquence  
+    > `VALEUR` : *X* (en miliseconds)
+  * `playScenario` : scénario simple  
+    > `VALEUR` : color/white/power*&*duration|color/white/power*&*duration|...|X  (X: nombre d'itération)  
     ex: `#DF0101-100&1|100-100&0.5|50-50&1|0&1|1&0.5|4` : Jouer 4 fois la séquence *couleur(1s), blanc(0.5s), autre blanc(1s), off(1s) et on(0.5s)*
+
 	
-`COMMANDE` autres:
-    * `resetMesh` : dépairage  
-	> `VALEUR` : 0 (valeur non utilisée)
-    * `setNewPairing` : pairage  
-	> `VALEUR` : 0 (valeur non utilisée)
-    * `addMeshGroup` : ajouter groupe  
-	> `VALEUR` : *NumeroGroupe*
-    * `delMeshGroup` : enlever groupe  
-	> `VALEUR` : *NumeroGroupe*
+`COMMANDE` autres: 
+
+  * `resetMesh` : dépairage  
+    > `VALEUR` : 0 (valeur non utilisée)
+  * `setNewPairing` : pairage  
+    > `VALEUR` : 0 (valeur non utilisée)
+  * `addMeshGroup` : ajouter groupe  
+    > `VALEUR` : *NumeroGroupe*
+  * `delMeshGroup` : enlever groupe  
+    > `VALEUR` : *NumeroGroupe*
 
 	
 Autres
 ------------
 
-Liste divers
-    * Reset (dépairage manuel d'un équipement (sans l'appli) : Voir [video](https://youtu.be/WSuPGxZp1_c)  
+Liste divers: 
+
+  * Reset (dépairage manuel d'un équipement (sans l'appli) : Voir [video](https://youtu.be/WSuPGxZp1_c)  
 	![example image](img/capture_awoxmesh_resetmanuel.png "Reset manuel")
 	
-    * Autres [videos](http://www.eglo.com/france/Produits2/Concepts/EGLO-connect-bluetooth-R) en cas dde problème
+  * Autres [videos](http://www.eglo.com/france/Produits2/Concepts/EGLO-connect-bluetooth-R) en cas dde problème
 
 	
