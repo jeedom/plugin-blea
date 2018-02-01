@@ -1,0 +1,81 @@
+ {
+	"awoxremote": {
+		"name": "Awox / Eglo - Télécommande",
+		"groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "awoxmesh",
+			"refreshlist" : {},
+			"canbelocked" : 1,
+			"needsrefresh" : 0,
+			"specificmodal" : 0,
+			"specificclass" : 0
+		},
+		"commands": [
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Debug",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "debug",
+				"display": {
+                    "generic_type": "DONT"
+                },
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "refresh"
+            },
+			{
+				"name": "New Pairing",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:setNewPairing,value:0"
+			},
+			{
+				"name": "Reset Pairing",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:resetMesh,value:0"
+			}
+		],
+		"compatibility": [
+			{
+				"manufacturer": "Awox Eglo",
+				"name": "Télécommande",
+				"doc": "",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Compatible avec Awox Mesh technologie. Il faut activer le mode bluetooth pour utiliser les commande.",
+				"inclusion" : "Mode inclusion. Appuyer sur le bouton ON et BLEU pendant 3 secondes pour activer le mode bluetooth avant pairage.",
+				"imglink": "awoxremote"
+			}
+		]
+	}
+}
