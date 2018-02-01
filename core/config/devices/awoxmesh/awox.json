@@ -1,0 +1,410 @@
+ {
+	"awox": {
+		"name": "Awox / Eglo - Gamme mesh",
+		"groupe" : "Lumières",
+		"afterInclusionSend" : "RefreshAction",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "awoxmesh",
+			"refreshlist" : {},
+			"canbelocked" : 1,
+			"needsrefresh" : 1,
+			"delay" : 600,
+			"specificmodal" : 0,
+			"specificclass" : 0
+		},
+		"commands": [
+			{
+                "name": "Etat",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Mode value",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "mode",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Type lumière",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "modestring",
+				"display": {
+					"generic_type": "GENERIC"
+                },
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Blanc Temperature info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "whitetemperature",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Blanc Luminosité info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "whitebrightness",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Couleur info",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "color",
+				"display": {
+                    "generic_type": "LIGHT_COLOR"
+                },
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Couleur Luminosité info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "colorbrightness",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+				"name": "Off",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:power,value:0",
+				"value": "Etat",
+				"display": {
+					"generic_type": "LIGHT_OFF"
+				},
+				"template": {
+					"dashboard": "light", 
+					"mobile": "light"
+				}
+			},
+			{
+				"name": "On",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:power,value:1",
+				"value": "Etat",
+				"display": {
+					"generic_type": "LIGHT_ON"
+				},
+				"template": {
+					"dashboard": "light", 
+					"mobile": "light"
+				}
+			},
+			{
+				"name": "Blanc Froid",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setWhite,value:0-100",
+				"display": {
+					"icon": "<i class=\"fa fa-snowflake-o\"><\/i>",
+					"forceReturnLineBefore": 1
+				}
+			},
+			{
+				"name": "Blanc",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setWhite,value:50-100",
+				"display": {
+					"icon": "<i class=\"fa fa-circle\"><\/i>"
+				}
+			},
+			{
+				"name": "Blanc Chaud",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setWhite,value:100-100",
+				"display": {
+					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"forceReturnLineAfter": 1
+				}
+			},
+			{
+				"name": "Température Blanc",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:awoxmesh,cmd:setWhiteTemperature,value:#slider#",
+				"value": "Blanc Temperature info",
+				"configuration": {
+						"minValue": 1,
+						"maxValue": 100
+				},
+				"display": {
+					"generic_type": "LIGHT_STATE"
+				}
+            },
+			{
+				"name": "Luminosité Blanc",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:awoxmesh,cmd:setWhiteBrightness,value:#slider#",
+				"value" : "Blanc Luminosité info",
+				"configuration": {
+						"minValue": 1,
+						"maxValue": 100,
+						"updateCmdId": "whitebrightness"
+				},
+				"display": {
+					"generic_type": "BRIGHTNESS"
+				}
+            },
+			{
+				"name": "Choix couleur",
+				"type": "action",
+				"subtype": "color",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setColor,value:#color#",
+				"value" : "Couleur info",
+				"display": {
+					"forceReturnLineBefore": 1,
+					"generic_type": "LIGHT_SET_COLOR"
+				}
+			},
+			{
+				"name": "Luminosité Couleur",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:awoxmesh,cmd:setColorBrightness,value:#slider#",
+				"value" : "Couleur Luminosité info",
+				"configuration": {
+						"minValue": 1,
+						"maxValue": 100
+				},
+				"display": {
+					"forceReturnLineAfter": 1,
+					"generic_type": "BRIGHTNESS"
+				}
+            },
+			{
+				"name": "Séquence",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setSequence,value:#listValue#",
+				"display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "listValue" : "0|Multicolor;1|Rose;2|Jaune;3|Vert;4|Cyan;5|Bleu;6|Violet"
+                }
+			},
+			{
+				"name": "Couleur fixe",
+				"type": "action",
+				"subtype": "select",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:setColorLight,value:#listValue#",
+				"display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "listValue" : "#DF0101-100|Rouge;#31B404-100|Vert;#FFBF00-100|Orange;#0000FF-100|Bleu;#FF00FF-100|Magenta;#FFFF00-100|Jaune;#00FFFF-100|Cyan;#A901DB-100|Violet"
+                }
+			},
+			{
+				"name": "Jouer Scenario",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:awoxmesh,cmd:playScenario,value:#DF0101-100&1|100-100&0.5|50-50&1|0&1|1&0.5|4",
+				"display": {
+                    "generic_type": "DONT"
+                },
+				"display": {
+					"forceReturnLineBefore": 1
+				}
+			},
+			{
+				"name": "Délai séquence",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:setSequenceFadeDuration,value:300"
+			},
+			{
+				"name": "Délai couleur",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:setSequenceColorDuration,value:300"
+			},
+			{
+				"name": "Add Group",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:addMeshGroup,value:1"
+			},
+			{
+				"name": "Remove Group",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:delMeshGroup,value:1"
+			},
+			{
+                "name": "Debug",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "debug",
+				"display": {
+                    "generic_type": "DONT"
+                },
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+				"name": "RefreshAction",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:status,value:0"
+			},
+			{
+				"name": "firstInit",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:firstInit,value:0"
+			},
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "logicalId": "refresh"
+            },
+			{
+				"name": "New Pairing",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:setNewPairing,value:0"
+			},
+			{
+				"name": "Reset Pairing",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:resetMesh,value:0"
+			},
+			{
+				"name": "Test group",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "name:awoxmesh,cmd:playScenario,gp:1,value:#DF0101-100&0.5|100-100&0.5|5"
+			},
+			{
+				"name": "Custom Code",
+				"type": "action",
+				"subtype": "message",
+				"isVisible": 0,
+				"logicalId": "name:awoxmesh,cmd:#title#,value:#message#"
+			}
+		],
+		"compatibility": [
+			{
+				"manufacturer": "Awox Eglo",
+				"name": "SmartLight Mesh",
+				"doc": "plugins/blea/core/config/devices/awoxmesh/doc/awoxmeshdoc.php",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Compatible avec Awox Mesh technologie.",
+				"inclusion" : "Mode inclusion. Dé-pairer le device (reset) avant inclusion puis utiliser la commande 'Pairing'",
+				"imglink": "awox"
+			},
+			{
+				"manufacturer": "Awox Eglo",
+				"name": "Eglo Fueva",
+				"doc": "plugins/blea/core/config/devices/awoxmesh/doc/awoxmeshdoc.php",
+				"type": "Lumières",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Compatible avec Awox Mesh technologie.",
+				"inclusion" : "Mode inclusion. Dé-pairer le device (reset) avant inclusion puis utiliser la commande 'Pairing'",
+				"imglink": "awox_eglo_fueva"
+			}
+		]
+	}
+}

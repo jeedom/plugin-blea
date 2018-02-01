@@ -898,6 +898,13 @@ class bleaCmd extends cmd {
 					case 'color':
 						$data[trim($value[0])] = str_replace('#','',trim(str_replace('#color#', $_options['color'], $value[1])));
 						break;
+					case 'select':
+						$data[trim($value[0])] = trim(str_replace('#listValue#', $_options['select'], $value[1]));
+						break;
+					case 'message':
+						$data[trim($value[0])] = trim(str_replace('#message#', $_options['message'], $value[1]));
+						$data[trim($value[0])] = trim(str_replace('#title#', $_options['title'], $data[trim($value[0])]));
+						break;
 					default:
 						$data[trim($value[0])] = trim($value[1]);
 				}
