@@ -17,7 +17,7 @@
                 "subtype": "numeric",
                 "display": {
                     "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
-					"generic_type": "DONT"
+					"generic_type": "TEMPERATURE"
                 },
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -34,7 +34,7 @@
                 "subtype": "numeric",
                 "display": {
 					"icon": "<i class=\"fa fa-tint\"><\/i>",
-					"generic_type": "DONT"
+					"generic_type": "HUMIDITY"
 				},
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -51,7 +51,7 @@
                 "subtype": "numeric",
                 "display": {
 					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
-					"generic_type": "DONT"
+					"generic_type": "BRIGHTNESS"
 				},
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -68,7 +68,7 @@
                 "subtype": "numeric",
                 "display": {
 					"icon": "<i class=\"fa fa-leaf\"><\/i>",
-					"generic_type": "DONT"
+					"generic_type": "GENERIC_INFO"
 				},
                 "isVisible": 1,
                 "isHistorized": 0,
@@ -85,7 +85,7 @@
                 "subtype": "numeric",
                 "display": {
 					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
-					"generic_type": "DONT"
+					"generic_type": "BATTERY"
 				},
                 "isVisible": 0,
                 "isHistorized": 0,
