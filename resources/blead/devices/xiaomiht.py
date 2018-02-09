@@ -16,7 +16,7 @@ class XiaomiHT():
 		if name.lower() in ['mj_ht_v1']:
 			return True
 			
-	def parse(self,data,mac,name,fulldata):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 		return action
