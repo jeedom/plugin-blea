@@ -7,7 +7,7 @@
 			"name" : "xiaomiht",
 			"battery_type" : "1x1.5V AAA",
 			"xiaomi" : 1,
-			"delay" : 300,
+			"delay" : 1800,
 			"cancontrol" : 1
 		},
         "commands": [
