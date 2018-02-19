@@ -151,7 +151,7 @@ class blea extends eqLogic {
 		$antennas['local']=$infolocal;
 		foreach (eqLogic::byType('blea') as $eqLogic){
 			$info =array();
-			$info['name'] = $eqLogic->getName();
+			$info['name'] = $eqLogic->getName().' ['.$eqLogic->getObject()->getName().']';
 			$info['icon'] = $eqLogic->getConfiguration('iconModel');
 			$info['rssi'] = array();
 			foreach ($eqLogic->getCmd('info') as $cmd) {
@@ -162,7 +162,7 @@ class blea extends eqLogic {
 					$info['rssi'][$remotename] = $remoterssi;
 				}
 			}
-		$eqLogics[$eqLogic->getName()]=$info;
+		$eqLogics[$eqLogic->getName().' ['.$eqLogic->getObject()->getName().']']=$info;
 		}
 		return [$eqLogics,$antennas];
 	}
