@@ -37,7 +37,13 @@ $infolocal['y'] = config::byKey('positiony', 'blea', 999);
 $antennas['local']=$infolocal;
 foreach (eqLogic::byType('blea') as $eqLogic){
 	$info =array();
-	$info['name'] = $eqLogic->getName().' ['.$eqLogic->getObject()->getName().']';
+	$object = $eqLogic->getObject();
+	if (is_null($object)) {
+		$object = 'Aucun';
+	} else {
+		$object = $object->getName();
+	}
+	$info['name'] = $eqLogic->getName().' [' . $object . ']';
 	$info['icon'] = $eqLogic->getConfiguration('iconModel');
 	$info['rssi'] = array();
 	foreach ($eqLogic->getCmd('info') as $cmd) {
@@ -48,7 +54,7 @@ foreach (eqLogic::byType('blea') as $eqLogic){
 			$info['rssi'][$remotename] = $remoterssi;
 		}
 	}
-	$eqLogics[$eqLogic->getName().' ['.$eqLogic->getObject()->getName().']']=$info;
+	$eqLogics[$eqLogic->getName().' [' . $object . ']']=$info;
 }
 sendVarToJS('eqLogics', $eqLogics);
 sendVarToJS('antennas', $antennas);
