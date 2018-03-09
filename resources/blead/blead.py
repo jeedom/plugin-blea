@@ -154,7 +154,7 @@ def listen():
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + 19)  < int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + 29)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
@@ -258,6 +258,7 @@ def read_socket(name):
 		time.sleep(0.3)
 		
 def heartbeat_handler(delay):
+	countbluepy=0
 	while 1:
 		for device in globals.KNOWN_DEVICES:
 			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
@@ -289,6 +290,26 @@ def heartbeat_handler(delay):
 		if (globals.LAST_BEAT + 55)  < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
 			globals.LAST_BEAT = int(time.time())
+		if (globals.LAST_BLUEPY + 20)  < int(time.time()):
+			globals.LAST_BLUEPY = int(time.time())
+			pid = os.popen("pgrep bluepy-helper | tail -n 1").readline().strip()
+			if pid == "":
+				logging.debug("Bluepy-Helper is not running")
+			else :
+				cpu = os.popen('ps -p ' +pid+' -o %cpu').read().split('\n')[1].strip() # get the cpu column
+				logging.debug("Bluepy-Helper cpu is " + cpu + " and pid is " +pid )
+				if(cpu == ""):
+					logging.debug("couldn't get cpu, skip once")
+				else:
+					over = (float(cpu)>float(50))
+				if(over):
+					if(countbluepy > 3):
+						logging.debug("killing bluepy-helper")
+						subprocess.call("killall bluepy-helper; bluepy-helper > /dev/null &", shell=True)
+					else:
+						countbluepy = countbluepy+1
+				else:
+					countbluepy = 0
 		time.sleep(1)
 
 def action_handler(message):
