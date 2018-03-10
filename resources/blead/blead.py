@@ -259,6 +259,7 @@ def read_socket(name):
 		
 def heartbeat_handler(delay):
 	countbluepy=0
+	highestcpu=0
 	while 1:
 		for device in globals.KNOWN_DEVICES:
 			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
@@ -297,10 +298,12 @@ def heartbeat_handler(delay):
 				logging.debug("Bluepy-Helper is not running")
 			else :
 				cpu = os.popen('ps -p ' +pid+' -o %cpu').read().split('\n')[1].strip() # get the cpu column
-				logging.debug("Bluepy-Helper cpu is " + cpu + " and pid is " +pid )
 				if(cpu == ""):
 					logging.debug("couldn't get cpu, skip once")
 				else:
+					if float(cpu)>float(highestcpu):
+						highestcpu=float(cpu)
+					logging.debug("Bluepy-Helper cpu is " + cpu + " and pid is " +pid + " (Highest CPU "+str(highestcpu)+")" )
 					over = (float(cpu)>float(50))
 				if(over):
 					if(countbluepy > 3):
