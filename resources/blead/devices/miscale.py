@@ -21,7 +21,7 @@ class MiScale():
 			measured = round(int((data[8:10] + data[6:8]), 16) * 0.01 / 2,2)
 			action['poids'] = measured
 		else :
-			logging.debug('Miscale this is a dummy measure')
+			logging.debug('MISCALE------Miscale this is a dummy measure')
 		return action
 
 globals.COMPATIBILITY.append(MiScale)

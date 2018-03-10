@@ -7,11 +7,11 @@ from multiconnect import Connector
 
 def tuple_to_hex(value):
 	result=''
-	logging.debug('Converting to hex ' + str(value))
+	logging.debug('UTILS------Converting to hex ' + str(value))
 	for x in value:
 		iterresult = "%x" % x
 		result = result + iterresult.zfill(2)
-	logging.debug('Result is ' + str(result))
+	logging.debug('UTILS------Result is ' + str(result))
 	return result
 	
 def twoDigitHex(number):
@@ -35,11 +35,11 @@ def getConnection(mac,type='public'):
 	isold=False
 	try:
 		if mac in globals.KEEPED_CONNECTION:
-			logging.debug('Already a connection for ' + mac + ' use it')
+			logging.debug('UTILS------Already a connection for ' + mac + ' use it')
 			conn = globals.KEEPED_CONNECTION[mac]
 			isold=True
 		else:
-			logging.debug('Creating a new connection for ' + mac)
+			logging.debug('UTILS------Creating a new connection for ' + mac)
 			conn = Connector(mac)
 			globals.KEEPED_CONNECTION[mac]=conn
 			conn.connect(type=type)

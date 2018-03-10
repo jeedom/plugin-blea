@@ -40,7 +40,7 @@ class XiaomiHT():
 			result['battery'] = battery
 			result['firmware'] = firmware
 			result['id'] = mac
-			logging.debug(str(result))
+			logging.debug('XIAOMIHT------'+str(result))
 			return result
 		except Exception,e:
 			logging.error(str(e))
