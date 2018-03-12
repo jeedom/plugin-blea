@@ -48,7 +48,7 @@
                 "subtype": "other",
                 "isVisible": 0,
                 "unite": "",
-                "logicalId": "name:yeelight_bed,handle:0x12,value:4341FF000000FF,type:switch"
+                "logicalId": "name:yeelight_bed,handle:0x12,value:4341FF000000FF,type:pair"
             },
 			{
 				"name": "Luminosité",
