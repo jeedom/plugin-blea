@@ -1,0 +1,90 @@
+{
+    "dreamscreen": {
+        "name": "DreamScreen",
+        "groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name": "dreamscreen"
+		},
+        "commands": [
+			{	
+				"name": "Idle",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dreamscreen,handle:0x25,value:234277305C72,type:mode"
+            },
+			{	
+				"name": "Video",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dreamscreen,handle:0x25,value:234277315C72,type:mode"
+            },
+			{	
+				"name": "Music",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dreamscreen,handle:0x25,value:234277325C72,type:mode"
+            },
+			{	
+				"name": "Color",
+                "type": "action",
+                "subtype": "color",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dreamscreen,handle:0x25,value:#color#,type:color",
+				"display": {
+					"forceReturnLineBefore": 1
+				}
+            },
+			{	
+				"name": "Brightness",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:dreamscreen,handle:0x25,value:#slider#,type:brightness",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"100"
+				},
+              	"display": {
+					"forceReturnLineAfter": 1
+				}
+            },
+			{	
+				"name": "Thème prédéfini",
+                "type": "action",
+                "subtype": "select",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "mid",
+                    "listValue" : "31|Fire;32|Twinkle;33|Ocean;34|Rainbow;35|July;36|Holliday;37|Pop;38|Forest"
+                },
+                "isVisible": 1,
+                "logicalId": "name:dreamscreen,handle:0x25,type:ambient,value:#listValue#"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "DreamScreen",
+                "name": "DreamScreen",
+				"doc": "",
+				"type": "Lumières",
+				"battery_type": "",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"inclusion" : "Mode inclusion",
+				"imglink": "dreamscreen"
+            }
+        ]
+    }
+}
