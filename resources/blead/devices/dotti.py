@@ -27,10 +27,10 @@ class Dotti():
 		value = message['command']['value']
 		type = message['command']['type']
 		if mac in globals.KEEPED_CONNECTION:
-			logging.debug('Already a connection for ' + mac + ' use it')
+			logging.debug('DOTTI------Already a connection for ' + mac + ' use it')
 			conn = globals.KEEPED_CONNECTION[mac]
 		else:
-			logging.debug('Creating a new connection for ' + mac)
+			logging.debug('DOTTI------Creating a new connection for ' + mac)
 			conn = Connector(mac)
 			globals.KEEPED_CONNECTION[mac]=conn
 			conn.connect()
@@ -40,12 +40,12 @@ class Dotti():
 				return
 		try:
 			if type == 'mode':
-				logging.debug('Changing Mode')
+				logging.debug('DOTTI------Changing Mode')
 				data = message['command']['value']
 				conn.writeCharacteristic('0x2a',data)
 				globals.LAST_STORAGE[mac]={}
 			elif type == 'color':
-				logging.debug('Sending Color')
+				logging.debug('DOTTI------Sending Color')
 				data = message['command']['data']
 				conn.writeCharacteristic('0x2a','0601'+utils.twoDigitHex(int(data[0]))+utils.twoDigitHex(int(data[1]))+utils.twoDigitHex(int(data[2]))+'00')
 				colorArray ={}
@@ -54,7 +54,7 @@ class Dotti():
 				globals.LAST_STORAGE[mac] = colorArray
 				logging.debug('Color sent')
 			elif type == 'display':
-				logging.debug('Sending Display')
+				logging.debug('DOTTI------Sending Display')
 				data = message['command']['data']
 				save_pixel=0
 				total_pixel=0
@@ -77,7 +77,7 @@ class Dotti():
 							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0],value[1], value[2])).lower():
 								save_pixel = save_pixel + 1
 					if  (maxint+1) > save_pixel and maxint > 2:
-						logging.debug('I use color all screen method to improve display speed in :'+str(maxhex))
+						logging.debug('DOTTI------I use color all screen method to improve display speed in :'+str(maxhex))
 						conn.writeCharacteristic(handle,'0601'+str(maxhex).replace('#','')+'00')
 						colorArray ={}
 						for i in range(64): 
@@ -97,10 +97,10 @@ class Dotti():
 					colorArray[int(pixel)] = self.rgb_to_hex((value[0], value[1], value[2]))
 					time.sleep(0.05)
 				globals.LAST_STORAGE[mac] = colorArray
-				logging.debug('I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
-				logging.debug('Display sent')
+				logging.debug('DOTTI------I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
+				logging.debug('DOTTI------Display sent')
 		except Exception,e:
-			logging.debug("Failed to finish : %s" % str(e))
+			logging.debug("DOTTI------Failed to finish : %s" % str(e))
 		conn.disconnect()
 		return
 		

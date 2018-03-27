@@ -12,7 +12,7 @@ class Connector():
 		self.isconnected = False
 
 	def connect(self,retry=3,type='public'):
-		logging.debug('Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
+		logging.debug('CONNECTOR------Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
 		i=0
 		timeout = time.time() + 15
 		while time.time()<timeout:
@@ -27,24 +27,25 @@ class Connector():
 					self.isconnected = True
 					break
 			except Exception,e:
-				logging.debug(str(e) + ' attempt ' + str(i) )
+				logging.debug('CONNECTOR------'+str(e) + ' attempt ' + str(i) )
 				if i >= retry:
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
-					self.conn.disconnect()
+					self.disconnect()
+					logging.debug('CONNECTOR------Issue connecting to : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE) + ' the device is busy or too far')
 					return
 				time.sleep(1)
 		if self.isconnected:
 			self.conn = connection
-			logging.debug('Connected... ' + str(self.mac))
+			logging.debug('CONNECTOR------Connected... ' + str(self.mac))
 		return
 		
 	def disconnect(self,force=False):
 		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] in [globals.daemonname,'all'] and force==False:
-			logging.debug('Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
+			logging.debug('CONNECTOR------Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
 			return
-		logging.debug('Disconnecting... ' + str(self.mac))
+		logging.debug('CONNECTOR------Disconnecting... ' + str(self.mac))
 		i=0
 		while True:
 			i = i + 1
@@ -57,7 +58,7 @@ class Connector():
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
 					return
-				logging.debug(str(e) + ' attempt ' + str(i) )
+				logging.debug('CONNECTOR------'+str(e) + ' attempt ' + str(i) )
 				if i >= 2:
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
@@ -66,10 +67,10 @@ class Connector():
 		if self.mac in globals.KEEPED_CONNECTION:
 			del globals.KEEPED_CONNECTION[self.mac]
 		self.isconnected = False
-		logging.debug('Disconnected...'+ str(self.mac))
+		logging.debug('CONNECTOR------Disconnected...'+ str(self.mac))
 
 	def readCharacteristic(self,handle,retry=1,type='public'):
-		logging.debug('Reading Characteristic...'+ str(self.mac))
+		logging.debug('CONNECTOR------Reading Characteristic...'+ str(self.mac))
 		ireadCharacteristic=0
 		while True:
 			ireadCharacteristic = ireadCharacteristic + 1
@@ -83,13 +84,13 @@ class Connector():
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
 					return False
-				logging.debug('Retry connection '+ str(self.mac))
+				logging.debug('CONNECTOR------Retry connection '+ str(self.mac))
 				self.connect(type=type)
-		logging.debug('Characteristic Readen .... ' + str(self.mac))
+		logging.debug('CONNECTOR------Characteristic Readen .... ' + str(self.mac))
 		return result
 
 	def writeCharacteristic(self,handle,value,retry=1,response=False,type='public'):
-		logging.debug('Writing Characteristic... ' + str(self.mac))
+		logging.debug('CONNECTOR------Writing Characteristic... ' + str(self.mac))
 		iwriteCharacteristic=0
 		while True:
 			iwriteCharacteristic = iwriteCharacteristic + 1
@@ -104,15 +105,15 @@ class Connector():
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
 					return False
-				logging.debug('Retry connection ' + str(self.mac))
+				logging.debug('CONNECTOR------Retry connection ' + str(self.mac))
 				self.connect(type=type)
-		logging.debug('Characteristic written... ' + str(self.mac))
+		logging.debug('CONNECTOR------Characteristic written... ' + str(self.mac))
 		if result :
 			logging.debug(str(result))
 		return True
 	
 	def getCharacteristics(self,handle='',handleend='',retry=1,type='public'):
-		logging.debug('Getting Characteristics... ' + str(self.mac))
+		logging.debug('CONNECTOR------Getting Characteristics... ' + str(self.mac))
 		if handleend == '':
 			handleend = handle
 		igetCharacteristics=0
@@ -130,21 +131,21 @@ class Connector():
 				if igetCharacteristics >= retry:
 					self.disconnect(True)
 					return False
-				logging.debug('Retry connection ' + str(self.mac))
+				logging.debug('CONNECTOR------Retry connection ' + str(self.mac))
 				self.connect(type=type)
-		logging.debug('Characteristics gotten... '+ str(self.mac))
+		logging.debug('CONNECTOR------Characteristics gotten... '+ str(self.mac))
 		return char
 		
 	def helper(self):
-		logging.debug('Helper for : ' + str(self.mac))
+		logging.debug('CONNECTOR------Helper for : ' + str(self.mac))
 		characteristics = self.getCharacteristics()
 		listtype=['x','c','b','B','?','h','H','i','I','l','L','q','Q','f','d','s','p','P']
 		for char in characteristics:
 			handle = str(hex(char.getHandle()))
 			if char.supportsRead():
-				logging.debug(handle + ' readable')
+				logging.debug('CONNECTOR------'+handle + ' readable')
 			else:
-				logging.debug(handle + ' not readable (probably only writable)')
+				logging.debug('CONNECTOR------'+handle + ' not readable (probably only writable)')
 			if char.supportsRead():
 				try:
 					value = char.read()
@@ -152,12 +153,12 @@ class Connector():
 					for type in listtype:
 						for i in range(1,256):
 							try:
-								logging.debug('value for handle (decrypted with ' + type + ' lenght ' + str(i) +') : ' + handle + ' is : ' + str(struct.unpack(str(i)+type,value)))
+								logging.debug('CONNECTOR------value for handle (decrypted with ' + type + ' lenght ' + str(i) +') : ' + handle + ' is : ' + str(struct.unpack(str(i)+type,value)))
 								found = True
 							except:
 								continue
-					logging.debug('value for handle (undecrypted) : ' + handle + ' is : ' + value)
+					logging.debug('CONNECTOR------value for handle (undecrypted) : ' + handle + ' is : ' + value)
 				except Exception,e:
-					logging.debug('unable to read value for handle (probably not readable) '+handle+ ' : '+str(e))
+					logging.debug('CONNECTOR------unable to read value for handle (probably not readable) '+handle+ ' : '+str(e))
 					continue
 		return

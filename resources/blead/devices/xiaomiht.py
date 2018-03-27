@@ -10,7 +10,7 @@ from notification import Notification
 class XiaomiHT():
 	def __init__(self):
 		self.name = 'xiaomiht'
-		self.ignoreRepeat = False
+		self.ignoreRepeat = True
 
 	def isvalid(self,name,manuf=''):
 		if name.lower() in ['mj_ht_v1']:
@@ -40,7 +40,7 @@ class XiaomiHT():
 			result['battery'] = battery
 			result['firmware'] = firmware
 			result['id'] = mac
-			logging.debug(str(result))
+			logging.debug('XIAOMIHT------'+str(result))
 			return result
 		except Exception,e:
 			logging.error(str(e))

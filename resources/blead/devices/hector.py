@@ -49,7 +49,7 @@ class Hector():
 				battery = round((float(battery)*0.00051029 - 2) *100,0)
 			result['battery'] = battery
 		except Exception,e:
-			logging.error(str(e))
+			logging.error('HECTOR------'+str(e))
 			conn.disconnect()
 		conn.disconnect()
 		result['id'] = mac

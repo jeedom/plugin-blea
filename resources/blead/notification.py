@@ -26,7 +26,7 @@ class Notification():
 	def waiter(self,timer=0,disconnect=True):
 		try:
 			if timer!=0:
-				logging.debug('Subscribing for ' +str(timer))
+				logging.debug('Subscribing for ' +str(timer) + 's')
 				timeout = time.time() + timer
 				while time.time()<timeout:
 					self.conn.conn.waitForNotifications(0.5)

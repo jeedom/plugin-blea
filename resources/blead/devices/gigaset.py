@@ -27,7 +27,7 @@ class Gigaset():
 				if not conn.isconnected:
 					return
 			batterytrame = conn.readCharacteristic('0x1b')
-			logging.debug('Parsing data ' + batterytrame)
+			logging.debug('GIGASET------Parsing data ' + batterytrame)
 			battery = int(batterytrame.encode("hex"), 16)
 			result['battery'] = battery
 			result['present'] = 1
