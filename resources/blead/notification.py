@@ -16,7 +16,7 @@ class Notification():
 		try:
 			logging.debug('Subscribing to notification : '+str(self.conn.mac))
 			delegate = NotificationDelegate(self.conn,self.classname,self.action)
-			self.conn.conn.withDelegate(delegate)
+			self.conn.conn.setDelegate(delegate)
 			logging.debug('Delegated')
 			thread.start_new_thread( self.waiter, (timer,disconnect,))
 		except Exception,e:

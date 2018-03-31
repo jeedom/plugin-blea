@@ -17,7 +17,7 @@ sudo pip install pycrypto
 echo 95 > /tmp/dependancy_blea_in_progress
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
-sudo git clone https://github.com/IanHarvey/bluepy.git
+sudo git clone https://github.com/sarakha63/bluepy.git
 cd /tmp/bluepy
 sudo python setup.py build
 sudo python setup.py install

@@ -35,7 +35,7 @@ class Miflora():
 			firmware = "".join(map(chr, batteryFirm[2:]))
 			notification = Notification(conn,Miflora)
 			conn.writeCharacteristic('0x36','0100',response=True)
-			notification.subscribe(4)
+			notification.subscribe(2)
 			result['battery'] = battery
 			result['firmware'] = firmware
 			result['id'] = mac

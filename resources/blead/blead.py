@@ -258,7 +258,6 @@ def read_socket(name):
 		time.sleep(0.3)
 		
 def heartbeat_handler(delay):
-	countbluepy=0
 	highestcpu=0
 	while 1:
 		for device in globals.KNOWN_DEVICES:
@@ -304,15 +303,10 @@ def heartbeat_handler(delay):
 					if float(cpu)>float(highestcpu):
 						highestcpu=float(cpu)
 					logging.debug("HEARTBEAT------Bluepy-Helper cpu is " + cpu + " and pid is " +pid + " (Highest CPU "+str(highestcpu)+")" )
-					over = (float(cpu)>float(50))
+					over = (float(cpu)>float(15))
 				if(over):
-					if(countbluepy > 3):
-						logging.debug("HEARTBEAT------Killing bluepy-helper")
-						subprocess.call("killall bluepy-helper; bluepy-helper > /dev/null &", shell=True)
-					else:
-						countbluepy = countbluepy+1
-				else:
-					countbluepy = 0
+					logging.debug("HEARTBEAT------Killing bluepy-helper")
+					subprocess.call("killall bluepy-helper > /dev/null &", shell=True)
 		time.sleep(1)
 
 def action_handler(message):
