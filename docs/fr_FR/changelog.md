@@ -1,5 +1,5 @@
 06/04/2018
-Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora
+Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora (necessite probablement une relance des dépendances pour les gens impactés)
 
 28/03/2018
 rajout conf dreamscreen
