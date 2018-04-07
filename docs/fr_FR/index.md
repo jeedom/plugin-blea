@@ -148,7 +148,8 @@ Changelog
 ---------
 
 Changelog détaillé :
-<https://github.com/jeedom/plugin-blea/commits/stable>
+<https://jeedom.github.io/plugin-blea/fr_FR/changelog>
+
 
 Liste des équipements compatibles 
 ---------------------------------
