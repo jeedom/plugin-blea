@@ -343,7 +343,7 @@ class blea extends eqLogic {
 		$return = array();
 		$return['log'] = 'blea';
 		$return['state'] = 'nok';
-		$pid_file = '/tmp/blead.pid';
+		$pid_file = jeedom::getTmpFolder('blea') . '/deamon.pid';
 		if (file_exists($pid_file)) {
 			if (@posix_getsid(trim(file_get_contents($pid_file)))) {
 				$return['state'] = 'ok';
@@ -361,24 +361,18 @@ class blea extends eqLogic {
 	}
 
 	public static function dependancy_info() {
+		#must find a way to detect git instllation of bluepy on multiple platform
 		$return = array();
 		$return['log'] = 'blea_update';
-		$return['progress_file'] = '/tmp/dependancy_blea_in_progress';
-		if (exec('sudo pip list | grep -E "bluepy" | wc -l') < 1) {
-			$return['state'] = 'nok';
-		} else {
-			$return['state'] = 'ok';
-		}
+		$return['progress_file'] = jeedom::getTmpFolder('blea') . '/dependance';
+		$return['state'] = 'ok';
 		return $return;
 	}
 
 	public static function dependancy_install() {
-		log::remove('blea_update');
-		$cmd = 'sudo /bin/bash ' . dirname(__FILE__) . '/../../resources/install.sh';
-		$cmd .= ' >> ' . log::getPathToLog('blea_dependancy') . ' 2>&1 &';
-		exec($cmd);
+		log::remove(__CLASS__ . '_update');
+		return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('blea') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
 	}
-
 	public static function deamon_start() {
 		self::deamon_stop();
 		$deamon_info = self::deamon_info();
@@ -395,6 +389,7 @@ class blea extends eqLogic {
 		$cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/blea/core/php/jeeBlea.php';
 		$cmd .= ' --apikey ' . jeedom::getApiKey('blea');
 		$cmd .= ' --daemonname local';
+		$cmd .= ' --pid ' . jeedom::getTmpFolder('blea') . '/deamon.pid';
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
 		$result = exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');
 		$i = 0;

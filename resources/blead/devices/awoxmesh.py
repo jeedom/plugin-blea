@@ -6,7 +6,10 @@ import binascii
 from multiconnect import Connector
 from notification import Notification
 import struct
-from Crypto.Cipher import AES
+try:
+	from Crypto.Cipher import AES
+except:
+	logging.debug('No crypto ignoring it')
 from os import urandom
 import os.path
 import copy
