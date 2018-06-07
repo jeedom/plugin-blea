@@ -1,3 +1,8 @@
+07/06/2018
+
+Amélioration du script de dépendances.
+Suppressions du check dépendances qui restera vert quoiqu'il en soit en attendant (pensez lors de l'installation à lancer les dépendances)
+
 06/04/2018
 Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora (necessite probablement une relance des dépendances pour les gens impactés)
 

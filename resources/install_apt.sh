@@ -10,12 +10,14 @@ echo "********************************************************"
 sudo apt-get update
 echo 50 > ${PROGRESS_FILE}
 sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth libffi-dev libssl-dev
+sudo apt-get install python3-dev
 echo 66 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > ${PROGRESS_FILE}
 sudo pip install pyudev
 sudo pip install pyserial
 sudo pip install requests
+sudo pip install -U pip setuptools
 echo 80 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
