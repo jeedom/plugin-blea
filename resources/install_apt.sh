@@ -17,6 +17,8 @@ sudo pip install pyudev
 sudo pip install pyserial
 sudo pip install requests
 sudo pip install -U pip setuptools
+sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python get-pip.py --force-reinstall
 echo 80 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
