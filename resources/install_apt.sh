@@ -10,7 +10,6 @@ echo "********************************************************"
 sudo apt-get update
 echo 50 > ${PROGRESS_FILE}
 sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth libffi-dev libssl-dev
-sudo apt-get install python3-dev
 echo 66 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > ${PROGRESS_FILE}
