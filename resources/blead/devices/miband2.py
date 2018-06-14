@@ -40,13 +40,13 @@ class Miband2():
 			conn.connect(type='random')
 			if not conn.isconnected:
 				return
-		conn.writeCharacteristic('0x51','0100',type='random')
+		conn.writeCharacteristic('0x55','0100',type='random')
 		notification = Notification(conn,Miband2,{'action':'write','handle':handle,'value':value,'type':'random'})
 		if handle == '0x2b':
 			notification.subscribe(20)
 		else:
 			notification.subscribe(1)
-		conn.writeCharacteristic('0x50', '0200',type='random')
+		conn.writeCharacteristic('0x54', '0200',type='random')
 		return
 	
 	def read(self,mac):
@@ -58,7 +58,7 @@ class Miband2():
 				conn.connect(type='random')
 				if not conn.isconnected:
 					return
-			batteryDatas = bytearray(conn.readCharacteristic('0x43',type='random'))
+			batteryDatas = bytearray(conn.readCharacteristic('0x47',type='random'))
 			if len(batteryDatas) >= 11:
 				battery = batteryDatas[1]
 				status = batteryDatas[2]
@@ -82,10 +82,6 @@ class Miband2():
 				result['lastchargelevel'] = lastchargelevel
 				result['lastcharge'] = day+'/'+month+'/'+year+' '+hour+'h'+minutes+'min'+seconds+'s'
 			result['id'] = mac
-			#conn.writeCharacteristic('0x51','0100',type='random')
-			#notification = Notification(conn,Miband2,{'action':'write','handle':'0x3d','value':'02','type':'random'})
-			#notification.subscribe(10)
-			#conn.writeCharacteristic('0x50', '0200',type='random')
 			logging.debug(str(result))
 		except Exception,e:
 			logging.error(str(e))
@@ -93,14 +89,14 @@ class Miband2():
 	
 	def handlenotification(self,conn,handle,data,action={}):
 		result={}
-		if hex(handle) == '0x50':
-			conn.writeCharacteristic('0x51','0000',type='random')
+		if hex(handle) == '0x54':
+			conn.writeCharacteristic('0x55','0000',type='random')
 			auth = binascii.hexlify(bytearray(struct.unpack('19B',data)))[-32:]
 			obj = AES.new(binascii.unhexlify('5b4b29dee0ed7cadf3b402d71782024f'), AES.MODE_ECB)
 			ciphertext = obj.encrypt(binascii.unhexlify(auth))
 			conn.writeCharacteristic('0x50','0300'+binascii.hexlify(bytearray(ciphertext)),type='random')
 			if action['handle'] == '0x2b':
-				conn.writeCharacteristic('0x25','03',type=action['type'])
+				conn.writeCharacteristic('0x26','03',type=action['type'])
 				conn.writeCharacteristic(action['handle'],action['value'],type=action['type'],response=True)
 				conn.writeCharacteristic('0x29', '0100',response=True)
 			elif action['handle'] == '0x3d':
@@ -112,7 +108,7 @@ class Miband2():
 				conn.disconnect()
 		elif hex(handle) == '0x28':
 			received = bytearray(data)
-			conn.writeCharacteristic('0x25','03',type=action['type'])
+			conn.writeCharacteristic('0x26','03',type=action['type'])
 			conn.disconnect()
 			result['heartvalue'] = received[1]
 			result['id'] = conn.mac
