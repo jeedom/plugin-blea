@@ -180,7 +180,7 @@ class blea extends eqLogic {
 			foreach ($remotes as $remote){
 				$last = $remote->getConfiguration('lastupdate','0');
 				$name = $remote->getRemoteName();
-				if ($last == '0' or time() - strtotime($last)>19){
+				if ($last == '0' or time() - strtotime($last)>60){
 					$result = 'NOK';
 					$advice = __('Vérifier le démon sur votre antenne',__FILE__);
 					$state = False;
