@@ -181,30 +181,6 @@
 				}
             },
             {
-                "name": "LED Pulse",
-                "type": "action",
-                "subtype": "other",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "unite": "",
-                "logicalId": "ledpulse"
-            },
-            {
-                "name": "LED OFF",
-                "type": "action",
-                "subtype": "other",
-                "display": {
-                    "generic_type": "GENERIC"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "unite": "",
-                "logicalId": "ledoff"
-            },
-            {
                 "name": "Refresh",
                 "type": "action",
                 "subtype": "other",

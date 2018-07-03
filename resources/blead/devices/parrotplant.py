@@ -64,7 +64,7 @@ class ParrotPlant():
 		return result
 
 	def __convertSunlightData(self,data):
-		return round(10981.31391 * math.exp(1/float(self.__safeUnpack('<H', data))) - 10981.3812,2)
+		return round(10981.31391 * math.exp(1.0/float(self.__safeUnpack('<H', data))) - 10981.3812,2)
 
 	def __convertSoilECData(self,data):
 		# TODO
