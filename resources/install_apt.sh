@@ -22,7 +22,7 @@ sudo python get-pip.py --force-reinstall
 echo 80 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
-sudo git clone https://github.com/sarakha63/bluepy.git
+sudo git clone https://github.com/IanHarvey/bluepy.git
 cd /tmp/bluepy
 sudo python setup.py build
 sudo python setup.py install
