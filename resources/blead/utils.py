@@ -2,6 +2,7 @@ import logging
 import globals
 import re
 import struct
+import math
 from bluepy import btle
 from multiconnect import Connector
 
@@ -59,3 +60,8 @@ def get_handle_from_uuid(service_uuid, char_uuid, conn):
 	svc = conn.getServiceByUUID( service_uuid )
 	ch = svc.getCharacteristics(char_uuid)[0]
 	return str(ch.getHandle())
+
+def twos_complement(value, bits):
+	if (value & (1 << (bits - 1))) != 0:
+		value = value - (1 << bits)
+	return value

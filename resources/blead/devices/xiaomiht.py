@@ -12,11 +12,11 @@ class XiaomiHT():
 		self.name = 'xiaomiht'
 		self.ignoreRepeat = True
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower() in ['mj_ht_v1']:
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		return action

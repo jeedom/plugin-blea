@@ -56,7 +56,7 @@ class ScanDelegate(DefaultDelegate):
 			action = {}
 			onlypresent = False
 			if mac not in globals.IGNORE:
-				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
+				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac) + ' ' + str(dev.scanData))
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
@@ -66,7 +66,7 @@ class ScanDelegate(DefaultDelegate):
 				elif desc == 'Manufacturer':
 					manuf = value.strip()
 			for device in globals.COMPATIBILITY:
-				if device().isvalid(name,manuf):
+				if device().isvalid(name,manuf,data):
 					findDevice=True
 					if device().ignoreRepeat and mac in globals.IGNORE:
 						return
@@ -83,7 +83,7 @@ class ScanDelegate(DefaultDelegate):
 						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
 					globals.PENDING_ACTION = True
 					try:
-						action = device().parse(data,mac,name)
+						action = device().parse(data,mac,name,manuf)
 					except Exception, e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 					if not action:

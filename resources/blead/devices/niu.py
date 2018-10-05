@@ -8,11 +8,11 @@ class Niu():
 		self.name = 'niu'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower() == self.name:
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		logging.debug('Parsing data ' + data)
 		buttontrame = data[34:36]
@@ -44,14 +44,14 @@ class Niu():
 		elif buttontrame == '04':
 			button = 'relachement'
 		elif buttontrame == '05':
-			buttontrame = '02'
-			button = 'double appui'
+			buttontrame = '05'
+			button = 'triple appui'
 		elif buttontrame == '06':
-			buttontrame = '02'
-			button = 'double appui'
+			buttontrame = '06'
+			button = 'quadruple appui'
 		elif buttontrame == '07':
-			buttontrame = '02'
-			button = 'double appui'
+			buttontrame = '07'
+			button = 'quintuple appui'
 		else:
 			button = ''
 		action['color'] = color

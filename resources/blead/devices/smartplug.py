@@ -12,11 +12,11 @@ class Smartplug():
 		self.name = 'smartplug'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		return action

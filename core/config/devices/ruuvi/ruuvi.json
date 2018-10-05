@@ -1,0 +1,146 @@
+{
+    "ruuvi": {
+        "name": "Ruuvi",
+        "groupe" : "Beacon",
+		"configuration" : {
+			"name" : "ruuvi",
+			"battery_type" : "1x3V CR2032"
+		},
+        "commands": [
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "TEMPERATURE"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temperature",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-tint\"><\/i>",
+					"generic_type": "HUMIDITY"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "humidity",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pression",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-leaf\"><\/i>",
+					"generic_type": "GENERIC_INFO"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "mbar",
+                "logicalId": "pression",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Acceleration",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "G",
+                "logicalId": "acceleration",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Acceleration X",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "accx",
+                "unite": "G",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Acceleration Y",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "accy",
+                "unite": "G",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Acceleration Z",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "accz",
+                "unite": "G",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "BATTERY"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Ruuvi",
+                "name": "Ruuvi",
+				"doc": "",
+				"type": "Beacon",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Capteurs beacon",
+				"inclusion" : "Mode inclusion",
+				"imglink": "ruuvi"
+            }
+        ]
+    }
+}

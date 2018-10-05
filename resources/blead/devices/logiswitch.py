@@ -10,11 +10,11 @@ class LogiSwitch():
 		self.name = 'logiswitch'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if 'logi switch' in name.lower():
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		result={}
 		result['present'] = 1
 		try:

@@ -6,10 +6,7 @@ import binascii
 from multiconnect import Connector
 from notification import Notification
 import struct
-try:
-	from Crypto.Cipher import AES
-except:
-	logging.debug('No crypto ignoring it')
+from Crypto.Cipher import AES
 from os import urandom
 import os.path
 import copy
@@ -97,7 +94,7 @@ class Awoxmesh():
 		self.mesh_longtermkey = P_JEEDOM_LONGTERMKEY
 		
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf=''):
 		if name.lower() == P_DEFAULTNAME:
 			logging.info('Detected unpaired device')
 		
@@ -106,7 +103,7 @@ class Awoxmesh():
 			
 		return False
 
-	def parse(self,data,mac,name,manuf):
+	def parse(self,data,mac,name):
 		action={}
 		action['present'] = 1
 			

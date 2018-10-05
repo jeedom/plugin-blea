@@ -144,7 +144,7 @@ créneau de 1 minute.
 
 Bien évidemment de nombreux autres modules seront rajoutés.
 
-Änderungsprotokoll
+Changelog 
 ---------
 
 Changelog détaillé :
@@ -153,4 +153,4 @@ Changelog détaillé :
 Liste des équipements compatibles 
 ---------------------------------
 
-<https://jeedom.github.io/documentation/blea/fr_FR/equipement.compatible>
+<https://github.com/jeedom/documentation/blob/master/blea/fr_FR/equipement.compatible.asciidoc>

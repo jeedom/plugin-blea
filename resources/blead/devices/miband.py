@@ -13,11 +13,11 @@ class Miband():
 		self.name = 'miband'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower() in ['mi1a','mi1s', 'mi',self.name]:
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:

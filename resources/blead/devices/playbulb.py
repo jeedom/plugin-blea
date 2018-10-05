@@ -12,31 +12,34 @@ class Playbulb():
 		self.name = 'playbulb'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb'):
 			return True
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
-		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
-			action['version'] = 'candle'
-			versionDict ={'btl300_v5' : 'candle',
-						'btl300_v6': 'candle6',
-						'btl301w_v5':'sphere',
-						'btl301w':'sphere',
-						'btl301wm_v1.7' : 'sphere17',
-						'btl400_v3.7':'garden',
-						'btl400m_v1.9':'garden19',
-						'btl201_v2': 'bluelabel'}
-			version = self.findVersion(mac)
-			logging.debug("Found " + str(version).lower())
-			if not version or version == '':
-				logging.debug("Not able to have consistent info from playbulb device")
-				return
-			if version.lower() in versionDict:
-				action['version'] = versionDict[version.lower()]
-			else:
+		try:
+			if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
 				action['version'] = 'candle'
+				versionDict ={'btl300_v5' : 'candle',
+							'btl300_v6': 'candle6',
+							'btl301w_v5':'sphere',
+							'btl301w':'sphere',
+							'btl301wm_v1.7' : 'sphere17',
+							'btl400_v3.7':'garden',
+							'btl400m_v1.9':'garden19',
+							'btl201_v2': 'bluelabel'}
+				version = self.findVersion(mac)
+				logging.debug("Found " + str(version).lower())
+				if not version or version == '':
+					logging.debug("Not able to have consistent info from playbulb device")
+					return
+				if version.lower() in versionDict:
+					action['version'] = versionDict[version.lower()]
+				else:
+					action['version'] = 'candle'
+		except Exception,e:
+				logging.debug("Not able to have consistent info from playbulb device")
 		return action
 	
 	def findVersion(self,mac):

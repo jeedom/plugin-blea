@@ -12,7 +12,7 @@ class ParrotPlant():
 		self.ignoreRepeat = False
 		self.characteristicHandles = {}
 
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		logging.debug('parse: data: '+str(data)+', mac: '+str(mac)+', name: '+str(name))
 		action={}
 		action['present'] = 1
@@ -115,7 +115,7 @@ class FlowerPower(ParrotPlant):
 			'battery': '0x4c'
 		}
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		return str(name).startswith('Flower power')
 
 globals.COMPATIBILITY.append(FlowerPower)
@@ -137,7 +137,7 @@ class ParrotPot(ParrotPlant):
 			'battery': '0x4b'
 		}
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		return str(name).startswith('Parrot pot')
 
 globals.COMPATIBILITY.append(ParrotPot)

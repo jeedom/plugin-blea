@@ -9,11 +9,11 @@ class Ticatag():
 		self.name = 'ticatag'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower() == self.name:
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		temperaturetrame = data[32:34]

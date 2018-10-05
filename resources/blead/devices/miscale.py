@@ -9,11 +9,11 @@ class MiScale():
 		self.name = 'miscale'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name[0:8] == 'MI_SCALE':
 			return True
 
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		if data[4:6] in ['22','12','03']:

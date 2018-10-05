@@ -11,11 +11,11 @@ class Miflora():
 		self.name = 'miflora'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		validname = ['Flower mate','Flower care']
 		if name in validname:
 			return True
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		return action

@@ -10,11 +10,11 @@ class Itag():
 		self.name = 'itag'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf=''):
+	def isvalid(self,name,manuf='',data=''):
 		if name.lower() in [self.name,'mle-15']:
 			return True
 			
-	def parse(self,data,mac,name):
+	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		if mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[mac.upper()]['emitterallowed'] == globals.daemonname and globals.KNOWN_DEVICES[mac.upper()]['islocked'] == 1:
