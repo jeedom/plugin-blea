@@ -144,7 +144,7 @@ créneau de 1 minute.
 
 Bien évidemment de nombreux autres modules seront rajoutés.
 
-Changelog 
+Änderungsprotokoll
 ---------
 
 Changelog détaillé :
