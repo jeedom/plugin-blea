@@ -304,9 +304,9 @@ def heartbeat_handler(delay):
 						highestcpu=float(cpu)
 					logging.debug("HEARTBEAT------Bluepy-Helper cpu is " + cpu + " and pid is " +pid + " (Highest CPU "+str(highestcpu)+")" )
 					over = (float(cpu)>float(10))
-				if(over):
-					logging.debug("HEARTBEAT------Killing bluepy-helper")
-					subprocess.call("kill -30 " +pid+ " > /dev/null &", shell=True)
+					if(over):
+						logging.debug("HEARTBEAT------Killing bluepy-helper")
+						subprocess.call("kill -30 " +pid+ " > /dev/null &", shell=True)
 		time.sleep(1)
 
 def action_handler(message):
