@@ -74,7 +74,7 @@ class Dotti():
 					for pixel, value in data.iteritems():
 						total_pixel = total_pixel + 1
 						if mac in globals.LAST_STORAGE:
-							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0],value[1], value[2])).lower():
+							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((int(value[0]),int(value[1]), int(value[2]))).lower():
 								save_pixel = save_pixel + 1
 					if  (maxint+1) > save_pixel and maxint > 2:
 						logging.debug('DOTTI------I use color all screen method to improve display speed in :'+str(maxhex))
@@ -89,12 +89,12 @@ class Dotti():
 				for pixel, value in data.iteritems():
 					total_pixel = total_pixel + 1
 					if mac in globals.LAST_STORAGE:
-						if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((value[0], value[1], value[2])).lower():
+						if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower():
 							save_pixel = save_pixel + 1
-							colorArray[int(pixel)]=self.rgb_to_hex((value[0], value[1], value[2])).lower()
+							colorArray[int(pixel)]=self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower()
 							continue
-					conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+utils.twoDigitHex(value[0])+utils.twoDigitHex(value[1])+utils.twoDigitHex(value[2]))
-					colorArray[int(pixel)] = self.rgb_to_hex((value[0], value[1], value[2]))
+					conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+utils.twoDigitHex(int(value[0]))+utils.twoDigitHex(int(value[1]))+utils.twoDigitHex(int(value[2])))
+					colorArray[int(pixel)] = self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2])))
 					time.sleep(0.05)
 				globals.LAST_STORAGE[mac] = colorArray
 				logging.debug('DOTTI------I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
