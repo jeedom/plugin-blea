@@ -89,12 +89,26 @@ class Dotti():
 				for pixel, value in data.iteritems():
 					total_pixel = total_pixel + 1
 					if mac in globals.LAST_STORAGE:
-						if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower():
-							save_pixel = save_pixel + 1
-							colorArray[int(pixel)]=self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower()
-							continue
-					conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+utils.twoDigitHex(int(value[0]))+utils.twoDigitHex(int(value[1]))+utils.twoDigitHex(int(value[2])))
-					colorArray[int(pixel)] = self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2])))
+						if isinstance(value,(list,)):
+							logging.debug('DOTTI------this is a list')
+							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower():
+								save_pixel = save_pixel + 1
+								colorArray[int(pixel)]=self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))).lower()
+								continue
+						else:
+							logging.debug('DOTTI------this is a string')
+							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == value.lower():
+								save_pixel = save_pixel + 1
+								colorArray[int(pixel)]=value.lower()
+								continue
+					if isinstance(value,(list,)):
+						logging.debug('DOTTI------writing from rgb ' + self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2]))))
+						conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+utils.twoDigitHex(int(value[0]))+utils.twoDigitHex(int(value[1]))+utils.twoDigitHex(int(value[2])))
+						colorArray[int(pixel)] = self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2])))
+					else:
+						logging.debug('DOTTI------writing from hex ' + str(value)[1:])
+						conn.writeCharacteristic('0x2a','0702'+utils.twoDigitHex(int(pixel))+str(value)[1:])
+						colorArray[int(pixel)] = value.lower()
 					time.sleep(0.05)
 				globals.LAST_STORAGE[mac] = colorArray
 				logging.debug('DOTTI------I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
