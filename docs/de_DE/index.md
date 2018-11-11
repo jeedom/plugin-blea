@@ -1,7 +1,7 @@
 BLEA (Bluetooth advertisement) 
 ==============================
 
-Description 
+Beschreibung 
 -----------
 
 Ce plugin est un plugin permettant de pouvoir recevoir les événements de
@@ -12,7 +12,7 @@ certains périphériques bluetooth (tel que les NIU de chez Nodon)
 Konfiguration
 -------------
 
-Configuration du plugin: 
+Plugin Konfiguration:
 ========================
 
 a.  Installation/Création
@@ -43,7 +43,7 @@ Vous pouvez aussi vérifier l’état des dépendances et les relancer. En
 cas de soucis avec le plugin, toujours relancer les dépendances même si
 OK dans le doute.
 
-Le plugin 
+Das Plugin 
 =========
 
 Rendez vous dans le menu Plugins &gt; Protocole Domotique pour retrouver
@@ -97,7 +97,7 @@ Sur la partie droite vous trouverez :
 
 -   Voir le visuel.
 
-Quels modules 
+Welche Module
 =============
 
 Pour le moment, seuls certains modules spécifiques sont reconnus.
