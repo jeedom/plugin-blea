@@ -153,4 +153,4 @@ Changelog détaillé :
 Liste des équipements compatibles 
 ---------------------------------
 
-<https://github.com/jeedom/documentation/blob/master/blea/fr_FR/equipement.compatible.asciidoc>
+<https://jeedom.github.io/documentation/#equipment>
