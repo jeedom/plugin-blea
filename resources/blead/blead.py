@@ -290,23 +290,6 @@ def heartbeat_handler(delay):
 		if (globals.LAST_BEAT + 55)  < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
 			globals.LAST_BEAT = int(time.time())
-		if (globals.LAST_BLUEPY + 10)  < int(time.time()):
-			globals.LAST_BLUEPY = int(time.time())
-			pid = os.popen("pgrep bluepy-helper | tail -n 1").readline().strip()
-			if pid == "":
-				logging.debug("HEARTBEAT------Bluepy-Helper is not running")
-			else :
-				cpu = os.popen('ps -p ' +pid+' -o %cpu').read().split('\n')[1].strip() # get the cpu column
-				if(cpu == ""):
-					logging.debug("HEARTBEAT------Couldn't get cpu, skip once")
-				else:
-					if float(cpu)>float(highestcpu):
-						highestcpu=float(cpu)
-					logging.debug("HEARTBEAT------Bluepy-Helper cpu is " + cpu + " and pid is " +pid + " (Highest CPU "+str(highestcpu)+")" )
-					over = (float(cpu)>float(10))
-				if(over):
-					logging.debug("HEARTBEAT------Killing bluepy-helper")
-					subprocess.call("kill -30 " +pid+ " > /dev/null &", shell=True)
 		time.sleep(1)
 
 def action_handler(message):
