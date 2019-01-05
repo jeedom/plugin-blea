@@ -73,14 +73,14 @@ class blea extends eqLogic {
 		));
 		return $eqLogic;
 	}
-	
+
 	public static function cron15() {
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			self::getRemoteLog($remote->getId());
 		}
 	}
-	
+
 	public static function childrenCronDispatcher($_params) {
 		$child = $_params['childclass'];
 		require_once dirname(__FILE__) . '/../config/devices/'.$child.'/class/'.$child.'.class.php';
@@ -88,7 +88,7 @@ class blea extends eqLogic {
 		$childrenclass = new $class();
 		$childrenclass->cronDispatcher($_params);
 	}
-	
+
 	public static function getMobileHealth() {
 		$health='';
 		$eqLogics = blea::byType('blea');
@@ -132,7 +132,7 @@ class blea extends eqLogic {
 		}
 		return $health;
 	}
-	
+
 	public static function getMobileGraph() {
 		$remotes = blea_remote::all();
 		$eqLogics = array();
@@ -166,7 +166,7 @@ class blea extends eqLogic {
 		}
 		return [$eqLogics,$antennas];
 	}
-	
+
 	public static function health() {
         $return = array();
 		$remotes = blea_remote::all();
@@ -199,7 +199,7 @@ class blea extends eqLogic {
 		}
         return $return;
     }
-	
+
 	public static function sendRemoteFiles($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
@@ -217,7 +217,7 @@ class blea extends eqLogic {
 		log::add('blea','info',__('Finie',__FILE__));
 		return True;
 	}
-	
+
 	public static function getRemoteLog($_remoteId,$_dependancy='') {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$name = $remoteObject->getRemoteName();
@@ -229,7 +229,7 @@ class blea extends eqLogic {
 		$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
 		return True;
 	}
-	
+
 	public static function dependancyRemote($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
@@ -239,7 +239,7 @@ class blea extends eqLogic {
 		blea::launchremote($_remoteId);
 		return True;
 	}
-	
+
 	public static function launchremote($_remoteId) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$last = $remoteObject->getConfiguration('lastupdate','0');
@@ -264,7 +264,7 @@ class blea extends eqLogic {
 		config::save('include_mode', 0, 'blea');
 		return True;
 	}
-	
+
 	public static function remotelearn($_remoteId,$_state) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
@@ -286,7 +286,7 @@ class blea extends eqLogic {
 		}
 		return True;
 	}
-	
+
 	public static function stopremote($_remoteId) {
 		log::add('blea','info',__('Arret du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
@@ -416,7 +416,7 @@ class blea extends eqLogic {
 			usleep(500);
 		}
 	}
-	
+
 	public static function saveAntennaPosition($_antennas){
 		$remotes = blea_remote::all();
 		$antennas = json_decode($_antennas, true);
@@ -439,7 +439,7 @@ class blea extends eqLogic {
 			}
 		}
 	}
-	
+
 	public static function socket_connection($_value,$_allremotes = False) {
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
@@ -463,7 +463,7 @@ class blea extends eqLogic {
 			}
 		}
 	}
-	
+
 	public static function changeLogLive($_level) {
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
 		$value = json_encode($value);
@@ -505,7 +505,7 @@ class blea extends eqLogic {
 		foreach (range(0,2) as $i) {
 			$c = intval(substr($hex,$i*2,2), 16);
 			$c = strval(round(min(max(0, $c + ($c * $lum)), 255)));
-			
+
 			$rgb = $rgb . str_pad(dechex($c),2,'0',STR_PAD_LEFT);
 		}
 			return $rgb;
@@ -602,7 +602,7 @@ class blea extends eqLogic {
 	public function preRemove() {
 		$this->disallowDevice();
 	}
-	
+
 	public function closestAntenna() {
 		$closest = 'local';
 		$rssicompare = -200;
@@ -827,7 +827,7 @@ class blea extends eqLogic {
 			'message' => '',
 		));
 	}
-	
+
 	public function toHtml($_version = 'dashboard') {
 		if ($this->getConfiguration('specificwidgets',0) == 1) {
 			if ($this->getConfiguration('specificclass',0) == 1) {
@@ -1001,11 +1001,11 @@ class blea_remote {
 		$user = $this->getConfiguration('remoteUser');
 		$pass = $this->getConfiguration('remotePassword');
 		if (!$connection = ssh2_connect($ip, $port)) {
-			log::add('blea', 'error', 'connexion SSH KO');
+			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
 				return;
 		} else {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
-				log::add('blea', 'error', 'Authentification SSH KO');
+				log::add('blea', 'error', 'Authentification SSH KO for ' . $this->remoteName);
 				return;
 			} else {
 				foreach ($_cmd as $cmd){
@@ -1028,11 +1028,11 @@ class blea_remote {
 		$user = $this->getConfiguration('remoteUser');
 		$pass = $this->getConfiguration('remotePassword');
 		if (!$connection = ssh2_connect($ip, $port)) {
-			log::add('blea', 'error', 'connexion SSH KO');
+			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
 			return;
 		} else {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
-				log::add('blea', 'error', 'Authentification SSH KO');
+				log::add('blea', 'error', 'Authentification SSH KO for ' . $this->remoteName);
 				return;
 			} else {
 				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
@@ -1044,18 +1044,18 @@ class blea_remote {
 		}
 		return;
 	}
-	
+
 	public function getFiles($_local, $_target) {
 		$ip = $this->getConfiguration('remoteIp');
 		$port = $this->getConfiguration('remotePort');
 		$user = $this->getConfiguration('remoteUser');
 		$pass = $this->getConfiguration('remotePassword');
 		if (!$connection = ssh2_connect($ip, $port)) {
-			log::add('blea', 'error', 'connexion SSH KO');
+			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
 				return;
 		} else {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
-				log::add('blea', 'error', 'Authentification SSH KO');
+				log::add('blea', 'error', 'Authentification SSH KO for ' . $this->remoteName);
 				return;
 			} else {
 				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
