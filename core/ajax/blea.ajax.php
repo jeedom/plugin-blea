@@ -30,19 +30,19 @@ try {
 		blea::changeIncludeState(init('state'), init('mode'));
 		ajax::success();
 	}
-	
+
 	if (init('action') == 'getMobileGraph') {
 		ajax::success(blea::getMobileGraph());
 	}
-	
+
 	if (init('action') == 'getMobileHealth') {
 		ajax::success(blea::getMobileHealth());
 	}
-	
+
 	if (init('action') == 'saveAntennaPosition') {
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}
-	
+
 	if (init('action') == 'autoDetectModule') {
 		$eqLogic = blea::byId(init('id'));
 		if (!is_object($eqLogic)) {
@@ -54,7 +54,7 @@ try {
 		$eqLogic->applyModuleConfiguration();
 		ajax::success();
 	}
-	
+
 	if (init('action') == 'getModelListParam') {
 		$blea = blea::byId(init('id'));
 		if (!is_object($blea)) {
@@ -62,7 +62,7 @@ try {
 		}
 		ajax::success($blea->getModelListParam(init('conf')));
 	}
-	
+
 	if (init('action') == 'save_bleaRemote') {
 		$bleaRemoteSave = jeedom::fromHumanReadable(json_decode(init('blea_remote'), true));
 		$blea_remote = blea_remote::byId($bleaRemoteSave['id']);
@@ -90,39 +90,54 @@ try {
 		$blea_remote->remove();
 		ajax::success();
 	}
-	
+
 	if (init('action') == 'sendRemoteFiles') {
-        ajax::success(blea::sendRemoteFiles(init('remoteId')));
+		if (!blea::sendRemoteFiles(init('remoteId'))) {
+			ajax::error(__('Erreur, vérifiez la log Blea', __FILE__));
+		}
+		ajax::success();
+    }
+
+	if (init('action') == 'getRemoteLog') {
+		if (!blea::getRemoteLog(init('remoteId'))) {
+			ajax::error(__('Erreur, vérifiez la log Blea', __FILE__));
+		}
+		ajax::success();
      }
-	 
-	 if (init('action') == 'getRemoteLog') {
-        ajax::success(blea::getRemoteLog(init('remoteId')));
-     }
-	 
+
 	 if (init('action') == 'getRemoteLogDependancy') {
-        ajax::success(blea::getRemoteLog(init('remoteId'),'_dependancy'));
+		if (!blea::getRemoteLog(init('remoteId'),'_dependancy')) {
+			ajax::error(__('Erreur, vérifiez la log Blea', __FILE__));
+		}
+		ajax::success();
      }
-	 
+
 	 if (init('action') == 'launchremote') {
-        ajax::success(blea::launchremote(init('remoteId')));
+		if (!blea::launchremote(init('remoteId'))) {
+			ajax::error(__('Erreur, vérifiez la log Blea', __FILE__));
+		}
+		ajax::success();
      }
-	 
+
 	 if (init('action') == 'stopremote') {
-        ajax::success(blea::stopremote(init('remoteId')));
+		if (!blea::stopremote(init('remoteId'))) {
+			ajax::error(__('Erreur, vérifiez la log Blea', __FILE__));
+		}
+		ajax::success();
      }
-	 
+
 	 if (init('action') == 'remotelearn') {
         ajax::success(blea::remotelearn(init('remoteId'), init('state')));
      }
-	 
+
 	 if (init('action') == 'dependancyRemote') {
         ajax::success(blea::dependancyRemote(init('remoteId')));
      }
-	 
+
 	 if (init('action') == 'aliveremote') {
         ajax::success(blea::aliveremote(init('remoteId')));
      }
-	
+
 	if (init('action') == 'changeLogLive') {
 		ajax::success(blea::changeLogLive(init('level')));
 	}
