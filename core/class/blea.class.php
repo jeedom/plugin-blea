@@ -74,6 +74,18 @@ class blea extends eqLogic {
 		return $eqLogic;
 	}
 
+	public static function cron() {
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			$last = $remote->getConfiguration('lastupdate','0');
+			$auto = $remote->getConfiguration('remoteDaemonAuto','0');
+			if (($last == '0' or time() - strtotime($last)>65) and $auto == 1) {
+				log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
+				blea::launchremote($remote->getId());
+			}
+		}
+	}
+
 	public static function cron15() {
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
