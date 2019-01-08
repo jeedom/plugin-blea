@@ -116,7 +116,7 @@ foreach ($remotes as $remote) {
 						<?php
 						if (method_exists( $id ,'sendRemoteFiles')){
 							echo '<div class="form-group">
-						<label class="col-sm-2 control-label">{{Envoie des fichiers nécessaires}}</label>
+						<label class="col-sm-2 control-label">{{Envoi des fichiers nécessaires}}</label>
 						<div class="col-sm-3">
 							<a class="btn btn-warning bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
 						</div>';
@@ -143,6 +143,13 @@ foreach ($remotes as $remote) {
 						<div class="col-sm-2">
 							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="fa fa-file-text-o"></i> {{Log}}</a>
 						</div>
+						</div>
+						<div class="form-group">
+						<label class="col-sm-2 control-label">{{Gestion du démon automatique}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-danger bleaRemoteAction" data-action="changeAutoModeRemote"></a>
+							<input type="hidden" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDaemonAuto"/>
+						</div>
 						</div>';
 						}
 						if (method_exists( $id ,'remotelearn')){
@@ -164,12 +171,26 @@ foreach ($remotes as $remote) {
 </div>
 
 <script>
+	function refreshDaemonMode() {
+		var auto = $('.bleaRemoteAttr[data-l2key="remoteDaemonAuto"]').value();
+		console.log("auto=" + auto);
+		if(auto == 1){
+			$('.bleaRemoteAction[data-action=stopremote]').hide();
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-success').addClass('btn-danger');
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fa fa-times"></i> {{Désactiver}}');
+		}else{
+			$('.bleaRemoteAction[data-action=stopremote]').show();
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-danger').addClass('btn-success');
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fa fa-magic"></i> {{Activer}}');
+		}
+	}
+
 	$('.bleaRemoteAction[data-action=add]').on('click',function(){
 		$('.bleaRemote').show();
 		$('.remoteThumbnailDisplay').hide();
 		$('.bleaRemoteAttr').value('');
 	});
-	
+
 	$('.eqLogicDisplayCard').on('click',function(){
 		displaybleaRemote($(this).attr('data-remote_id'));
 	});
@@ -197,10 +218,11 @@ foreach ($remotes as $remote) {
 				$('.remoteThumbnailDisplay').hide();
 				$('.bleaRemoteAttr').value('');
 				$('.bleaRemote').setValues(data.result,'.bleaRemoteAttr');
+				setTimeout(function() { refreshDaemonMode(); }, 200);
 			}
 		});
 	}
-	
+
 	function displaybleaRemoteComm(_id){
 		$('.li_bleaRemote').removeClass('active');
 		$('.li_bleaRemote[data-bleaRemote_id='+_id+']').addClass('active');
@@ -231,12 +253,18 @@ foreach ($remotes as $remote) {
 		displaybleaRemote($(this).attr('data-bleaRemote_id'));
 		$('.remoteThumbnailDisplay').hide();
 	});
-	
+
 	$('.returnAction').on('click',function(){
 		$('.bleaRemote').hide();
 		$('.li_bleaRemote').removeClass('active');
 		setTimeout(function() { $('.remoteThumbnailDisplay').show() }, 100);
 		;
+	});
+
+	$('.bleaRemoteAction[data-action=changeAutoModeRemote]').on('click',function(){
+		var auto = 1 - $('.bleaRemoteAttr[data-l2key="remoteDaemonAuto"]').value();
+		$('.bleaRemoteAttr[data-l2key="remoteDaemonAuto"]').val(auto);
+		$('.bleaRemoteAction[data-action=save]').click();
 	});
 
 	$('.bleaRemoteAction[data-action=save]').on('click',function(){
@@ -262,11 +290,11 @@ foreach ($remotes as $remote) {
 				$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
 				$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 				setTimeout(function() { displaybleaRemote(data.result.id) }, 200);
-				
+
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=sendFiles]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -285,11 +313,11 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoi réussi}}', level: 'success'});
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=getRemoteLog]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -312,7 +340,7 @@ foreach ($remotes as $remote) {
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=getRemoteLogDependancy]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -335,7 +363,7 @@ foreach ($remotes as $remote) {
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=launchremote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -354,11 +382,11 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Lancement réussi}}', level: 'success'});
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=dependancyRemote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -377,11 +405,11 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoi réussi}}', level: 'success'});
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=stopremote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -400,11 +428,11 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Arrêt réussi}}', level: 'success'});
 			}
 		});
 	});
-	
+
 	$('.bleaRemoteAction[data-action=remotelearn]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
 		$.ajax({
@@ -424,7 +452,7 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoie réussie}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Envoi réussi}}', level: 'success'});
 			}
 		});
 	});
