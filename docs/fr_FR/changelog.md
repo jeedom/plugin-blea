@@ -1,4 +1,4 @@
-# 16/01/2018
+# 16/01/2019
 
 - Correction d'un soucis sur le maximum possible d'une commande
 
