@@ -1,39 +1,36 @@
 BLEA (Bluetooth advertisement) 
 ==============================
 
-Description 
+Description
 -----------
 
-Ce plugin est un plugin permettant de pouvoir recevoir les événements de
-certains périphériques bluetooth (tel que les NIU de chez Nodon)
+This plugin is a plugin allowing to receive the events of some bluetooth devices (such as NIU from Nodon).
 
 ![blea icon](../images/blea_icon.png)
 
-Configuration 
+Configuration
 -------------
 
-Configuration du plugin: 
+Plugin configuration:
 ========================
 
 a.  Installation/Création
 
 > **Tip**
 >
-> Afin d’utiliser le plugin, vous devez le télécharger, l’installer et
-> l’activer comme tout plugin Jeedom.
+> In order to use the plugin, you have to download it, install it and
+> activate it like any Jeedom plugin.
 
--   Suite à cela vous arriverez sur cette page :
+-   After that you will arrive on this page:
 
 ![gestion](../images/gestion.jpg)
 
-Sur cette page vous avez peu de choses à faire. Il est très vivement
-recommandé de lancer l’installation des dépendances (même si elles
-apparaissent OK). Puis à la fin de rafraichir la page.
+On this page you have little to do. He is strongly recommended to start installing dependencies (even if they appear OK). Then at the end refresh the page.
 
 > **Important**
 >
-> La chose la plus importante ici est de sélectionner votre Contrôleur
-> Bluetooth
+> The most important thing here is to select your Bluetooth 
+> controller
 
 L’autre option disponible sur cette page est : **Supprimer
 automatiquement les périphériques exclus**. Celle-ci permet de supprimer
@@ -43,7 +40,7 @@ Vous pouvez aussi vérifier l’état des dépendances et les relancer. En
 cas de soucis avec le plugin, toujours relancer les dépendances même si
 OK dans le doute.
 
-Le plugin 
+The plugin
 =========
 
 Rendez vous dans le menu Plugins &gt; Protocole Domotique pour retrouver
@@ -51,43 +48,43 @@ le plugin.
 
 ![blea screenshot1](../images/blea_screenshot1.jpg)
 
-Sur cette page, vous pourrez voir les modules déjà inclus.
+On this page you will see the modules already included.
 
-Sur la partie haute de cette page, vous avez plusieurs boutons.
+On the top part of this page, you have several buttons.
 
--   Bouton Inclusion : ce bouton permet de mettre Jeedom en Inclusion.
+-   Inclusion button: this button allows to put Jeedom in Inclusion mode.
 
--   Bouton Exclusion : ce bouton permet de mettre Jeedom en Exclusion.
+-   Exclusion button: this button allows to put Jeedom in Exclusion mode.
 
 -   Bouton Configuration : ce bouton permet d’ouvrir la fenêtre de
-    configuration du plugin.
+    plugin configuration.
 
 -   Bouton Santé : ce bouton permet d’avoir un aperçu Santé de tous
     vos modules.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement 
+Equipment
 ==========
 
-Lorsque que vous cliquez sur un de vos modules, vous arrivez sur la page
-de configuration de celui-ci. Comme partout dans Jeedom vous pouvez ici
-sur la partie gauche :
+When you click on one of your modules, you arrive on the modeule configuration page. Here, like everywhere in Jeedom you can 
 
--   Donner un nom au module.
+on the left side:
 
--   L’activer/le rendre visible ou non.
+-   Give the module a name.
 
--   Choisir son objet parent.
+-   Activate / make it visible or not.
 
--   Lui attribuer une catégorie.
+-   Choose his parent object.
+
+-   Give it a category.
 
 -   Definir un delai de surveillance de communication pour
     certains modules.
 
--   Mettre un commentaire.
+-   Put a comment.
 
-Sur la partie droite vous trouverez :
+On the right side you will find:
 
 -   Le profil de l’équipement (généralement auto détecté si le module
     le permet).
@@ -133,7 +130,7 @@ Vous aurez ainsi 4 commandes :
 
 -   Batterie : donne la valeur de la batterie
 
-Cas d’autres modules 
+Case of other modules
 --------------------
 
 -   D’autres modules peuvent être inclus du type beacon NUT, bracelet
@@ -142,15 +139,15 @@ Cas d’autres modules
 Ils permettront une détection de présence avec une détection sur un
 créneau de 1 minute.
 
-Bien évidemment de nombreux autres modules seront rajoutés.
+Of course many other modules will be added.
 
-Changelog 
+Changelog
 ---------
 
-Changelog détaillé :
+Detailed changelog :
 <https://github.com/jeedom/plugin-blea/commits/stable>
 
-Liste des équipements compatibles 
+List of compatible equipment
 ---------------------------------
 
 <https://jeedom.github.io/documentation/#equipment>
