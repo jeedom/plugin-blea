@@ -50,8 +50,8 @@ class Miflora():
 		if hex(handle) == '0x35':
 			received = bytearray(data)
 			temperature = float(received[1] * 256 + received[0]) / 10
-			if temperature>3200:
-				temperature = 0-(temperature - 3276.8)
+			if temperature>3276.8:
+				temperature = 0-(6553.6 - temperature)
 			sunlight = received[4] * 256 + received[3]
 			moisture = received[7]
 			fertility = received[9] * 256 + received[8]
