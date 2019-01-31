@@ -14,7 +14,7 @@ Configuration
 Plugin configuration:
 ========================
 
-a.  Installation/Création
+a. Installation/Creation
 
 > **Tip**
 >
@@ -32,19 +32,19 @@ On this page you have little to do. He is strongly recommended to start installi
 > The most important thing here is to select your Bluetooth 
 > controller
 
-L’autre option disponible sur cette page est : **Supprimer
-automatiquement les périphériques exclus**. Celle-ci permet de supprimer
-les équipements de Jeedom lorsqu’ils sont exclus.
+The other option available on this page is: ** Delete
+automatically excluded devices **. This allows you to delete
+Jeedom's device when excluded.
 
-Vous pouvez aussi vérifier l’état des dépendances et les relancer. En
-cas de soucis avec le plugin, toujours relancer les dépendances même si
-OK dans le doute.
+You can also check the status of the dependencies and restart them.
+In case of trouble with the plugin, always relaunch the dependencies even if OK 
+in case of doubt
 
 The plugin
 =========
 
-Rendez vous dans le menu Plugins &gt; Protocole Domotique pour retrouver
-le plugin.
+Go to the Plugins menu &gt; Home Automation Protocol to find
+the plugin.
 
 ![blea screenshot1](../images/blea_screenshot1.jpg)
 

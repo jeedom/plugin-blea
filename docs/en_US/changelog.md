@@ -16,15 +16,15 @@ Suppression of the dependency check which will remain green meanwhile (keep in m
 06/04/2018
 ----------
 
-Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora (necessite probablement une relance des dépendances pour les gens impactés)
+Fix a refresh notification bug on Hygrothermograph and Miflora (probably needs relaunching of dependencies for impacted people)
 
 28/03/2018
 ----------
 
-rajout conf dreamscreen
-modification du démon pour préciser les logs
-modification de la reconnaissance des MI_SCALE V1
-Watchdog bluepy-helper (en essai)
+add conf dreamscreen
+modify the daemon to specify the logs
+modification of the MI_SCALE V1 recognition
+Watchdog bluepy-helper (under test)
 
 10/02/2018
 ----------
@@ -34,5 +34,5 @@ Fixed a bug on the network graph modal if a device had no object
 01/03/2018
 ----------
 
-Rajout de la conf pour le thermomètre/hygrometre avec écran Xiaomi
-Rajout de certaines confs awox mesh
+Addition of the conf for the thermometer/hygrometer with Xiaomi screen
+Addition of some confs awox mesh
