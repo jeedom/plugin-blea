@@ -1,0 +1,58 @@
+{
+    "beewismartdoor": {
+        "name": "BeeWi Smart Door",
+        "groupe" : "Porte",
+		"configuration" : {
+			"needsrefresh" : 1,
+			"name" : "beewismartdoor",
+			"battery_type" : "1x3V CR2032",
+			"delay" : 120,
+			"cancontrol" : 1
+		},
+        "commands": [
+			{
+                "name": "Status",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "door",
+					"mobile": "door"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "%",
+				"display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "BeeWi",
+                "name": "capteur d'ouverture",
+				"doc": "",
+				"type": "Capteurs",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Capteurs d'ouverture de porte",
+				"inclusion" : "Mode inclusion",
+				"imglink": "beewismartdoor"
+            }
+        ]
+    }
+}
