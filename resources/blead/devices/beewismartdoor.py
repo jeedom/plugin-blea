@@ -3,17 +3,14 @@ import time
 import logging
 import globals
 import struct
-<<<<<<< HEAD
 import datetime
 from multiconnect import Connector
 from notification import Notification
 import binascii
-
-        
-=======
+       
 from multiconnect import Connector
 from notification import Notification
->>>>>>> 8581cb04e3734102b8f2335f57aee295867b14a0
+
 class BeeWiSmartDoor():
     def __init__(self):
         self.name = 'beewi smart door'
@@ -43,10 +40,6 @@ class BeeWiSmartDoor():
             logging.debug('BeeWi PARSE: wrong frame ')      
         return action
     
-<<<<<<< HEAD
-          
-=======
->>>>>>> 8581cb04e3734102b8f2335f57aee295867b14a0
     def read(self,mac):
         result={}
         try:
@@ -56,8 +49,7 @@ class BeeWiSmartDoor():
                 conn.connect()
                 if not conn.isconnected:
                     return
-<<<<<<< HEAD
-                    
+       
             #check pairing state first
             pairing = conn.readCharacteristic('0x3a') # check pairing state 
             if pairing:
@@ -77,19 +69,9 @@ class BeeWiSmartDoor():
                 notification.subscribe(2)
             else:
                 battery = ord(conn.readCharacteristic('0x25'))
+                result['battery'] = battery
                 logging.debug('BeeWi read Battery=' + str(battery))           
-=======
-            battery = bytearray(conn.readCharacteristic('0x25'))
-            notification = Notification(conn,BeeWiSmartDoor)
-            conn.writeCharacteristic('0x3A','00',response=True)
-            conn.writeCharacteristic('0x33','0100',response=True)
-            conn.writeCharacteristic('0x32','00',response=True)
-            conn.writeCharacteristic('0x42','0100',response=True)           
-            conn.writeCharacteristic('0x2b','313930323034313535393033',response=True)
-            conn.writeCharacteristic('0x41','00000000',response=True)
-            #notification.subscribe(2)
-            result['battery'] = int(battery,16)
->>>>>>> 8581cb04e3734102b8f2335f57aee295867b14a0
+            
             result['id'] = mac
             return result
         except Exception,e:
@@ -98,11 +80,6 @@ class BeeWiSmartDoor():
         
     def handlenotification(self,conn,handle,data,action={}):
         result={}
-<<<<<<< HEAD
         logging.debug('BeeWiiSmartDoor--Handle: '+str(ord(handle)))
-=======
-        logging.debug('BeeWiiSmartDoor--Handle: '+str(hex(handle)))
->>>>>>> 8581cb04e3734102b8f2335f57aee295867b14a0
-
 
 globals.COMPATIBILITY.append(BeeWiSmartDoor)
