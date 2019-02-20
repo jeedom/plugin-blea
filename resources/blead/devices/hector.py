@@ -34,7 +34,7 @@ class Hector():
 			temperature = int(str(hex(temperature[0])[2:].zfill(2) + hex(temperature[1])[2:].zfill(2)),16)
 			humidity = struct.unpack('2B',conn.readCharacteristic('0x3c'))
 			humidity = int(str(hex(humidity[0])[2:].zfill(2) + hex(humidity[1])[2:].zfill(2)),16)
-                        # If pression == Ox00014601 -> read again at least for 3 attempts
+                        # If pression == Ox00014601 (83457) -> read again at least for 3 attempts
 			# Hector's sensor seems to always return Ox00014601 at first read attempt
 			pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 			pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
