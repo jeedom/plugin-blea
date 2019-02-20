@@ -29,6 +29,7 @@ class Hector():
 				if not conn.isconnected:
 					return
 			battery = struct.unpack('2B',conn.readCharacteristic('0x2e'))
+                        battery = int(str(hex(battery[0])[2:].zfill(2) + hex(battery[1])[2:].zfill(2)),16)
 			temperature = struct.unpack('2B',conn.readCharacteristic('0x34'))
 			temperature = int(str(hex(temperature[0])[2:].zfill(2) + hex(temperature[1])[2:].zfill(2)),16)
 			humidity = struct.unpack('2B',conn.readCharacteristic('0x3c'))
@@ -44,7 +45,6 @@ class Hector():
 			    pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
                             pression_read += 1
 			logging.debug(str(pression))
-                        battery = int(str(hex(battery[0])[2:].zfill(2) + hex(battery[1])[2:].zfill(2)),16)
 			result['temperature'] = float(temperature)/10
 			result['humidity'] = float(humidity)/10
 			result['pressure'] = float(pression)/100
