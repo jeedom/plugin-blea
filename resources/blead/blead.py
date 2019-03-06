@@ -958,7 +958,7 @@ parser.add_argument("--socketport", help="Socket Port", type=str)
 parser.add_argument("--sockethost", help="Socket Host", type=str)
 parser.add_argument("--daemonname", help="Daemon Name", type=str)
 parser.add_argument("--cycle", help="Cycle to send event", type=str)
-parser.add_argument("--passive", help="Passive scan", type=bool)
+parser.add_argument("--passive", help="Passive scan", type=str)
 args = parser.parse_args()
 
 if args.device:
@@ -1173,7 +1173,7 @@ def listen():
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
-				globals.SCANNER.start(passive=True)
+				globals.SCANNER.start(passive=!globals.LEARN_MODE) #set passive scan when not in learning state
 				if globals.LEARN_MODE:
 					globals.SCANNER.process(3)
 				else:
