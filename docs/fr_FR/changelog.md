@@ -2,6 +2,7 @@
 # 09/03/2019
 
 - Ajout de la gestion automatique du daemon sur les antennes.
+- Gestion temp négative
 - Correction sur le rafraichissement des nuts (info batterie)
 
 # 16/01/2019
