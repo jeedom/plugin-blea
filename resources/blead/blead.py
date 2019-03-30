@@ -157,14 +157,12 @@ def listen():
 				if globals.LEARN_MODE or (globals.LAST_CLEAR + 29)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
-					globals.LAST_CLEAR = int(time.time())
-                if globals.LEARN_MODE:
-                    globals.SCANNER.start()
-				else: 
-                    globals.SCANNER.start(passive=True) 
+					globals.LAST_CLEAR = int(time.time())  
 				if globals.LEARN_MODE:
+                    globals.SCANNER.start()
 					globals.SCANNER.process(3)
 				else:
+                    globals.SCANNER.start(passive=True) 
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
