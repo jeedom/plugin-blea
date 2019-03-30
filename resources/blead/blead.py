@@ -158,7 +158,10 @@ def listen():
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
-				globals.SCANNER.start(passive=True)
+                if globals.LEARN_MODE:
+                    globals.SCANNER.start()
+				else: 
+                    globals.SCANNER.start(passive=True) 
 				if globals.LEARN_MODE:
 					globals.SCANNER.process(3)
 				else:
