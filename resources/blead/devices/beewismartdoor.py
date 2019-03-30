@@ -17,27 +17,24 @@ class BeeWiSmartDoor():
         self.ignoreRepeat = False
 
     def isvalid(self,name,manuf='',data=''):
-        if name.lower() == self.name:
-            return True
+        if manuf[1:8] == '0d00080c'
+            return True   
+        # if name.lower() == self.name:
+            # return True
             
     def parse(self,data,mac,name,manuf):
         action={}
-        action['present'] = 1       
-        logging.debug('PARSE: manuf[4:9]= ' + manuf[4:9] )
-        if manuf[4:8] == '080c':              
-            status = manuf[9:10]
-            if manuf[4:8] == '080c':
-                status = manuf[9:10]
-                if status == '1':
-                    status = '0'
-                elif status == '0':
-                    status = '1'
-            battery = manuf[12:14]
-            action['status'] = status
-            action['battery'] = int(battery,16)
-            logging.debug('BeeWi PARSE: status = ' + status )
-        else:
-            logging.debug('BeeWi PARSE: wrong frame ')      
+        action['present'] = 1     
+        logging.debug('PARSE: manuf[4:9]= ' + manuf[4:9] )           
+        status = manuf[9:10]
+        if status == '1':
+            status = '0'
+        elif status == '0':
+            status = '1'
+        battery = manuf[12:14]
+        action['status'] = status
+        action['battery'] = int(battery,16)
+        logging.debug('BeeWi PARSE: status = ' + status )     
         return action
     
     def read(self,mac):
