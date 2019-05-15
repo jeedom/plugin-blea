@@ -54,7 +54,7 @@
 				},
                 "isVisible": 1,
                 "isHistorized": 0,
-                "unite": "mmHg",
+                "unite": "hPa",
                 "logicalId": "pressure",
 				"template": {
 					"dashboard": "line",
