@@ -3,11 +3,11 @@
         "name": "BeeWi Smart Door",
         "groupe" : "Porte",
 		"configuration" : {
-			"needsrefresh" : 1,
+			"needsrefresh" : 0,
 			"name" : "beewismartdoor",
 			"battery_type" : "1x3V CR2032",
 			"delay" : 120,
-			"cancontrol" : 1
+			"cancontrol" : 0
 		},
         "commands": [
 			{
@@ -15,7 +15,7 @@
                 "type": "info",
                 "subtype": "binary",
                 "isVisible": 1,
-                "isHistorized": 1,
+                "isHistorized": 0,
                 "logicalId": "status",
 				"template": {
 					"dashboard": "door",
@@ -27,7 +27,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "isVisible": 1,
-                "isHistorized": 1,
+                "isHistorized": 0,
                 "unite": "%",
 				"display": {
 					"icon": "<i class=\"fa fa-battery-full\"><\/i>",

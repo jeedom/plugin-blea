@@ -3,12 +3,12 @@
         "name": "Xioami Température Humidité",
         "groupe" : "Température",
 		"configuration" : {
-			"needsrefresh" : 1,
+			"needsrefresh" : 0,
 			"name" : "xiaomiht",
 			"battery_type" : "1x1.5V AAA",
 			"xiaomi" : 1,
 			"delay" : 1800,
-			"cancontrol" : 1
+			"cancontrol" : 0
 		},
         "commands": [
 			{
