@@ -35,20 +35,10 @@ class Miflora():
 			firmware = "".join(map(chr, batteryFirm[2:]))
 			notification = Notification(conn,Miflora)
 			conn.writeCharacteristic('0x36','0100',response=True)
-			notification.subscribe(2)
 			result['battery'] = battery
 			result['firmware'] = firmware
 			result['id'] = mac
-			logging.debug(str(result))
-			return result
-		except Exception,e:
-			logging.error(str(e))
-		return result
-	
-	def handlenotification(self,conn,handle,data,action={}):
-		result={}
-		if hex(handle) == '0x35':
-			received = bytearray(data)
+			received = bytearray(conn.readCharacteristic('0x35'))
 			temperature = float(received[1] * 256 + received[0]) / 10
 			if temperature>3276.8:
 				temperature = 0-(6553.6 - temperature)
@@ -59,8 +49,15 @@ class Miflora():
 			result['moisture'] = moisture
 			result['fertility'] = fertility
 			result['temperature'] = temperature
-			result['id'] = conn.mac
 			result['source'] = globals.daemonname
+			logging.debug(str(result))
 			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
+			return result
+		except Exception,e:
+			logging.error(str(e))
+		return result
+	
+	def handlenotification(self,conn,handle,data,action={}):
+		result={}
 
 globals.COMPATIBILITY.append(Miflora)

@@ -21,7 +21,7 @@ class XiaomiHT():
 			
 	def parse(self,data,mac,name,manuf):
 		action={}
-		action['present'] = 1					
+		action['present'] = 1
 		if data.lower().startswith("95fe"):
 			##todo parse data
 			logging.debug('Xiaomi PARSE data: ' + data ) 
@@ -43,7 +43,7 @@ class XiaomiHT():
 				batt = int(b_data,16)
 				logging.debug('XiaomiHT------ Advertising Data=> Batt: ' + str(batt))
 				action['battery'] = batt
-			elif val_type in ['0d']: # type: temp&moist					
+			elif val_type in ['0d']: # type: temp&moist
 				 t_data = val_data[2:4] + val_data[0:2]
 				 temp = int(t_data,16)/10.0
 				 h_data = val_data[6:8] + val_data[4:6]
@@ -55,27 +55,27 @@ class XiaomiHT():
 		
 	def read(self,mac):
 		result={}
-		try:
-			conn = Connector(mac)
-			conn.connect()
-			if not conn.isconnected:
-				conn.connect()
-				if not conn.isconnected:
-					return
-			Firm = bytearray(conn.readCharacteristic('0x24'))
-			batt = bytearray(conn.readCharacteristic('0x18'))
-			battery = batt[0]
-			firmware = "".join(map(chr, Firm))
-			notification = Notification(conn,XiaomiHT)
-			conn.writeCharacteristic('0x10','0100',response=True)
-			notification.subscribe(2)
-			result['battery'] = battery
-			result['firmware'] = firmware
-			result['id'] = mac
-			logging.debug('XIAOMIHT------'+str(result))
-			return result
-		except Exception,e:
-			logging.error(str(e))
+		#try:
+		#	conn = Connector(mac)
+		#	conn.connect()
+		#	if not conn.isconnected:
+		#		conn.connect()
+		#		if not conn.isconnected:
+		#			return
+		#	Firm = bytearray(conn.readCharacteristic('0x24'))
+		#	batt = bytearray(conn.readCharacteristic('0x18'))
+		#	battery = batt[0]
+		#	firmware = "".join(map(chr, Firm))
+		#	notification = Notification(conn,XiaomiHT)
+		#	conn.writeCharacteristic('0x10','0100',response=True)
+		#	notification.subscribe(2)
+		#	result['battery'] = battery
+		#	result['firmware'] = firmware
+		#	result['id'] = mac
+		#	logging.debug('XIAOMIHT------'+str(result))
+		#	return result
+		#except Exception,e:
+		#	logging.error(str(e))
 		return result
 	
 	def handlenotification(self,conn,handle,data,action={}):
