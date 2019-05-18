@@ -14,9 +14,9 @@ class XiaomiHT():
 		self.ignoreRepeat = True
 
 	def isvalid(self,name,manuf='',data=''):
-		if name.lower() in ['mj_ht_v1']:
+		if name.lower() in ['mj_ht_v1','cleargrass temp & rh']:
 			return True
-		if data.lower().startswith("95fe"):
+		if data.lower().startswith("95fe"): #dirty temporary fix, device doesn't report it's name with passive scan 
 			#broadcasted advertising data
 			return True
 	
