@@ -65,3 +65,9 @@ def twos_complement(value, bits):
 	if (value & (1 << (bits - 1))) != 0:
 		value = value - (1 << bits)
 	return value
+
+def signed_int(h):
+	x = int(h, 16)
+	if x > 32767:
+		x -= 65534
+	return x

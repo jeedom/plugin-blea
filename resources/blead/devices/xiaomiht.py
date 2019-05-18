@@ -4,6 +4,7 @@ import time
 import logging
 import globals
 import struct
+import utils
 from multiconnect import Connector
 from notification import Notification
 
@@ -18,7 +19,7 @@ class XiaomiHT():
 		if data.lower().startswith("95fe"):
 			#broadcasted advertising data
 			return True
-			
+	
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
@@ -30,7 +31,7 @@ class XiaomiHT():
 			val_data = data[32:40]			 
 			if val_type in ['04']:	 # type: temperature
 				t_data = val_data[2:4] + val_data[0:2]
-				temp = int(t_data,16)/10.0
+				temp = utils.signed_int(t_data)/10.0
 				logging.debug('XiaomiHT------ Advertising Data=> Temp' + str(temp))
 				action['temperature'] = temp
 			elif val_type in ['06']: # type: moisture
@@ -45,7 +46,7 @@ class XiaomiHT():
 				action['battery'] = batt
 			elif val_type in ['0d']: # type: temp&moist
 				 t_data = val_data[2:4] + val_data[0:2]
-				 temp = int(t_data,16)/10.0
+				 temp = utils.signed_int(t_data)/10.0
 				 h_data = val_data[6:8] + val_data[4:6]
 				 hum = int(h_data,16)/10.0
 				 logging.debug('XiaomiHT------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))
