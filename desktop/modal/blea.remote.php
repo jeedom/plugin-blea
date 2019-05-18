@@ -48,19 +48,17 @@ foreach ($remotes as $remote) {
 <legend><i class="fa fa-table"></i>  {{Mes Antennes}}</legend>
 
 <div class="eqLogicThumbnailContainer">
-	<div class="cursor bleaRemoteAction pull-left" data-action="add" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-     <center>
-      <i class="fa fa-plus-circle" style="font-size : 9em;color:#94ca02;"></i>
-    </center>
-    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Ajouter}}</center></span>
+	<div class="cursor bleaRemoteAction logoPrimary" data-action="add">
+      <i class="fa fa-plus-circle"></i>
+	  </br>
+    <span>{{Ajouter}}</span>
   </div>
   <?php
 foreach ($remotes as $remote) {
-	echo '<div class="eqLogicDisplayCard cursor pull-left" data-remote_id="' . $remote->getId() . '" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo "<center>";
-	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png" height="105" width="95" />';
-	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02""><center>' . $remote->getRemoteName() . '</center></span>';
+	echo '<div class="eqLogicDisplayCard cursor" data-remote_id="' . $remote->getId() . '">';
+	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png"/>';
+	echo '</br>';
+	echo '<span class="name">' . $remote->getRemoteName() . '</span>';
 	echo '</div>';
 }
 ?>
@@ -126,7 +124,7 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-spinner"></i> {{Lancer les dépendances}}</a>
 						</div>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLogDependancy"><i class="fa fa-file-text-o"></i> {{Log dépendances}}</a>
+							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLogDependancy"><i class="far fa-file-alt"></i> {{Log dépendances}}</a>
 						</div>';
 						}
 						echo'</div>';
@@ -141,7 +139,7 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
 						</div>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="fa fa-file-text-o"></i> {{Log}}</a>
+							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="far fa-file-alt"></i> {{Log}}</a>
 						</div>
 						</div>
 						<div class="form-group">
@@ -156,11 +154,11 @@ foreach ($remotes as $remote) {
 							echo '<div class="form-group">
 						<label class="col-sm-2 control-label">{{Mettre en learn}}</label>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fa fa-sign-in fa-rotate-90"></i> {{Inclusion}}</a>
+							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Inclusion}}</a>
 						</div>
 						<label class="col-sm-2 control-label">{{Arrêter learn}}</label>
 						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fa fa-sign-in fa-rotate-270"></i> {{Stop Inclusion}}</a>
+							<a class="btn btn-danger bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Stop Inclusion}}</a>
 						</div>
 						</div>';
 						}

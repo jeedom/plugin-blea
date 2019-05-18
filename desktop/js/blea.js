@@ -47,7 +47,7 @@ $('#bt_advancedblea').on('click', function () {
 
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=device]').on('change', function () {
   if($('.li_eqLogic.active').attr('data-eqlogic_id') != ''){
-   getModelListParam($(this).value(),$('.li_eqLogic.active').attr('data-eqlogic_id'));
+   getModelListParam($(this).value(),$('.eqLogicAttr[data-l1key=id]').value());
 }else{
     $('#img_device').attr("src",'plugins/blea/doc/images/blea_icon.png');
 }
@@ -118,33 +118,85 @@ function getModelListParam(_conf,_id) {
 });
 }
 
- $('#bt_autoDetectModule').on('click', function () {
-
-    bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
-        if (result) {
-            $.ajax({
-                type: "POST", // méthode de transmission des données au fichier php
-                url: "plugins/blea/core/ajax/blea.ajax.php", 
-                data: {
-                    action: "autoDetectModule",
-                    id: $('.eqLogicAttr[data-l1key=id]').value(),
-                },
-                dataType: 'json',
-                global: false,
-                error: function (request, status, error) {
-                    handleAjaxError(request, status, error);
-                },
-                success: function (data) { 
-                    if (data.state != 'ok') {
-                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                        return;
-                    }
-                    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
-                    $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
-                }
-            });
-        }
-    });
+$('#bt_autoDetectModule').on('click', function () {
+    var dialog_title = '{{Recharge configuration}}';
+    var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+    dialog_title = '{{Recharger la configuration}}';
+    dialog_message += '<label class="control-label" > {{Sélectionner le mode de rechargement de la configuration ?}} </label> ' +
+    '<div> <div class="radio"> <label > ' +
+    '<input type="radio" name="command" id="command-0" value="0" checked="checked"> {{Sans supprimer les commandes}} </label> ' +
+    '</div><div class="radio"> <label > ' +
+    '<input type="radio" name="command" id="command-1" value="1"> {{En supprimant et recréant les commandes}}</label> ' +
+    '</div> ' +
+    '</div><br>' +
+    '<label class="lbl lbl-warning" for="name">{{Attention, "En supprimant et recréant" va supprimer les commandes existantes.}}</label> ';
+    dialog_message += '</form>';
+    bootbox.dialog({
+       title: dialog_title,
+       message: dialog_message,
+       buttons: {
+           "{{Annuler}}": {
+               className: "btn-danger",
+               callback: function () {
+               }
+           },
+           success: {
+               label: "{{Démarrer}}",
+               className: "btn-success",
+               callback: function () {
+                    if ($("input[name='command']:checked").val() == "1"){
+						bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+                            if (result) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "plugins/blea/core/ajax/blea.ajax.php",
+                                    data: {
+                                        action: "autoDetectModule",
+                                        id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                        createcommand: 1,
+                                    },
+                                    dataType: 'json',
+                                    global: false,
+                                    error: function (request, status, error) {
+                                        handleAjaxError(request, status, error);
+                                    },
+                                    success: function (data) {
+                                        if (data.state != 'ok') {
+                                            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                            return;
+                                        }
+                                        $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                                    }
+                                });
+                            }
+                        });
+					} else {
+						$.ajax({
+                                    type: "POST",
+                                    url: "plugins/blea/core/ajax/blea.ajax.php",
+                                    data: {
+                                        action: "autoDetectModule",
+                                        id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                        createcommand: 0,
+                                    },
+                                    dataType: 'json',
+                                    global: false,
+                                    error: function (request, status, error) {
+                                        handleAjaxError(request, status, error);
+                                    },
+                                    success: function (data) {
+                                        if (data.state != 'ok') {
+                                            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                            return;
+                                        }
+                                        $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                                    }
+                                });
+					}
+            }
+        },
+    }
+});
 });
 
 
@@ -230,9 +282,7 @@ $('body').on('blea::includeState', function (_event,_options) {
 				$.hideAlert();
 				$('.include:not(.card)').removeClass('btn-default').addClass('btn-success');
 				$('.include').attr('data-state', 0);
-				$('.include.card').css('background-color','#8000FF');
-				$('.include.card span center').text('{{Arrêter le scan}}');
-				$('.includeicon').empty().append('<i class="fa fa-spinner fa-pulse" style="font-size : 6em;color:#94ca02;"></i>');
+				$('.include').empty().append('<i class="fa fa-spinner fa-pulse"></i><br/><span>{{Arrêter Scan}}</span>');
 				$('#div_inclusionAlert').showAlert({message: '{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}', level: 'warning'});
 			}
 		} else {
@@ -240,9 +290,7 @@ $('body').on('blea::includeState', function (_event,_options) {
 				$.hideAlert();
 				$('.include:not(.card)').addClass('btn-default').removeClass('btn-success btn-danger');
 				$('.include').attr('data-state', 1);
-				$('.includeicon').empty().append('<i class="fa fa-bullseye" style="font-size : 6em;color:#94ca02;"></i>');
-				$('.include.card span center').text('{{Lancer Scan}}');
-				$('.include.card').css('background-color','#ffffff');
+				$('.include').empty().append('<i class="fa fa-bullseye"></i><br/><span>{{Lancer Scan}}</span>');
 			}
 		}
 	}

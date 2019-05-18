@@ -14,90 +14,70 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	echo '<div id="div_inclusionAlert"></div>';
 }
 ?>
-<div class="row row-overflow">
-  <div class="col-lg-2 col-md-3 col-sm-4">
-    <div class="bs-sidebar">
-      <ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-        <li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="Rechercher" style="width: 100%"/></li>
-        <?php
-foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-	echo '<li class="cursor li_eqLogic" data-eqLogic_id="' . $eqLogic->getId() . '" style="' . $opacity . '"><a>' . $eqLogic->getHumanName(true) . '</a></li>';
-}
-?>
-     </ul>
-   </div>
- </div>
 
- <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-   <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
+ <div class="col-lg-12 eqLogicThumbnailDisplay">
+   <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
    <div class="eqLogicThumbnailContainer">
     <?php
 if (config::byKey('include_mode', 'blea', 0) == 1) {
-	echo '<div class="cursor changeIncludeState include card" data-mode="1" data-state="0" style="background-color : #8000FF; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo '<center class="includeicon">';
-	echo '<i class="fa fa-spinner fa-pulse" style="font-size : 6em;color:#94ca02;"></i>';
-	echo '</center>';
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Arrêter Scan}}</center></span>';
+	echo '<div class="cursor changeIncludeState include card logoPrimary" data-mode="1" data-state="0" >';
+	echo '<i class="fa fa-spinner fa-pulse"></i>';
+	echo '<br/>';
+	echo '<span>{{Arrêter Scan}}</span>';
 	echo '</div>';
 } else {
-	echo '<div class="cursor changeIncludeState include card" data-mode="1" data-state="1" style="background-color : #ffffff; height : 140px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
-	echo '<center class="includeicon">';
-	echo '<i class="fa fa-bullseye" style="font-size : 6em;color:#94ca02;"></i>';
-	echo '</center>';
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#94ca02"><center>{{Lancer Scan}}</center></span>';
+	echo '<div class="cursor changeIncludeState include card logoPrimary " data-mode="1" data-state="1">';
+	echo '<i class="fa fa-bullseye"></i>';
+	echo '<br/>';
+	echo '<span>{{Lancer Scan}}</span>';
 	echo '</div>';
 }
 ?>
-   <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-    <center>
-      <i class="fa fa-wrench" style="font-size : 6em;color:#767676;"></i>
-    </center>
-    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Configuration}}</center></span>
+   <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+      <i class="fas fa-wrench"></i>
+	<br/>
+    <span>{{Configuration}}</span>
   </div>
-  <div class="cursor" id="bt_healthblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-    <center>
-      <i class="fa fa-medkit" style="font-size : 6em;color:#767676;"></i>
-    </center>
-    <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Santé}}</center></span>
+  <div class="cursor logoSecondary" id="bt_healthblea">
+      <i class="fas fa-medkit"></i>
+	<br/>
+    <span>{{Santé}}</span>
   </div>
-  <div class="cursor" id="bt_graphblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-	<center>
-	<i class="fa fa-asterisk" style="font-size : 6em;color:#767676;"></i>
-	</center>
-	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Réseau}}</center></span>
+  <div class="cursor logoSecondary" id="bt_graphblea">
+	<i class="fas fa-asterisk"></i>
+	<br/>
+	<span>{{Réseau}}</span>
 	</div>
-  <div class="cursor" id="bt_remoteblea" style="background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-	<center>
-	<i class="fa fa-bluetooth" style="font-size : 6em;color:#767676;"></i>
-	</center>
-	<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676"><center>{{Antennes}}</center></span>
+  <div class="cursor logoSecondary" id="bt_remoteblea">
+	<i class="fab fa-bluetooth"></i>
+	<br/>
+	<span>{{Antennes}}</span>
 	</div>
 </div>
 <legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
+<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-	echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-	echo "<center>";
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
 	$alternateImg = $eqLogic->getConfiguration('iconModel');
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
-		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg" height="105" width="105" />';
+		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
 	} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
-		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="105" width="105" />';
+		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
 	} else {
-		echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="105" />';
+		echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
 	}
-	echo "</center>";
-	echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
+	echo '<br/>';
+	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 	echo '</div>';
 }
 ?>
 </div>
 </div>
 
-<div class="col-lg-10 col-md-9 col-sm-8 eqLogic" style="border-left: solid 1px #EEE; padding-left: 25px;display: none;">
+<div class="col-lg-12 eqLogic" style="display: none;">
  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>

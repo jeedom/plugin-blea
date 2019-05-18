@@ -42,7 +42,7 @@ $eqLogics = blea::byType('blea');
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	$alternateImg = $eqLogic->getConfiguration('iconModel');
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
 		$img = '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg" height="55" width="55" style="' . $opacity . '"/>';

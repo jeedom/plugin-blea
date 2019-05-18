@@ -29,14 +29,22 @@ class Hector():
 				if not conn.isconnected:
 					return
 			battery = struct.unpack('2B',conn.readCharacteristic('0x2e'))
+                        battery = int(str(hex(battery[0])[2:].zfill(2) + hex(battery[1])[2:].zfill(2)),16)
 			temperature = struct.unpack('2B',conn.readCharacteristic('0x34'))
-			humidity = struct.unpack('2B',conn.readCharacteristic('0x3c'))
-			pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 			temperature = int(str(hex(temperature[0])[2:].zfill(2) + hex(temperature[1])[2:].zfill(2)),16)
+			humidity = struct.unpack('2B',conn.readCharacteristic('0x3c'))
 			humidity = int(str(hex(humidity[0])[2:].zfill(2) + hex(humidity[1])[2:].zfill(2)),16)
-			logging.debug(str(pression))
+                        # If pression == Ox00014601 (83457) -> read again at least for 3 attempts
+			# Hector's sensor seems to always return Ox00014601 at first read attempt
+			pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 			pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
-			battery = int(str(hex(battery[0])[2:].zfill(2) + hex(battery[1])[2:].zfill(2)),16)
+                        pression_read = 0
+                        while (pression <= 14601 and pression_read < 3):
+                            time.sleep(1)
+                            pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
+			    pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
+                            pression_read += 1
+			logging.debug(str(pression))
 			result['temperature'] = float(temperature)/10
 			result['humidity'] = float(humidity)/10
 			result['pressure'] = float(pression)/100

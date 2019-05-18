@@ -4,12 +4,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Jeedom is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 
@@ -33,7 +33,7 @@ try:
 except ImportError:
 	print "Error: importing module from jeedom folder"
 	sys.exit(1)
-	
+
 try:
 	import queue
 except ImportError:
@@ -171,7 +171,7 @@ def listen():
 				while globals.PENDING_ACTION:
 					time.sleep(0.01)
 			except Exception, e:
-				if not globals.PENDING_ACTION and not globals.LEARN_MODE: 
+				if not globals.PENDING_ACTION and not globals.LEARN_MODE:
 					if globals.SCAN_ERRORS < 5:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
@@ -257,7 +257,7 @@ def read_socket(name):
 		except Exception,e:
 			logging.error("SOCKET-READ------Exception on socket : %s" % str(e))
 		time.sleep(0.3)
-		
+
 def heartbeat_handler(delay):
 	highestcpu=0
 	while 1:
@@ -344,7 +344,7 @@ def action_handler(message):
 					logging.debug("ACTION------Refresh failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 				break
-		if result and len(result) > 2 :
+		if result and len(result) >= 2 :
 			if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
 				return
 			else:
@@ -420,7 +420,7 @@ def read_device(name):
 def handler(signum=None, frame=None):
 	logging.debug("GLOBAL------Signal %i caught, exiting..." % int(signum))
 	shutdown()
-	
+
 def shutdown():
 	logging.debug("GLOBAL------Shutdown")
 	logging.debug("GLOBAL------Removing PID file " + str(globals.pidfile))
