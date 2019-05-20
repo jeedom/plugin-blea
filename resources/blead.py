@@ -66,7 +66,7 @@ class ScanDelegate(DefaultDelegate):
 				elif desc == 'Manufacturer':
 					manuf = value.strip()
 			for device in globals.COMPATIBILITY:
-				if device().isvalid(name,manuf):
+				if device().isvalid(name,manuf,data,mac):
 					findDevice=True
 					if device().ignoreRepeat and mac in globals.IGNORE:
 						return
@@ -83,10 +83,13 @@ class ScanDelegate(DefaultDelegate):
 						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
 					globals.PENDING_ACTION = True
 					try:
-						action = device().parse(data,mac,name)
+						action = device().parse(data,mac,name,manuf)
 					except Exception, e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
+						globals.PENDING_ACTION = False
+						return
 					if not action:
+						globals.PENDING_ACTION = False
 						return
 					globals.PENDING_ACTION = False
 					action['id'] = mac.upper()

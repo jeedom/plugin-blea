@@ -97,7 +97,7 @@ class Awoxmesh():
 		self.mesh_longtermkey = P_JEEDOM_LONGTERMKEY
 		
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() == P_DEFAULTNAME:
 			logging.info('Detected unpaired device')
 		

@@ -13,7 +13,7 @@ class Yeelight():
 		self.ignoreRepeat = True
 		self.key = 'bbc123456789abc123456789abc12345'
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if 'xmctd_' in [name.lower()] or name.lower()==self.name:
 			return True
 	def parse(self,data,mac,name,manuf):

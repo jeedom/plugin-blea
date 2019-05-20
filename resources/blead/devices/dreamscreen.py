@@ -9,7 +9,7 @@ class DreamScreen():
 		self.name = 'dreamscreen'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in [self.name]:
 			return True
 			

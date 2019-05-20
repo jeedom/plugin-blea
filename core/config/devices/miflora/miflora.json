@@ -3,12 +3,9 @@
         "name": "Miflora",
         "groupe" : "Plante",
 		"configuration" : {
-			"needsrefresh" : 1,
 			"name" : "miflora",
 			"battery_type" : "1x3V CR2032",
-			"xiaomi" : 1,
-			"delay" : 18000,
-			"cancontrol" : 1
+			"xiaomi" : 1
 		},
         "commands": [
 			{

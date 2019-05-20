@@ -10,7 +10,7 @@ class LogiSwitch():
 		self.name = 'logiswitch'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if 'logi switch' in name.lower():
 			return True
 			

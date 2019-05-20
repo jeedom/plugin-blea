@@ -11,7 +11,7 @@ class Miflora():
 		self.name = 'ropot'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		validname = ['ropot']
 		if name in validname:
 			return True

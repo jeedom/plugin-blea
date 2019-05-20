@@ -12,7 +12,7 @@ class Smartplug():
 		self.name = 'smartplug'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
 			return True
 			
