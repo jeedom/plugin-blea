@@ -66,7 +66,7 @@ class ScanDelegate(DefaultDelegate):
 				elif desc == 'Manufacturer':
 					manuf = value.strip()
 			for device in globals.COMPATIBILITY:
-				if device().isvalid(name,manuf,data):
+				if device().isvalid(name,manuf,data,mac):
 					findDevice=True
 					if device().ignoreRepeat and mac in globals.IGNORE:
 						return

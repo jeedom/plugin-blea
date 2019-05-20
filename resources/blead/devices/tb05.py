@@ -10,7 +10,7 @@ class Tb05():
 		self.name = 'tb05'
 		self.ignoreRepeat = True
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in [self.name,'bt05']:
 			return True
 			

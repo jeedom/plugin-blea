@@ -12,7 +12,7 @@ class Playbulb():
 		self.name = 'playbulb'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb'):
 			return True
 	def parse(self,data,mac,name,manuf):

@@ -13,10 +13,10 @@ class XiaomiHT():
 		self.name = 'xiaomiht'
 		self.ignoreRepeat = True
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in ['mj_ht_v1','cleargrass temp & rh']:
 			return True
-		if data.lower().startswith("95fe"): #dirty temporary fix, device doesn't report it's name with passive scan 
+		if data.lower().startswith("95fe") and (mac.lower().startswith("4c:65:a8") or mac.lower().startswith("58:2d:34")):
 			#broadcasted advertising data
 			return True
 	
@@ -56,27 +56,27 @@ class XiaomiHT():
 		
 	def read(self,mac):
 		result={}
-		#try:
-		#	conn = Connector(mac)
-		#	conn.connect()
-		#	if not conn.isconnected:
-		#		conn.connect()
-		#		if not conn.isconnected:
-		#			return
-		#	Firm = bytearray(conn.readCharacteristic('0x24'))
-		#	batt = bytearray(conn.readCharacteristic('0x18'))
-		#	battery = batt[0]
-		#	firmware = "".join(map(chr, Firm))
-		#	notification = Notification(conn,XiaomiHT)
-		#	conn.writeCharacteristic('0x10','0100',response=True)
-		#	notification.subscribe(2)
-		#	result['battery'] = battery
-		#	result['firmware'] = firmware
-		#	result['id'] = mac
-		#	logging.debug('XIAOMIHT------'+str(result))
-		#	return result
-		#except Exception,e:
-		#	logging.error(str(e))
+		try:
+			conn = Connector(mac)
+			conn.connect()
+			if not conn.isconnected:
+				conn.connect()
+				if not conn.isconnected:
+					return
+			Firm = bytearray(conn.readCharacteristic('0x24'))
+			batt = bytearray(conn.readCharacteristic('0x18'))
+			battery = batt[0]
+			firmware = "".join(map(chr, Firm))
+			notification = Notification(conn,XiaomiHT)
+			conn.writeCharacteristic('0x10','0100',response=True)
+			notification.subscribe(2)
+			result['battery'] = battery
+			result['firmware'] = firmware
+			result['id'] = mac
+			logging.debug('XIAOMIHT------'+str(result))
+			return result
+		except Exception,e:
+			logging.error(str(e))
 		return result
 	
 	def handlenotification(self,conn,handle,data,action={}):

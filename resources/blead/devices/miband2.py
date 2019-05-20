@@ -18,7 +18,7 @@ class Miband2():
 		self.name = 'miband2'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in ['mi band 2','mi2a',self.name]:
 			return True
 			

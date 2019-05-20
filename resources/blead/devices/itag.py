@@ -10,7 +10,7 @@ class Itag():
 		self.name = 'itag'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in [self.name,'mle-15']:
 			return True
 			

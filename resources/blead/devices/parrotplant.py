@@ -115,7 +115,7 @@ class FlowerPower(ParrotPlant):
 			'battery': '0x4c'
 		}
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		return str(name).startswith('Flower power')
 
 globals.COMPATIBILITY.append(FlowerPower)
@@ -137,7 +137,7 @@ class ParrotPot(ParrotPlant):
 			'battery': '0x4b'
 		}
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		return str(name).startswith('Parrot pot')
 
 globals.COMPATIBILITY.append(ParrotPot)

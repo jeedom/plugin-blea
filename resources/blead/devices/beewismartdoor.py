@@ -16,7 +16,7 @@ class BeeWiSmartDoor():
         self.name = 'beewi smart door'
         self.ignoreRepeat = False
 
-    def isvalid(self,name,manuf='',data=''):
+    def isvalid(self,name,manuf='',data='',mac=''):
         if manuf[0:8] == '0d00080c':
             return True   
         # if name.lower() == self.name:

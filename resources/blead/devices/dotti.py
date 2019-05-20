@@ -10,7 +10,7 @@ class Dotti():
 		self.name = 'dotti'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if self.name in name.lower():
 			return True
 

@@ -14,7 +14,7 @@ class Ruuvi():
 		self.name = 'ruuvi'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if data[0:4] == 'aafe' or manuf[0:4] in ['9904']:
 			return True
 

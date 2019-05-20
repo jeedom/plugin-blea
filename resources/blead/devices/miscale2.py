@@ -9,7 +9,7 @@ class MiScale2():
 		self.name = 'miscale2'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name[0:5] == 'MIBCS':
 			return True
 

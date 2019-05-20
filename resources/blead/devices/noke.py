@@ -10,7 +10,7 @@ class Noke():
 		self.name = 'noke'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if 'noke' in name.lower():
 			return True
 			
