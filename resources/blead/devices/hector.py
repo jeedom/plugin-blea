@@ -10,7 +10,7 @@ class Hector():
 		self.name = 'hector'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() == self.name:
 			return True
 			

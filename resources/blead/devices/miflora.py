@@ -11,13 +11,65 @@ class Miflora():
 		self.name = 'miflora'
 		self.ignoreRepeat = False
 
-	def isvalid(self,name,manuf='',data=''):
+	def isvalid(self,name,manuf='',data='',mac=''):
 		validname = ['Flower mate','Flower care']
 		if name in validname:
+			return True
+		if data.lower().startswith("95fe") and (mac.lower().startswith("c4:7c:8d")):
+			#broadcasted advertising data
 			return True
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
+		try:
+			if data.lower().startswith("95fe"):
+				##todo parse data
+				logging.debug('Xiaomi Flower Care PARSE data: ' + data ) 
+				val_type = data[28:30].lower()
+				val_len =  data[32:34]
+				val_data = data[34:]
+				if val_type in ['04']:	 # type: temperature
+					t_data = int(val_data[2:4]+val_data[0:2],16)
+					temp = t_data/10.0
+					logging.debug('XiaomiFlower------ Advertising Data=> Temp' + str(temp))
+					action['temperature'] = temp
+				elif val_type in ['06']: # type: humidity
+					h_data = int(val_data[2:4]+val_data[0:2],16)
+					hum = h_data/10.0
+					logging.debug('XiaomiFlower------ Advertising Data=> Humidity: ' + str(hum))
+					action['humidity'] = hum
+				elif val_type in ['07']: # type: illuminance
+					h_data = int(val_data[4:6]+val_data[2:4]+val_data[0:2],16)
+					ill = h_data
+					logging.debug('XiaomiFlower------ Advertising Data=> Illuminance: ' + str(ill))
+					action['sunlight'] = ill
+				elif val_type in ['08']: # type: moisture
+					h_data = int(val_data[2:4]+val_data[0:2],16)
+					moist = h_data
+					logging.debug('XiaomiFlower------ Advertising Data=> Moist: ' + str(moist))
+					action['moisture'] = moist
+				elif val_type in ['09']: # type: fertility
+					h_data = int(val_data[2:4]+val_data[0:2],16)
+					fert = h_data
+					logging.debug('XiaomiFlower------ Advertising Data=> Fertility: ' + str(fert))
+					action['fertility'] = fert
+				elif val_type in ['0a']: # type: battery
+					b_data = val_data[0:2]
+					batt = int(b_data,16)
+					logging.debug('XiaomiFlower------ Advertising Data=> Batt: ' + str(batt))
+					action['battery'] = batt
+				elif val_type in ['0d']: # type: temp&moist
+					t_data = int(val_data[2:4]+val_data[0:2],16)
+					temp = t_data/10.0
+					h_data = int(val_data[6:8]+val_data[4:6],16)
+					hum = h_data/10.0
+					logging.debug('XiaomiFlower------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))
+					action['temperature'] = temp
+					action['moisture'] = hum
+		except Exception,e:
+			logging.error(str(e))
+		except Exception, e:
+			logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 		return action
 
 	def read(self,mac):
