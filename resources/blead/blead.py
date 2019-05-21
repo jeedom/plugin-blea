@@ -154,7 +154,7 @@ def listen():
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + 29)	< int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + 29)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())  
@@ -276,7 +276,7 @@ def heartbeat_handler(delay):
 			globals.LEARN_MODE = False
 			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
 			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-		if (globals.LAST_VIRTUAL + 60)	< int(time.time()):
+		if (globals.LAST_VIRTUAL + 60)  < int(time.time()):
 			for device in globals.KNOWN_DEVICES:
 				action={}
 				if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
@@ -288,7 +288,7 @@ def heartbeat_handler(delay):
 						action['source'] = globals.daemonname
 						globals.JEEDOM_COM.add_changes('devices::'+device,action)
 						globals.LAST_VIRTUAL = int(time.time())
-		if (globals.LAST_BEAT + 55)	 < int(time.time()):
+		if (globals.LAST_BEAT + 55)  < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
 			globals.LAST_BEAT = int(time.time())
 		time.sleep(1)

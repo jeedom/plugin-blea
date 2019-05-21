@@ -28,8 +28,8 @@ class XiaomiHT():
 			logging.debug('Xiaomi PARSE data: ' + data ) 
 			val_type = data[26:28].lower()
 			val_len =  data[30:32]
-			val_data = data[32:40]			 
-			if val_type in ['04']:	 # type: temperature
+			val_data = data[32:40]
+			if val_type in ['04']: # type: temperature
 				t_data = val_data[2:4] + val_data[0:2]
 				temp = utils.signed_int(t_data)/10.0
 				logging.debug('XiaomiHT------ Advertising Data=> Temp' + str(temp))
