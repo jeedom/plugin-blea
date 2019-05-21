@@ -36,22 +36,22 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
    <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
       <i class="fas fa-wrench"></i>
 	<br/>
-    <span class="text-cursor">{{Configuration}}</span>
+    <span>{{Configuration}}</span>
   </div>
   <div class="cursor logoSecondary" id="bt_healthblea">
       <i class="fas fa-medkit"></i>
 	<br/>
-    <span class="text-cursor">{{Santé}}</span>
+    <span>{{Santé}}</span>
   </div>
   <div class="cursor logoSecondary" id="bt_graphblea">
 	<i class="fas fa-asterisk"></i>
 	<br/>
-	<span class="text-cursor">{{Réseau}}</span>
+	<span>{{Réseau}}</span>
 	</div>
   <div class="cursor logoSecondary" id="bt_remoteblea">
 	<i class="fab fa-bluetooth"></i>
 	<br/>
-	<span class="text-cursor">{{Antennes}}</span>
+	<span>{{Antennes}}</span>
 	</div>
 </div>
 <legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
