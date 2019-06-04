@@ -33,10 +33,12 @@ foreach ($remotes as $remote){
 	$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 	$antennas[$name] = $info;
 }
-$infolocal=array();
-$infolocal['x'] = config::byKey('positionx', 'blea', 999);
-$infolocal['y'] = config::byKey('positiony', 'blea', 999);
-$antennas['local'] = $infolocal;
+if (config::byKey('noLocal', 'blea', 0) == 0){
+	$infolocal=array();
+	$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+	$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+	$antennas['local']=$infolocal;
+}
 foreach (eqLogic::byType('blea') as $eqLogic){
 	$info =array();
 	$object = $eqLogic->getObject();

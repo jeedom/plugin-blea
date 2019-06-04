@@ -157,13 +157,21 @@ class blea extends eqLogic {
 			$info['y'] = $remote->getConfiguration('positiony',999);
 			$antennas[$name]=$info;
 		}
-		$infolocal=array();
-		$infolocal['x'] = config::byKey('positionx', 'blea', 999);
-		$infolocal['y'] = config::byKey('positiony', 'blea', 999);
-		$antennas['local']=$infolocal;
+		if (config::byKey('noLocal', 'blea', 0) == 0){
+			$infolocal=array();
+			$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+			$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+			$antennas['local']=$infolocal;
+		}
 		foreach (eqLogic::byType('blea') as $eqLogic){
 			$info =array();
-			$info['name'] = $eqLogic->getName().' ['.$eqLogic->getObject()->getName().']';
+			$object = $eqLogic->getObject();
+			if (is_null($object)) {
+				$object = 'Aucun';
+			} else {
+				$object = $object->getName();
+			}
+			$info['name'] = $eqLogic->getName().' ['.$object.']';
 			$info['icon'] = $eqLogic->getConfiguration('iconModel');
 			$info['rssi'] = array();
 			foreach ($eqLogic->getCmd('info') as $cmd) {
@@ -174,7 +182,7 @@ class blea extends eqLogic {
 					$info['rssi'][$remotename] = $remoterssi;
 				}
 			}
-		$eqLogics[$eqLogic->getName().' ['.$eqLogic->getObject()->getName().']']=$info;
+		$eqLogics[$eqLogic->getName().' ['.$object.']']=$info;
 		}
 		return [$eqLogics,$antennas];
 	}
@@ -357,7 +365,10 @@ class blea extends eqLogic {
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = 'blea';
-		$return['state'] = 'nok';
+		if (config::byKey('noLocal', 'blea', 0) == 1){
+			$return['state'] = 'ok';
+			return $return;	
+		}
 		$pid_file = jeedom::getTmpFolder('blea') . '/deamon.pid';
 		if (file_exists($pid_file)) {
 			if (@posix_getsid(trim(file_get_contents($pid_file)))) {

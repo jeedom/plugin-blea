@@ -30,6 +30,13 @@ if (!isConnect('admin')) {
            <input type="checkbox" class="configKey" data-l1key="allowAllinclusion" />
        </div>
 	</div>
+	 <div class="form-group">
+        <label class="col-lg-4 control-label">{{Pas de local}}</label>
+        <div class="col-lg-3">
+           <input type="checkbox" class="configKey" data-l1key="noLocal" />
+       </div>
+	</div>
+	
    </fieldset>
 </form>
 <form class="form-horizontal">
