@@ -39,7 +39,7 @@ class Hector():
 			pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 			pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
                         pression_read = 0
-                        while (pression <= 14601 and pression_read < 3):
+                        while (pression <= 83457 and pression_read < 3):
                             time.sleep(1)
                             pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 			    pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
