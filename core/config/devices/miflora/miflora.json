@@ -5,7 +5,8 @@
 		"configuration" : {
 			"name" : "miflora",
 			"battery_type" : "1x3V CR2032",
-			"xiaomi" : 1
+			"xiaomi" : 1,
+			"cancontrol" : 1
 		},
         "commands": [
 			{
