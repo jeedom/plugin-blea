@@ -365,8 +365,9 @@ class blea extends eqLogic {
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = 'blea';
+		$return['state'] = 'ok';
 		if (config::byKey('noLocal', 'blea', 0) == 1){
-			$return['state'] = 'ok';
+			$return['launchable'] = 'ok';
 			return $return;	
 		}
 		$pid_file = jeedom::getTmpFolder('blea') . '/deamon.pid';
