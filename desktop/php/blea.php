@@ -143,8 +143,11 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
-                <option value="local">{{Local}}</option>
+                
 				<?php
+				if (config::byKey('noLocal', 'blea', 0) == 0){
+					echo '<option value="local">{{Local}}</option>';
+				}
 				try{
 					$hasblea = plugin::byId('blea');
 					} catch (Exception $e) {
@@ -171,8 +174,10 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<label class="col-sm-3 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
-                <option value="local">{{Local}}</option>
 				<?php
+				if (config::byKey('noLocal', 'blea', 0) == 0){
+					echo '<option value="local">{{Local}}</option>';
+				}
 				try{
 					$hasblea = plugin::byId('blea');
 					} catch (Exception $e) {

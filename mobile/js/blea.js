@@ -54,11 +54,15 @@
 		$('#graph_network svg').remove();
 	var graph = Viva.Graph.graph();
 	for (antenna in antennas) {
-		if (antenna == 'local'){
-			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/jeeblue.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
+		if (antenna == 'local') {
+			icon = 'jeeblue';
 		} else {
-			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/antenna.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
+			icon = 'antenna';
 		}
+		if (antennas[antenna]['dead']) {
+			icon = icon + '-ko';
+		}
+		graph.addNode(antenna,{url : 'plugins/blea/3rdparty/'+icon+'.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		topin = graph.getNode(antenna);
 		topin.isPinned = true;
 	}
@@ -85,6 +89,9 @@
 		}
 		if (haslink != 0){
 			for (antenna in antennas){
+				if (antennas[antenna]['dead']) {
+					continue;
+				}
 				linked = 0;
 				for (linkedantenna in eqLogics[eqlogic]['rssi']){
 					if (antenna == linkedantenna && eqLogics[eqlogic]['rssi'][linkedantenna] != -200){
