@@ -4,6 +4,7 @@
 - Début de gestion dynamique de modèles
 - Début réécriture gamme playbulb pour plus avoir de différence en fonction des firmwares
 - Correction bug sur status démon dans certains cas
+- Deblocage des fonctions refresh / delai : chaque user fait ce qu'il veut (attention quand même)
 - NB : plus besoin de refresh pour les xiaomi HT les miflora : gain de batterie, meilleur portée, plus de datas. Je recommande de cliquer sur recréer les commandes pour ces devices (en choisissant ne pas supprimer)
 
 # 22/05/2019
