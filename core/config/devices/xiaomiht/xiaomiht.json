@@ -1,7 +1,8 @@
 {
     "xiaomiht": {
-        "name": "Xioami Température Humidité",
+        "name": "Xiaomi Température Humidité",
         "groupe" : "Température",
+        "models" : {"xiaomiht/xiaomiht_cleargrass" : {"configuration" :{"battery_type" : "1x3V CR2032"}}},
 		"configuration" : {
 			"needsrefresh" : 0,
 			"name" : "xiaomiht",
@@ -9,7 +10,7 @@
 			"xiaomi" : 1,
 			"delay" : 1800,
 			"cancontrol" : 0
-		},
+    },
         "commands": [
 			{
                 "name": "Température",
@@ -89,8 +90,8 @@
         ],
 		"compatibility": [
             {
-                "manufacturer": "Xiaomi",
-                "name": "Température Humidité",
+        "manufacturer": "Xiaomi",
+        "name": "Température Humidité",
 				"doc": "",
 				"type": "Capteurs",
 				"battery_type": "1x1.5V AAA",

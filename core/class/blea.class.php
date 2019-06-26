@@ -370,7 +370,7 @@ class blea extends eqLogic {
 		$return['state'] = 'ok';
 		if (config::byKey('noLocal', 'blea', 0) == 1){
 			$return['launchable'] = 'ok';
-			return $return;	
+			return $return;
 		}
 		$pid_file = jeedom::getTmpFolder('blea') . '/deamon.pid';
 		if (file_exists($pid_file)) {
@@ -614,7 +614,7 @@ class blea extends eqLogic {
 	}
 
 	public function postSave() {
-		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device')) {
+		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device') || $this->getConfiguration('applyModel') != $this->getConfiguration('iconModel')) {
 			$this->applyModuleConfiguration();
 		} else {
 			$this->allowDevice();
@@ -701,6 +701,35 @@ class blea extends eqLogic {
 	}
 
 	public function applyModuleConfiguration() {
+	$device = self::devicesParameters($this->getConfiguration('device'));
+	if (!is_array($device)) {
+		return true;
+	}
+		if ($this->getConfiguration('applyDevice') == $this->getConfiguration('device')){
+			$model=$this->getConfiguration('iconModel','');
+			if (isset($device['models'])) {
+				if (isset($device['models'][$model])) {
+					foreach ($device['models'][$model]['configuration'] as $key => $value) {
+						$this->setConfiguration($key, $value);
+					}
+				} else {
+					if (isset($device['configuration'])) {
+						foreach ($device['configuration'] as $key => $value) {
+							$this->setConfiguration($key, $value);
+						}
+					}
+				}
+			} else {
+				if (isset($device['configuration'])) {
+					foreach ($device['configuration'] as $key => $value) {
+						$this->setConfiguration($key, $value);
+					}
+				}
+			}
+			$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
+			$this->save();
+			return true;
+		}
 		$this->setConfiguration('canbelocked',0);
 		$this->setConfiguration('cancontrol',0);
 		$this->setConfiguration('islocked',0);
@@ -712,12 +741,9 @@ class blea extends eqLogic {
 		$this->setConfiguration('resetRssis',1);
 		$this->setConfiguration('specificwidgets',0);
 		$this->setConfiguration('applyDevice', $this->getConfiguration('device'));
+		$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
 		$this->save();
 		if ($this->getConfiguration('device') == '') {
-			return true;
-		}
-		$device = self::devicesParameters($this->getConfiguration('device'));
-		if (!is_array($device)) {
 			return true;
 		}
 		event::add('jeedom::alert', array(
