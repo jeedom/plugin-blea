@@ -143,7 +143,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
-                
+
 				<?php
 				if (config::byKey('noLocal', 'blea', 0) == 0){
 					echo '<option value="local">{{Local}}</option>';
@@ -162,15 +162,21 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<option value="all">{{Tous}}</option>
               </select>
             </div>
-			 <div class="form-group refreshdelay" style="display:none">
-				<label class="col-sm-3 control-label help" data-help="{{Inutile de mettre des valeurs trop faible, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}">{{Refresh des infos (en s)}}</label>
+						<div class="form-group">
+							<label class="col-sm-3 control-label help" data-help="{{Demandera les infos en forcés. A eviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
+							<div class="col-sm-3">
+							 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr canberefreshed" data-l1key="configuration" data-l2key="needsrefresh" />
+							</div>
+						</div>
+			 <div class="form-group refreshdelay">
+				<label class="col-sm-3 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}">{{Refresh des infos (en s)}}</label>
 				<div class="col-sm-3">
 				<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
 				</div>
 			</div>
-			
+
 		</div>
-		<div class="form-group cancontrol" style="display:none">
+		<div class="form-group cancontrol">
 				<label class="col-sm-3 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
               <div class="col-sm-3">
                 <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
@@ -192,7 +198,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 				<option value="all">{{Tous}}</option>
               </select>
             </div>
-			<div class="form-group canbelocked" style="display:none">
+			<div class="form-group canbelocked">
 				<label class="col-sm-3 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
 				<div class="col-sm-3">
 				 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" />

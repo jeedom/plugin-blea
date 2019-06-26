@@ -367,9 +367,8 @@ class blea extends eqLogic {
 	public static function deamon_info() {
 		$return = array();
 		$return['log'] = 'blea';
-		$return['state'] = 'nok';
+		$return['state'] = 'ok';
 		if (config::byKey('noLocal', 'blea', 0) == 1){
-			$return['state'] = 'ok';
 			$return['launchable'] = 'ok';
 			return $return;
 		}
@@ -680,8 +679,8 @@ class blea extends eqLogic {
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
 				'id' => $this->getLogicalId(),
-				'delay' => $this->getConfiguration('delay',0),
-				'needsrefresh' => $this->getConfiguration('needsrefresh',0),
+				'delay' => intval($this->getConfiguration('delay',0)),
+				'needsrefresh' => intval($this->getConfiguration('needsrefresh',0)),
 				'name' => $this->getConfiguration('name','0'),
 				'refreshlist' => $this->getConfiguration('refreshlist',array()),
 				'islocked' => $islocked,

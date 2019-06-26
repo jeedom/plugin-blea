@@ -80,11 +80,6 @@ function getModelListParam(_conf,_id) {
                 options += '<option value="'+i+'">'+data.result[0][i]['value']+'</option>';
             }
         }
-		if (data.result[1] == true){
-			$(".refreshdelay").show();
-		} else {
-			$(".refreshdelay").hide();
-		}
 		if (data.result[2] != false){
              $(".globalRemark").show();
              $(".globalRemark").empty().append(data.result[2]);
@@ -97,16 +92,6 @@ function getModelListParam(_conf,_id) {
 			 $(".specificmodal").attr('data-modal', data.result[3]);
          } else {
              $(".specificmodal").hide();
-         }
-		 if (data.result[4] != false){
-             $(".cancontrol").show();
-         } else {
-             $(".cancontrol").hide();
-         }
-		 if (data.result[5] != false){
-             $(".canbelocked").show();
-         } else {
-             $(".canbelocked").hide();
          }
         $(".modelList").show();
         $(".listModel").html(options);
