@@ -4,6 +4,7 @@
         "groupe" : "Plante",
 		"configuration" : {
 			"name" : "miflora",
+  		"needsrefresh" : 0,
 			"battery_type" : "1x3V CR2032",
 			"xiaomi" : 1
 		},
