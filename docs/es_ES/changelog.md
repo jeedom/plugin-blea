@@ -1,3 +1,8 @@
+# 22/05/2019
+
+- Passage de la page d'équipement en V4 compliant.
+- Amélioration des xiaomi hygrothermographe (plus besoin de connection pour les datas) merci @kipk
+- Amélioration des miflora (plus besoin de connection pour les datas)
 
 # 09/03/2019
 

@@ -13,21 +13,21 @@ class XiaomiHT():
 		self.ignoreRepeat = True
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name.lower() in ['mj_ht_v1']:
+		if name.lower() in ['mj_ht_v1','cleargrass temp & rh']:
 			return True
 		if data.lower().startswith("95fe") and (mac.lower().startswith("4c:65:a8") or mac.lower().startswith("58:2d:34")):
 			#broadcasted advertising data
 			return True
-			
+
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		if data.lower().startswith("95fe"):
 			##todo parse data
-			logging.debug('Xiaomi PARSE data: ' + data ) 
+			logging.debug('Xiaomi PARSE data: ' + data )
 			val_type = data[26:28].lower()
 			val_len =  data[30:32]
-			val_data = data[32:40]			 
+			val_data = data[32:40]
 			if val_type in ['04']:	 # type: temperature
 				t_data = val_data[2:4] + val_data[0:2]
 				temp = int(t_data,16)/10.0
@@ -52,7 +52,7 @@ class XiaomiHT():
 				 action['temperature'] = temp
 				 action['moisture'] = hum
 		return action
-		
+
 	def read(self,mac):
 		result={}
 		try:
@@ -77,7 +77,7 @@ class XiaomiHT():
 		except Exception,e:
 			logging.error(str(e))
 		return result
-	
+
 	def handlenotification(self,conn,handle,data,action={}):
 		result={}
 		if hex(handle) == '0xe':

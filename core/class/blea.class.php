@@ -155,15 +155,25 @@ class blea extends eqLogic {
 			$name = $remote->getRemoteName();
 			$info['x'] = $remote->getConfiguration('positionx',999);
 			$info['y'] = $remote->getConfiguration('positiony',999);
+			$last = $remote->getConfiguration('lastupdate', '0');
+			$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 			$antennas[$name]=$info;
 		}
-		$infolocal=array();
-		$infolocal['x'] = config::byKey('positionx', 'blea', 999);
-		$infolocal['y'] = config::byKey('positiony', 'blea', 999);
-		$antennas['local']=$infolocal;
+		if (config::byKey('noLocal', 'blea', 0) == 0){
+			$infolocal=array();
+			$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+			$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+			$antennas['local']=$infolocal;
+		}
 		foreach (eqLogic::byType('blea') as $eqLogic){
 			$info =array();
-			$info['name'] = $eqLogic->getName().' ['.$eqLogic->getObject()->getName().']';
+			$object = $eqLogic->getObject();
+			if (is_null($object)) {
+				$object = 'Aucun';
+			} else {
+				$object = $object->getName();
+			}
+			$info['name'] = $eqLogic->getName().' ['.$object.']';
 			$info['icon'] = $eqLogic->getConfiguration('iconModel');
 			$info['rssi'] = array();
 			foreach ($eqLogic->getCmd('info') as $cmd) {
@@ -174,7 +184,7 @@ class blea extends eqLogic {
 					$info['rssi'][$remotename] = $remoterssi;
 				}
 			}
-		$eqLogics[$eqLogic->getName().' ['.$eqLogic->getObject()->getName().']']=$info;
+		$eqLogics[$eqLogic->getName().' ['.$object.']']=$info;
 		}
 		return [$eqLogics,$antennas];
 	}
@@ -358,6 +368,11 @@ class blea extends eqLogic {
 		$return = array();
 		$return['log'] = 'blea';
 		$return['state'] = 'nok';
+		if (config::byKey('noLocal', 'blea', 0) == 1){
+			$return['state'] = 'ok';
+			$return['launchable'] = 'ok';
+			return $return;
+		}
 		$pid_file = jeedom::getTmpFolder('blea') . '/deamon.pid';
 		if (file_exists($pid_file)) {
 			if (@posix_getsid(trim(file_get_contents($pid_file)))) {
@@ -600,7 +615,7 @@ class blea extends eqLogic {
 	}
 
 	public function postSave() {
-		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device')) {
+		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device') || $this->getConfiguration('applyModel') != $this->getConfiguration('iconModel')) {
 			$this->applyModuleConfiguration();
 		} else {
 			$this->allowDevice();
@@ -687,6 +702,35 @@ class blea extends eqLogic {
 	}
 
 	public function applyModuleConfiguration() {
+	$device = self::devicesParameters($this->getConfiguration('device'));
+	if (!is_array($device)) {
+		return true;
+	}
+		if ($this->getConfiguration('applyDevice') == $this->getConfiguration('device')){
+			$model=$this->getConfiguration('iconModel','');
+			if (isset($device['models'])) {
+				if (isset($device['models'][$model])) {
+					foreach ($device['models'][$model]['configuration'] as $key => $value) {
+						$this->setConfiguration($key, $value);
+					}
+				} else {
+					if (isset($device['configuration'])) {
+						foreach ($device['configuration'] as $key => $value) {
+							$this->setConfiguration($key, $value);
+						}
+					}
+				}
+			} else {
+				if (isset($device['configuration'])) {
+					foreach ($device['configuration'] as $key => $value) {
+						$this->setConfiguration($key, $value);
+					}
+				}
+			}
+			$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
+			$this->save();
+			return true;
+		}
 		$this->setConfiguration('canbelocked',0);
 		$this->setConfiguration('cancontrol',0);
 		$this->setConfiguration('islocked',0);
@@ -698,12 +742,9 @@ class blea extends eqLogic {
 		$this->setConfiguration('resetRssis',1);
 		$this->setConfiguration('specificwidgets',0);
 		$this->setConfiguration('applyDevice', $this->getConfiguration('device'));
+		$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
 		$this->save();
 		if ($this->getConfiguration('device') == '') {
-			return true;
-		}
-		$device = self::devicesParameters($this->getConfiguration('device'));
-		if (!is_array($device)) {
 			return true;
 		}
 		event::add('jeedom::alert', array(

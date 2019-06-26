@@ -29,12 +29,16 @@ foreach ($remotes as $remote){
 	$name = $remote->getRemoteName();
 	$info['x'] = $remote->getConfiguration('positionx',999);
 	$info['y'] = $remote->getConfiguration('positiony',999);
-	$antennas[$name]=$info;
+	$last = $remote->getConfiguration('lastupdate', '0');
+	$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
+	$antennas[$name] = $info;
 }
-$infolocal=array();
-$infolocal['x'] = config::byKey('positionx', 'blea', 999);
-$infolocal['y'] = config::byKey('positiony', 'blea', 999);
-$antennas['local']=$infolocal;
+if (config::byKey('noLocal', 'blea', 0) == 0){
+	$infolocal=array();
+	$infolocal['x'] = config::byKey('positionx', 'blea', 999);
+	$infolocal['y'] = config::byKey('positiony', 'blea', 999);
+	$antennas['local']=$infolocal;
+}
 foreach (eqLogic::byType('blea') as $eqLogic){
 	$info =array();
 	$object = $eqLogic->getObject();
@@ -83,11 +87,15 @@ function load_graph(){
     $('#graph_network svg').remove();
 	var graph = Viva.Graph.graph();
 	for (antenna in antennas) {
-		if (antenna == 'local'){
-			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/jeeblue.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
+		if (antenna == 'local') {
+			icon = 'jeeblue';
 		} else {
-			graph.addNode(antenna,{url : 'plugins/blea/3rdparty/antenna.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
+			icon = 'antenna';
 		}
+		if (antennas[antenna]['dead']) {
+			icon = icon + '-ko';
+		}
+		graph.addNode(antenna,{url : 'plugins/blea/3rdparty/'+icon+'.png',antenna :1,x:antennas[antenna]['x'],y:antennas[antenna]['y']});
 		topin = graph.getNode(antenna);
 		topin.isPinned = true;
 	}
@@ -114,6 +122,9 @@ function load_graph(){
 		}
 		if (haslink != 0){
 			for (antenna in antennas){
+				if (antennas[antenna]['dead']) {
+					continue;
+				}
 				linked = 0;
 				for (linkedantenna in eqLogics[eqlogic]['rssi']){
 					if (antenna == linkedantenna && eqLogics[eqlogic]['rssi'][linkedantenna] != -200){

@@ -60,7 +60,7 @@ class ScanDelegate(DefaultDelegate):
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
-					name = value.strip()
+					name = value.strip().encode('utf-8')
 				elif 'Service Data' in desc:
 					data = value.strip()
 				elif desc == 'Manufacturer':
