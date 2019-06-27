@@ -1,3 +1,12 @@
+# 26/06/2019
+- Rajout du xiaomi cleargrass
+- Rajout du lywsd02 Xiaomi
+- Début de gestion dynamique de modèles
+- Début réécriture gamme playbulb pour plus avoir de différence en fonction des firmwares
+- Correction bug sur status démon dans certains cas
+- Deblocage des fonctions refresh / delai : chaque user fait ce qu'il veut (attention quand même)
+- NB : plus besoin de refresh pour les xiaomi HT les miflora : gain de batterie, meilleur portée, plus de datas. Je recommande de ne pas activer le refresh forcé qui n'est plus necessaire sauf si votre device semble ne pas advertiser correctement
+
 # 22/05/2019
 
 - Passage de la page d'équipement en V4 compliant.
