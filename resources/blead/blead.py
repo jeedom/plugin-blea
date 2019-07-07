@@ -35,9 +35,9 @@ except ImportError:
 	sys.exit(1)
 
 try:
-    import queue
+	import queue
 except ImportError:
-    import Queue as queue
+	import Queue as queue
 
 class ScanDelegate(DefaultDelegate):
 	import globals
@@ -158,10 +158,11 @@ def listen():
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
-				globals.SCANNER.start()
 				if globals.LEARN_MODE:
+					globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(3)
 				else:
+					globals.SCANNER.start(passive=True)
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
