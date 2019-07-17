@@ -345,7 +345,7 @@ class bodyMetrics:
 
 	# Return body type scale
 	def getBodyTypeScale(self):
-		return ['obèse', 'surpoids', 'trapu', 'manque d\'exercice', 'équilibré', 'équilibré musclé', 'maigre', 'équilibré maigre', 'maigre musclé']
+		return ['Obèse', 'Surpoids', 'Trapu', 'Manque d\'exercice', 'Equilibré', 'Equilibré musclé', 'Maigre', 'Equilibré maigre', 'Maigre musclé']
 
 	def getImcLabel(self):
 		imc = self.getBMI()
