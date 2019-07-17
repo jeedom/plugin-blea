@@ -1,0 +1,268 @@
+{
+    "miscale2": {
+        "name": "MiScale 2",
+        "groupe" : "Santé",
+		"configuration" : {
+			"specificmodal" : 1,
+			"specificclass" : 1,
+			"xiaomi" : 1,
+			"battery_type": "4x1.5V AA"
+		},
+        "commands": [
+			{
+                "name": "Dernier Poids",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "poids",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernière Impédance",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "ohm",
+                "isVisible": 1,
+                "logicalId": "impedance",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier LBM",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "lbm",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Taux graisse",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "%",
+                "isVisible": 1,
+                "logicalId": "fat",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Taux eau",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "%",
+                "isVisible": 1,
+                "logicalId": "water",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Masse Os",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "bones",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Masse Muscle",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "muscle",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Visceral",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "visceral",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier IMC",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imc",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier BMR",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kcal",
+                "isVisible": 1,
+                "logicalId": "bmr",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Idéal",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "ideal",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Type",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "body",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Masse vers idéal",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "fatmassideal",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Taux Protéine",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "%",
+                "isVisible": 1,
+                "logicalId": "protein",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Label IMC",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imclabel",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			}
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Xiaomi",
+                "name": "MiScale V2",
+				"doc": "",
+				"type": "Scale",
+				"battery_type": "4x1.5V AA",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Gestion de profils complète",
+				"inclusion" : "Mode inclusion",
+				"imglink": "miscale"
+            }
+        ]
+    }
+}

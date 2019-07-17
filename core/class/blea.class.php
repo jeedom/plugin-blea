@@ -445,6 +445,8 @@ class blea extends eqLogic {
 			$eqLogic->allowDevice();
 			usleep(500);
 		}
+		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'ready'));
+		self::socket_connection($value,True);
 	}
 
 	public static function saveAntennaPosition($_antennas){
@@ -687,6 +689,7 @@ class blea extends eqLogic {
 				'islocked' => $islocked,
 				'emitterallowed' => $emitter,
 				'refresherallowed' => $refresher,
+				'specificconfiguration' => $this->getConfiguration('specificconfiguration',array()),
 			);
 			$value = json_encode($value);
 			self::socket_connection($value,True);

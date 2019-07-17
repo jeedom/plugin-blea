@@ -5,6 +5,7 @@ import struct
 import math
 from bluepy import btle
 from multiconnect import Connector
+import binascii
 
 def tuple_to_hex(value):
 	result=''
@@ -65,3 +66,9 @@ def twos_complement(value, bits):
 	if (value & (1 << (bits - 1))) != 0:
 		value = value - (1 << bits)
 	return value
+
+def hex_to_binary(h):
+	return ''.join(byte_to_binary(ord(b)) for b in binascii.unhexlify(h))
+
+def byte_to_binary(n):
+	return ''.join(str((n & (1 << i)) and 1) for i in reversed(range(8)))

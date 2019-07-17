@@ -151,6 +151,8 @@ def listen():
 	thread.start_new_thread( heartbeat_handler, (19,))
 	logging.debug('GLOBAL------Heartbeat Thread Launched')
 	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname});
+	while not globals.READY:
+		time.sleep(1)
 	try:
 		while 1:
 			try:
@@ -158,11 +160,10 @@ def listen():
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
+				globals.SCANNER.start()
 				if globals.LEARN_MODE:
-					globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(3)
 				else:
-					globals.SCANNER.start(passive=True)
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
@@ -254,6 +255,9 @@ def read_socket(name):
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 					time.sleep(2)
 					shutdown()
+				elif message['cmd'] == 'ready':
+					logging.debug('Daemon is ready')
+					globals.READY = True
 		except Exception,e:
 			logging.error("SOCKET-READ------Exception on socket : %s" % str(e))
 		time.sleep(0.3)
@@ -359,7 +363,7 @@ def action_handler(message):
 				try:
 					result = device().action(message)
 				except Exception,e:
-						logging.debug("ACTION------Action failed : %s" % str(e))
+						logging.debug("ACTION------Action failed :" + str(e))
 				globals.PENDING_ACTION = False
 				if result :
 					if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:

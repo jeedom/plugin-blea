@@ -53,7 +53,8 @@ try {
 				$cmd->remove();
 			}
 		}
-		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
+		$eqLogic->setConfiguration('applyDevice','');
+		$eqLogic->save();
 		ajax::success();
 	}
 

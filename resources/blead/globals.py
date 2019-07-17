@@ -2,6 +2,7 @@ import time
 JEEDOM_COM = ''
 KNOWN_DEVICES = {}
 LEARN_MODE = False
+READY = False
 LEARN_MODE_ALL = 0
 LAST_BLUEPY = int(time.time())
 LAST_VIRTUAL = int(time.time())

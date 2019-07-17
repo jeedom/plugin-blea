@@ -40,10 +40,11 @@ class Connector():
 			self.conn = connection
 			logging.debug('CONNECTOR------Connected... ' + str(self.mac))
 		return
-		
+
 	def disconnect(self,force=False):
 		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] in [globals.daemonname,'all'] and force==False:
 			logging.debug('CONNECTOR------Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
+			globals.KEEPED_CONNECTION[self.mac]=self
 			return
 		logging.debug('CONNECTOR------Disconnecting... ' + str(self.mac))
 		i=0
@@ -111,7 +112,7 @@ class Connector():
 		if result :
 			logging.debug(str(result))
 		return True
-	
+
 	def getCharacteristics(self,handle='',handleend='',retry=1,type='public'):
 		logging.debug('CONNECTOR------Getting Characteristics... ' + str(self.mac))
 		if handleend == '':
@@ -135,7 +136,7 @@ class Connector():
 				self.connect(type=type)
 		logging.debug('CONNECTOR------Characteristics gotten... '+ str(self.mac))
 		return char
-		
+
 	def helper(self):
 		logging.debug('CONNECTOR------Helper for : ' + str(self.mac))
 		characteristics = self.getCharacteristics()
