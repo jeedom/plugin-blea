@@ -137,10 +137,10 @@ class Playbulb():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			if (mac in globals.KNOWN_DEVICES):
-				if ('specificconfiguration' in globals.KNOWN_DEVICES[mac] and len(globals.KNOWN_DEVICES[mac]['specificconfiguration'])>0):
-					logging.debug('Already known handles ' + str(globals.KNOWN_DEVICES[mac]['specificconfiguration']))
-					chars = [globals.KNOWN_DEVICES[mac]['specificconfiguration']['colorhandle'],globals.KNOWN_DEVICES[mac]['specificconfiguration']['effecthandle']]
+			if (mac.upper() in globals.KNOWN_DEVICES):
+				if ('specificconfiguration' in globals.KNOWN_DEVICES[mac.upper()] and len(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'])>0):
+					logging.debug('Already known handles ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']))
+					chars = [globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']['colorhandle'],globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']['effecthandle']]
 			if chars == []:
 				logging.debug('Not known handles searching')
 				chars = self.findCharacteristics(mac,conn)
