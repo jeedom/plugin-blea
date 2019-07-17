@@ -791,11 +791,13 @@ class blea extends eqLogic {
 					$arrayToRemove[] = $eqLogic_cmd;
 				}
 			}
-			foreach ($arrayToRemove as $cmdToRemove) {
-				try {
-					$cmdToRemove->remove();
-				} catch (Exception $e) {
+			if (!(in_array($this->getConfiguration('device'), array('miscale','miscale2')))){
+				foreach ($arrayToRemove as $cmdToRemove) {
+					try {
+						$cmdToRemove->remove();
+					} catch (Exception $e) {
 
+					}
 				}
 			}
 			foreach ($device['commands'] as $command) {

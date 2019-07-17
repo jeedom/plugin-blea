@@ -57,6 +57,7 @@ class MiScale():
 							target = user
 					if target != '':
 						logging.debug('Found target : ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]))
+						action['target'] = target
 						birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
 						born = datetime.strptime(birthdate, '%d-%m-%Y')
 						today = date.today()
@@ -345,7 +346,7 @@ class bodyMetrics:
 
 	# Return body type scale
 	def getBodyTypeScale(self):
-		return ['Obèse', 'Surpoids', 'Trapu', 'Manque d\'exercice', 'Equilibré', 'Equilibré musclé', 'Maigre', 'Equilibré maigre', 'Maigre musclé']
+		return ['obèse', 'surpoids', 'trapu', 'manque d\'exercice', 'équilibré', 'équilibré musclé', 'maigre', 'équilibré maigre', 'maigre musclé']
 
 	def getImcLabel(self):
 		imc = self.getBMI()

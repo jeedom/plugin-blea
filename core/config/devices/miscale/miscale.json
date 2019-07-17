@@ -24,6 +24,21 @@
                     "mobile": "line",
 					"dashboard" : "line"
 				}
+			},{
+                "name": "Dernier Qui",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "target",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
 			},
 			{
                 "name": "Dernier IMC",
