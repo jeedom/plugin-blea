@@ -83,7 +83,7 @@ if (isset($result['heartbeat'])) {
 }
 
 if (isset($result['devices'])) {
-	
+
 	foreach ($result['devices'] as $key => $datas) {
 		if (!isset($datas['id'])) {
 			continue;
@@ -117,10 +117,23 @@ if (isset($result['devices'])) {
 				'page' => 'blea',
 				'message' => '',
 			));
+			$remotes = blea_remote::all();
+			foreach ($remotes as $remote){
+				if ($remote->getRemoteName() == $datas['source']){
+					$blea->setConfiguration('antennareceive',$remote->getId());
+					$blea->setConfiguration('antenna',$remote->getId());
+					$blea->save();
+					break;
+				}
+			}
 			event::add('blea::includeDevice', $blea->getId());
 		}
 		if (!$blea->getIsEnable()) {
 			continue;
+		}
+		if (isset($datas['specificconfiguration'])) {
+			$blea->setConfiguration('specificconfiguration',$datas['specificconfiguration']);
+			$blea->save();
 		}
 		if (isset($datas['rssi'])) {
 			if ($datas['rssi']=='same'){
