@@ -24,6 +24,70 @@
                     "mobile": "line",
 					"dashboard" : "line"
 				}
+			},
+			{
+                "name": "Dernier IMC",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imc",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier BMR",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kcal",
+                "isVisible": 1,
+                "logicalId": "bmr",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Idéal",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "ideal",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Label IMC",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imclabel",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
 			}
         ],
 		"compatibility": [

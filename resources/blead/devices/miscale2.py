@@ -6,6 +6,7 @@ import globals
 import struct
 import utils
 from math import floor
+from datetime import datetime,date
 
 class MiScale2():
 	def __init__(self):
@@ -45,7 +46,6 @@ class MiScale2():
 			action['poids'] = round(int((data[28:30] + data[26:28]), 16) * 0.01 / 2,2)
 			if hasimpedance:
 				action['impedance'] = round(int((data[24:26] + data[22:24]), 16),2)
-				logging.debug('mac ' + mac + ' known ' + str(globals.KNOWN_DEVICES))
 				if (mac.upper() in globals.KNOWN_DEVICES):
 					if ('specificconfiguration' in globals.KNOWN_DEVICES[mac.upper()] and len(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']) >0):
 						logging.debug('Known Users ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']))
@@ -59,7 +59,12 @@ class MiScale2():
 								target = user
 						if target != '':
 							logging.debug('Found target : ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]))
-							lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), int(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']), globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], action['impedance'])
+							birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
+							born = datetime.strptime(birthdate, '%d-%m-%Y')
+							today = date.today()
+							age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+							logging.debug('Birthdate is ' +birthdate + ' age is ' + str(age))
+							lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), age, globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], action['impedance'])
 							action['poids'+target] = action['poids']
 							action['impedance'+target] = action['impedance']
 							action['lbm'+target] = round(float(lib.getLBMCoefficient()),2)

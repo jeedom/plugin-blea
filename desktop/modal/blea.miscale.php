@@ -26,7 +26,7 @@ if (!is_object($eqLogic)) {
 	throw new Exception('{{EqLogic non trouvé}}');
 }
 sendVarToJS('configureDeviceId', init('id'));
-$listUsers = $eqLogic->getConfiguration('userList',array());
+$listUsers = $eqLogic->getConfiguration('specificconfiguration',array());
 ?>
 <div class="ListUserDisplay"></div>
 <a class="btn btn-success btn-sm pull-right" id="bt_saveUser"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
@@ -35,8 +35,10 @@ $listUsers = $eqLogic->getConfiguration('userList',array());
 	<thead>
 		<tr>
 			<th>{{Surnom}}</th>
-			<th>{{Taille}}</th>
+			<th>{{Taille (en cm)}}</th>
 			<th>{{Poids}}</th>
+			<th>{{Année naissance ( ex : 30-04-1984)}}}</th>
+			<th>{{Sex}}</th>
 			<th>{{Action}}</th>
 		</tr>
 	</thead>
@@ -45,7 +47,14 @@ $listUsers = $eqLogic->getConfiguration('userList',array());
 foreach ($listUsers as $id => $data) {
 	echo '<tr class="users"><td class="name"><input type="text" class="form-control" value="'.$data['name'].'" readonly/></td>';
 	echo '<td class="height"><input type="text" class="form-control" value="'.$data['height'].'"/></td>';
-	echo '<td class="weight"><input type="text" class="form-control" value="'.$data['weight'].'"/></td><td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td></tr>';
+	echo '<td class="weight"><input type="text" class="form-control" value="'.$data['weight'].'"/></td>';
+	echo '<td class="age"><input type="text" class="form-control" value="'.$data['age'].'"/></td>';
+	if ($data['sex'] == 'female'){
+		echo '<td class="sex"><select><option value="male">Homme</option><option value="female" selected>Femme</option></select></td>';
+	} else {
+		echo '<td class="sex"><select><option value="male" selected>Homme</option><option value="female">Femme</option></select></td>';
+	}
+	echo '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td></tr>';
 	}
 ?>
 	</tbody>
@@ -62,6 +71,8 @@ function addCmdToTable(_cmd) {
     var tr = '<tr class="users"><td class="name"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="height"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="weight"><input type="text" class="form-control" value=""/></td>';
+    tr += '<td class="age"><input type="text" class="form-control" value=""/></td>';
+    tr += '<td class="sex"><select><option value="male">Homme</option><option value="female">Femme</option></select></td>';
 	tr += '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td>';
     tr += '</tr>';
     $('#table_userList tbody').append(tr);
@@ -73,9 +84,13 @@ $('#bt_saveUser').on('click', function () {
 		name = $(this).find("td.name").find("input").value();
 		height = $(this).find("td.height").find("input").value();
 		weight = $(this).find("td.weight").find("input").value();
+		age = $(this).find("td.age").find("input").value();
+		sex = $(this).find("td.sex").find("select").val();
 		data['name']= name;
 		data['height']= height;
 		data['weight'] = weight;
+		data['sex'] = sex;
+		data['age'] = age;
 		userList[name] =data;
 	});
 	saveUserList(userList);
@@ -88,7 +103,7 @@ $('body').undelegate('#bt_delUser', 'click').delegate('#bt_delUser', 'click', fu
 function saveUserList(userList) {
         $.ajax({// fonction permettant de faire de l'ajax
             type: "POST", // méthode de transmission des données au fichier php
-            url: "plugins/blea/core/config/devices/miscale/ajax/miscale.ajax.php", // url du fichier php
+            url: "plugins/blea/core/config/devices/miscale2/ajax/miscale2.ajax.php", // url du fichier php
             data: {
                 action: "saveUserList",
 				id : configureDeviceId,
