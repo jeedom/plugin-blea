@@ -1,3 +1,12 @@
+#20/07/2019
+- Changement de méthode pour l'ensemble de la gamme playbulb (une seule conf et des visuels) plus de dépendances par rapport aux différentes versions (maintenant a l'inclusion on récupére les adresses des diffférentes méthodes)
+- Rajout de la miscale V2 avec poids et impedance (et tout un tas de mesures calculées). Gestion des utilisateurs pour les calculs (dans le bouton config avancée)
+- Changement de la miscale V1 (il faudra recréer les users) mais on gagne quelques infos en plus
+- Pour les playbulbs je recommande une reinclusion de tous les devices
+- Correctiond d'un bug sur le graph réseau en mode sans local
+- Correction d'un bug sur la régénération des commandes sur demande
+- A l'inclusion les antennes d'émissions et de réceptions sont automatiquement remplies par l'antenne ayant permis l'inclusion
+
 # 26/06/2019
 - Rajout du xiaomi cleargrass
 - Rajout du lywsd02 Xiaomi
@@ -15,8 +24,8 @@
 
 # 09/03/2019
 
-- Added automatic daemon management on antennas.
-- Negative temp management
+- Ajout de la gestion automatique du daemon sur les antennes.
+- Gestion temp négative
 - Correction sur le rafraichissement des nuts (info batterie)
 
 # 16/01/2019
@@ -30,7 +39,7 @@
 
 # 06/04/2018
 
-- Fix a refresh notification bug on Hygrothermograph and Miflora (probably needs relaunching of dependencies for impacted people)
+- Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora (necessite probablement une relance des dépendances pour les gens impactés)
 
 # 28/03/2018
 
@@ -41,7 +50,7 @@
 
 # 10/02/2018
 
-- Fixed a bug on the network graph modal if a device had no object
+- Correction d'un bug sur la modal de graph réseau si jamais un équipement n'avait pas d'objet
 
 # 01/03/2018
 
