@@ -10,7 +10,7 @@ from notification import Notification
 class Lywsd02():
 	def __init__(self):
 		self.name = 'lywsd02'
-		self.ignoreRepeat = True
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in ['lywsd02']:
