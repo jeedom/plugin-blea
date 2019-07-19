@@ -395,11 +395,16 @@ class blea extends eqLogic {
 	}
 
 	public static function dependancy_info() {
-		#must find a way to detect git instllation of bluepy on multiple platform
 		$return = array();
 		$return['log'] = 'blea_update';
 		$return['progress_file'] = jeedom::getTmpFolder('blea') . '/dependance';
 		$return['state'] = 'ok';
+		if (exec(system::getCmdSudo() . system::get('cmd_check') . '-E "python3\-serial|python3\-request|python3\-pyudev|rfkill" | wc -l') < 4) {
+			$return['state'] = 'nok';
+		}
+		if (exec(system::getCmdSudo() . 'pip3 list | grep -E "pyudev|pyserial|requests" | wc -l') < 3) {
+			$return['state'] = 'nok';
+		}
 		return $return;
 	}
 
@@ -412,6 +417,13 @@ class blea extends eqLogic {
 		$deamon_info = self::deamon_info();
 		if ($deamon_info['launchable'] != 'ok') {
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
+		}
+		$unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
+		if (config::byKey('port', 'blea','none') == 'none') {
+			foreach (jeedom::getBluetoothMapping() as $name => $value) {
+				config::save('port', $name ,'blea');
+			break;
+			}
 		}
 		$port = jeedom::getBluetoothMapping(config::byKey('port', 'blea'));
 		$blea_path = realpath(dirname(__FILE__) . '/../../resources/blead');

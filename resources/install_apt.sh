@@ -18,7 +18,7 @@ echo 50 > ${PROGRESS_FILE}
 sudo pip3 install pyudev
 sudo pip3 install pyserial
 sudo pip3 install requests
-sudo pip3 install -U pip setuptools
+sudo pip3 install -U pip3 setuptools
 echo 60 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
