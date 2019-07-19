@@ -24,6 +24,7 @@ $remotes = blea_remote::all();
 $eqLogics = array();
 $antennas = array();
 $remotes = blea_remote::all();
+$availremotename=array();
 foreach ($remotes as $remote){
 	$info = array();
 	$name = $remote->getRemoteName();
@@ -32,7 +33,9 @@ foreach ($remotes as $remote){
 	$last = $remote->getConfiguration('lastupdate', '0');
 	$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 	$antennas[$name] = $info;
+	$availremotename[]=$name;
 }
+$availremotename[]='local';
 if (config::byKey('noLocal', 'blea', 0) == 0){
 	$infolocal=array();
 	$infolocal['x'] = config::byKey('positionx', 'blea', 999);
@@ -55,7 +58,9 @@ foreach (eqLogic::byType('blea') as $eqLogic){
 		if (substr($logicalId,0,4) == 'rssi'){
 			$remotename= substr($logicalId,4);
 			$remoterssi = $cmd->execCmd();
-			$info['rssi'][$remotename] = $remoterssi;
+			if (in_array($remotename,$availremotename)){
+				$info['rssi'][$remotename] = $remoterssi;
+			}
 		}
 	}
 	$eqLogics[$eqLogic->getName().' [' . $object . ']']=$info;
@@ -115,7 +120,7 @@ function load_graph(){
 				quality = 2 * (signal + 100);
 			}
 			lenghtfactor = quality/100;
-			if (lenghtfactor != 2){
+			if (lenghtfactor != 2){;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}
@@ -162,6 +167,7 @@ function load_graph(){
 		if (name == 'local'){
 			name = 'Local';
 		}
+		console.log(node);
        var ui = Viva.Graph.svg('g'),
                   svgText = Viva.Graph.svg('text').attr('y', '-4px').text(name),
                   img = Viva.Graph.svg('image')

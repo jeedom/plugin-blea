@@ -80,17 +80,51 @@ class blea extends eqLogic {
 		foreach ($remotes as $remote) {
 			$last = $remote->getConfiguration('lastupdate','0');
 			$auto = $remote->getConfiguration('remoteDaemonAuto','0');
-			if (($last == '0' or time() - strtotime($last)>65) and $auto == 1) {
-				log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
-				blea::launchremote($remote->getId());
+			if (($last == '0' or time() - strtotime($last)>65)) {
+				if ($auto == 1){
+					log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
+					blea::launchremote($remote->getId());
+				}
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$rssicmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
+					$presentcmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
+					$eqLogic->checkAndUpdateCmd($presentcmd, 0);
+					$eqLogic->checkAndUpdateCmd($rssicmd, -200);
+				}
 			}
 		}
 	}
 
 	public static function cron15() {
 		$remotes = blea_remote::all();
+		$availremote= array();
 		foreach ($remotes as $remote) {
 			self::getRemoteLog($remote->getId());
+			$availremote[] = $remote->getRemoteName();
+		}
+		foreach (eqLogic::byType('blea') as $eqLogic){
+			foreach ($eqLogic->getCmd('info') as $cmd) {
+				$logicalId = $cmd->getLogicalId();
+				if (substr($logicalId,0,4) == 'rssi'){
+					$remotename= substr($logicalId,4);
+					if ($remotename != 'local' && !(in_array($remotename,$availremote))){
+						$cmd->remove();
+					} else if ($remotename == 'local') {
+						if (config::byKey('noLocal', 'blea', 0) == 1){
+							$cmd->remove();
+						}
+					}
+				} else if (substr($logicalId,0,7) == 'present') {
+					$remotename= substr($logicalId,7);
+					if ($remotename != 'local' && !(in_array($remotename,$availremote))){
+						$cmd->remove();
+					} else if ($remotename == 'local') {
+						if (config::byKey('noLocal', 'blea', 0) == 1){
+							$cmd->remove();
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -405,7 +439,7 @@ class blea extends eqLogic {
 		if (exec(system::getCmdSudo() . 'pip3 list | grep -E "pyudev|pyserial|requests|bluepy" | wc -l') < 4) {
 			$return['state'] = 'nok';
 		}
-		if ($return['state'] = 'ok') {
+		if ($return['state'] == 'ok') {
 			$bluepyversion = exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'");
 			if (exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'") <> '1.1.3'){
 				log::add('blea','error', 'Bluepy not up to date . ' . $bluepyversion);
