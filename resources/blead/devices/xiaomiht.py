@@ -10,7 +10,7 @@ from notification import Notification
 class XiaomiHT():
 	def __init__(self):
 		self.name = 'xiaomiht'
-		self.ignoreRepeat = True
+		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in ['mj_ht_v1','cleargrass temp & rh']:

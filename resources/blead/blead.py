@@ -74,6 +74,7 @@ class ScanDelegate(DefaultDelegate):
 				if device().isvalid(name,manuf,data,mac):
 					findDevice=True
 					if device().ignoreRepeat and mac in globals.IGNORE:
+						logging.debug('Ignore repeat for this interval' +globals.KNOWN_DEVICES[mac.upper()]['name'])
 						return
 					globals.IGNORE.append(mac)
 					logging.debug('SCANNER------This is a ' + device().name + ' device ' +str(mac))
