@@ -83,7 +83,6 @@ if (isset($result['heartbeat'])) {
 }
 
 if (isset($result['devices'])) {
-	log::add('blea','debug','Received ' . print_r($result['devices'],true));
 	foreach ($result['devices'] as $key => $datas) {
 		if (!isset($datas['id'])) {
 			continue;
