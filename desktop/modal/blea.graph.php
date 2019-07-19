@@ -121,6 +121,7 @@ function load_graph(){
 			}
 			lenghtfactor = quality/100;
 			if (lenghtfactor != 2){;
+				haslink +=1;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}
@@ -167,7 +168,6 @@ function load_graph(){
 		if (name == 'local'){
 			name = 'Local';
 		}
-		console.log(node);
        var ui = Viva.Graph.svg('g'),
                   svgText = Viva.Graph.svg('text').attr('y', '-4px').text(name),
                   img = Viva.Graph.svg('image')

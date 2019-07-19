@@ -83,7 +83,7 @@
 			}
 			lenghtfactor = quality/100;
 			if (lenghtfactor != 2){
-				haslink=1;
+				haslink+=1;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}

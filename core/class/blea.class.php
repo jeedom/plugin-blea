@@ -193,7 +193,9 @@ class blea extends eqLogic {
 			$last = $remote->getConfiguration('lastupdate', '0');
 			$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 			$antennas[$name]=$info;
+			$availremotename[]=$name;
 		}
+		$availremotename[]='local';
 		if (config::byKey('noLocal', 'blea', 0) == 0){
 			$infolocal=array();
 			$infolocal['x'] = config::byKey('positionx', 'blea', 999);
@@ -216,7 +218,9 @@ class blea extends eqLogic {
 				if (substr($logicalId,0,4) == 'rssi'){
 					$remotename= substr($logicalId,4);
 					$remoterssi = $cmd->execCmd();
-					$info['rssi'][$remotename] = $remoterssi;
+					if (in_array($remotename,$availremotename)){
+						$info['rssi'][$remotename] = $remoterssi;
+					}
 				}
 			}
 		$eqLogics[$eqLogic->getName().' ['.$object.']']=$info;
