@@ -57,6 +57,14 @@ if (isset($result['started'])) {
 			foreach ($remotes as $remote){
 				if ($remote->getRemoteName() == $result['source']){
 					$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
+					$version = '1.0';
+					if (isset($result['version'])){
+						$version = $result['version'];
+					}
+					$currentVersion = $remote->getConfiguration('version','1.0');
+					if ($version != $currentVersion){
+						$remote->setConfiguration('version',$version);
+					}
 					$remote->save();
 					break;
 				}

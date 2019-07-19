@@ -23,7 +23,7 @@ if (!isConnect('admin')) {
 ?>
 <form class="form-horizontal">
     <fieldset>
-         <legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
+	<legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
       <div class="form-group">
         <label class="col-lg-4 control-label">{{Autoriser l'inclusion de devices inconnus}}</label>
         <div class="col-lg-3">
@@ -55,6 +55,12 @@ if (!isConnect('admin')) {
 		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour toutes les antennes}}</a>
 		<a class="btn btn-success allantennas" data-action="restart"><i class="fas fa-play"></i> {{Redémarrer toutes les antennes}}</a>
 	</div>
+	</div>
+	<div class="form-group">
+        <label class="col-lg-4 control-label">{{Version Démon}}</label>
+        <div class="col-lg-3">
+           <span type="checkbox" class="configKey" data-l1key="version" />
+       </div>
 	</div>
        <div class="form-group">
         <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>

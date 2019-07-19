@@ -24,6 +24,7 @@ function blea_install() {
 	foreach (blea::byType('blea') as $blea) {
 		$blea->save();
 	}
+	config::save('version',blea::$_version,'blea');
 }
 
 function blea_update() {
@@ -35,6 +36,7 @@ function blea_update() {
 	log::add('blea','info','Updating remotes ...');
 	$remotes = blea_remote::all();
 	blea::send_allremotes();
+	config::save('version',blea::$_version,'blea');
 }
 
 function blea_remove() {

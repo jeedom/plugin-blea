@@ -175,7 +175,7 @@ def listen():
 	logging.debug('GLOBAL------Read Device Thread Launched')
 	thread.start_new_thread( heartbeat_handler, (19,))
 	logging.debug('GLOBAL------Heartbeat Thread Launched')
-	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname});
+	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 	while not globals.READY:
 		time.sleep(1)
 	try:
@@ -341,7 +341,7 @@ def heartbeat_handler(delay):
 						globals.JEEDOM_COM.add_changes('devices::'+device,action)
 						globals.LAST_VIRTUAL = int(time.time())
 		if (globals.LAST_BEAT + 55)  < int(time.time()):
-			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
+			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 			globals.LAST_BEAT = int(time.time())
 		time.sleep(1)
 

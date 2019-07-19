@@ -111,6 +111,12 @@ foreach ($remotes as $remote) {
 								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">{{Version}}</label>
+							<div class="col-sm-3">
+								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="version" title="{{Version}}" style="font-size : 1em;cursor : default;"></span>
+							</div>
+						</div>
 						<?php
 						if (method_exists( $id ,'sendRemoteFiles')){
 							echo '<div class="form-group">
@@ -171,7 +177,6 @@ foreach ($remotes as $remote) {
 <script>
 	function refreshDaemonMode() {
 		var auto = $('.bleaRemoteAttr[data-l2key="remoteDaemonAuto"]').value();
-		console.log("auto=" + auto);
 		if(auto == 1){
 			$('.bleaRemoteAction[data-action=stopremote]').hide();
 			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-success').addClass('btn-danger');
