@@ -643,6 +643,13 @@ class blea extends eqLogic {
 		}
 		return [$modelList, $needsrefresh,$remark,$specificmodal,$cancontrol,$canbelocked];
 	}
+	
+	public function preSave() {
+		$device = self::devicesParameters($this->getConfiguration('device'));
+		if (isset($device['configuration']['name'])) {
+				$this->setConfiguration('name', $device['configuration']['name']);
+		}
+	}
 
 	public function postSave() {
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device') || $this->getConfiguration('applyModel') != $this->getConfiguration('iconModel')) {
