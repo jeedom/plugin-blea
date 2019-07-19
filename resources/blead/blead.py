@@ -56,7 +56,7 @@ class ScanDelegate(DefaultDelegate):
 			action = {}
 			onlypresent = False
 			if mac not in globals.IGNORE:
-				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac) + ' ' + str(dev.scanData))
+				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
 			findDevice=False
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
