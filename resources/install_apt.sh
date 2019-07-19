@@ -9,7 +9,7 @@ echo "*             Installation des dépendances             *"
 echo "********************************************************"
 sudo apt-get update
 echo 50 > ${PROGRESS_FILE}
-sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth libffi-dev libssl-dev
+sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth libffi-dev libssl-dev rfkill
 echo 66 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
 echo 75 > ${PROGRESS_FILE}
@@ -22,11 +22,14 @@ sudo python get-pip.py --force-reinstall
 echo 80 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
-sudo git clone https://github.com/IanHarvey/bluepy.git
+sudo git clone https://github.com/sarakha63/bluepy.git
 cd /tmp/bluepy
 sudo python setup.py build
 sudo python setup.py install
 sudo connmanctl enable bluetooth >/dev/null 2>&1
+sudo rfkill unblock 0 >/dev/null 2>&1
+sudo rfkill unblock 1 >/dev/null 2>&1
+sudo rfkill unblock 2 >/dev/null 2>&1
 sudo hciconfig hci0 up >/dev/null 2>&1
 sudo hciconfig hci1 up >/dev/null 2>&1
 sudo hciconfig hci2 up >/dev/null 2>&1
