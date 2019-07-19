@@ -35,9 +35,9 @@ except ImportError:
 	sys.exit(1)
 
 try:
-	import queue
+    import queue
 except ImportError:
-	import Queue as queue
+    import Queue as queue
 
 class ScanDelegate(DefaultDelegate):
 	import globals
@@ -56,16 +56,11 @@ class ScanDelegate(DefaultDelegate):
 			action = {}
 			onlypresent = False
 			if mac not in globals.IGNORE:
-				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac) + ' ' + str(dev.scanData))
+				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac))
 			findDevice=False
-			if mac.upper() in globals.KNOWN_DEVICES:
-				if 'name' in globals.KNOWN_DEVICES[mac.upper()]:
-					if name == '':
-						logging.debug('No name in data but i know it is : ' +globals.KNOWN_DEVICES[mac.upper()]['name'])
-						name = globals.KNOWN_DEVICES[mac.upper()]['name']
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
-					name = value.strip()
+					name = value.strip().encode('utf-8')
 				elif 'Service Data' in desc:
 					data = value.strip()
 				elif desc == 'Manufacturer':
@@ -91,7 +86,10 @@ class ScanDelegate(DefaultDelegate):
 						action = device().parse(data,mac,name,manuf)
 					except Exception, e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
+						globals.PENDING_ACTION = False
+						return
 					if not action:
+						globals.PENDING_ACTION = False
 						return
 					globals.PENDING_ACTION = False
 					action['id'] = mac.upper()
@@ -109,19 +107,6 @@ class ScanDelegate(DefaultDelegate):
 						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 						return
 					if len(action) > 2:
-						if action['id'] not in globals.SEEN_DEVICES:
-							globals.SEEN_DEVICES[action['id']] = {}
-						if 'present' not in globals.SEEN_DEVICES[action['id']]:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
-							globals.SEEN_DEVICES[action['id']]['present'] = 1
-							logging.info('First Time SEEEEEEEEEN------' + str(action['id']) + ' || ' +str(globals.SEEN_DEVICES))
-						elif globals.SEEN_DEVICES[action['id']]['present'] == 0:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
-							globals.SEEN_DEVICES[action['id']]['present'] = 1
-							logging.info('RE SEEEEEEEEEN------' + str(action['id']) + ' || ' +str(globals.SEEN_DEVICES))
-						elif globals.SEEN_DEVICES[action['id']]['present'] == 1:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
-						logging.debug(action)
 						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 			if not findDevice:
 				action['id'] = mac.upper()
@@ -151,18 +136,6 @@ class ScanDelegate(DefaultDelegate):
 							logging.debug('SCANNER------It\'s an unknown packet i know this device but i\'m in learn mode ignoring ' +str(mac))
 							return
 						logging.debug('SCANNER------It\'s a unknown packet and I known this device so I send ' +str(mac))
-						if action['id'] not in globals.SEEN_DEVICES:
-							globals.SEEN_DEVICES[action['id']] = {}
-						if 'present' not in globals.SEEN_DEVICES[action['id']]:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
-							globals.SEEN_DEVICES[action['id']]['present'] = 1
-							logging.info('First Time SEEEEEEEEEN------' + str(action['id']) + ' || ' +str(globals.SEEN_DEVICES))
-						elif globals.SEEN_DEVICES[action['id']]['present'] == 0:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
-							globals.SEEN_DEVICES[action['id']]['present'] = 1
-							logging.info('RE SEEEEEEEEEN------' + str(action['id']) + ' || ' +str(globals.SEEN_DEVICES))
-						elif globals.SEEN_DEVICES[action['id']]['present'] == 1:
-							globals.SEEN_DEVICES[action['id']]['lastseen'] = int(time.time())
 						logging.debug(action)
 						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 
@@ -180,21 +153,18 @@ def listen():
 	logging.debug('GLOBAL------Read Device Thread Launched')
 	thread.start_new_thread( heartbeat_handler, (19,))
 	logging.debug('GLOBAL------Heartbeat Thread Launched')
-	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
-	while not globals.READY:
-		time.sleep(1)
+	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname});
 	try:
 		while 1:
 			try:
-				if globals.LEARN_MODE or (globals.LAST_CLEAR + globals.SCAN_INTERVAL)  < int(time.time()):
+				if globals.LEARN_MODE or (globals.LAST_CLEAR + 29)  < int(time.time()):
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
+				globals.SCANNER.start()
 				if globals.LEARN_MODE:
-					globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(3)
 				else:
-					globals.SCANNER.start(passive=True)
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
@@ -286,40 +256,14 @@ def read_socket(name):
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 					time.sleep(2)
 					shutdown()
-				elif message['cmd'] == 'ready':
-					logging.debug('Daemon is ready')
-					globals.READY = True
 		except Exception,e:
 			logging.error("SOCKET-READ------Exception on socket : %s" % str(e))
 		time.sleep(0.3)
 
 def heartbeat_handler(delay):
-	while not globals.READY:
-		time.sleep(1)
+	highestcpu=0
 	while 1:
 		for device in globals.KNOWN_DEVICES:
-			noseeninterval = globals.SCAN_INTERVAL*globals.NOSEEN_NUMBER
-			if device in globals.SEEN_DEVICES and 'present' in globals.SEEN_DEVICES[device]:
-				if globals.SEEN_DEVICES[device]['present'] == 1:
-					if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):
-						logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
-						globals.SEEN_DEVICES[device]['present'] = 0
-						action = {}
-						action['present']=0
-						action['id']=device
-						action['rssi'] = -200
-						action['source'] = globals.daemonname
-						globals.JEEDOM_COM.add_changes('devices::'+device,action)
-			else:
-				if (globals.START_TIME + noseeninterval) < int(time.time()):
-					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
-					globals.SEEN_DEVICES[device]={'present':0}
-					action = {}
-					action['present']=0
-					action['id']=device
-					action['rssi'] = -200
-					action['source'] = globals.daemonname
-					globals.JEEDOM_COM.add_changes('devices::'+device,action)
 			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
 				if device in globals.KEEPED_CONNECTION:
 					logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))
@@ -347,7 +291,7 @@ def heartbeat_handler(delay):
 						globals.JEEDOM_COM.add_changes('devices::'+device,action)
 						globals.LAST_VIRTUAL = int(time.time())
 		if (globals.LAST_BEAT + 55)  < int(time.time()):
-			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
+			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname});
 			globals.LAST_BEAT = int(time.time())
 		time.sleep(1)
 
@@ -417,7 +361,7 @@ def action_handler(message):
 				try:
 					result = device().action(message)
 				except Exception,e:
-						logging.debug("ACTION------Action failed :" + str(e))
+						logging.debug("ACTION------Action failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 				if result :
 					if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
@@ -512,8 +456,6 @@ parser.add_argument("--socketport", help="Socket Port", type=str)
 parser.add_argument("--sockethost", help="Socket Host", type=str)
 parser.add_argument("--daemonname", help="Daemon Name", type=str)
 parser.add_argument("--cycle", help="Cycle to send event", type=str)
-parser.add_argument("--noseeninterval", help="No seen interval", type=str)
-parser.add_argument("--scaninterval", help="Scan interval", type=str)
 args = parser.parse_args()
 
 if args.device:
@@ -534,10 +476,6 @@ if args.sockethost:
 	globals.sockethost = args.sockethost
 if args.daemonname:
 	globals.daemonname = args.daemonname
-if args.noseeninterval:
-	globals.NOSEEN_NUMBER = int(args.noseeninterval)
-if args.scaninterval:
-	globals.SCAN_INTERVAL = int(args.scaninterval)
 
 globals.socketport = int(globals.socketport)
 globals.cycle = float(globals.cycle)
@@ -552,8 +490,6 @@ logging.info('GLOBAL------PID file : '+str(globals.pidfile))
 logging.info('GLOBAL------Apikey : '+str(globals.apikey))
 logging.info('GLOBAL------Callback : '+str(globals.callback))
 logging.info('GLOBAL------Cycle : '+str(globals.cycle))
-logging.info('GLOBAL------Scan interval  : '+str(globals.SCAN_INTERVAL))
-logging.info('GLOBAL------Number for no seen : '+str(globals.NOSEEN_NUMBER))
 import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
