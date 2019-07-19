@@ -100,6 +100,17 @@
 				"remark": "Capteurs de Température Humidité avec écran",
 				"inclusion" : "Mode inclusion",
 				"imglink": "xiaomiht"
+            },
+			{
+                "manufacturer": "Xiaomi",
+                "name": "Température Humidité Cleargrass",
+                "doc": "",
+                "type": "Micromodule",
+                "ref" : "",
+                "comlink": "",
+                "remark": "Capteurs de Température Humidité avec écran e-ink",
+                "inclusion" : "Mode inclusion",
+                "imglink": "xiaomiht_cleargrass"
             }
         ]
     }
