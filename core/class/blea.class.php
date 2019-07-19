@@ -440,6 +440,7 @@ class blea extends eqLogic {
 			log::add('blea', 'error', __('Impossible de lancer le démon blea, vérifiez la log',__FILE__), 'unableStartDeamon');
 			return false;
 		}
+		blea::launch_allremotes();
 		message::removeAll('blea', 'unableStartDeamon');
 		config::save('include_mode', 0, 'blea');
 		return true;
@@ -452,6 +453,27 @@ class blea extends eqLogic {
 		}
 		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'ready'));
 		self::socket_connection($value,True);
+	}
+	
+	public function launch_allremotes(){
+		log::add('blea','info','Launching remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::launchremote($remote->getId());
+			sleep(1);
+		}
+	}
+	
+	public function send_allremotes(){
+		log::add('blea','info','Updating remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::sendRemoteFiles($remote->getId());
+			sleep(1);
+			blea::sendRemoteFiles($remote->getId());
+			sleep(1);
+			blea::launchremote($remote->getId());
+		}
 	}
 
 	public static function saveAntennaPosition($_antennas){

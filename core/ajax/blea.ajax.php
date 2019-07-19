@@ -44,12 +44,11 @@ try {
 	}
 	
 	if (init('action') == 'launchremotes') {
-		$remotes = blea_remote::all();
-		foreach ($remotes as $remote) {
-			blea::launchremote($remote->getId());
-			sleep(1);
-		}
-		ajax::success();
+		ajax::success(blea::launch_allremotes());
+	}
+	
+	if (init('action') == 'sendremotes') {
+		ajax::success(blea::send_allremotes());
 	}
 
 	if (init('action') == 'autoDetectModule') {

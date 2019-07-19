@@ -32,6 +32,9 @@ function blea_update() {
 	foreach (blea::byType('blea') as $blea) {
 		$blea->save();
 	}
+	log::add('blea','info','Updating remotes ...');
+	$remotes = blea_remote::all();
+	blea::send_allremotes();
 }
 
 function blea_remove() {

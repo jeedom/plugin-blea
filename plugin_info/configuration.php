@@ -48,6 +48,13 @@ if (!isConnect('admin')) {
 		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fa fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
 		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fa fa-paperclip"></i> {{Remettre niveau de log local}}</a>
 	</div>
+	</br>
+	</br>
+	<label class="col-lg-4"></label>
+	<div class="col-lg-8">
+		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour toutes les antennes}}</a>
+		<a class="btn btn-success allantennas" data-action="restart"><i class="fas fa-play"></i> {{Redémarrer toutes les antennes}}</a>
+	</div>
 	</div>
        <div class="form-group">
         <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
@@ -90,6 +97,33 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
             data: {
                 action: "changeLogLive",
 				level : $(this).attr('data-log')
+            },
+            dataType: 'json',
+            error: function (request, status, error) {
+                handleAjaxError(request, status, error);
+            },
+            success: function (data) { // si l'appel a bien fonctionné
+                if (data.state != 'ok') {
+                    $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                    return;
+                }
+                $('#div_alert').showAlert({message: '{{Réussie}}', level: 'success'});
+            }
+        });
+});
+
+$('.allantennas').on('click', function () {
+	if ($(this).attr('data-action') == 'update') {
+		action = 'sendremotes';
+	} else {
+		action = 'launchremotes';
+	}
+	console.log(action);
+	 $.ajax({// fonction permettant de faire de l'ajax
+            type: "POST", // methode de transmission des données au fichier php
+            url: "plugins/blea/core/ajax/blea.ajax.php", // url du fichier php
+            data: {
+                action: action
             },
             dataType: 'json',
             error: function (request, status, error) {
