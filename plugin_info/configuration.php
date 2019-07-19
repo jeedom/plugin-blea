@@ -57,11 +57,22 @@ if (!isConnect('admin')) {
 	</div>
 	</div>
 	<div class="form-group">
-        <label class="col-lg-4 control-label">{{Version Démon}}</label>
+        <label class="col-lg-4 control-label">{{Version Démon Local}}</label>
         <div class="col-lg-3">
-           <span type="checkbox" class="configKey" data-l1key="version" />
+           <span class="configKey" data-l1key="version" />
        </div>
 	</div>
+		<?php
+			$remotes = blea_remote::all();
+			foreach ($remotes as $remote) {
+				echo '<div class="form-group">';
+				echo '<label class="col-lg-4 control-label">{{Version Démon }}' . $remote->getRemoteName() . '</label>';
+				echo '<div class="col-lg-3">';
+				echo '<span>' . $remote->getConfiguration('version','1.0') . '</span>';
+				echo '</div>';
+				echo '</div>';
+			}
+		?>
        <div class="form-group">
         <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
         <div class="col-sm-2">
