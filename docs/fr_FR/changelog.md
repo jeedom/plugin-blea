@@ -10,7 +10,7 @@
 - Réglage possible maintenant du scan interval et du nombre de scan ou un device n'est pas visible pour le déclarer absent (gain de détection présence et surtout absence)
 - Possibilité de mettre à jour toutes les antennes en un clic
 - Possibilité de redémarrer toutes les antennes en un clic
-- Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
+- Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrées (peut parfois échouer)
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass
