@@ -9,7 +9,7 @@ echo "*			 Installation des dépendances			 *"
 echo "********************************************************"
 sudo apt-get update
 echo 20 > ${PROGRESS_FILE}
-sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
+sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-request bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
 sudo python3 -m pip uninstall pip
 sudo apt-get remove -y python3-pip
 sudo apt-get install -y python3-pip
