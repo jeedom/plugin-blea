@@ -23,7 +23,7 @@ class MiScale2():
 		stabilized = 'unstabilized'
 		hasimpedance = False
 		action['present'] = 1
-		status = utils.hex_to_binary(data[6:8]).zfill(8)[::-1] 
+		status = utils.hex_to_binary(data[6:8]).zfill(8)[::-1]
 		logging.debug('Status is ' + status + ' from ' + data[6:8])
 		logging.debug('FAT ' +data[24:26] + data[22:24])
 		if (status[0:1] == '1'):
@@ -44,57 +44,61 @@ class MiScale2():
 			action['minute'] = int(data[18:20], 16)
 			action['second'] = int(data[20:22], 16)
 			action['poids'] = round(int((data[28:30] + data[26:28]), 16) * 0.01 / 2,2)
+			target =''
+			if (mac.upper() in globals.KNOWN_DEVICES):
+				if ('specificconfiguration' in globals.KNOWN_DEVICES[mac.upper()] and len(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']) >0):
+					logging.debug('Known Users ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']))
+					delta = 999;
+					for user in globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'] :
+						oldweight = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][user]['weight']
+						currentdelta = abs(float(oldweight)-float(action['poids']))
+						if (currentdelta<delta):
+							delta = currentdelta
+							target = user
+			if target != '':
+				logging.debug('Found target : ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]))
+				action['poids'+target] = action['poids']
+				action['target'] = target
 			if hasimpedance:
 				action['impedance'] = round(int((data[24:26] + data[22:24]), 16),2)
-				if (mac.upper() in globals.KNOWN_DEVICES):
-					if ('specificconfiguration' in globals.KNOWN_DEVICES[mac.upper()] and len(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']) >0):
-						logging.debug('Known Users ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration']))
-						delta = 999;
-						target =''
-						for user in globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'] :
-							oldweight = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][user]['weight']
-							currentdelta = abs(float(oldweight)-float(action['poids']))
-							if (currentdelta<delta):
-								delta = currentdelta
-								target = user
-						if target != '':
-							logging.debug('Found target : ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]))
-							action['target'] = target
-							birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
-							born = datetime.strptime(birthdate, '%d-%m-%Y')
-							today = date.today()
-							age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-							logging.debug('Birthdate is ' +birthdate + ' age is ' + str(age))
-							lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), age, globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], action['impedance'])
-							action['poids'+target] = action['poids']
-							action['impedance'+target] = action['impedance']
-							action['lbm'+target] = round(float(lib.getLBMCoefficient()),2)
-							action['fat'+target] = round(float(lib.getFatPercentage()),2)
-							action['water'+target] = round(float(lib.getWaterPercentage()),2)
-							action['bones'+target] = round(float(lib.getBoneMass()),2)
-							action['muscle'+target] = round(float(lib.getMuscleMass()),2)
-							action['visceral'+target] = round(float(lib.getVisceralFat()),2)
-							action['imc'+target] = round(float(lib.getBMI()),2)
-							action['bmr'+target] = round(float(lib.getBMR()),2)
-							action['ideal'+target] = round(float(lib.getIdealWeight()),2)
-							action['fatmassideal'+target] = round(float(lib.getFatMassToIdeal()),2)
-							action['protein'+target] = round(float(lib.getProteinPercentage()),2)
-							action['body'+target] = lib.getBodyType()
-							action['imclabel'+target] = lib.getImcLabel()
-							action['lbm'] = round(float(lib.getLBMCoefficient()),2)
-							action['fat'] = round(float(lib.getFatPercentage()),2)
-							action['water'] = round(float(lib.getWaterPercentage()),2)
-							action['bones'] = round(float(lib.getBoneMass()),2)
-							action['muscle'] = round(float(lib.getMuscleMass()),2)
-							action['visceral'] = round(float(lib.getVisceralFat()),2)
-							action['imc'] = round(float(lib.getBMI()),2)
-							action['bmr'] = round(float(lib.getBMR()),2)
-							action['ideal'] = round(float(lib.getIdealWeight()),2)
-							action['fatlabel'] = round(float(lib.getIdealWeight()),2)
-							action['fatmassideal'] = round(float(lib.getFatMassToIdeal()),2)
-							action['protein'] = round(float(lib.getProteinPercentage()),2)
-							action['body'] = lib.getBodyType()
-							action['imclabel'] = lib.getImcLabel()
+				action['impedance'+target] = action['impedance']
+				if target != '':
+					try:
+						birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
+						born = datetime.strptime(birthdate, '%d-%m-%Y')
+						today = date.today()
+						age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+						logging.debug('Birthdate is ' +birthdate + ' age is ' + str(age))
+						lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), age, globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], action['impedance'])
+						action['lbm'+target] = round(float(lib.getLBMCoefficient()),2)
+						action['fat'+target] = round(float(lib.getFatPercentage()),2)
+						action['water'+target] = round(float(lib.getWaterPercentage()),2)
+						action['bones'+target] = round(float(lib.getBoneMass()),2)
+						action['muscle'+target] = round(float(lib.getMuscleMass()),2)
+						action['visceral'+target] = round(float(lib.getVisceralFat()),2)
+						action['imc'+target] = round(float(lib.getBMI()),2)
+						action['bmr'+target] = round(float(lib.getBMR()),2)
+						action['ideal'+target] = round(float(lib.getIdealWeight()),2)
+						action['fatmassideal'+target] = round(float(lib.getFatMassToIdeal()),2)
+						action['protein'+target] = round(float(lib.getProteinPercentage()),2)
+						action['body'+target] = lib.getBodyType()
+						action['imclabel'+target] = lib.getImcLabel()
+						action['lbm'] = round(float(lib.getLBMCoefficient()),2)
+						action['fat'] = round(float(lib.getFatPercentage()),2)
+						action['water'] = round(float(lib.getWaterPercentage()),2)
+						action['bones'] = round(float(lib.getBoneMass()),2)
+						action['muscle'] = round(float(lib.getMuscleMass()),2)
+						action['visceral'] = round(float(lib.getVisceralFat()),2)
+						action['imc'] = round(float(lib.getBMI()),2)
+						action['bmr'] = round(float(lib.getBMR()),2)
+						action['ideal'] = round(float(lib.getIdealWeight()),2)
+						action['fatlabel'] = round(float(lib.getIdealWeight()),2)
+						action['fatmassideal'] = round(float(lib.getFatMassToIdeal()),2)
+						action['protein'] = round(float(lib.getProteinPercentage()),2)
+						action['body'] = lib.getBodyType()
+						action['imclabel'] = lib.getImcLabel()
+					except Exception as e:
+						logging.error(str(e))
 		else:
 			logging.debug('Weight unstabilized skipping')
 		return action

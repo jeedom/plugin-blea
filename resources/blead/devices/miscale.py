@@ -24,7 +24,7 @@ class MiScale():
 		unit = 'kg'
 		stabilized = 'unstabilized'
 		hasimpedance = False
-		status = utils.hex_to_binary(data[4:6]).zfill(8)[::-1] 
+		status = utils.hex_to_binary(data[4:6]).zfill(8)[::-1]
 		logging.debug('Status is ' + status + ' from ' + data[6:8])
 		if (status[0:1] == '1'):
 			unit = 'lbs'
@@ -58,21 +58,24 @@ class MiScale():
 					if target != '':
 						logging.debug('Found target : ' + str(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]))
 						action['target'] = target
-						birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
-						born = datetime.strptime(birthdate, '%d-%m-%Y')
-						today = date.today()
-						age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-						logging.debug('Birthdate is ' +birthdate + ' age is ' + str(age))
-						lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), age, globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], 0)
 						action['poids'+target] = action['poids']
-						action['imc'+target] = round(float(lib.getBMI()),2)
-						action['bmr'+target] = round(float(lib.getBMR()),2)
-						action['ideal'+target] = round(float(lib.getIdealWeight()),2)
-						action['imclabel'+target] = lib.getImcLabel()
-						action['imc'] = round(float(lib.getBMI()),2)
-						action['bmr'] = round(float(lib.getBMR()),2)
-						action['imclabel'] = lib.getImcLabel()
-						action['ideal'] = round(float(lib.getIdealWeight()),2)
+						try:
+							birthdate = globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['age']
+							born = datetime.strptime(birthdate, '%d-%m-%Y')
+							today = date.today()
+							age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+							logging.debug('Birthdate is ' +birthdate + ' age is ' + str(age))
+							lib = bodyMetrics(action['poids'], float(globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['height']), age, globals.KNOWN_DEVICES[mac.upper()]['specificconfiguration'][target]['sex'], 0)
+							action['imc'+target] = round(float(lib.getBMI()),2)
+							action['bmr'+target] = round(float(lib.getBMR()),2)
+							action['ideal'+target] = round(float(lib.getIdealWeight()),2)
+							action['imclabel'+target] = lib.getImcLabel()
+							action['imc'] = round(float(lib.getBMI()),2)
+							action['bmr'] = round(float(lib.getBMR()),2)
+							action['imclabel'] = lib.getImcLabel()
+							action['ideal'] = round(float(lib.getIdealWeight()),2)
+						except Exception as e:
+							logging.error(str(e))
 		else :
 			logging.debug('MISCALE------Miscale this is a dummy measure')
 		return action
