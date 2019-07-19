@@ -264,6 +264,7 @@ class blea extends eqLogic {
 	}
 
 	public static function launchremote($_remoteId) {
+		log::add('blea','info',__('Lancement du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
 		$last = $remoteObject->getConfiguration('lastupdate','0');
 		if ($last != '0' and time() - strtotime($last)<65){
@@ -281,6 +282,8 @@ class blea extends eqLogic {
 		$cmd .= ' --callback ' . network::getNetworkAccess('internal') . '/plugins/blea/core/php/jeeBlea.php';
 		$cmd .= ' --apikey ' . jeedom::getApiKey('blea');
 		$cmd .= ' --daemonname "' . $remoteObject->getRemoteName() . '"';
+		$cmd .= ' --noseeninterval ' . config::byKey('absentnumber', 'blea', 4);
+		$cmd .= ' --scaninterval ' . config::byKey('scaninterval', 'blea', 29);
 		$cmd .= ' >> ' . '/tmp/blea' . ' 2>&1 &';
 		log::add('blea','info','Lancement du démon distant ' . $cmd);
 		config::save('include_mode', 0, 'blea');
@@ -419,6 +422,8 @@ class blea extends eqLogic {
 		$cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/blea/core/php/jeeBlea.php';
 		$cmd .= ' --apikey ' . jeedom::getApiKey('blea');
 		$cmd .= ' --daemonname local';
+		$cmd .= ' --noseeninterval ' . config::byKey('absentnumber', 'blea', 4);
+		$cmd .= ' --scaninterval ' . config::byKey('scaninterval', 'blea', 29);
 		$cmd .= ' --pid ' . jeedom::getTmpFolder('blea') . '/deamon.pid';
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
 		$result = exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');
@@ -648,6 +653,39 @@ class blea extends eqLogic {
 			}
 		}
 		return $closest;
+	}
+	
+	public function computePresence() {
+		$globalPresence = 0;
+		$presentcmd = $this->getCmd(null, 'present');
+		if (!is_object($presentcmd)) {
+			$presentcmd = new bleaCmd();
+			$presentcmd->setLogicalId('present');
+			$presentcmd->setIsVisible(0);
+			$presentcmd->setIsHistorized(1);
+			$presentcmd->setName(__('Present', __FILE__));
+			$presentcmd->setType('info');
+			$presentcmd->setSubType('binary');
+			$presentcmd->setTemplate('dashboard','line');
+			$presentcmd->setTemplate('mobile','line');
+			$presentcmd->setEqLogic_id($this->getId());
+			$presentcmd->save();
+		}
+		if ($presentcmd->getConfiguration('returnStateValue') == 0 || $presentcmd->getConfiguration('returnStateTime') == 2){
+			$presentcmd->setConfiguration('returnStateValue','');
+			$presentcmd->setConfiguration('returnStateTime','');
+			$presentcmd->save();
+		}
+		foreach ($this->getCmd('info') as $cmd) {
+			if (substr($cmd->getLogicalId(),0,7) == 'present' && $cmd->getLogicalId()!= 'present'){
+				$globalPresence += $cmd->execCmd();
+			}
+		}
+		if ($globalPresence > 0) {
+			$this->checkAndUpdateCmd($presentcmd, 1);
+		} else {
+			$this->checkAndUpdateCmd($presentcmd, 0);
+		}
 	}
 
 	public function allowDevice() {

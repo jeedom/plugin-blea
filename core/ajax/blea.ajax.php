@@ -42,6 +42,15 @@ try {
 	if (init('action') == 'saveAntennaPosition') {
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}
+	
+	if (init('action') == 'launchremotes') {
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::launchremote($remote->getId());
+			sleep(1);
+		}
+		ajax::success();
+	}
 
 	if (init('action') == 'autoDetectModule') {
 		$eqLogic = blea::byId(init('id'));

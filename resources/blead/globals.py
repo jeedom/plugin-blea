@@ -1,6 +1,10 @@
 import time
 JEEDOM_COM = ''
+SCAN_INTERVAL = 29
+NOSEEN_NUMBER = 4
+START_TIME = int(time.time())
 KNOWN_DEVICES = {}
+SEEN_DEVICES = {}
 LEARN_MODE = False
 READY = False
 LEARN_MODE_ALL = 0

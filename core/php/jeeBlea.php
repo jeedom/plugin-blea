@@ -83,7 +83,7 @@ if (isset($result['heartbeat'])) {
 }
 
 if (isset($result['devices'])) {
-
+	log::add('blea','debug','Received ' . print_r($result['devices'],true));
 	foreach ($result['devices'] as $key => $datas) {
 		if (!isset($datas['id'])) {
 			continue;
@@ -136,30 +136,43 @@ if (isset($result['devices'])) {
 			$blea->save();
 		}
 		if (isset($datas['rssi'])) {
-			if ($datas['rssi']=='same'){
-				foreach ($blea->getCmd() as $cmd){
-					if (substr($cmd->getLogicalId(),0,4) == 'rssi'){
-						$oldrssi = $cmd->execCmd();
-						$cmd->event($oldrssi);
-					}
-					if ($cmd->getLogicalId() == 'present'){
-						$cmd->event(1);
-					}
-				}
-				die();
+			$rssicmd = $blea->getCmd(null, 'rssi' . $datas['source']);
+			if (!is_object($rssicmd)) {
+				$rssicmd = new bleaCmd();
+				$rssicmd->setLogicalId('rssi' . $datas['source']);
+				$rssicmd->setIsVisible(0);
+				$rssicmd->setIsHistorized(1);
+				$rssicmd->setName(__('Rssi '. $datas['source'], __FILE__));
+				$rssicmd->setType('info');
+				$rssicmd->setSubType('numeric');
+				$rssicmd->setUnite('dbm');
+				$rssicmd->setEqLogic_id($blea->getId());
+				$rssicmd->save();
 			}
-			$cmdremote = $blea->getCmd(null, 'rssi' . $datas['source']);
-			if (!is_object($cmdremote)) {
-				$cmdremote = new bleaCmd();
-				$cmdremote->setLogicalId('rssi' . $datas['source']);
-				$cmdremote->setIsVisible(0);
-				$cmdremote->setIsHistorized(1);
-				$cmdremote->setName(__('Rssi '. $datas['source'], __FILE__));
-				$cmdremote->setType('info');
-				$cmdremote->setSubType('numeric');
-				$cmdremote->setUnite('dbm');
-				$cmdremote->setEqLogic_id($blea->getId());
-				$cmdremote->save();
+			if ($rssicmd->getConfiguration('returnStateValue') == -200 || $cmdremote->getConfiguration('returnStateTime') == 2){
+				$rssicmd->setConfiguration('returnStateValue','');
+				$rssicmd->setConfiguration('returnStateTime','');
+				$rssicmd->save();
+			}
+			$presentcmd = $blea->getCmd(null, 'present' . $datas['source']);
+			if (!is_object($presentcmd)) {
+				$presentcmd = new bleaCmd();
+				$presentcmd->setLogicalId('present' . $datas['source']);
+				$presentcmd->setIsVisible(0);
+				$presentcmd->setIsHistorized(1);
+				$presentcmd->setName(__('Present '. $datas['source'], __FILE__));
+				$presentcmd->setType('info');
+				$presentcmd->setSubType('binary');
+				$presentcmd->setTemplate('dashboard','line');
+				$presentcmd->setTemplate('mobile','line');
+				$presentcmd->setEqLogic_id($blea->getId());
+				$presentcmd->save();
+			}
+			if ($datas['rssi']=='same'){
+				$oldrssi = $cmd->execCmd();
+				$cmdremote->event($oldrssi);
+				$presentcmd->event(1);
+				die();
 			}
 			$cmdraw = $blea->getCmd(null, 'rawdata');
 			if (!is_object($cmdraw)) {
@@ -173,40 +186,8 @@ if (isset($result['devices'])) {
 				$cmdraw->setEqLogic_id($blea->getId());
 				$cmdraw->save();
 			}
-			if ($blea->getConfiguration('resetRssis',1) == 1){
-				if ($cmdremote->getConfiguration('returnStateValue') != -200 || $cmdremote->getConfiguration('returnStateTime') != 2){
-					$cmdremote->setConfiguration('returnStateValue',-200);
-					$cmdremote->setConfiguration('returnStateTime',2);
-					$cmdremote->save();
-				}
-			}
-			if ($cmdremote->getConfiguration('repeatEventManagement') != "always"){
-				$cmdremote->setConfiguration('repeatEventManagement',"always");
-				$cmdremote->save();
-			}
-			$cmdremote->event($datas['rssi']);
-			$cmdpresent = $blea->getCmd(null, 'present');
-			if (!is_object($cmdpresent)) {
-				$cmdpresent = new bleaCmd();
-				$cmdpresent->setLogicalId('present');
-				$cmdpresent->setIsVisible(0);
-				$cmdpresent->setIsHistorized(1);
-				$cmdpresent->setName(__('Present', __FILE__));
-				$cmdpresent->setType('info');
-				$cmdpresent->setSubType('binary');
-				$cmdpresent->setTemplate('dashboard','line');
-				$cmdpresent->setTemplate('mobile','line');
-				$cmdpresent->setEqLogic_id($blea->getId());
-				$cmdpresent->save();
-			}
-			if ($blea->getConfiguration('resetRssis',1) == 1){
-				if ($cmdpresent->getConfiguration('returnStateValue') != 0 or $cmdpresent->getConfiguration('returnStateTime') !=2){
-					$cmdpresent->setConfiguration('returnStateValue',0);
-					$cmdpresent->setConfiguration('returnStateTime',2);
-					$cmdpresent->save();
-				}
-			}
-			$cmdpresent->event(1);
+			$rssicmd->event($datas['rssi']);
+			$presentcmd->event($datas['present']);
 		}
 		$remotelist =['rssilocal'];
 		$remotes = blea_remote::all();
@@ -263,5 +244,6 @@ if (isset($result['devices'])) {
 		foreach ($cmdrssitoremove as $cmdremove){
 			$cmdremove->remove();
 		}
+		$blea->computePresence();
 	}
 }
