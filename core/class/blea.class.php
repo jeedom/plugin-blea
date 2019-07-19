@@ -402,7 +402,7 @@ class blea extends eqLogic {
 		if (exec(system::getCmdSudo() . system::get('cmd_check') . '-E "python3\-serial|python3\-requests|python3\-pyudev|rfkill" | wc -l') < 4) {
 			$return['state'] = 'nok';
 		}
-		if (exec(system::getCmdSudo() . 'pip3 list | grep -E "pyudev|pyserial|requests" | wc -l') < 3) {
+		if (exec(system::getCmdSudo() . 'pip3 list | grep -E "pyudev|pyserial|requests|bluepy" | wc -l') < 4) {
 			$return['state'] = 'nok';
 		}
 		return $return;
