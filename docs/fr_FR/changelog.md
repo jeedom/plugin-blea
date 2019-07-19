@@ -8,6 +8,10 @@
 - A l'inclusion les antennes d'émissions et de réceptions sont automatiquement remplies par l'antenne ayant permis l'inclusion
 - Changement de la notion de présence (plus besoin de repetion toujours, plus besoin de return state et return state time) maintenant une commande présence par antenne et local et une command presence dependant des autres
 - Réglage possible maintenant du scan interval et du nombre de scan ou un device n'est pas visible pour le déclarer absent (gain de détection présence et surtout absence)
+- Possibilité de mettre à jour toutes les antennes en un clic
+- Possibilité de redémarrer toutes les antennes en un clic
+- Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
+- Passage en scan passif sauf au learn (avec mémoire de la conf jeedom pour savoir qui est qui)
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass

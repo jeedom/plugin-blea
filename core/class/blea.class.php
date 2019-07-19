@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.0';
+	public static $_version = '2.2';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',

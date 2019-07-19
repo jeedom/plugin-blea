@@ -58,6 +58,11 @@ class ScanDelegate(DefaultDelegate):
 			if mac not in globals.IGNORE:
 				logging.debug('SCANNER------'+str(dev.getScanData()) +' '+str(connectable) +' '+ str(addrType) +' '+ str(mac) + ' ' + str(dev.scanData))
 			findDevice=False
+			if mac.upper() in globals.KNOWN_DEVICES:
+				if 'name' in globals.KNOWN_DEVICES[mac.upper()]:
+					if name == '':
+						logging.debug('No name in data but i know it is : ' +globals.KNOWN_DEVICES[mac.upper()]['name'])
+						name = globals.KNOWN_DEVICES[mac.upper()]['name']
 			for (adtype, desc, value) in dev.getScanData():
 				if desc == 'Complete Local Name':
 					name = value.strip()
@@ -185,10 +190,11 @@ def listen():
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
-				globals.SCANNER.start()
 				if globals.LEARN_MODE:
+					globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(3)
 				else:
+					globals.SCANNER.start(passive=True)
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
