@@ -3,6 +3,7 @@
         "name": "Inconnu",
         "groupe" : "Inconnu",
 		"configuration" : {
+			"name" : "unknown",
 			"cancontrol" : 1
 		},
         "commands": [

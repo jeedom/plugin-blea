@@ -6,6 +6,7 @@
 			"specificmodal" : 1,
 			"specificclass" : 1,
 			"xiaomi" : 1,
+			"name" : "miscale2",
 			"battery_type": "4x1.5V AA"
 		},
         "commands": [

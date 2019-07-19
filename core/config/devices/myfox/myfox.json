@@ -2,6 +2,9 @@
     "myfox": {
         "name": "Myfox",
 		"groupe" : "Sécurité",
+		"configuration" : {
+			"name" : "myfox"
+		},
         "commands": [
         ],
 		"compatibility": [

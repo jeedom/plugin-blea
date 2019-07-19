@@ -7,6 +7,7 @@
 			"specificclass" : 1,
 			"cancontrol" : 1,
 			"specificwidgets" : 1,
+			"name" : "dotti",
 			"canbelocked" : 1
 		},
         "commands": [

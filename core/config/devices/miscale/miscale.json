@@ -5,6 +5,7 @@
 		"configuration" : {
 			"specificmodal" : 1,
 			"specificclass" : 1,
+			"name" : "miscale",
 			"xiaomi" : 1,
 			"battery_type": "4x1.5V AA"
 		},
