@@ -399,7 +399,7 @@ class blea extends eqLogic {
 		$return['log'] = 'blea_update';
 		$return['progress_file'] = jeedom::getTmpFolder('blea') . '/dependance';
 		$return['state'] = 'ok';
-		if (exec(system::getCmdSudo() . system::get('cmd_check') . '-E "python3\-serial|python3\-request|python3\-pyudev|rfkill" | wc -l') < 4) {
+		if (exec(system::getCmdSudo() . system::get('cmd_check') . '-E "python3\-serial|python3\-requests|python3\-pyudev|rfkill" | wc -l') < 4) {
 			$return['state'] = 'nok';
 		}
 		if (exec(system::getCmdSudo() . 'pip3 list | grep -E "pyudev|pyserial|requests" | wc -l') < 3) {
