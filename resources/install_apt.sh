@@ -5,27 +5,27 @@ fi
 touch ${PROGRESS_FILE}
 echo 0 > ${PROGRESS_FILE}
 echo "********************************************************"
-echo "*             Installation des dépendances             *"
+echo "*			 Installation des dépendances			 *"
 echo "********************************************************"
 sudo apt-get update
-echo 50 > ${PROGRESS_FILE}
-sudo apt-get install -y python-pip python-dev build-essential python-requests bluetooth libffi-dev libssl-dev rfkill
-echo 66 > ${PROGRESS_FILE}
+echo 20 > ${PROGRESS_FILE}
+sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
+sudo apt-get remove -y python3-pip
+sudo apt-get install -y python3-pip
+echo 40 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
-echo 75 > ${PROGRESS_FILE}
-sudo pip install pyudev
-sudo pip install pyserial
-sudo pip install requests
-sudo pip install -U pip setuptools
-sudo curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-sudo python get-pip.py --force-reinstall
-echo 80 > ${PROGRESS_FILE}
+echo 50 > ${PROGRESS_FILE}
+sudo pip3 install pyudev
+sudo pip3 install pyserial
+sudo pip3 install requests
+sudo pip3 install -U pip setuptools
+echo 60 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
 sudo git clone https://github.com/sarakha63/bluepy.git
 cd /tmp/bluepy
-sudo python setup.py build
-sudo python setup.py install
+sudo python3 setup.py build
+sudo python3 setup.py install
 sudo connmanctl enable bluetooth >/dev/null 2>&1
 sudo rfkill unblock 0 >/dev/null 2>&1
 sudo rfkill unblock 1 >/dev/null 2>&1
@@ -36,11 +36,11 @@ sudo hciconfig hci2 up >/dev/null 2>&1
 sudo rm -R /tmp/bluepy
 cd /tmp
 echo 85 > ${PROGRESS_FILE}
-sudo pip install cryptography
+sudo pip3 install cryptography
 echo 90 > ${PROGRESS_FILE}
-sudo pip install pycrypto
+sudo pip3 install pycrypto
 echo 100 > ${PROGRESS_FILE}
 echo "********************************************************"
-echo "*             Installation terminée                    *"
+echo "*			 Installation terminée					*"
 echo "********************************************************"
 rm ${PROGRESS_FILE}

@@ -26,7 +26,7 @@ class LogiSwitch():
 					return
 			notification = Notification(conn,LogiSwitch)
 			notification.subscribe(2)
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 	

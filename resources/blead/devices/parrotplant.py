@@ -32,7 +32,7 @@ class ParrotPlant():
 					return
 			conn.writeCharacteristic(handle,value)
 			logging.debug('action:  (done) '+str(message))
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 
 
@@ -59,7 +59,7 @@ class ParrotPlant():
 			result['id'] = mac
 			logging.debug(str(result))
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 
@@ -94,7 +94,7 @@ class ParrotPlant():
 	def __safeUnpack(self,fmt,data):
 		try:
 			return struct.unpack(fmt, data)[0]
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return 0
 

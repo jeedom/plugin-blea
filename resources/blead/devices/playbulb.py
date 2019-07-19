@@ -37,15 +37,15 @@ class Playbulb():
 		characteristics=[]
 		try:
 			characteristics = conn.conn.getCharacteristics(0x0001)
-		except Exception,e:
+		except Exception as e:
 			logging.debug(str(e))
 			try:
 				characteristics = conn.conn.getCharacteristics(0x0001)
-			except Exception,e:
+			except Exception as e:
 				logging.debug(str(e))
 				try:
 					characteristics = conn.conn.getCharacteristics(0x0001)
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
 					conn.disconnect()
 		color_characteristic = next(iter(filter(lambda el: el.uuid == COLOR_CHARACTERISTIC_UUID, characteristics)))
@@ -156,7 +156,7 @@ class Playbulb():
 					else:
 						color = color[2:]
 					result['color'] = '#'+color
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
 			if 'effect' in refreshlist:
 				try:
@@ -176,7 +176,7 @@ class Playbulb():
 						result['mode'] = 'Aucun'
 					speed = 255-int(effect[12:14],16)
 					result['speed'] = speed
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
 			if 'battery' in refreshlist:
 				try:
@@ -190,9 +190,9 @@ class Playbulb():
 							result['mode'] = result['mode'] + ' (En charge)'
 						else:
 							result['mode'] = result['mode'] + ' (En décharge)'
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
-		except Exception,e:
+		except Exception as e:
 			logging.debug(str(e))
 			conn.disconnect()
 			return

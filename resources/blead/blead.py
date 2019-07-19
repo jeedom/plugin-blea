@@ -26,12 +26,12 @@ import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
 from threading import Timer
-import thread
+from threading import Thread as thread
 from multiconnect import Connector
 try:
 	from jeedom.jeedom import *
 except ImportError:
-	print "Error: importing module from jeedom folder"
+	print("Error: importing module from jeedom folder")
 	sys.exit(1)
 
 try:
@@ -90,7 +90,7 @@ class ScanDelegate(DefaultDelegate):
 					globals.PENDING_ACTION = True
 					try:
 						action = device().parse(data,mac,name,manuf)
-					except Exception, e:
+					except Exception as e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 					if not action:
 						return
@@ -203,7 +203,7 @@ def listen():
 					globals.SCAN_ERRORS = 0
 				while globals.PENDING_ACTION:
 					time.sleep(0.01)
-			except Exception, e:
+			except Exception as e:
 				if not globals.PENDING_ACTION and not globals.LEARN_MODE:
 					if globals.SCAN_ERRORS < 5:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
@@ -231,7 +231,8 @@ def read_socket(name):
 			global JEEDOM_SOCKET_MESSAGE
 			if not JEEDOM_SOCKET_MESSAGE.empty():
 				logging.debug("SOCKET-READ------Message received in socket JEEDOM_SOCKET_MESSAGE")
-				message = json.loads(jeedom_utils.stripped(JEEDOM_SOCKET_MESSAGE.get()))
+				message = JEEDOM_SOCKET_MESSAGE.get().decode('utf-8')
+				message =json.loads(message)
 				if message['apikey'] != globals.apikey:
 					logging.error("SOCKET-READ------Invalid apikey from socket : " + str(message))
 					return
@@ -248,7 +249,7 @@ def read_socket(name):
 							logging.debug("SOCKET-READ------This antenna should not keep a connection with this device, disconnecting " + str(message['device']['id']))
 							try:
 								globals.KEEPED_CONNECTION[message['device']['id']].disconnect()
-							except Exception, e:
+							except Exception as e:
 								logging.debug(str(e))
 							if message['device']['id'] in globals.KEEPED_CONNECTION:
 								del globals.KEEPED_CONNECTION[message['device']['id']]
@@ -290,7 +291,7 @@ def read_socket(name):
 				elif message['cmd'] == 'ready':
 					logging.debug('Daemon is ready')
 					globals.READY = True
-		except Exception,e:
+		except Exception as e:
 			logging.error("SOCKET-READ------Exception on socket : %s" % str(e))
 		time.sleep(0.3)
 
@@ -326,7 +327,7 @@ def heartbeat_handler(delay):
 					logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))
 					try:
 						globals.KEEPED_CONNECTION[device].disconnect()
-					except Exception, e:
+					except Exception as e:
 						logging.debug(str(e))
 					if device in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[device]
@@ -382,13 +383,13 @@ def action_handler(message):
 					return
 			try:
 				conn.helper()
-			except Exception,e:
+			except Exception as e:
 				logging.debug("ACTION------Helper failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 			conn.disconnect()
 			globals.PENDING_ACTION = False
 			return
-		except Exception,e:
+		except Exception as e:
 				logging.debug("ACTION------Helper failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 	elif message['cmd'] == 'refresh':
@@ -399,7 +400,7 @@ def action_handler(message):
 				globals.PENDING_ACTION = True
 				try:
 					result = compatible().read(message['device']['id'])
-				except Exception,e:
+				except Exception as e:
 					logging.debug("ACTION------Refresh failed : %s" % str(e))
 				globals.PENDING_ACTION = False
 				break
@@ -417,7 +418,7 @@ def action_handler(message):
 				globals.PENDING_ACTION = True
 				try:
 					result = device().action(message)
-				except Exception,e:
+				except Exception as e:
 						logging.debug("ACTION------Action failed :" + str(e))
 				globals.PENDING_ACTION = False
 				if result :
@@ -443,7 +444,7 @@ def read_device(name):
 					continue
 				if not 'needsrefresh' in globals.KNOWN_DEVICES[device]:
 					continue
-				if globals.KNOWN_DEVICES[device]['needsrefresh'] <> 1:
+				if globals.KNOWN_DEVICES[device]['needsrefresh'] != 1:
 					continue
 				if mac in globals.LAST_TIME_READ and now < (globals.LAST_TIME_READ[mac]+datetime.timedelta(milliseconds=int(globals.KNOWN_DEVICES[device]['delay'])*1000)):
 					continue
@@ -454,13 +455,13 @@ def read_device(name):
 							globals.PENDING_ACTION = True
 							try:
 								result = compatible().read(mac)
-							except Exception,e:
+							except Exception as e:
 								try:
 									result = compatible().read(mac)
-								except Exception,e:
+								except Exception as e:
 									try:
 										result = compatible().read(mac)
-									except Exception,e:
+									except Exception as e:
 										logging.debug("READER------Refresh failed : %s" % str(e))
 							globals.PENDING_ACTION = False
 							break
@@ -472,7 +473,7 @@ def read_device(name):
 							result['source'] = globals.daemonname
 							globals.JEEDOM_COM.add_changes('devices::'+mac,result)
 							break
-		except Exception,e:
+		except Exception as e:
 			logging.error("READER------Exception on read device : %s" % str(e))
 		time.sleep(10)
 
@@ -489,7 +490,7 @@ def shutdown():
 		try:
 			globals.KEEPED_CONNECTION[device].disconnect(True)
 			logging.debug("Connection closed for " + str(device))
-		except Exception, e:
+		except Exception as e:
 			logging.debug(str(e))
 	try:
 		os.remove(globals.pidfile)
@@ -567,7 +568,7 @@ try:
 		shutdown()
 	jeedom_socket = jeedom_socket(port=globals.socketport,address=globals.sockethost)
 	listen()
-except Exception,e:
+except Exception as e:
 	logging.error('GLOBAL------Fatal error : '+str(e))
 	logging.debug(traceback.format_exc())
 	shutdown()

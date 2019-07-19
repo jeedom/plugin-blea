@@ -50,7 +50,7 @@ def getConnection(mac,type='public'):
 				if not conn.isconnected:
 					return False,False
 		return conn,isold
-	except Exception,e:
+	except Exception as e:
 		logging.error(str(e))
 		if mac in globals.KEEPED_CONNECTION:
 			del globals.KEEPED_CONNECTION[mac]

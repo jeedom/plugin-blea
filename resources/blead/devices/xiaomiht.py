@@ -74,7 +74,7 @@ class XiaomiHT():
 			result['id'] = mac
 			logging.debug('XIAOMIHT------'+str(result))
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 

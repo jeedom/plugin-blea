@@ -24,7 +24,7 @@ class Blpnr():
 			self.getStatus(mac)
 		return action
 
-              
+			  
 	def action(self,message):
 		logging.debug('ACTION BLPNR')
 		mac = message['device']['id']
@@ -59,7 +59,7 @@ class Blpnr():
 		conn.writeCharacteristic(handle,message)
 		conn.disconnect()
 		self.getStatus(mac)
-              
+			  
 	def getStatus(self,mac):
 		logging.debug('STATUS BLPNR')
 		try:
@@ -70,7 +70,7 @@ class Blpnr():
 					return
 			conn.writeCharacteristic('0x000f','2902')
 			conn.disconnect()
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		try:
 			conn = Connector(mac)
@@ -83,7 +83,7 @@ class Blpnr():
 			#notification.subscribe(10,disconnect=True)
 			notification.subscribe() 
 			conn.writeCharacteristic('0x0011','0d00000d00')
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 
 	def read(self,mac):
@@ -119,19 +119,19 @@ class Blpnr():
 			logging.debug('BLPNR temps : '+result['temps'])
 			tension = int(data[7].encode('hex'),16)
 			logging.debug('BLPNR tension : '+str(tension))
-			battery = 0              
+			battery = 0			  
 			if tension >= 80:
 				battery = 5
 			elif tension >= 75:
-				battery = 4      
+				battery = 4	  
 			elif tension >= 70:
-				battery = 3      
+				battery = 3	  
 			elif tension >= 65:
-				battery = 2      
+				battery = 2	  
 			elif tension >= 60:
 				battery = 1
-			result['battery'] = str(tension)# str(battery * 20)             
-			logging.debug('BLPNR battery : '+result['battery'])    
+			result['battery'] = str(tension)# str(battery * 20)			 
+			logging.debug('BLPNR battery : '+result['battery'])	
 			result['rssi'] = str(int(data[8].encode('hex'),16))
 			result['mode'] = str((int(data[4].encode('hex'),16) > 0))
 			logging.debug('BLPNR mode : '+result['mode'])
@@ -141,5 +141,5 @@ class Blpnr():
 		globals.LAST_STORAGE[conn.mac] = result['mode']
 		globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
-              
+			  
 globals.COMPATIBILITY.append(Blpnr)

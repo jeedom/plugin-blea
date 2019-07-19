@@ -43,7 +43,7 @@ class DreamScreen():
 			else:
 				conn.writeCharacteristic(handle,value)
 			conn.disconnect()
-		except Exception,e:
+		except Exception as e:
 			logging.error('Oups ' +str(e))
 			conn.disconnect()
 		return

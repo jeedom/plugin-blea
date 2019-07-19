@@ -275,7 +275,7 @@ class blea extends eqLogic {
 		$user=$remoteObject->getConfiguration('remoteUser');
 		$device=$remoteObject->getConfiguration('remoteDevice');
 		$script_path = '/home/'.$user.'/blead/resources/blead';
-		$cmd = '/usr/bin/python ' . $script_path . '/blead.py';
+		$cmd = '/usr/bin/python3 ' . $script_path . '/blead.py';
 		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('blea'));
 		$cmd .= ' --device ' . $device;
 		$cmd .= ' --socketport ' . config::byKey('socketport', 'blea');
@@ -415,7 +415,7 @@ class blea extends eqLogic {
 		}
 		$port = jeedom::getBluetoothMapping(config::byKey('port', 'blea'));
 		$blea_path = realpath(dirname(__FILE__) . '/../../resources/blead');
-		$cmd = 'sudo /usr/bin/python ' . $blea_path . '/blead.py';
+		$cmd = 'sudo /usr/bin/python3 ' . $blea_path . '/blead.py';
 		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('blea'));
 		$cmd .= ' --device ' . $port;
 		$cmd .= ' --socketport ' . config::byKey('socketport', 'blea');

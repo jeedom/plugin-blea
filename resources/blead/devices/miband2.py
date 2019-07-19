@@ -83,7 +83,7 @@ class Miband2():
 				result['lastcharge'] = day+'/'+month+'/'+year+' '+hour+'h'+minutes+'min'+seconds+'s'
 			result['id'] = mac
 			logging.debug(str(result))
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 	

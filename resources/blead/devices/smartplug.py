@@ -29,7 +29,7 @@ class Smartplug():
 			try:
 				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
-			except Exception, e:
+			except Exception as e:
 				logging.error(str(e))
 				if i >= 4 :
 					return
@@ -77,10 +77,10 @@ class Smartplug():
 			conn.writeCharacteristic('0x2b','0f050400000005ffff')
 			notification.subscribe(2)
 			return
-		except Exception,e:
+		except Exception as e:
 			try:
 				conn.disconnect()
-			except Exception,e:
+			except Exception as e:
 				pass
 			logging.error(str(e))
 		return

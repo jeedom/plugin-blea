@@ -113,7 +113,7 @@ class Dotti():
 				globals.LAST_STORAGE[mac] = colorArray
 				logging.debug('DOTTI------I save '+str(save_pixel)+'/'+str(total_pixel)+' pixel to write so '+str((save_pixel*100)/total_pixel)+'%')
 				logging.debug('DOTTI------Display sent')
-		except Exception,e:
+		except Exception as e:
 			logging.debug("DOTTI------Failed to finish : %s" % str(e))
 		conn.disconnect()
 		return

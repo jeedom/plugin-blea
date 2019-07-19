@@ -96,7 +96,7 @@ class YeelightCandela():
 					else:
 						color = color[2:]
 					result['color'] = '#'+color
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
 			if 'effect' in refreshlist:
 				try:
@@ -116,7 +116,7 @@ class YeelightCandela():
 						result['mode'] = 'Aucun'
 					speed = 255-int(effect[12:14],16)
 					result['speed'] = speed
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
 			if 'battery' in refreshlist:
 				try:
@@ -130,9 +130,9 @@ class YeelightCandela():
 							result['mode'] = result['mode'] + ' (En charge)'
 						else:
 							result['mode'] = result['mode'] + ' (En décharge)'
-				except Exception,e:
+				except Exception as e:
 					logging.debug(str(e))
-		except Exception,e:
+		except Exception as e:
 			logging.debug(str(e))
 			conn.disconnect()
 			return

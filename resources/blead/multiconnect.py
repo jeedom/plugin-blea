@@ -26,7 +26,7 @@ class Connector():
 					connection = btle.Peripheral(self.mac,addrType = btle.ADDR_TYPE_RANDOM,iface=globals.IFACE_DEVICE)
 					self.isconnected = True
 					break
-			except Exception,e:
+			except Exception as e:
 				logging.debug('CONNECTOR------'+str(e) + ' attempt ' + str(i) )
 				if i >= retry:
 					self.isconnected = False
@@ -53,7 +53,7 @@ class Connector():
 			try:
 				self.conn.disconnect()
 				break
-			except Exception,e:
+			except Exception as e:
 				if 'str' in str(e) and 'has no attribute' in str(e):
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
@@ -78,7 +78,7 @@ class Connector():
 			try:
 				result = self.conn.readCharacteristic(int(handle,16))
 				break
-			except Exception,e:
+			except Exception as e:
 				logging.debug(str(e))
 				if ireadCharacteristic >= retry:
 					self.disconnect(True)
@@ -99,7 +99,7 @@ class Connector():
 				arrayValue = [int('0x'+value[i:i+2],16) for i in range(0, len(value), 2)]
 				result = self.conn.writeCharacteristic(int(handle,16),struct.pack('<%dB' % (len(arrayValue)), *arrayValue),response)
 				break
-			except Exception,e:
+			except Exception as e:
 				logging.debug(str(e))
 				if iwriteCharacteristic >= retry:
 					self.disconnect(True)
@@ -127,7 +127,7 @@ class Connector():
 				else:
 					char = self.conn.getCharacteristics(int(handle,16), int(handleend,16)+4)
 					break
-			except Exception,e:
+			except Exception as e:
 				logging.debug(str(e))
 				if igetCharacteristics >= retry:
 					self.disconnect(True)
@@ -159,7 +159,7 @@ class Connector():
 							except:
 								continue
 					logging.debug('CONNECTOR------value for handle (undecrypted) : ' + handle + ' is : ' + value)
-				except Exception,e:
+				except Exception as e:
 					logging.debug('CONNECTOR------unable to read value for handle (probably not readable) '+handle+ ' : '+str(e))
 					continue
 		return

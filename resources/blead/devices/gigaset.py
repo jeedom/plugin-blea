@@ -31,7 +31,7 @@ class Gigaset():
 			battery = int(batterytrame.encode("hex"), 16)
 			result['battery'] = battery
 			result['present'] = 1
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 			conn.disconnect()
 		conn.disconnect()

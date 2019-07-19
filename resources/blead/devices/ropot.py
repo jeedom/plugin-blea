@@ -41,7 +41,7 @@ class Miflora():
 			result['id'] = mac
 			logging.debug(str(result))
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 	
