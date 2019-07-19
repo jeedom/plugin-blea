@@ -149,7 +149,7 @@ if (isset($result['devices'])) {
 				$rssicmd->setEqLogic_id($blea->getId());
 				$rssicmd->save();
 			}
-			if ($rssicmd->getConfiguration('returnStateValue') == -200 || $cmdremote->getConfiguration('returnStateTime') == 2){
+			if ($rssicmd->getConfiguration('returnStateValue') == -200 || $rssicmd->getConfiguration('returnStateTime') == 2){
 				$rssicmd->setConfiguration('returnStateValue','');
 				$rssicmd->setConfiguration('returnStateTime','');
 				$rssicmd->save();
