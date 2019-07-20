@@ -1,3 +1,18 @@
+# 20/07/2019
+- Changement de méthode pour l'ensemble de la gamme playbulb (une seule conf et des visuels) plus de dépendances par rapport aux différentes versions (maintenant a l'inclusion on récupére les adresses des diffférentes méthodes)
+- Rajout de la miscale V2 avec poids et impedance (et tout un tas de mesures calculées). Gestion des utilisateurs pour les calculs (dans le bouton config avancée)
+- Changement de la miscale V1 (il faudra recréer les users) mais on gagne quelques infos en plus
+- Pour les playbulbs je recommande une reinclusion de tous les devices
+- Correction d'un bug sur le graph réseau en mode sans local
+- Correction d'un bug sur la régénération des commandes sur demande
+- A l'inclusion les antennes d'émissions et de réceptions sont automatiquement remplies par l'antenne ayant permis l'inclusion
+- Changement de la notion de présence (plus besoin de repetion toujours, plus besoin de return state et return state time) maintenant une commande présence par antenne et local et une command presence dependant des autres
+- Réglage possible maintenant du scan interval et du nombre de scan ou un device n'est pas visible pour le déclarer absent (gain de détection présence et surtout absence)
+- Possibilité de mettre à jour toutes les antennes en un clic
+- Possibilité de redémarrer toutes les antennes en un clic
+- Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
+- Passage en scan passif sauf au learn (avec mémoire de la conf jeedom pour savoir qui est qui)
+
 # 26/06/2019
 - Rajout du xiaomi cleargrass
 - Rajout du lywsd02 Xiaomi
