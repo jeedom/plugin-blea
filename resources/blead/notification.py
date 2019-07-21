@@ -2,7 +2,7 @@ from bluepy import btle
 import time
 import logging
 import globals
-from threading import Thread as thread
+import threading
 import struct
 
 class Notification():
@@ -18,7 +18,7 @@ class Notification():
 			delegate = NotificationDelegate(self.conn,self.classname,self.action)
 			self.conn.conn.setDelegate(delegate)
 			logging.debug('Delegated')
-			thread.start_new_thread( self.waiter, (timer,disconnect,))
+			threading.Thread( target=self.waiter, args=(timer,disconnect,)).start()
 		except Exception as e:
 			logging.debug(str(e))
 			self.conn.disconnect(True)

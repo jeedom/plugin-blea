@@ -25,8 +25,7 @@ import json
 import traceback
 from bluepy.btle import Scanner, DefaultDelegate
 import globals
-from threading import Timer
-from threading import Thread as thread
+import threading
 from multiconnect import Connector
 try:
 	from jeedom.jeedom import *
@@ -178,11 +177,11 @@ def listen():
 	globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
 	logging.info("GLOBAL------Preparing Scanner...")
 	globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-	thread.start_new_thread( read_socket, ('socket',))
+	threading.Thread( target=read_socket, args=('socket',)).start()
 	logging.debug('GLOBAL------Read Socket Thread Launched')
-	thread.start_new_thread( read_device, ('device',))
+	threading.Thread( target=read_device, args=('device',)).start()
 	logging.debug('GLOBAL------Read Device Thread Launched')
-	thread.start_new_thread( heartbeat_handler, (19,))
+	threading.Thread( target=heartbeat_handler, args=(19,)).start()
 	logging.debug('GLOBAL------Heartbeat Thread Launched')
 	globals.JEEDOM_COM.send_change_immediate({'started' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 	while not globals.READY:
@@ -190,6 +189,8 @@ def listen():
 	try:
 		while 1:
 			try:
+				while globals.PENDING_ACTION:
+					time.sleep(0.01)
 				if globals.LEARN_MODE or (globals.LAST_CLEAR + globals.SCAN_INTERVAL)  < int(time.time()):
 					logging.debug('SCANNER------Clearing seen')
 					globals.SCANNER.clear()
@@ -205,16 +206,15 @@ def listen():
 				if globals.SCAN_ERRORS > 0:
 					logging.info("GLOBAL------Attempt to recover successful, reseting counter")
 					globals.SCAN_ERRORS = 0
-				while globals.PENDING_ACTION:
-					time.sleep(0.01)
 			except Exception as e:
 				if not globals.PENDING_ACTION and not globals.LEARN_MODE:
-					if globals.SCAN_ERRORS < 5:
+					if globals.SCAN_ERRORS < 10:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
-					elif globals.SCAN_ERRORS >=5 and globals.SCAN_ERRORS< 8:
+					elif globals.SCAN_ERRORS >=10 and globals.SCAN_ERRORS< 20:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
 						logging.warning("GLOBAL------Exception on scanner (trying to resolve by myself " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
+						os.system('sudo rfkill unblock all >/dev/null 2>&1')
 						os.system('sudo hciconfig ' + globals.device + ' down')
 						os.system('sudo hciconfig ' + globals.device + ' up')
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
@@ -272,7 +272,7 @@ def read_socket(name):
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 				elif message['cmd'] in ['action','refresh','helper','helperrandom']:
 					logging.debug('SOCKET-READ------Attempt an action on a device')
-					thread.start_new_thread( action_handler, (message,))
+					threading.Thread( target=action_handler, args=(message,)).start()
 					logging.debug('SOCKET-READ------Action Thread Launched')
 				elif message['cmd'] == 'logdebug':
 					logging.info('SOCKET-READ------Passage du demon en mode debug force')
