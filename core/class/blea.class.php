@@ -20,7 +20,8 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.2';
+	public static $_version = '2.3';
+	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
@@ -334,6 +335,7 @@ class blea extends eqLogic {
 		$cmd .= ' --daemonname "' . $remoteObject->getRemoteName() . '"';
 		$cmd .= ' --noseeninterval ' . config::byKey('absentnumber', 'blea', 4);
 		$cmd .= ' --scaninterval ' . config::byKey('scaninterval', 'blea', 29);
+		$cmd .= ' --scanmode ' . config::byKey('scanmode', 'blea', 'passive');
 		$cmd .= ' >> ' . '/tmp/blea' . ' 2>&1 &';
 		log::add('blea','info','Lancement du démon distant ' . $cmd);
 		config::save('include_mode', 0, 'blea');
@@ -456,8 +458,8 @@ class blea extends eqLogic {
 		}
 		if ($return['state'] == 'ok') {
 			$bluepyversion = exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'");
-			if ($bluepyversion <> '1.1.4'){
-				log::add('blea','error', 'Bluepy not up to date : ' . $bluepyversion);
+			if ($bluepyversion <> blea::$_bluepy_version){
+				log::add('blea','error', 'Bluepy not up to date : ' . $bluepyversion . ' expected ' . blea::$_bluepy_version);
 				$return['state'] = 'nok';
 			}
 		}
@@ -493,6 +495,7 @@ class blea extends eqLogic {
 		$cmd .= ' --daemonname local';
 		$cmd .= ' --noseeninterval ' . config::byKey('absentnumber', 'blea', 4);
 		$cmd .= ' --scaninterval ' . config::byKey('scaninterval', 'blea', 29);
+		$cmd .= ' --scanmode ' . config::byKey('scanmode', 'blea', 'passive');
 		$cmd .= ' --pid ' . jeedom::getTmpFolder('blea') . '/deamon.pid';
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
 		$result = exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');

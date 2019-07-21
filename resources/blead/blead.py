@@ -90,12 +90,7 @@ class ScanDelegate(DefaultDelegate):
 					try:
 						action = device().parse(data,mac,name,manuf)
 					except Exception as e:
-						logging.error('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
-						globals.PENDING_ACTION = False
-						return
-					if not action:
-						globals.PENDING_ACTION = False
-						return
+						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 					globals.PENDING_ACTION = False
 					action['id'] = mac.upper()
 					action['type'] = device().name
@@ -103,6 +98,7 @@ class ScanDelegate(DefaultDelegate):
 					action['rssi'] = rssi
 					action['source'] = globals.daemonname
 					action['rawdata'] = str(dev.getScanData())
+					action['present'] = 1
 					if globals.LEARN_MODE:
 						logging.debug('SCANNER------It\'s a known packet and I don\'t known this device so I learn ' +str(mac))
 						action['learn'] = 1
@@ -133,6 +129,7 @@ class ScanDelegate(DefaultDelegate):
 				action['rssi'] = rssi
 				action['source'] = globals.daemonname
 				action['rawdata'] = str(dev.getScanData())
+				action['present'] = 1
 				if mac in globals.IGNORE:
 					return
 				globals.IGNORE.append(mac)
@@ -200,7 +197,10 @@ def listen():
 					globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(3)
 				else:
-					globals.SCANNER.start(passive=True)
+					if globals.SCAN_MODE == 'passive':
+						globals.SCANNER.start(passive=True)
+					else:
+						globals.SCANNER.start(passive=False)
 					globals.SCANNER.process(0.3)
 				globals.SCANNER.stop()
 				if globals.SCAN_ERRORS > 0:
@@ -520,6 +520,7 @@ parser.add_argument("--daemonname", help="Daemon Name", type=str)
 parser.add_argument("--cycle", help="Cycle to send event", type=str)
 parser.add_argument("--noseeninterval", help="No seen interval", type=str)
 parser.add_argument("--scaninterval", help="Scan interval", type=str)
+parser.add_argument("--scanmode", help="Scan mode", type=str)
 args = parser.parse_args()
 
 if args.device:
@@ -544,6 +545,8 @@ if args.noseeninterval:
 	globals.NOSEEN_NUMBER = int(args.noseeninterval)
 if args.scaninterval:
 	globals.SCAN_INTERVAL = int(args.scaninterval)
+if args.scanmode:
+	globals.SCAN_MODE = args.scanmode
 
 globals.socketport = int(globals.socketport)
 globals.cycle = float(globals.cycle)
@@ -563,6 +566,7 @@ logging.info('GLOBAL------Callback : '+str(globals.callback))
 logging.info('GLOBAL------Cycle : '+str(globals.cycle))
 logging.info('GLOBAL------Scan interval  : '+str(globals.SCAN_INTERVAL))
 logging.info('GLOBAL------Number for no seen : '+str(globals.NOSEEN_NUMBER))
+logging.info('GLOBAL------Scan Mode : '+str(globals.SCAN_MODE))
 import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)

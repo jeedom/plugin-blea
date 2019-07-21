@@ -104,6 +104,16 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
         <input class="configKey form-control" data-l1key="absentnumber" placeholder="{{4}}" />
     </div>
 </div>
+	<div class="form-group">
+		<label class="col-lg-4 control-label" data-help="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence}}">{{Mode de scan}}</label>
+		<div class="col-lg-2">
+			<select class="configKey form-control" data-l1key="scanmode">
+                <option value="passive">{{Passif}}</option>
+                <option value="active">{{Actif}}</option>
+           </select>
+       </div>
+		</div>
+	</div>
    <div class="form-group">
     <label class="col-lg-4 control-label">{{Port socket interne (modification dangereuse)}}</label>
     <div class="col-lg-2">

@@ -35,6 +35,7 @@ $eqLogics = blea::byType('blea');
 			<th>{{Antenne Emission}}</th>
 			<th>{{Antenne Réception}}</th>
 			<th>{{Présent}}</th>
+			<th>{{Refresh Forcé}}</th>
 			<th>{{Dernière communication}}</th>
 			<th>{{Date création}}</th>
 		</tr>
@@ -146,10 +147,17 @@ foreach ($eqLogics as $eqLogic) {
 	} else {
 		$present = '<span class="label label-danger" style="font-size : 1em;" title="{{Absent}}"><i class="fa fa-times"></i></span>';
 	}
+	$refresh = $eqLogic->getConfiguration('needsrefresh', 0);
+	if ($refresh == 1){
+		$refresh = '<span class="label label-success" style="font-size : 1em;" title="{{Oui}}"><i class="fa fa-check"></i></span>';
+	} else {
+		$refresh = '<span class="label label-danger" style="font-size : 1em;" title="{{Non}}"><i class="fa fa-times"></i></span>';
+	}
 	echo '<td>' . $rssi . '</td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . ucfirst($antenna) . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . ucfirst($antennareceive) . '</span></td>';
 	echo '<td>' . $present . '</td>';
+	echo '<td>' . $refresh . '</td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
 }
