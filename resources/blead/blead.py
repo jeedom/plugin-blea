@@ -211,8 +211,8 @@ def listen():
 					elif globals.SCAN_ERRORS >=5 and globals.SCAN_ERRORS< 8:
 						globals.SCAN_ERRORS = globals.SCAN_ERRORS+1
 						logging.warning("GLOBAL------Exception on scanner (trying to resolve by myself " + str(globals.SCAN_ERRORS) + "): %s" % str(e))
-						os.system('hciconfig ' + globals.device + ' down')
-						os.system('hciconfig ' + globals.device + ' up')
+						os.system('sudo hciconfig ' + globals.device + ' down')
+						os.system('sudo hciconfig ' + globals.device + ' up')
 						globals.SCANNER = Scanner(globals.IFACE_DEVICE).withDelegate(ScanDelegate())
 					else:
 						logging.error("GLOBAL------Exception on scanner (didn't resolve there is an issue with bluetooth) : %s" % str(e))
@@ -544,6 +544,9 @@ if args.scaninterval:
 globals.socketport = int(globals.socketport)
 globals.cycle = float(globals.cycle)
 
+if globals.device == '':
+	globals.device = 'hci0'
+
 jeedom_utils.set_log_level(globals.log_level)
 logging.info('GLOBAL------Start blead')
 logging.info('GLOBAL------Log level : '+str(globals.log_level))
@@ -559,6 +562,8 @@ logging.info('GLOBAL------Number for no seen : '+str(globals.NOSEEN_NUMBER))
 import devices
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
+os.system('sudo rfkill unblock all >/dev/null 2>&1')
+os.system('sudo hciconfig ' + globals.device + ' up')
 globals.IFACE_DEVICE = int(globals.device[-1:])
 try:
 	jeedom_utils.write_pid(str(globals.pidfile))
