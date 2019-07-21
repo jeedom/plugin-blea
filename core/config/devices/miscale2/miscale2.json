@@ -7,7 +7,7 @@
 			"specificclass" : 1,
 			"xiaomi" : 1,
 			"name" : "miscale2",
-			"battery_type": "4x1.5V AA"
+			"battery_type": "3x1.5V AAA"
 		},
         "commands": [
 			{
@@ -272,7 +272,7 @@
                 "name": "MiScale V2",
 				"doc": "",
 				"type": "Scale",
-				"battery_type": "4x1.5V AA",
+				"battery_type": "3x1.5V AAA",
 				"ref" : "",
 				"comlink": "",
 				"remark": "Gestion de profils complète",
