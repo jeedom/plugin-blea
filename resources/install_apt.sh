@@ -10,9 +10,6 @@ echo "********************************************************"
 sudo apt-get update
 echo 20 > ${PROGRESS_FILE}
 sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
-sudo python3 -m pip uninstall pip
-sudo apt-get remove -y python3-pip
-sudo apt-get install -y python3-pip
 sudo apt-get install -y python3-pip --reinstall
 echo 40 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
