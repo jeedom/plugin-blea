@@ -107,7 +107,7 @@ class blea extends eqLogic {
 				$logicalId = $cmd->getLogicalId();
 				if (substr($logicalId,0,4) == 'rssi'){
 					$remotename= substr($logicalId,4);
-					if ($remotename != 'local' && !(in_array($remotename,$availremote))){
+					if ($remotename != 'local' && $remotename != 'local' && !(in_array($remotename,$availremote))){
 						$cmd->remove();
 					} else if ($remotename == 'local') {
 						if (config::byKey('noLocal', 'blea', 0) == 1){
@@ -299,7 +299,7 @@ class blea extends eqLogic {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$user=$remoteObject->getConfiguration('remoteUser');
 		log::add('blea','info',__('Installation des dépendances',__FILE__));
-		return $remoteObject->execCmd(['bash /home/'.$user.'/blead/resources/install.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
+		return $remoteObject->execCmd(['bash /home/'.$user.'/blead/resources/install_apt.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
 	}
 
 	public static function launchremote($_remoteId) {

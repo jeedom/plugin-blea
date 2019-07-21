@@ -13,7 +13,7 @@ class Smartplug():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
+		if name.lower().startswith("smp-b16-") or name.lower() == self.name:
 			return True
 			
 	def parse(self,data,mac,name,manuf):

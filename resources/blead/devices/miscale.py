@@ -15,7 +15,7 @@ class MiScale():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name[0:8] == 'MI_SCALE':
+		if name[0:8] == 'MI_SCALE' or name.lower() == self.name:
 			return True
 
 	def parse(self,data,mac,name,manuf):

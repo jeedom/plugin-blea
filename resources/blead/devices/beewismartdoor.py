@@ -19,8 +19,8 @@ class BeeWiSmartDoor():
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if manuf[0:8] == '0d00080c':
 			return True   
-		# if name.lower() == self.name:
-			# return True
+		if name.lower() == self.name:
+			return True
 			
 	def parse(self,data,mac,name,manuf):
 		action={}

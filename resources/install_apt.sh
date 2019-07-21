@@ -13,7 +13,7 @@ sudo apt-get install -y python3-dev build-essential python3-requests python3-set
 sudo python3 -m pip uninstall pip
 sudo apt-get remove -y python3-pip
 sudo apt-get install -y python3-pip
-sudo apt-get install - python3-pip --reinstall
+sudo apt-get install -y python3-pip --reinstall
 echo 40 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
 echo 50 > ${PROGRESS_FILE}

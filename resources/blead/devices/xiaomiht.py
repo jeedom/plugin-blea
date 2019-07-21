@@ -13,7 +13,7 @@ class XiaomiHT():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name.lower() in ['mj_ht_v1','cleargrass temp & rh']:
+		if name.lower() in ['mj_ht_v1','cleargrass temp & rh', self.name]:
 			return True
 		if data.lower().startswith("95fe") and (mac.lower().startswith("4c:65:a8") or mac.lower().startswith("58:2d:34")):
 			#broadcasted advertising data

@@ -12,7 +12,7 @@ class Miflora():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		validname = ['ropot']
+		validname = [self.name]
 		if name in validname:
 			return True
 	def parse(self,data,mac,name,manuf):

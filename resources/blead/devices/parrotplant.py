@@ -116,6 +116,8 @@ class FlowerPower(ParrotPlant):
 		}
 
 	def isvalid(self,name,manuf='',data='',mac=''):
+		if name.lower() == self.name:
+			return True
 		return str(name).startswith('Flower power')
 
 globals.COMPATIBILITY.append(FlowerPower)

@@ -17,7 +17,7 @@ class Playbulb():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb'):
+		if manuf.lower().startswith("4d49504f57") or name.lower().startswith('playbulb') or name.lower()==self.name:
 			return True
 	def parse(self,data,mac,name,manuf):
 		action={}

@@ -12,7 +12,7 @@ class Miflora():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		validname = ['Flower mate','Flower care']
+		validname = ['Flower mate','Flower care',self.name]
 		if name in validname:
 			return True
 		if data.lower().startswith("95fe") and (mac.lower().startswith("c4:7c:8d")):

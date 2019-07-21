@@ -13,7 +13,7 @@ class Lywsd02():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name.lower() in ['lywsd02']:
+		if name.lower() in [self.name]:
 			return True
 		if data.lower().startswith("95fe") and (mac.lower().startswith("3f:59:c8")):
 			#broadcasted advertising data
