@@ -114,7 +114,7 @@ class blea extends eqLogic {
 							$cmd->remove();
 						}
 					}
-				} else if (substr($logicalId,0,7) == 'present') {
+				} else if (substr($logicalId,0,7) == 'present' && $logicalId!= 'present') {
 					$remotename= substr($logicalId,7);
 					if ($remotename != 'local' && !(in_array($remotename,$availremote))){
 						$cmd->remove();
