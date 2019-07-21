@@ -2,6 +2,7 @@
     "miscale": {
         "name": "MiScale",
         "groupe" : "Santé",
+		"models" : {"miscale/miscale_2019" : {"configuration" :{"battery_type" : "3x1.5V AA"}}},
 		"configuration" : {
 			"specificmodal" : 1,
 			"specificclass" : 1,
@@ -118,6 +119,18 @@
 				"remark": "Gestion de profils complète",
 				"inclusion" : "Mode inclusion",
 				"imglink": "miscale"
+            },
+			{
+                "manufacturer": "Xiaomi",
+                "name": "MiScale 2019",
+				"doc": "",
+				"type": "Scale",
+				"battery_type": "3x1.5V AA",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Gestion de profils complète",
+				"inclusion" : "Mode inclusion",
+				"imglink": "miscale_2019"
             }
         ]
     }
