@@ -19,6 +19,8 @@
 - Si une antenne n'a pas communiqué depuis plus d'une minute alors les présences de cette antenne sont mises à 0
 - Rajout de la possibilité de récupérer les nouvelles configurations sans mettre à jour le plugin
 - Rajout d'un mode passif ou actif pour le scan
+- Réorganisation de la page équipement
+- Rajout d'une option nombre de scan pour considérer absent spécifique à l'équipement (si défini remplacera la globale pour cet équipement)
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass

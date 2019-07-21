@@ -305,6 +305,8 @@ def heartbeat_handler(delay):
 	while 1:
 		for device in globals.KNOWN_DEVICES:
 			noseeninterval = globals.SCAN_INTERVAL*globals.NOSEEN_NUMBER
+			if 'absent' in globals.KNOWN_DEVICES[device] and globals.KNOWN_DEVICES[device]['absent'] != '':
+				noseeninterval = globals.SCAN_INTERVAL*int(globals.KNOWN_DEVICES[device]['absent']) 
 			if device in globals.SEEN_DEVICES and 'present' in globals.SEEN_DEVICES[device]:
 				if globals.SEEN_DEVICES[device]['present'] == 1:
 					if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):

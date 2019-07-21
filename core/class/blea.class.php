@@ -844,6 +844,7 @@ class blea extends eqLogic {
 				'emitterallowed' => $emitter,
 				'refresherallowed' => $refresher,
 				'specificconfiguration' => $this->getConfiguration('specificconfiguration',array()),
+				'absent' => $this->getConfiguration('absent',''),
 			);
 			$value = json_encode($value);
 			self::socket_connection($value,True);
