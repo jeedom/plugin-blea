@@ -36,7 +36,7 @@
                 "unite": "",
                 "logicalId": "name:playbulb,value:ffffffff,type:color",
 				"display": {
-				"icon": "<i class=\"fa fa-snowflake-o\"><\/i>"
+				"icon": "<i class=\"icon nature-snowflake\"><\/i>"
 				}
             },
 			{
@@ -47,7 +47,7 @@
                 "unite": "",
                 "logicalId": "name:playbulb,value:ff000000,type:color",
 				"display": {
-				"icon": "<i class=\"fa fa-sun-o\"><\/i>"
+				"icon": "<i class=\"far fa-sun\"><\/i>"
 				}
             },
 			{
