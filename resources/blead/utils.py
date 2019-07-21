@@ -68,7 +68,7 @@ def twos_complement(value, bits):
 	return value
 
 def hex_to_binary(h):
-	return ''.join(byte_to_binary(ord(b)) for b in binascii.unhexlify(h))
+	return ''.join(byte_to_binary(b) for b in binascii.unhexlify(h))
 
 def byte_to_binary(n):
 	return ''.join(str((n & (1 << i)) and 1) for i in reversed(range(8)))

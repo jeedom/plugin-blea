@@ -91,8 +91,11 @@ class ScanDelegate(DefaultDelegate):
 					try:
 						action = device().parse(data,mac,name,manuf)
 					except Exception as e:
-						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
+						logging.error('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
+						globals.PENDING_ACTION = False
+						return
 					if not action:
+						globals.PENDING_ACTION = False
 						return
 					globals.PENDING_ACTION = False
 					action['id'] = mac.upper()
@@ -188,6 +191,7 @@ def listen():
 		while 1:
 			try:
 				if globals.LEARN_MODE or (globals.LAST_CLEAR + globals.SCAN_INTERVAL)  < int(time.time()):
+					logging.debug('SCANNER------Clearing seen')
 					globals.SCANNER.clear()
 					globals.IGNORE[:] = []
 					globals.LAST_CLEAR = int(time.time())
