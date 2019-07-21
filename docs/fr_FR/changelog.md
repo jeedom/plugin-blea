@@ -13,6 +13,8 @@
 - Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
 - Passage en scan passif sauf au learn (avec mémoire de la conf jeedom pour savoir qui est qui)
 - Passage à Python3
+- Modification perso de bluepy, avec meilleurs gestion d'erreur (peut etre plus de blocage sur proxmow, vmware)
+- Rajout d'un timeout de connection au sein meme de bluepy pour éviter qu'une tentative de connection tourne en boucle
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass

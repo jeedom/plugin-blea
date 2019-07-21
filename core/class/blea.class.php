@@ -77,20 +77,31 @@ class blea extends eqLogic {
 
 	public static function cron() {
 		$remotes = blea_remote::all();
+		$allEqlogic = eqLogic::byType('blea');
 		foreach ($remotes as $remote) {
 			$last = $remote->getConfiguration('lastupdate','0');
 			$auto = $remote->getConfiguration('remoteDaemonAuto','0');
 			if (($last == '0' or time() - strtotime($last)>65)) {
+				foreach ($allEqlogic as $eqLogic){
+					$rssicmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
+					$presentcmd = $eqLogic->getCmd(null, 'present' . $remote->getRemoteName());
+					$eqLogic->checkAndUpdateCmd($presentcmd, 0);
+					$eqLogic->checkAndUpdateCmd($rssicmd, -200);
+				}
 				if ($auto == 1){
 					log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
 					blea::launchremote($remote->getId());
 				}
-				foreach (eqLogic::byType('blea') as $eqLogic){
-					$rssicmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
-					$presentcmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
-					$eqLogic->checkAndUpdateCmd($presentcmd, 0);
-					$eqLogic->checkAndUpdateCmd($rssicmd, -200);
-				}
+			}
+		}
+		$deamon_info = self::deamon_info();
+		if ($deamon_info['state'] != 'ok'){
+			foreach ($allEqlogic as $eqLogic){
+				$rssicmd = $eqLogic->getCmd(null, 'rssilocal');
+				$presentcmd = $eqLogic->getCmd(null, 'presentlocal');
+				$eqLogic->checkAndUpdateCmd($presentcmd, 0);
+				$eqLogic->checkAndUpdateCmd($rssicmd, -200);
+				$eqLogic->computePresence();
 			}
 		}
 	}
@@ -445,8 +456,8 @@ class blea extends eqLogic {
 		}
 		if ($return['state'] == 'ok') {
 			$bluepyversion = exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'");
-			if (exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'") <> '1.1.3'){
-				log::add('blea','error', 'Bluepy not up to date . ' . $bluepyversion);
+			if ($bluepyversion <> '1.1.3'){
+				log::add('blea','error', 'Bluepy not up to date : ' . $bluepyversion);
 				$return['state'] = 'nok';
 			}
 		}
