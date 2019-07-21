@@ -36,6 +36,12 @@ if (!isConnect('admin')) {
            <input type="checkbox" class="configKey" data-l1key="noLocal" />
        </div>
 	</div>
+	<div class="form-group">
+			<label class="col-lg-4 control-label">{{Options avancées}}</label>
+			<div class="col-lg-5">
+				<a class="btn btn-warning" id="bt_syncconfigBlea"><i class="fas fa-sync-alt"></i> {{Configs modules}}</a>
+			</div>
+		</div>
 	
    </fieldset>
 </form>
@@ -175,4 +181,12 @@ function blea_postSaveConfiguration(){
     }
   });
 }
+$('#bt_syncconfigBlea').on('click',function(){
+		bootbox.confirm('{{Etes-vous sûr de vouloir télécharger les dernières configurations des modules ? Ceci relancera le plugin Blea.}}', function (result) {
+			if (result) {
+				$('#md_modal2').dialog({title: "{{Téléchargement des configurations}}"});
+				$('#md_modal2').load('index.php?v=d&plugin=blea&modal=syncconf.blea').dialog('open');
+			}
+		});
+	});
 </script>

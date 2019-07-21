@@ -30,6 +30,11 @@ try {
 		blea::changeIncludeState(init('state'), init('mode'));
 		ajax::success();
 	}
+	
+	if (init('action') == 'syncconfBlea') {
+		blea::syncconfBlea(false);
+		ajax::success();
+	}
 
 	if (init('action') == 'getMobileGraph') {
 		ajax::success(blea::getMobileGraph());

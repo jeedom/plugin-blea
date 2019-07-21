@@ -456,7 +456,7 @@ class blea extends eqLogic {
 		}
 		if ($return['state'] == 'ok') {
 			$bluepyversion = exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'");
-			if ($bluepyversion <> '1.1.3'){
+			if ($bluepyversion <> '1.1.4'){
 				log::add('blea','error', 'Bluepy not up to date : ' . $bluepyversion);
 				$return['state'] = 'nok';
 			}
@@ -513,6 +513,21 @@ class blea extends eqLogic {
 		message::removeAll('blea', 'unableStartDeamon');
 		config::save('include_mode', 0, 'blea');
 		return true;
+	}
+	
+	public static function syncconfBlea($_background = true) {
+		log::remove('blea_syncconf');
+		log::add('blea_syncconf', 'info', 'Arrêt du démon en cours');
+		self::deamon_stop();
+		log::add('blea_syncconf', 'info', 'Arrêt du démon fait');
+		$cmd = system::getCmdSudo() . ' /bin/bash ' . dirname(__FILE__) . '/../../resources/syncconf.sh >> ' . log::getPathToLog('blea_syncconf') . ' 2>&1';
+		if ($_background) {
+			$cmd .= ' &';
+		}
+		log::add('blea_syncconf', 'info', $cmd);
+		shell_exec($cmd);
+		self::send_allremotes();
+		self::deamon_start();
 	}
 
 	public static function sendIdToDeamon() {

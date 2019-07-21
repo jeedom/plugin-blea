@@ -17,6 +17,7 @@
 - Rajout d'un timeout de connection au sein meme de bluepy pour éviter qu'une tentative de connection tourne en boucle
 - Si le démon Local est en status NOK alors les présences locales sont mises a 0
 - Si une antenne n'a pas communiqué depuis plus d'une minute alors les présences de cette antenne sont mises à 0
+- Rajout de la possibilité de récupérer les nouvelles configurations sans mettre à jour le plugin
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass
