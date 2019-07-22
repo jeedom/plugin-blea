@@ -42,7 +42,13 @@ if (!isConnect('admin')) {
 				<a class="btn btn-warning" id="bt_syncconfigBlea"><i class="fas fa-sync-alt"></i> {{Configs modules}}</a>
 			</div>
 		</div>
-	
+<div class="form-group">
+<label class="col-lg-4 control-label">{{Mettre tous les équipements sur Local}}</label>
+<div class="col-lg-2">
+	<a class="btn btn-success bleaAction" data-action="all" data-type="reception"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Réception}}</a>
+	<a class="btn btn-danger bleaAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
+</div>
+</div>
    </fieldset>
 </form>
 <form class="form-horizontal">
@@ -145,13 +151,41 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
         });
 });
 
+$('.bleaAction[data-action=all]').on('click',function(){
+	var type = $(this).attr('data-type');
+	bootbox.confirm('{{Etes-vous sûr de vouloir mettre tous les équipements sur Local en : }}' +$(this).attr('data-type'), function (result) {
+		if (result) {
+			$.ajax({
+				type: "POST",
+				url: "plugins/blea/core/ajax/blea.ajax.php",
+				data: {
+					action: "allantennas",
+					remote: "local",
+					remoteId: "local",
+					type: type,
+				},
+				dataType: 'json',
+				error: function (request, status, error) {
+					handleAjaxError(request, status, error);
+				},
+				success: function (data) {
+					if (data.state != 'ok') {
+						$('#div_alert').showAlert({message: data.result, level: 'danger'});
+						return;
+					}
+					$('#div_alert').showAlert({message: '{{Réussie}}', level: 'success'});
+				}
+			});
+		}
+	});
+});
+
 $('.allantennas').on('click', function () {
 	if ($(this).attr('data-action') == 'update') {
 		action = 'sendremotes';
 	} else {
 		action = 'launchremotes';
 	}
-	console.log(action);
 	 $.ajax({// fonction permettant de faire de l'ajax
             type: "POST", // methode de transmission des données au fichier php
             url: "plugins/blea/core/ajax/blea.ajax.php", // url du fichier php
@@ -171,6 +205,7 @@ $('.allantennas').on('click', function () {
             }
         });
 });
+
 function blea_postSaveConfiguration(){
   $.ajax({
     type: "POST",

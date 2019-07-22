@@ -31,6 +31,36 @@ try {
 		ajax::success();
 	}
 	
+	if (init('action') == 'allantennas') {
+		log::add('blea','error',init('remote') . init('type') . init('remoteId'));
+		if (init('remote') == 'local') {
+			if (init('type') == 'reception'){
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antennareceive','local');
+					$eqLogic->save();
+				}
+			} else {
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antenna','local');
+					$eqLogic->save();
+				}
+			}
+		} else {
+			if (init('type') == 'reception'){
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antennareceive',init('remoteId'));
+					$eqLogic->save();
+				}
+			} else {
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antenna',init('remoteId'));
+					$eqLogic->save();
+				}
+			}
+		}
+		ajax::success();
+	}
+	
 	if (init('action') == 'syncconfBlea') {
 		blea::syncconfBlea(false);
 		ajax::success();

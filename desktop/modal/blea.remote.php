@@ -169,6 +169,15 @@ foreach ($remotes as $remote) {
 						</div>';
 						}
 						?>
+						<div class="form-group">
+						<label class="col-sm-2 control-label">{{Mettre tous les équipements sur cette antenne}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="all" data-type="reception"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Réception}}</a>
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
+						</div>
+						</div>
 						</fieldset>
 				</form>
 	</div>
@@ -389,6 +398,36 @@ foreach ($remotes as $remote) {
 			}
 		});
 	});
+	
+	$('.bleaRemoteAction[data-action=all]').on('click',function(){
+	var type = $(this).attr('data-type');
+	var remoteId=$('.li_bleaRemote.active').attr('data-bleaRemote_id');
+	bootbox.confirm('{{Etes-vous sûr de vouloir mettre tous les équipements sur cette antenne en : }}' +$(this).attr('data-type'), function (result) {
+		if (result) {
+			$.ajax({
+				type: "POST",
+				url: "plugins/blea/core/ajax/blea.ajax.php",
+				data: {
+					action: "allantennas",
+					remote: "remote",
+					remoteId: remoteId,
+					type: type,
+				},
+				dataType: 'json',
+				error: function (request, status, error) {
+					handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+				},
+				success: function (data) {
+					if (data.state != 'ok') {
+						$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+						return;
+					}
+					$('#div_bleaRemoteAlert').showAlert({message: '{{Réussie}}', level: 'success'});
+				}
+			});
+		}
+	});
+});
 
 	$('.bleaRemoteAction[data-action=dependancyRemote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];
