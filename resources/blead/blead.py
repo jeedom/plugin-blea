@@ -86,12 +86,10 @@ class ScanDelegate(DefaultDelegate):
 							logging.debug('SCANNER------Known device and in Learn Mode ignoring ' +str(mac))
 							return
 						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
-					globals.PENDING_ACTION = True
 					try:
 						action = device().parse(data,mac,name,manuf)
 					except Exception as e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
-					globals.PENDING_ACTION = False
 					action['id'] = mac.upper()
 					action['type'] = device().name
 					action['name'] = name
@@ -305,29 +303,31 @@ def heartbeat_handler(delay):
 	while 1:
 		for device in globals.KNOWN_DEVICES:
 			noseeninterval = globals.SCAN_INTERVAL*globals.NOSEEN_NUMBER
+			action = {}
 			if 'absent' in globals.KNOWN_DEVICES[device] and globals.KNOWN_DEVICES[device]['absent'] != '':
-				noseeninterval = globals.SCAN_INTERVAL*int(globals.KNOWN_DEVICES[device]['absent']) 
+				noseeninterval = globals.SCAN_INTERVAL*int(globals.KNOWN_DEVICES[device]['absent'])
 			if device in globals.SEEN_DEVICES and 'present' in globals.SEEN_DEVICES[device]:
 				if globals.SEEN_DEVICES[device]['present'] == 1:
 					if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):
 						logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
 						globals.SEEN_DEVICES[device]['present'] = 0
-						action = {}
 						action['present']=0
 						action['id']=device
 						action['rssi'] = -200
 						action['source'] = globals.daemonname
-						globals.JEEDOM_COM.add_changes('devices::'+device,action)
 			else:
 				if (globals.START_TIME + noseeninterval) < int(time.time()):
 					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
 					globals.SEEN_DEVICES[device]={'present':0}
-					action = {}
 					action['present']=0
 					action['id']=device
 					action['rssi'] = -200
 					action['source'] = globals.daemonname
+			if len(action)>2 :
+				if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()):
 					globals.JEEDOM_COM.add_changes('devices::'+device,action)
+				else:
+					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection was too soon')
 			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
 				if device in globals.KEEPED_CONNECTION:
 					logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))
@@ -372,7 +372,6 @@ def action_handler(message):
 		if message['cmd'] == 'helperrandom':
 			type = 'random'
 		try:
-			globals.PENDING_ACTION = True
 			mac = message['device']['id']
 			if mac in globals.KEEPED_CONNECTION:
 				logging.debug('ACTION------Already a connection for ' + mac + ' use it')
@@ -385,30 +384,24 @@ def action_handler(message):
 			if not conn.isconnected:
 				conn.connect(type=type)
 				if not conn.isconnected:
-					globals.PENDING_ACTION = False
 					return
 			try:
 				conn.helper()
 			except Exception as e:
 				logging.debug("ACTION------Helper failed : %s" % str(e))
-				globals.PENDING_ACTION = False
 			conn.disconnect()
-			globals.PENDING_ACTION = False
 			return
 		except Exception as e:
 				logging.debug("ACTION------Helper failed : %s" % str(e))
-				globals.PENDING_ACTION = False
 	elif message['cmd'] == 'refresh':
 		for compatible in globals.COMPATIBILITY:
 			classname = message['command']['device']['name']
 			if compatible().name.lower() == classname.lower():
 				logging.debug('ACTION------Attempt to refresh values')
-				globals.PENDING_ACTION = True
 				try:
 					result = compatible().read(message['device']['id'])
 				except Exception as e:
 					logging.debug("ACTION------Refresh failed : %s" % str(e))
-				globals.PENDING_ACTION = False
 				break
 		if result and len(result) >= 2 :
 			if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
@@ -421,12 +414,10 @@ def action_handler(message):
 	else:
 		for device in globals.COMPATIBILITY:
 			if device().isvalid(name,manuf):
-				globals.PENDING_ACTION = True
 				try:
 					result = device().action(message)
 				except Exception as e:
 						logging.debug("ACTION------Action failed :" + str(e))
-				globals.PENDING_ACTION = False
 				if result :
 					if message['device']['id'] in globals.LAST_STATE and result == globals.LAST_STATE[message['device']['id']]:
 						return
@@ -458,7 +449,6 @@ def read_device(name):
 					globals.LAST_TIME_READ[mac] = now
 					for compatible in globals.COMPATIBILITY:
 						if compatible().name.lower() == str(globals.KNOWN_DEVICES[device]['name']).lower():
-							globals.PENDING_ACTION = True
 							try:
 								result = compatible().read(mac)
 							except Exception as e:
@@ -469,7 +459,6 @@ def read_device(name):
 										result = compatible().read(mac)
 									except Exception as e:
 										logging.debug("READER------Refresh failed : %s" % str(e))
-							globals.PENDING_ACTION = False
 							break
 					if result :
 						if mac in globals.LAST_STATE and result == globals.LAST_STATE[mac]:

@@ -18,6 +18,7 @@ class Connector():
 		while time.time()<timeout:
 			i = i + 1
 			try:
+				globals.PENDING_ACTION = True
 				if type == 'public':
 					connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
 					self.isconnected = True
@@ -34,6 +35,8 @@ class Connector():
 						del globals.KEEPED_CONNECTION[self.mac]
 					self.disconnect()
 					logging.debug('CONNECTOR------Issue connecting to : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE) + ' the device is busy or too far')
+					globals.PENDING_ACTION = False
+					globals.PENDING_TIME = int(time.time())
 					return
 				time.sleep(1)
 		if self.isconnected:
@@ -42,6 +45,8 @@ class Connector():
 		return
 
 	def disconnect(self,force=False):
+		globals.PENDING_ACTION = False
+		globals.PENDING_TIME = int(time.time())
 		if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] in [globals.daemonname,'all'] and force==False:
 			logging.debug('CONNECTOR------Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
 			globals.KEEPED_CONNECTION[self.mac]=self
@@ -55,6 +60,7 @@ class Connector():
 				break
 			except Exception as e:
 				if 'str' in str(e) and 'has no attribute' in str(e):
+					logging.debug('CONNECTOR------'+str(e))
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]

@@ -27,6 +27,7 @@ IFACE_DEVICE = 0
 SCAN_ERRORS = 0
 SCANNER = ''
 PENDING_ACTION = False
+PENDING_TIME = int(time.time())
 log_level = "error"
 pidfile = '/tmp/blead.pid'
 apikey = ''
