@@ -69,6 +69,15 @@ if (isset($result['started'])) {
 					break;
 				}
 			}
+		} else {
+			$oldversion = config::byKey('version','blea','1.0');
+			$version = '1.0';
+			if (isset($result['version'])){
+				$version = $result['version'];
+			}
+			if ($version != $oldversion){
+				config::save('version',$version,'blea');
+			}
 		}
 		usleep(500);
 		blea::sendIdToDeamon();
