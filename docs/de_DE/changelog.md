@@ -12,6 +12,15 @@
 - Possibilité de redémarrer toutes les antennes en un clic
 - Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
 - Passage en scan passif sauf au learn (avec mémoire de la conf jeedom pour savoir qui est qui)
+- Passage à Python3
+- Modification perso de bluepy, avec meilleurs gestion d'erreur (peut etre plus de blocage sur proxmow, vmware)
+- Rajout d'un timeout de connection au sein meme de bluepy pour éviter qu'une tentative de connection tourne en boucle
+- Si le démon Local est en status NOK alors les présences locales sont mises a 0
+- Si une antenne n'a pas communiqué depuis plus d'une minute alors les présences de cette antenne sont mises à 0
+- Rajout de la possibilité de récupérer les nouvelles configurations sans mettre à jour le plugin
+- Rajout d'un mode passif ou actif pour le scan
+- Réorganisation de la page équipement
+- Rajout d'une option nombre de scan pour considérer absent spécifique à l'équipement (si défini remplacera la globale pour cet équipement)
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass
