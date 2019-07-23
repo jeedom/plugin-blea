@@ -460,7 +460,6 @@ class blea extends eqLogic {
 			$bluepyversion = exec(system::getCmdSudo() . "pip3 list --format=columns | grep bluepy | awk '{print $2}'");
 			if ($bluepyversion <> blea::$_bluepy_version){
 				log::add('blea','error', 'Bluepy not up to date : ' . $bluepyversion . ' expected ' . blea::$_bluepy_version);
-				$return['state'] = 'nok';
 			}
 		}
 		return $return;

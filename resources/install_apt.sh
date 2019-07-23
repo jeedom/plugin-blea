@@ -11,6 +11,7 @@ sudo apt-get update
 echo 20 > ${PROGRESS_FILE}
 sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
 sudo apt-get install -y python3-pip --reinstall
+sudo pip3 install -U setuptools
 echo 40 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
 echo 50 > ${PROGRESS_FILE}
