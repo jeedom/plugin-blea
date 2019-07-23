@@ -98,12 +98,15 @@ class ScanDelegate(DefaultDelegate):
 					action['rawdata'] = str(dev.getScanData())
 					action['present'] = 1
 					if globals.LEARN_MODE:
-						logging.debug('SCANNER------It\'s a known packet and I don\'t known this device so I learn ' +str(mac))
-						action['learn'] = 1
-						if 'version' in action:
-							action['type']= action['version']
-						logging.debug(action)
-						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
+						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == device().name) :
+							logging.debug('SCANNER------It\'s a known packet and I don\'t known this device so I learn ' +str(mac))
+							action['learn'] = 1
+							if 'version' in action:
+								action['type']= action['version']
+							logging.debug(action)
+							globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
+						else:
+							logging.debug('SCANNER------It\'s a known packet and I don\'t known this device ' +str(mac) + ' but i only want ' + globals.LEARN_TYPE + ' and this is ' +action['type'])
 						return
 					if len(action) > 2:
 						if action['id'] not in globals.SEEN_DEVICES:
@@ -139,10 +142,13 @@ class ScanDelegate(DefaultDelegate):
 						if globals.LEARN_MODE_ALL == 0:
 							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known but i\'m configured to ignore unknow packet ' +str(mac))
 							return
-						logging.debug('SCANNER------It\'s a unknown packet and I don\'t known this device so I learn ' +str(mac))
-						action['learn'] = 1
-						logging.debug(action)
-						globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
+						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == device().name) :
+							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known this device so I learn ' +str(mac))
+							action['learn'] = 1
+							logging.debug(action)
+							globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
+						else:
+							logging.debug('SCANNER------It\'s a known packet and I don\'t known this device ' +str(mac) + ' but i only want ' + globals.LEARN_TYPE + ' and this is ' +action['type'])
 				else:
 					if len(action) > 2:
 						if globals.LEARN_MODE:
@@ -261,6 +267,7 @@ def read_socket(name):
 					globals.LEARN_MODE_ALL = 0
 					if message['allowAll'] == '1' :
 						globals.LEARN_MODE_ALL = 1
+					globals.LEARN_TYPE = message['type']
 					globals.LEARN_MODE = True
 					globals.LEARN_BEGIN = int(time.time())
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 1,'source' : globals.daemonname});

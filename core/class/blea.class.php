@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.3';
+	public static $_version = '2.4';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
@@ -627,11 +627,11 @@ class blea extends eqLogic {
 		sleep(1);
 	}
 
-	public static function changeIncludeState($_state, $_mode) {
+	public static function changeIncludeState($_state, $_mode, $_type) {
 		if ($_mode == 1) {
 			if ($_state == 1) {
 				$allowAll = config::byKey('allowAllinclusion', 'blea');
-				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll));
+				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll, 'type' => $_type));
 				self::socket_connection($value,True);
 			} else {
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout'));

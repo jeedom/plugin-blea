@@ -27,8 +27,18 @@ try {
 	ajax::init();
 
 	if (init('action') == 'changeIncludeState') {
-		blea::changeIncludeState(init('state'), init('mode'));
+		blea::changeIncludeState(init('state'), init('mode'), init('type'));
 		ajax::success();
+	}
+	
+	if (init('action') == 'getAllTypes') {
+		$list = array();
+		$allconfs = blea::devicesParameters();
+		foreach ($allconfs as $key=>$data){
+			$list[$data['name']] = $data['configuration']['name'];
+		}
+		ksort($list);
+		ajax::success($list);
 	}
 	
 	if (init('action') == 'allantennas') {

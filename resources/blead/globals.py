@@ -1,5 +1,5 @@
 import time
-DAEMON_VERSION = '2.3'
+DAEMON_VERSION = '2.4'
 BLUEPY_VERSION = '1.0'
 SCAN_MODE = 'passive'
 JEEDOM_COM = ''
@@ -9,6 +9,7 @@ START_TIME = int(time.time())
 KNOWN_DEVICES = {}
 SEEN_DEVICES = {}
 LEARN_MODE = False
+LEARN_TYPE = ''
 READY = False
 LEARN_MODE_ALL = 0
 LAST_BLUEPY = int(time.time())

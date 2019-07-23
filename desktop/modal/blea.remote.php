@@ -156,18 +156,6 @@ foreach ($remotes as $remote) {
 						</div>
 						</div>';
 						}
-						if (method_exists( $id ,'remotelearn')){
-							echo '<div class="form-group">
-						<label class="col-sm-2 control-label">{{Mettre en learn}}</label>
-						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Inclusion}}</a>
-						</div>
-						<label class="col-sm-2 control-label">{{Arrêter learn}}</label>
-						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Stop Inclusion}}</a>
-						</div>
-						</div>';
-						}
 						?>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">{{Mettre tous les équipements sur cette antenne}}</label>

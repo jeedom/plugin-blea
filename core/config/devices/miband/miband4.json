@@ -1,0 +1,27 @@
+{
+    "miband4": {
+        "name": "Miband 4",
+		"groupe" : "Santé",
+		"configuration" : {
+			"name" : "miband4",
+			"battery_type" : "Batterie",
+			"xiaomi" : 1
+		},
+        "commands": [
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Xiaomi",
+                "name": "Miband 4",
+				"doc": "",
+				"type": "Santé",
+				"battery_type": "Batterie",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Uniquement de la présence pour le moment",
+				"inclusion" : "Mode inclusion",
+				"imglink": "miband4"
+            }
+        ]
+    }
+}
