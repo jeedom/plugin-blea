@@ -63,6 +63,8 @@
 					}
 				},
 				success: {
+					label: "{{Démarrer}}",
+					className: "btn-success",
 					callback: function () {
 						var proto = $("input[name='type']:checked").val();
 						changeIncludeState(state, mode ,proto);
