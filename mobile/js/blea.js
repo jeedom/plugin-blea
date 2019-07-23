@@ -83,7 +83,7 @@
 			}
 			lenghtfactor = quality/100;
 			if (lenghtfactor != 2){
-				haslink=1;
+				haslink+=1;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}
@@ -104,7 +104,16 @@
 			}
 		}
 		if (haslink == 0){
-			graph.addLink('local',eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			if ('local' in antennas) {
+				graph.addLink('local',eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			} else {
+				firstantenna ='';
+				for (antenna in antennas){
+					firstantenna = antenna;
+					break;
+				}
+				graph.addLink(firstantenna,eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			}
 		}
 	}
 	var graphics = Viva.Graph.View.svgGraphics();

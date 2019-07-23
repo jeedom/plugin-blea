@@ -2,6 +2,9 @@
     "noke": {
         "name": "Noke",
         "groupe" : "Cadenas",
+		"configuration" : {
+			"name" : "noke"
+		},
         "commands": [
         ],
 		"compatibility": [

@@ -58,7 +58,7 @@ class Miband():
 				if value == '02':
 					time.sleep(10)
 				conn.disconnect()
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 			conn.disconnect()
 		return
@@ -107,7 +107,7 @@ class Miband():
 			logging.debug(str(result))
 			conn.disconnect()
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 			conn.disconnect()
 		return result

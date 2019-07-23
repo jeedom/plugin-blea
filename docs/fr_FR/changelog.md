@@ -1,3 +1,29 @@
+# 20/07/2019
+- Changement de méthode pour l'ensemble de la gamme playbulb (une seule conf et des visuels) plus de dépendances par rapport aux différentes versions (maintenant a l'inclusion on récupére les adresses des diffférentes méthodes)
+- Rajout de la miscale V2 avec poids et impedance (et tout un tas de mesures calculées). Gestion des utilisateurs pour les calculs (dans le bouton config avancée)
+- Changement de la miscale V1 (il faudra recréer les users) mais on gagne quelques infos en plus
+- Pour les playbulbs je recommande une reinclusion de tous les devices
+- Correction d'un bug sur le graph réseau en mode sans local
+- Correction d'un bug sur la régénération des commandes sur demande
+- A l'inclusion les antennes d'émissions et de réceptions sont automatiquement remplies par l'antenne ayant permis l'inclusion
+- Changement de la notion de présence (plus besoin de repetion toujours, plus besoin de return state et return state time) maintenant une commande présence par antenne et local et une command presence dependant des autres
+- Réglage possible maintenant du scan interval et du nombre de scan ou un device n'est pas visible pour le déclarer absent (gain de détection présence et surtout absence)
+- Possibilité de mettre à jour toutes les antennes en un clic
+- Possibilité de redémarrer toutes les antennes en un clic
+- Lors d'une mise à jour du plugin les antennes sont mises à jour et redémarrer (peut parfois échouer)
+- Passage en scan passif sauf au learn (avec mémoire de la conf jeedom pour savoir qui est qui)
+- Passage à Python3
+- Modification perso de bluepy, avec meilleurs gestion d'erreur (peut etre plus de blocage sur proxmow, vmware)
+- Rajout d'un timeout de connection au sein meme de bluepy pour éviter qu'une tentative de connection tourne en boucle
+- Si le démon Local est en status NOK alors les présences locales sont mises a 0
+- Si une antenne n'a pas communiqué depuis plus d'une minute alors les présences de cette antenne sont mises à 0
+- Rajout de la possibilité de récupérer les nouvelles configurations sans mettre à jour le plugin
+- Rajout d'un mode passif ou actif pour le scan
+- Réorganisation de la page équipement
+- Rajout d'une option nombre de scan pour considérer absent spécifique à l'équipement (si défini remplacera la globale pour cet équipement)
+- Ajout de la possibilité de définir en un clic tous les équipements sur une antenne ou sur local
+- Possibilité de choisir exactement le type de produit à inclure lors d'un scan (avec possibilité de choisir tous)
+
 # 26/06/2019
 - Rajout du xiaomi cleargrass
 - Rajout du lywsd02 Xiaomi

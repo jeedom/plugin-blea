@@ -13,7 +13,7 @@ class Smartplug():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if name.lower().startswith("smp-b16-") or name.lower() == 'smartplug':
+		if name.lower().startswith("smp-b16-") or name.lower() == self.name:
 			return True
 			
 	def parse(self,data,mac,name,manuf):
@@ -29,7 +29,7 @@ class Smartplug():
 			try:
 				conn = btle.Peripheral(mac,iface=globals.IFACE_DEVICE)
 				break
-			except Exception, e:
+			except Exception as e:
 				logging.error(str(e))
 				if i >= 4 :
 					return
@@ -77,10 +77,10 @@ class Smartplug():
 			conn.writeCharacteristic('0x2b','0f050400000005ffff')
 			notification.subscribe(2)
 			return
-		except Exception,e:
+		except Exception as e:
 			try:
 				conn.disconnect()
-			except Exception,e:
+			except Exception as e:
 				pass
 			logging.error(str(e))
 		return

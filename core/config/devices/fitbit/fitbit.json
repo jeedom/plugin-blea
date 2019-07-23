@@ -2,6 +2,9 @@
     "fitbit": {
         "name": "Fitbit",
         "groupe" : "Santé",
+		"configuration" : {
+			"name": "fitbit"
+		},
         "commands": [
         ],
 		"compatibility": [

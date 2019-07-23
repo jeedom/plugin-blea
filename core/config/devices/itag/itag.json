@@ -4,7 +4,8 @@
 		"groupe" : "Boutons",
 		"configuration" : {
 			"cancontrol" : 1,
-			"canbelocked" : 1
+			"canbelocked" : 1,
+			"name" : "itag"
 		},
         "commands": [
 			{

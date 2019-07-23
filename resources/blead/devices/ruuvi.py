@@ -15,7 +15,7 @@ class Ruuvi():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		if data[0:4] == 'aafe' or manuf[0:4] in ['9904']:
+		if data[0:4] == 'aafe' or manuf[0:4] in ['9904'] or name.lower() == self.name:
 			return True
 
 	def parse(self,data,mac,name,manuf):

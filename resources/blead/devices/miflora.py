@@ -12,7 +12,7 @@ class Miflora():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		validname = ['Flower mate','Flower care']
+		validname = ['Flower mate','Flower care',self.name]
 		if name in validname:
 			return True
 		if data.lower().startswith("95fe") and (mac.lower().startswith("c4:7c:8d")):
@@ -66,9 +66,9 @@ class Miflora():
 					logging.debug('XiaomiFlower------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))
 					action['temperature'] = temp
 					action['moisture'] = hum
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
-		except Exception, e:
+		except Exception as e:
 			logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 		return action
 
@@ -105,7 +105,7 @@ class Miflora():
 			logging.debug(str(result))
 			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 	

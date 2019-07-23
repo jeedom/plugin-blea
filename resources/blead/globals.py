@@ -1,7 +1,16 @@
 import time
+DAEMON_VERSION = '2.4'
+BLUEPY_VERSION = '1.0'
+SCAN_MODE = 'passive'
 JEEDOM_COM = ''
+SCAN_INTERVAL = 29
+NOSEEN_NUMBER = 4
+START_TIME = int(time.time())
 KNOWN_DEVICES = {}
+SEEN_DEVICES = {}
 LEARN_MODE = False
+LEARN_TYPE = ''
+READY = False
 LEARN_MODE_ALL = 0
 LAST_BLUEPY = int(time.time())
 LAST_VIRTUAL = int(time.time())
@@ -19,6 +28,7 @@ IFACE_DEVICE = 0
 SCAN_ERRORS = 0
 SCANNER = ''
 PENDING_ACTION = False
+PENDING_TIME = int(time.time())
 log_level = "error"
 pidfile = '/tmp/blead.pid'
 apikey = ''

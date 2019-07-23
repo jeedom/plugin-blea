@@ -17,7 +17,64 @@
  $('.changeIncludeState').on('click', function () {
 	var mode = $(this).attr('data-mode');
 	var state = $(this).attr('data-state');
-	changeIncludeState(state, mode);
+	var list = '';
+	if (state == 1){
+		$.ajax({// fonction permettant de faire de l'ajax
+			type: "POST", // methode de transmission des données au fichier php
+			url: "plugins/blea/core/ajax/blea.ajax.php", // url du fichier php
+			data: {
+				action: "getAllTypes",
+			},
+			dataType: 'json',
+			global: true,
+			async: false,
+			error: function (request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function (data) { // si l'appel a bien fonctionné
+			if (data.state != 'ok') {
+				$('#div_alert').showAlert({message: data.result, level: 'danger'});
+				return;
+			}
+			list = data['result'];
+			}
+		});
+		var dialog_title = '';
+		var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+		dialog_title = '{{Inclusion BLEA}}';
+		dialog_message += '<label class="control-label" > {{Quel type de produits voulez vous inclure : }} </label> ' +
+		'<div>' +
+		'<input type="radio" name="type" id="all" value="all" checked="checked"> {{Tous}} </label> '; 
+		for (device in list) {
+			dialog_message += '<label > ' +
+		'<input type="radio" name="type" id="'+list[device]+'" value="'+list[device]+'"> '+device+'</label> ';
+		}
+		dialog_message += '</div> ' +
+		'</div><br>'+
+		'<label class="lbl lbl-warning" for="type">{{Choisissez le type de produit que vous souhaitez ajouter}}</label> ';
+		dialog_message += '</form>';
+		bootbox.dialog({
+			title: dialog_title,
+			message: dialog_message,
+			buttons: {
+				"{{Annuler}}": {
+					className: "btn-danger",
+					callback: function () {
+					}
+				},
+				success: {
+					label: "{{Démarrer}}",
+					className: "btn-success",
+					callback: function () {
+						var proto = $("input[name='type']:checked").val();
+						changeIncludeState(state, mode ,proto);
+					}
+				},
+			}
+		})
+	} else {
+		changeIncludeState(state, mode);
+	}
 });
 
  $('#bt_healthblea').on('click', function () {
@@ -246,7 +303,7 @@ function addCmdToTable(_cmd) {
     $('#table_cmd tbody').append(tr);
     var tr = $('#table_cmd tbody tr:last');
     jeedom.eqLogic.builSelectCmd({
-        id: $(".li_eqLogic.active").attr('data-eqLogic_id'),
+        id: $('.eqLogicAttr[data-l1key=id]').value(),
         filter: {type: 'info'},
         error: function (error) {
             $('#div_alert').showAlert({message: error.message, level: 'danger'});
@@ -302,6 +359,7 @@ function changeIncludeState(_state,_mode,_type='') {
             action: "changeIncludeState",
             state: _state,
             mode: _mode,
+            type: _type,
         },
         dataType: 'json',
         error: function (request, status, error) {

@@ -22,6 +22,11 @@ require_once dirname(__FILE__) . '/../../../../../../../core/php/core.inc.php';
 class miscaleblea extends blea {
 
 	public static function saveUserList($_id, $_userList) {
+		$datas = array('imc' =>  array('name' => 'IMC', 'unit' => '', 'type' => 'numeric'),
+						'bmr' =>  array('name' => 'BMR', 'unit' => 'kcal', 'type' => 'numeric'),
+						'ideal' =>  array('name' => 'Idéal', 'unit' => 'kg', 'type' => 'numeric'),
+						'imclabel' => array('name' => 'IMC Label', 'unit' => '', 'type' => 'string'),
+				);
 		$miscale = blea::byId($_id);
 		$userList = json_decode($_userList,true);
 		$newList = array();
@@ -30,6 +35,8 @@ class miscaleblea extends blea {
 				'name' => $user['name'],
 				'height' =>$user['height'],
 				'weight' =>$user['weight'],
+				'sex' =>$user['sex'],
+				'age' =>$user['age'],
 			);
 			$userweigthCmd = $miscale->getCmd('info','poids'.$user['name']);
 			if (!is_object($userweigthCmd)){
@@ -47,82 +54,55 @@ class miscaleblea extends blea {
 				$userweigthCmd->save();
 			}
 			$userweigthCmd->event($user['weight']);
-			$userimcCmd = $miscale->getCmd('info','imc'.$user['name']);
-			if (!is_object($userimcCmd)){
-				$userimcCmd = new bleaCmd();
-				$userimcCmd->setLogicalId('imc'.$user['name']);
-				$userimcCmd->setIsVisible(1);
-				$userimcCmd->setIsHistorized(1);
-				$userimcCmd->setName(__('Imc ' . $user['name'], __FILE__));
-				$userimcCmd->setType('info');
-				$userimcCmd->setSubType('numeric');
-				$userimcCmd->setTemplate('mobile','line');
-				$userimcCmd->setTemplate('dashboard','line');
-				$userimcCmd->setEqLogic_id($miscale->getId());
-				$userimcCmd->save();
+			foreach ($datas as $key => $value){
+				$userCmd = $miscale->getCmd('info',$key.$user['name']);
+				if (!is_object($userCmd)){
+					$userCmd = new bleaCmd();
+					$userCmd->setLogicalId($key.$user['name']);
+					$userCmd->setIsVisible(1);
+					$userCmd->setIsHistorized(1);
+					$userCmd->setName(__($value['name'] . ' ' . $user['name'], __FILE__));
+					$userCmd->setType('info');
+					$userCmd->setSubType($value['type']);
+					$userCmd->setUnite($value['unit']);
+					$userCmd->setTemplate('mobile','line');
+					$userCmd->setTemplate('dashboard','line');
+					$userCmd->setEqLogic_id($miscale->getId());
+					$userCmd->save();
+				}
 			}
-			$userimcCmd->event(round($user['weight']/($user['height']*$user['height']),2));
 		}
-		$miscale->setConfiguration('userList',$newList);
+		$miscale->setConfiguration('specificconfiguration',$newList);
 		$miscale->save();
-		$userlist = $miscale->getConfiguration('userList');
-		foreach ($miscale->getCmd('info') as $cmd){
-			if (substr($cmd->getLogicalId(),0,3) == 'imc'){
-				if (!isset($userlist[substr($cmd->getLogicalId(),3)])) {
-					$cmd->remove();
-				}
-			} else if (substr($cmd->getLogicalId(),0,5) == 'poids' && $cmd->getLogicalId() != 'poids'){
-				if (!isset($userlist[substr($cmd->getLogicalId(),5)])) {
-					$cmd->remove();
-				}
-			} 
-		}
 		return True;
 	}
 	
 	public static function calculateInputValue($_eqLogic,$_datas) {
-		if (isset($_datas['poids'])){
-			$poids = $_datas['poids'];
-			$listUsers = $_eqLogic->getConfiguration('userList',array());
-			if (count($listUsers>0)){
-				$userArray=array();
-				foreach ($listUsers as $id => $data) {
-					$name = $data['name'];
-					$userweigthCmd = $_eqLogic->getCmd('info','poids'.$name);
-					if (is_object($userweigthCmd)){
-						$lastKnownWeight = $userweigthCmd->execCmd();
-						$userArray[$name] = $lastKnownWeight;
-					}
-				}
-				$target = '';
-				$delta = 999;
-				foreach ($userArray as $name => $last) {
-					$currentdelta = abs($last-$poids);
-					if ($currentdelta<$delta){
-						$delta = $currentdelta;
-						$target = $name;
-					}
-				}
-				if ($target != ''){
-					$_datas['poids'.$target] = $poids;
-					$_datas['imc'.$target] = round($poids/($listUsers[$target]['height']*$listUsers[$target]['height']),2);
-					$listUsers[$target]['weight'] = $poids;
-					$_eqLogic->setConfiguration('userList',$listUsers);
-					$_eqLogic->save();
-				}
+		$listUsers = $_eqLogic->getConfiguration('specificconfiguration',array());
+		foreach ($listUsers as $id => $data) {
+			$name = $data['name'];
+			if (isset($_datas['poids'.$name])){
+				$listUsers[$name]['weight'] = $_datas['poids'.$name];
+				$_eqLogic->setConfiguration('specificconfiguration',$listUsers);
+				$_eqLogic->save();
 			}
 		}
 		return $_datas;
 	}
 	
 	public static function postSaveChild($_eqLogic) {
-		$listUsers = $_eqLogic->getConfiguration('userList',array());
+		$datas = array('imc' =>  array('name' => 'IMC', 'unit' => '', 'type' => 'numeric'),
+						'bmr' =>  array('name' => 'BMR', 'unit' => 'kcal', 'type' => 'numeric'),
+						'ideal' =>  array('name' => 'Idéal', 'unit' => 'kg', 'type' => 'numeric'),
+						'imclabel' => array('name' => 'IMC Label', 'unit' => '', 'type' => 'string'),
+				);
+		$listUsers = $_eqLogic->getConfiguration('specificconfiguration',array());
 		foreach ($listUsers as $key=>$user){
 			$userweigthCmd = $_eqLogic->getCmd('info','poids'.$user['name']);
 			if (!is_object($userweigthCmd)){
 				$userweigthCmd = new bleaCmd();
 				$userweigthCmd->setLogicalId('poids'.$user['name']);
-				$userweigthCmd->setIsVisible(0);
+				$userweigthCmd->setIsVisible(1);
 				$userweigthCmd->setIsHistorized(1);
 				$userweigthCmd->setName(__('Poids ' . $user['name'], __FILE__));
 				$userweigthCmd->setType('info');
@@ -134,21 +114,23 @@ class miscaleblea extends blea {
 				$userweigthCmd->save();
 			}
 			$userweigthCmd->event($user['weight']);
-			$userimcCmd = $_eqLogic->getCmd('info','imc'.$user['name']);
-			if (!is_object($userimcCmd)){
-				$userimcCmd = new bleaCmd();
-				$userimcCmd->setLogicalId('imc'.$user['name']);
-				$userimcCmd->setIsVisible(0);
-				$userimcCmd->setIsHistorized(1);
-				$userimcCmd->setName(__('Imc ' . $user['name'], __FILE__));
-				$userimcCmd->setType('info');
-				$userimcCmd->setSubType('numeric');
-				$userimcCmd->setTemplate('mobile','line');
-				$userimcCmd->setTemplate('dashboard','line');
-				$userimcCmd->setEqLogic_id($_eqLogic->getId());
-				$userimcCmd->save();
+			foreach ($datas as $key => $value){
+				$userCmd = $_eqLogic->getCmd('info',$key.$user['name']);
+				if (!is_object($userCmd)){
+					$userCmd = new bleaCmd();
+					$userCmd->setLogicalId($key.$user['name']);
+					$userCmd->setIsVisible(1);
+					$userCmd->setIsHistorized(1);
+					$userCmd->setName(__($value['name'] . ' ' . $user['name'], __FILE__));
+					$userCmd->setType('info');
+					$userCmd->setSubType($value['type']);
+					$userCmd->setUnite($value['unit']);
+					$userCmd->setTemplate('mobile','line');
+					$userCmd->setTemplate('dashboard','line');
+					$userCmd->setEqLogic_id($_eqLogic->getId());
+					$userCmd->save();
+				}
 			}
-			$userimcCmd->event(round($user['weight']/($user['height']*$user['height']),2));
 		}
 	}
 }

@@ -24,6 +24,7 @@ $remotes = blea_remote::all();
 $eqLogics = array();
 $antennas = array();
 $remotes = blea_remote::all();
+$availremotename=array();
 foreach ($remotes as $remote){
 	$info = array();
 	$name = $remote->getRemoteName();
@@ -32,7 +33,9 @@ foreach ($remotes as $remote){
 	$last = $remote->getConfiguration('lastupdate', '0');
 	$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 	$antennas[$name] = $info;
+	$availremotename[]=$name;
 }
+$availremotename[]='local';
 if (config::byKey('noLocal', 'blea', 0) == 0){
 	$infolocal=array();
 	$infolocal['x'] = config::byKey('positionx', 'blea', 999);
@@ -55,7 +58,9 @@ foreach (eqLogic::byType('blea') as $eqLogic){
 		if (substr($logicalId,0,4) == 'rssi'){
 			$remotename= substr($logicalId,4);
 			$remoterssi = $cmd->execCmd();
-			$info['rssi'][$remotename] = $remoterssi;
+			if (in_array($remotename,$availremotename)){
+				$info['rssi'][$remotename] = $remoterssi;
+			}
 		}
 	}
 	$eqLogics[$eqLogic->getName().' [' . $object . ']']=$info;
@@ -76,8 +81,8 @@ sendVarToJS('antennas', $antennas);
     }
 </style>
 <div id="graph_network" class="tab-pane">
-<a class="btn btn-success bleaRemoteAction" data-action="saveanttenna"><i class="fa fa-floppy-o"></i> {{Position Antennes}}</a>
-<a class="btn btn-success bleaRemoteAction" data-action="refresh"><i class="fa fa-refresh"></i></a>
+<a class="btn btn-success bleaRemoteAction" data-action="saveanttenna"><i class="fas fa-hdd"></i> {{Position Antennes}}</a>
+<a class="btn btn-success bleaRemoteAction" data-action="refresh"><i class="fas fa-sync"></i></a>
 <i class="fa fa-question-circle" style="cursor:pointer;font-size:2em" title="{{Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne local via des pointillés}}"></i>
 </div>
 
@@ -115,8 +120,8 @@ function load_graph(){
 				quality = 2 * (signal + 100);
 			}
 			lenghtfactor = quality/100;
-			if (lenghtfactor != 2){
-				haslink=1;
+			if (lenghtfactor != 2){;
+				haslink +=1;
 				graph.addLink(linkedantenna,eqLogics[eqlogic]['name'],{isdash: 0,lengthfactor: lenghtfactor,signal : orisignal});
 			}
 		}
@@ -137,7 +142,16 @@ function load_graph(){
 			}
 		}
 		if (haslink == 0){
-			graph.addLink('local',eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			if ('local' in antennas) {
+				graph.addLink('local',eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			} else {
+				firstantenna ='';
+				for (antenna in antennas){
+					firstantenna = antenna;
+					break;
+				}
+				graph.addLink(firstantenna,eqLogics[eqlogic]['name'],{isdash: 1,lengthfactor: 0.5,signal : -200});
+			}
 		}
 	}
 	var graphics = Viva.Graph.View.svgGraphics();

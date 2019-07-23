@@ -3,7 +3,8 @@
         "name": "Logitech Pop",
         "groupe" : "Boutons",
 		"configuration" : {
-			"battery_type": "Batterie"
+			"battery_type": "Batterie",
+			"name" : "logiswitch"
 		},
 		"commands": [
 			{

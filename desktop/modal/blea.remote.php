@@ -55,7 +55,7 @@ foreach ($remotes as $remote) {
   </div>
   <?php
 foreach ($remotes as $remote) {
-	echo '<div class="eqLogicDisplayCard cursor" data-remote_id="' . $remote->getId() . '">';
+	echo '<div class="eqLogicDisplayCard cursor col-lg-2" data-remote_id="' . $remote->getId() . '" style="width:10px">';
 	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png"/>';
 	echo '</br>';
 	echo '<span class="name">' . $remote->getRemoteName() . '</span>';
@@ -111,6 +111,12 @@ foreach ($remotes as $remote) {
 								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">{{Version}}</label>
+							<div class="col-sm-3">
+								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="version" title="{{Version}}" style="font-size : 1em;cursor : default;"></span>
+							</div>
+						</div>
 						<?php
 						if (method_exists( $id ,'sendRemoteFiles')){
 							echo '<div class="form-group">
@@ -150,19 +156,18 @@ foreach ($remotes as $remote) {
 						</div>
 						</div>';
 						}
-						if (method_exists( $id ,'remotelearn')){
-							echo '<div class="form-group">
-						<label class="col-sm-2 control-label">{{Mettre en learn}}</label>
-						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="remotelearn" data-type="1"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Inclusion}}</a>
-						</div>
-						<label class="col-sm-2 control-label">{{Arrêter learn}}</label>
-						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="remotelearn" data-type="0"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Stop Inclusion}}</a>
-						</div>
-						</div>';
-						}
 						?>
+						<div class="form-group">
+						<label class="col-sm-2 control-label">{{Mettre tous les équipements sur cette antenne}}</label>
+						<div class="col-sm-2">
+							<a class="btn btn-success bleaRemoteAction" data-action="all" data-type="reception"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Réception}}</a>
+						</div>
+						<div class="col-sm-2">
+							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
+						</div>
+						</div>
+						<div class="alert alert-info">{{La durée d'installation des dépendances sur une antenne peut prendre jusqu'à presque 30 minutes selon les antennes}}</div>
+				</div>
 						</fieldset>
 				</form>
 	</div>
@@ -171,7 +176,6 @@ foreach ($remotes as $remote) {
 <script>
 	function refreshDaemonMode() {
 		var auto = $('.bleaRemoteAttr[data-l2key="remoteDaemonAuto"]').value();
-		console.log("auto=" + auto);
 		if(auto == 1){
 			$('.bleaRemoteAction[data-action=stopremote]').hide();
 			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-success').addClass('btn-danger');
@@ -384,6 +388,36 @@ foreach ($remotes as $remote) {
 			}
 		});
 	});
+	
+	$('.bleaRemoteAction[data-action=all]').on('click',function(){
+	var type = $(this).attr('data-type');
+	var remoteId=$('.li_bleaRemote.active').attr('data-bleaRemote_id');
+	bootbox.confirm('{{Etes-vous sûr de vouloir mettre tous les équipements sur cette antenne en : }}' +$(this).attr('data-type'), function (result) {
+		if (result) {
+			$.ajax({
+				type: "POST",
+				url: "plugins/blea/core/ajax/blea.ajax.php",
+				data: {
+					action: "allantennas",
+					remote: "remote",
+					remoteId: remoteId,
+					type: type,
+				},
+				dataType: 'json',
+				error: function (request, status, error) {
+					handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
+				},
+				success: function (data) {
+					if (data.state != 'ok') {
+						$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
+						return;
+					}
+					$('#div_bleaRemoteAlert').showAlert({message: '{{Réussie}}', level: 'success'});
+				}
+			});
+		}
+	});
+});
 
 	$('.bleaRemoteAction[data-action=dependancyRemote]').on('click',function(){
 		var blea_remote = $('.bleaRemote').getValues('.bleaRemoteAttr')[0];

@@ -2,9 +2,11 @@
     "miscale": {
         "name": "MiScale",
         "groupe" : "Santé",
+		"models" : {"miscale/miscale_2019" : {"configuration" :{"battery_type" : "3x1.5V AA"}}},
 		"configuration" : {
 			"specificmodal" : 1,
 			"specificclass" : 1,
+			"name" : "miscale",
 			"xiaomi" : 1,
 			"battery_type": "4x1.5V AA"
 		},
@@ -24,6 +26,85 @@
                     "mobile": "line",
 					"dashboard" : "line"
 				}
+			},{
+                "name": "Dernier Qui",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "target",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier IMC",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imc",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier BMR",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kcal",
+                "isVisible": 1,
+                "logicalId": "bmr",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Idéal",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "kg",
+                "isVisible": 1,
+                "logicalId": "ideal",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
+			},
+			{
+                "name": "Dernier Label IMC",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+				"unite": "",
+                "isVisible": 1,
+                "logicalId": "imclabel",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+					"dashboard" : "line"
+				}
 			}
         ],
 		"compatibility": [
@@ -38,6 +119,18 @@
 				"remark": "Gestion de profils complète",
 				"inclusion" : "Mode inclusion",
 				"imglink": "miscale"
+            },
+			{
+                "manufacturer": "Xiaomi",
+                "name": "MiScale 2019",
+				"doc": "",
+				"type": "Scale",
+				"battery_type": "3x1.5V AA",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Gestion de profils complète",
+				"inclusion" : "Mode inclusion",
+				"imglink": "miscale_2019"
             }
         ]
     }

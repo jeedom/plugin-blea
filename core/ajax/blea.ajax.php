@@ -27,7 +27,52 @@ try {
 	ajax::init();
 
 	if (init('action') == 'changeIncludeState') {
-		blea::changeIncludeState(init('state'), init('mode'));
+		blea::changeIncludeState(init('state'), init('mode'), init('type'));
+		ajax::success();
+	}
+	
+	if (init('action') == 'getAllTypes') {
+		$list = array();
+		$allconfs = blea::devicesParameters();
+		foreach ($allconfs as $key=>$data){
+			$list[$data['name']] = $data['configuration']['name'];
+		}
+		ksort($list);
+		ajax::success($list);
+	}
+	
+	if (init('action') == 'allantennas') {
+		log::add('blea','error',init('remote') . init('type') . init('remoteId'));
+		if (init('remote') == 'local') {
+			if (init('type') == 'reception'){
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antennareceive','local');
+					$eqLogic->save();
+				}
+			} else {
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antenna','local');
+					$eqLogic->save();
+				}
+			}
+		} else {
+			if (init('type') == 'reception'){
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antennareceive',init('remoteId'));
+					$eqLogic->save();
+				}
+			} else {
+				foreach (eqLogic::byType('blea') as $eqLogic){
+					$eqLogic->setConfiguration('antenna',init('remoteId'));
+					$eqLogic->save();
+				}
+			}
+		}
+		ajax::success();
+	}
+	
+	if (init('action') == 'syncconfBlea') {
+		blea::syncconfBlea(false);
 		ajax::success();
 	}
 
@@ -42,6 +87,14 @@ try {
 	if (init('action') == 'saveAntennaPosition') {
 		ajax::success(blea::saveAntennaPosition(init('antennas')));
 	}
+	
+	if (init('action') == 'launchremotes') {
+		ajax::success(blea::launch_allremotes());
+	}
+	
+	if (init('action') == 'sendremotes') {
+		ajax::success(blea::send_allremotes());
+	}
 
 	if (init('action') == 'autoDetectModule') {
 		$eqLogic = blea::byId(init('id'));
@@ -53,7 +106,8 @@ try {
 				$cmd->remove();
 			}
 		}
-		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
+		$eqLogic->setConfiguration('applyDevice','');
+		$eqLogic->save();
 		ajax::success();
 	}
 

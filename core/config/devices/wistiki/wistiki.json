@@ -2,6 +2,9 @@
     "wistiki": {
         "name": "Wistiki",
         "groupe" : "Présence",
+		"configuration" : {
+			"name" : "wistiki"
+		},
         "commands": [
         ],
 		"compatibility": [

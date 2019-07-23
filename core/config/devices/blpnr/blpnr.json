@@ -1,0 +1,141 @@
+{
+    "blpnr": {
+        "name": "Jardibric BLPNR",
+        "groupe" : "Plante",
+		"configuration" : {
+			"cancontrol" : 1,
+			"needsrefresh" : 1,
+			"canbelocked" : 0,
+			"name" : "blpnr",
+			"delay" : 60
+		},
+		"commands": [
+			{
+                "name": "Mode en cours",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "logicalId": "mode",
+              	"display": {
+					"icon": "<i class=\"icon nature-watering1\"><\/i>",
+					"generic_type": "DONT"
+				},
+              	"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            },{
+                "name": "Temps restant",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "min",
+                "logicalId": "temps",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"configuration": {
+                	"repeatEventManagement" : "always"
+				}
+            },
+			{	
+				"name": "Marche",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "minute",
+                "logicalId": "name:blpnr,value:#slider#,action:on",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"60"
+				}
+            },
+			{	
+				"name": "2 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:blpnr,value:2,action:on"
+            },
+			{	
+				"name": "5 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:blpnr,value:5,action:on"
+            },
+			{	
+				"name": "10 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:blpnr,value:10,action:on"
+            },
+			{	
+				"name": "15 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:blpnr,value:15,action:on"
+            },
+           
+			{	
+				"name": "Arret",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:blpnr,action:off"
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Jardibric",
+                "name": "BLP NR",
+				"doc": "",
+				"type": "Plante",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"battery_type" : "1x9V",
+				"inclusion" : "Mode inclusion",
+				"imglink": "blpnr"
+            }
+        ]
+    }
+}

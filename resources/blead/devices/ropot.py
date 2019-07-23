@@ -12,7 +12,7 @@ class Miflora():
 		self.ignoreRepeat = False
 
 	def isvalid(self,name,manuf='',data='',mac=''):
-		validname = ['ropot']
+		validname = [self.name]
 		if name in validname:
 			return True
 	def parse(self,data,mac,name,manuf):
@@ -41,7 +41,7 @@ class Miflora():
 			result['id'] = mac
 			logging.debug(str(result))
 			return result
-		except Exception,e:
+		except Exception as e:
 			logging.error(str(e))
 		return result
 	

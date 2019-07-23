@@ -14,7 +14,7 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	echo '<div id="div_inclusionAlert"></div>';
 }
 ?>
-
+<div class="row row-overflow">
  <div class="col-lg-12 eqLogicThumbnailDisplay">
    <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
    <div class="eqLogicThumbnailContainer">
@@ -76,14 +76,16 @@ foreach ($eqLogics as $eqLogic) {
 ?>
 </div>
 </div>
-
 <div class="col-lg-12 eqLogic" style="display: none;">
- <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
- <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
- <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
+<div class="input-group pull-right" style="display:inline-flex">
+<span class="input-group-btn">
+ <a class="btn btn-danger btn-sm roundedLeft" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-warning btn-sm specificmodal" id="bt_specificmodal" style="display:none"><i class="fa fa-cogs"></i> {{Configuration spécifique}}</a><a class="btn btn-success btn-sm eqLogicAction" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
+ </span>
+</div>
  <ul class="nav nav-tabs" role="tablist">
   <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-  <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
+  <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
+  <li role="presentation"><a href="#paramtab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-cog"></i> {{Paramètres}}</a></li>
   <li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 </ul>
 <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
@@ -119,7 +121,7 @@ foreach ($eqLogics as $eqLogic) {
                 <select class="eqLogicAttr form-control" data-l1key="object_id">
                   <option value="">Aucun</option>
                   <?php
-foreach (object::all() as $object) {
+foreach (jeeObject::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>
@@ -139,72 +141,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 
            </div>
          </div>
-		 <div class="form-group">
-				<label class="col-sm-3 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
-              <div class="col-sm-3">
-                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
-
-				<?php
-				if (config::byKey('noLocal', 'blea', 0) == 0){
-					echo '<option value="local">{{Local}}</option>';
-				}
-				try{
-					$hasblea = plugin::byId('blea');
-					} catch (Exception $e) {
-				}
-				if ($hasblea != '' && $hasblea->isActive()){
-					$remotes = blea_remote::all();
-					foreach ($remotes as $remote) {
-						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
-					}
-				}
-				?>
-				<option value="all">{{Tous}}</option>
-              </select>
-            </div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label help" data-help="{{Demandera les infos en forcés. A eviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
-							<div class="col-sm-3">
-							 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr canberefreshed" data-l1key="configuration" data-l2key="needsrefresh" />
-							</div>
-						</div>
-			 <div class="form-group refreshdelay">
-				<label class="col-sm-3 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour}}">{{Refresh des infos (en s)}}</label>
-				<div class="col-sm-3">
-				<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
-				</div>
-			</div>
-
-		</div>
-		<div class="form-group cancontrol">
-				<label class="col-sm-3 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
-              <div class="col-sm-3">
-                <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
-				<?php
-				if (config::byKey('noLocal', 'blea', 0) == 0){
-					echo '<option value="local">{{Local}}</option>';
-				}
-				try{
-					$hasblea = plugin::byId('blea');
-					} catch (Exception $e) {
-				}
-				if ($hasblea != '' && $hasblea->isActive()){
-					$remotes = blea_remote::all();
-					foreach ($remotes as $remote) {
-						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
-					}
-				}
-				?>
-				<option value="all">{{Tous}}</option>
-              </select>
-            </div>
-			<div class="form-group canbelocked">
-				<label class="col-sm-3 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
-				<div class="col-sm-3">
-				 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" />
-				</div>
-			</div>
-          </div>
+		 
       </fieldset>
     </form>
   </div>
@@ -214,8 +151,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
        <div class="form-group">
         <label class="col-sm-2 control-label"></label>
         <div class="col-sm-8">
-          <a class="btn btn-danger" id="bt_autoDetectModule"><i class="fa fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
-		  <a class="btn btn-warning specificmodal" id="bt_specificmodal" style="display:none"><i class="fa fa-cogs"></i> {{Configuration spécifique}}</a>
           </div>
         </div>
      <div class="form-group">
@@ -269,7 +204,90 @@ foreach ($groups as $group) {
 <div class="alert alert-info globalRemark" style="display:none"></div>
 </div>
 </div>
+</div>
+<div role="tabpanel" class="tab-pane" id="paramtab">
+<div class="row">
+      <div class="col-sm-6">
+        <form class="form-horizontal">
+          <fieldset>
+	<legend><i class="fab fa-bluetooth"></i>  {{Antennes}}</legend>
+	<div class="form-group">
+		<label class="col-sm-6 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
+		<div class="col-sm-4">
+			<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
+			<?php
+			if (config::byKey('noLocal', 'blea', 0) == 0){
+				echo '<option value="local">{{Local}}</option>';
+			}
+			try{
+				$hasblea = plugin::byId('blea');
+				} catch (Exception $e) {
+			}
+			if ($hasblea != '' && $hasblea->isActive()){
+				$remotes = blea_remote::all();
+				foreach ($remotes as $remote) {
+					echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+				}
+			}
+			?>
+			<option value="all">{{Tous}}</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group cancontrol">
+		<label class="col-sm-6 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
+		<div class="col-sm-4">
+			<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
+				<?php
+				if (config::byKey('noLocal', 'blea', 0) == 0){
+					echo '<option value="local">{{Local}}</option>';
+				}
+				try{
+					$hasblea = plugin::byId('blea');
+					} catch (Exception $e) {
+				}
+				if ($hasblea != '' && $hasblea->isActive()){
+					$remotes = blea_remote::all();
+					foreach ($remotes as $remote) {
+						echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+					}
+				}
+				?>
+				<option value="all">{{Tous}}</option>
+			</select>
+		</div>
+	</div>
+	<legend><i class="fas fa-sync"></i>  {{Refresh}}</legend>
+	<div class="form-group">
+		<label class="col-sm-6 control-label help" data-help="{{Demandera les infos en forcés. A eviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
+		<div class="col-sm-4">
+		 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr canberefreshed" data-l1key="configuration" data-l2key="needsrefresh" /></label>
+		</div>
+	</div>
+	</br>
+	<div class="form-group refreshdelay">
+		<label class="col-sm-6 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour et cela peut engendre un blocage du scan}}">{{Refresh des infos (en s)}}</label>
+		<div class="col-sm-4">
+		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
+		</div>
+	</div>
+	<div class="form-group canbelocked">
+		<label class="col-sm-6 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
+		<div class="col-sm-4">
+			<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" /></label>
+		</div>
+	</div>
+	</br>
+	<div class="form-group">
+		<label class="col-sm-6 control-label help" data-help="{{Nombre de scan où le device est invisible pour le déclarer non présent sur l'antenne (spécifique au device, sinon la valeur globale du plugin est utilisée}}">{{Nombre de scan}}</label>
+		<div class="col-sm-4">
+		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="absent" placeholder="Nombre de scans (3 ou 4 est un bon chiffre)"/>
+		</div>
+		</fieldset>
+    </form>
+  </div>
 
+</div>
 </div>
 <div role="tabpanel" class="tab-pane" id="commandtab">
   <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Ajouter une commande}}</a><br/><br/>
@@ -294,6 +312,6 @@ foreach ($groups as $group) {
 
 </div>
 </div>
-
+</div>
 <?php include_file('desktop', 'blea', 'js', 'blea');?>
 <?php include_file('core', 'plugin.template', 'js');?>
