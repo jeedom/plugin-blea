@@ -30,9 +30,6 @@ $result = json_decode(file_get_contents("php://input"), true);
 if (!is_array($result)) {
 	die();
 }
-if (isset($result['source'])){
-	log::add('blea','debug','This is a message from antenna ' . $result['source']);
-}
 if (isset($result['learn_mode'])) {
 	if ($result['learn_mode'] == 1) {
 		config::save('include_mode', 1, 'blea');
@@ -105,7 +102,6 @@ if (isset($result['devices'])) {
 			continue;
 		}
 		if (isset($datas['source'])){
-			log::add('blea','debug','This is a message from antenna ' . $datas['source']);
 			if ($datas['source'] != 'local'){
 				$remotes = blea_remote::all();
 				foreach ($remotes as $remote){

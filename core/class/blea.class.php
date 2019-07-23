@@ -284,7 +284,7 @@ class blea extends eqLogic {
 		$result = false;
 		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','folder-blea.tar.gz')) {
 			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
-			$result = $remoteObject->execCmd(['mkdir /home','mkdir /home/'.$user,'rm -R /home/'.$user.'/blead','mkdir /home/'.$user.'/blead','tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
+			$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead','tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
 		}
 		log::add('blea','info',__('Suppression du zip local',__FILE__));
 		exec('rm /tmp/folder-blea.tar.gz');
@@ -556,9 +556,6 @@ class blea extends eqLogic {
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::sendRemoteFiles($remote->getId());
-			sleep(1);
-			blea::sendRemoteFiles($remote->getId());
-			sleep(1);
 			blea::launchremote($remote->getId());
 		}
 	}
@@ -1226,13 +1223,29 @@ class blea_remote {
 			} else {
 				foreach ($_cmd as $cmd){
 					log::add('blea', 'info', __('Commande par SSH ',__FILE__) . $cmd .  __(' sur ',__FILE__) . $ip);
-					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
-					$result = ssh2_exec($connection, $execmd);
+					$execmd = "sudo -S " . $cmd;
+					$stream = ssh2_exec($connection, $execmd);
+					$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+					stream_set_blocking($errorStream, true);
+					stream_set_blocking($stream, true);
+					$output = stream_get_contents($stream) . ' ' . stream_get_contents($errorStream);
+					fclose($stream);
+					fclose($errorStream);
+					if (trim($output) != '') {
+						log::add('blea','error',$output);
+					}
 				}
-				$closesession = ssh2_exec($connection, 'exit');
-				stream_set_blocking($closesession, true);
-				stream_get_contents($closesession);
-				return $result !== false;
+				$stream = ssh2_exec($connection, 'exit');
+				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+				stream_set_blocking($errorStream, true);
+				stream_set_blocking($stream, true);
+				$output = stream_get_contents($stream) . ' ' . stream_get_contents($errorStream);
+				fclose($stream);
+				fclose($errorStream);
+				if (trim($output) != '') {
+					log::add('blea','error',$output);
+				}
+				return $output !== false;
 			}
 		}
 	}
@@ -1252,9 +1265,23 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
 				$result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
+				if (!$result){
+					log::add('blea','error','Files could not be sent to ' . $ip);
+					return false;
+				} else {
+					log::add('blea','info','Files successfully sent to ' . $ip);
+				}
 				$closesession = ssh2_exec($connection, 'exit');
-				stream_set_blocking($closesession, true);
-				stream_get_contents($closesession);
+				$stream = ssh2_exec($connection, $execmd);
+				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+				stream_set_blocking($errorStream, true);
+				stream_set_blocking($stream, true);
+				$output = stream_get_contents($stream);
+				fclose($stream);
+				fclose($errorStream);
+				if (trim($output) != '') {
+					log::add('blea','error',$output);
+				}
 			}
 		}
 		return true;
@@ -1275,9 +1302,16 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
-				$closesession = ssh2_exec($connection, 'exit');
-				stream_set_blocking($closesession, true);
-				stream_get_contents($closesession);
+				$stream = ssh2_exec($connection, 'exit');
+				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
+				stream_set_blocking($errorStream, true);
+				stream_set_blocking($stream, true);
+				$output = stream_get_contents($stream);
+				fclose($stream);
+				fclose($errorStream);
+				if (trim($output) != '') {
+					log::add('blea','error',$output);
+				}
 			}
 		}
 		return true;

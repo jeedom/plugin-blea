@@ -34,7 +34,6 @@ function blea_update() {
 		$blea->save();
 	}
 	log::add('blea','info','Updating remotes ...');
-	$remotes = blea_remote::all();
 	blea::send_allremotes();
 	config::save('version',blea::$_version,'blea');
 }
