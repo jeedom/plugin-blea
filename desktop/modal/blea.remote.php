@@ -55,7 +55,7 @@ foreach ($remotes as $remote) {
   </div>
   <?php
 foreach ($remotes as $remote) {
-	echo '<div class="eqLogicDisplayCard cursor" data-remote_id="' . $remote->getId() . '">';
+	echo '<div class="eqLogicDisplayCard cursor col-lg-2" data-remote_id="' . $remote->getId() . '" style="width:10px">';
 	echo '<img class="lazy" src="plugins/blea/3rdparty/antenna.png"/>';
 	echo '</br>';
 	echo '<span class="name">' . $remote->getRemoteName() . '</span>';
@@ -166,6 +166,8 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
 						</div>
 						</div>
+						<div class="alert alert-info">{{La durée d'installation des dépendances sur une antenne peut prendre jusqu'à presque 30 minutes selon les antennes}}</div>
+				</div>
 						</fieldset>
 				</form>
 	</div>
