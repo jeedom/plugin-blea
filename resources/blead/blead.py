@@ -317,7 +317,6 @@ def heartbeat_handler(delay):
 				if globals.SEEN_DEVICES[device]['present'] == 1:
 					if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):
 						logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
-						globals.SEEN_DEVICES[device]['present'] = 0
 						action['present']=0
 						action['id']=device
 						action['rssi'] = -200
@@ -332,6 +331,10 @@ def heartbeat_handler(delay):
 					action['source'] = globals.daemonname
 			if len(action)>2 :
 				if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()):
+					if 'present' in globals.SEEN_DEVICES[device]:
+						globals.SEEN_DEVICES[device]['present'] = 0
+					else:
+						globals.SEEN_DEVICES[device]={'present':0}
 					globals.JEEDOM_COM.add_changes('devices::'+device,action)
 				else:
 					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection was too soon')
