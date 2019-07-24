@@ -64,8 +64,9 @@ if (!isConnect('admin')) {
 	</br>
 	<label class="col-lg-4"></label>
 	<div class="col-lg-8">
-		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour toutes les antennes}}</a>
+		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour les fichiers sur toutes les antennes}}</a>
 		<a class="btn btn-success allantennas" data-action="restart"><i class="fas fa-play"></i> {{Redémarrer toutes les antennes}}</a>
+		<a class="btn btn-danger allantennas" data-action="updatedep"><i class="fas fa-arrow-up"></i> {{Mettre à jour les dépendances sur toutes les antennes}}</a>
 	</div>
 	</div>
 	<div class="form-group">
@@ -183,6 +184,8 @@ $('.bleaAction[data-action=all]').on('click',function(){
 $('.allantennas').on('click', function () {
 	if ($(this).attr('data-action') == 'update') {
 		action = 'sendremotes';
+	} else if ($(this).attr('data-action') == 'updatedep'){
+		action = 'updateremotes';
 	} else {
 		action = 'launchremotes';
 	}

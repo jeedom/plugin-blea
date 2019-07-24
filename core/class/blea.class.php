@@ -551,10 +551,19 @@ class blea extends eqLogic {
 	}
 	
 	public function send_allremotes(){
-		log::add('blea','info','Updating remotes ...');
+		log::add('blea','info','Updating files on remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::sendRemoteFiles($remote->getId());
+			blea::launchremote($remote->getId());
+		}
+	}
+	
+	public function update_allremotes(){
+		log::add('blea','info','Updating remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::dependancyRemote($remote->getId());
 			blea::launchremote($remote->getId());
 		}
 	}

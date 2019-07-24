@@ -95,6 +95,10 @@ try {
 	if (init('action') == 'sendremotes') {
 		ajax::success(blea::send_allremotes());
 	}
+	
+	if (init('action') == 'updateremotes') {
+		ajax::success(blea::update_allremotes());
+	}
 
 	if (init('action') == 'autoDetectModule') {
 		$eqLogic = blea::byId(init('id'));
