@@ -21,6 +21,8 @@
 - Rajout d'un mode passif ou actif pour le scan
 - Réorganisation de la page équipement
 - Rajout d'une option nombre de scan pour considérer absent spécifique à l'équipement (si défini remplacera la globale pour cet équipement)
+- Ajout de la possibilité de définir en un clic tous les équipements sur une antenne ou sur local
+- Possibilité de choisir exactement le type de produit à inclure lors d'un scan (avec possibilité de choisir tous)
 
 # 26/06/2019
 - Rajout du xiaomi cleargrass
