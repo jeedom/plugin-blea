@@ -1279,7 +1279,7 @@ class blea_remote {
 				} else {
 					log::add('blea','info','Files successfully sent to ' . $ip);
 				}
-				$closesession = ssh2_exec($connection, 'exit');
+				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
 				$stream = ssh2_exec($connection, $execmd);
 				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
 				stream_set_blocking($errorStream, true);
@@ -1310,7 +1310,8 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
-				$stream = ssh2_exec($connection, 'exit');
+				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
+				$stream = ssh2_exec($connection, $execmd);
 				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
 				stream_set_blocking($errorStream, true);
 				stream_set_blocking($stream, true);

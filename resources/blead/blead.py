@@ -103,6 +103,8 @@ class ScanDelegate(DefaultDelegate):
 							action['learn'] = 1
 							if 'version' in action:
 								action['type']= action['version']
+							if 'bind' in action and action['bind'] == False:
+								return
 							logging.debug(action)
 							globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
 						else:
