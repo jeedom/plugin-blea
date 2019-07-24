@@ -34,7 +34,6 @@ function blea_update() {
 		$blea->save();
 	}
 	log::add('blea','alert','Pensez à mettre à jour vos antennes et relancer leurs dépendances si besoin ...');
-	config::save('version',blea::$_version,'blea');
 }
 
 function blea_remove() {
