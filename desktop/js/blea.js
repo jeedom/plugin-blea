@@ -44,13 +44,12 @@
 		dialog_title = '{{Inclusion BLEA}}';
 		dialog_message += '<label class="control-label" > {{Quel type de produits voulez vous inclure : }} </label> ' +
 		'<div>' +
-		'<input type="radio" name="type" id="all" value="all" checked="checked"> {{Tous}} </label> '; 
+		' <select id="type">' +
+		'<option value="all">{{Tous}}</option>';
 		for (device in list) {
-			dialog_message += '<label > ' +
-		'<input type="radio" name="type" id="'+list[device]+'" value="'+list[device]+'"> '+device+'</label> ';
+			dialog_message += '<option value="'+list[device]+'"> '+device+'</option>';
 		}
-		dialog_message += '</div> ' +
-		'</div><br>'+
+		dialog_message += '</select></div><br>'+
 		'<label class="lbl lbl-warning" for="type">{{Choisissez le type de produit que vous souhaitez ajouter}}</label> ';
 		dialog_message += '</form>';
 		bootbox.dialog({
@@ -66,7 +65,7 @@
 					label: "{{Démarrer}}",
 					className: "btn-success",
 					callback: function () {
-						var proto = $("input[name='type']:checked").val();
+						var proto = $("#type option:selected").val();
 						changeIncludeState(state, mode ,proto);
 					}
 				},

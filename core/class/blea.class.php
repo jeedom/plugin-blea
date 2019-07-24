@@ -1240,7 +1240,7 @@ class blea_remote {
 					fclose($stream);
 					fclose($errorStream);
 					if (trim($output) != '') {
-						log::add('blea','debug',$output);
+						log::add('blea','error',$output);
 					}
 				}
 				$stream = ssh2_exec($connection, 'exit');
@@ -1251,7 +1251,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea','error',$output);
 				}
 				return $output !== false;
 			}
@@ -1288,7 +1288,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea','error',$output);
 				}
 			}
 		}
@@ -1319,7 +1319,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea','error',$output);
 				}
 			}
 		}
