@@ -185,7 +185,7 @@ class bodyMetrics:
 			{'min': 21, 'max': 25, 'female': [19, 24, 30, 35], 'male': [10, 15, 22, 26]},
 			{'min': 26, 'max': 30, 'female': [20, 25, 31, 36], 'male': [11, 16, 21, 27]},
 			{'min': 31, 'max': 35, 'female': [21, 26, 33, 36], 'male': [13, 17, 25, 28]},
-			{'min': 46, 'max': 40, 'female': [22, 27, 34, 37], 'male': [15, 20, 26, 29]},
+			{'min': 36, 'max': 40, 'female': [22, 27, 34, 37], 'male': [15, 20, 26, 29]},
 			{'min': 41, 'max': 45, 'female': [23, 28, 35, 38], 'male': [16, 22, 27, 30]},
 			{'min': 46, 'max': 50, 'female': [24, 30, 36, 38], 'male': [17, 23, 29, 31]},
 			{'min': 51, 'max': 55, 'female': [26, 31, 36, 39], 'male': [19, 25, 30, 33]},
@@ -349,7 +349,7 @@ class bodyMetrics:
 
 	# Return body type scale
 	def getBodyTypeScale(self):
-		return ['obèse', 'surpoids', 'trapu', 'manque d\'exercice', 'équilibré', 'équilibré musclé', 'maigre', 'équilibré maigre', 'maigre musclé']
+		return ['Obèse', 'Surpoids', 'Trapu', 'Manque d\'exercice', 'Equilibré', 'Equilibré musclé', 'Maigre', 'Equilibré maigre', 'Maigre musclé']
 
 	def getImcLabel(self):
 		imc = self.getBMI()
@@ -357,7 +357,9 @@ class bodyMetrics:
 			return 'Maigreur'
 		elif imc >= 18.5 and imc <25:
 			return 'Corpulence Normale'
-		elif imc >= 25 and imc <30:
+		elif imc >= 25 and imc <27:
+			return 'Léger surpoids'
+		elif imc >= 27 and imc <30:
 			return 'Surpoids'
 		elif imc >= 30 and imc <35:
 			return 'Obésité modérée'
