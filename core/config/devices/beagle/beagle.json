@@ -1,0 +1,43 @@
+{
+    "beagle": {
+        "name": "Interrupteur Beagle",
+		"groupe" : "Boutons",
+		"configuration" : {
+			"resetRssis" : 0,
+			"name" : "beagle"
+		},
+        "commands": [
+            {
+                "name": "BoutonID",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+				"template": {
+                    "mobile": "badge",
+					"dashboard" : "badge"
+                },
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
+                "unite": "",
+                "logicalId": "value"
+            },
+			{
+                "name": "Boutons",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "",
+				"configuration": {
+                "repeatEventManagement" : "always"
+				},
+                "logicalId": "label"
+            }
+        ],
+		"compatibility": [
+            
+        ]
+    }
+}

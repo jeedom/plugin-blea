@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.4';
+	public static $_version = '2.5';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
@@ -551,10 +551,19 @@ class blea extends eqLogic {
 	}
 	
 	public function send_allremotes(){
-		log::add('blea','info','Updating remotes ...');
+		log::add('blea','info','Updating files on remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::sendRemoteFiles($remote->getId());
+			blea::launchremote($remote->getId());
+		}
+	}
+	
+	public function update_allremotes(){
+		log::add('blea','info','Updating remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::dependancyRemote($remote->getId());
 			blea::launchremote($remote->getId());
 		}
 	}
@@ -1270,7 +1279,7 @@ class blea_remote {
 				} else {
 					log::add('blea','info','Files successfully sent to ' . $ip);
 				}
-				$closesession = ssh2_exec($connection, 'exit');
+				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
 				$stream = ssh2_exec($connection, $execmd);
 				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
 				stream_set_blocking($errorStream, true);
@@ -1301,7 +1310,8 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
-				$stream = ssh2_exec($connection, 'exit');
+				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
+				$stream = ssh2_exec($connection, $execmd);
 				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
 				stream_set_blocking($errorStream, true);
 				stream_set_blocking($stream, true);
