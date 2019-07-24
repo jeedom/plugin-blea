@@ -237,6 +237,7 @@ function changeIncludeState(_state,_mode,_type='') {
             action: "changeIncludeState",
             state: _state,
             mode: _mode,
+            type: 'all',
         },
         dataType: 'json',
         error: function (request, status, error) {
