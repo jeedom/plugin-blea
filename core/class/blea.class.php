@@ -1222,7 +1222,7 @@ class blea_remote {
 			} else {
 				foreach ($_cmd as $cmd){
 					log::add('blea', 'info', __('Commande par SSH ',__FILE__) . $cmd .  __(' sur ',__FILE__) . $ip);
-					$execmd = "sudo -S " . $cmd;
+					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
 					$stream = ssh2_exec($connection, $execmd);
 					$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
 					stream_set_blocking($errorStream, true);
