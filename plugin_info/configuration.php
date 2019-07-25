@@ -100,19 +100,19 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
        </div>
    </div>
    <div class="form-group">
-    <label class="col-lg-4 control-label" data-help="{{Intervalle de scan présence. Il est déconseillé de descendre en dessous de 20 secondes}}">{{Intervalle de scan (s)}}</label>
+    <label class="col-lg-4 control-label">{{Intervalle de scan (s)}} <sup><i class="fas fa-question-circle" tooltip="{{Intervalle de scan présence. Il est déconseillé de descendre en dessous de 20 secondes}}"></i></sup></label>
     <div class="col-lg-2">
         <input class="configKey form-control" data-l1key="scaninterval" placeholder="{{20}}" />
     </div>
 </div>
 	<div class="form-group">
-    <label class="col-lg-4 control-label" data-help="{{Combien de fois le device ne doit pas etre vu lors d'un scan pour décider qu'il est absent (fortement déconseillé de descendre en dessous de 3 ou 4 pour éviter les faux positifs}}">{{Nombre de scan invisible pour déclencher absence}}</label>
+    <label class="col-lg-4 control-label" tooltip="{{Combien de fois le device ne doit pas etre vu lors d'un scan pour décider qu'il est absent (fortement déconseillé de descendre en dessous de 3 ou 4 pour éviter les faux positifs}}">{{Nombre de scan invisible pour déclencher absence}}</label>
     <div class="col-lg-2">
         <input class="configKey form-control" data-l1key="absentnumber" placeholder="{{4}}" />
     </div>
 </div>
 	<div class="form-group">
-		<label class="col-lg-4 control-label" data-help="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence}}">{{Mode de scan}}</label>
+		<label class="col-lg-4 control-label help" data-help="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence}}">{{Mode de scan}}</label>
 		<div class="col-lg-2">
 			<select class="configKey form-control" data-l1key="scanmode">
                 <option value="passive">{{Passif}}</option>

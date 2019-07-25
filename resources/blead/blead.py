@@ -354,19 +354,13 @@ def heartbeat_handler(delay):
 			globals.LEARN_MODE = False
 			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
 			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-		if (globals.LAST_VIRTUAL + 60)  < int(time.time()):
-			for device in globals.KNOWN_DEVICES:
-				action={}
-				if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
-					if device in list(globals.KEEPED_CONNECTION):
-						logging.debug("HEARTBEAT------Virtually send rssi to device connected as they are not seen anymore " + str(device))
-						action['id'] = device
-						action['rssi'] = 'same'
-						action['present'] = 1
-						action['source'] = globals.daemonname
-						globals.JEEDOM_COM.add_changes('devices::'+device,action)
-						globals.LAST_VIRTUAL = int(time.time())
-		if (globals.LAST_BEAT + 55)  < int(time.time()):
+		if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
+			if device in list(globals.KEEPED_CONNECTION):
+				if device not in globals.SEEN_DEVICES:
+					globals.SEEN_DEVICES[device] = {}
+				globals.SEEN_DEVICES[device]['lastseen'] = int(time.time())
+				globals.SEEN_DEVICES[device]['present'] = 1
+		if (globals.LAST_BEAT + 55) < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 			globals.LAST_BEAT = int(time.time())
 		time.sleep(1)

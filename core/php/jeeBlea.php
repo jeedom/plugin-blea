@@ -45,15 +45,14 @@ if (isset($result['learn_mode'])) {
 		);
 	}
 }
-
+$remotes = blea_remote::getCacheRemotes('allremotes',array());
 if (isset($result['started'])) {
 	if ($result['started'] == 1) {
 		log::add('blea','info','Antenna ' . $result['source'] . ' alive sending known devices');
 		if ($result['source'] != 'local'){
-			$remotes = blea_remote::all();
 			foreach ($remotes as $remote){
 				if ($remote->getRemoteName() == $result['source']){
-					$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
+					$remote->setCache('lastupdate',date("Y-m-d H:i:s"));
 					$version = '1.0';
 					if (isset($result['version'])){
 						$version = $result['version'];
@@ -84,11 +83,9 @@ if (isset($result['heartbeat'])) {
 	if ($result['heartbeat'] == 1) {
 		log::add('blea','info','This is a heartbeat from antenna ' . $result['source']);
 		if ($result['source'] != 'local'){
-			$remotes = blea_remote::all();
 			foreach ($remotes as $remote){
 				if ($remote->getRemoteName() == $result['source']){
-					$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
-					$remote->save();
+					$remote->setCache('lastupdate',date("Y-m-d H:i:s"));
 					break;
 				}
 			}
@@ -103,11 +100,9 @@ if (isset($result['devices'])) {
 		}
 		if (isset($datas['source'])){
 			if ($datas['source'] != 'local'){
-				$remotes = blea_remote::all();
 				foreach ($remotes as $remote){
 					if ($remote->getRemoteName() == $datas['source']){
-						$remote->setConfiguration('lastupdate',date("Y-m-d H:i:s"));
-						$remote->save();
+						$remote->setCache('lastupdate',date("Y-m-d H:i:s"));
 						break;
 					}
 				}
@@ -129,7 +124,6 @@ if (isset($result['devices'])) {
 				'page' => 'blea',
 				'message' => '',
 			));
-			$remotes = blea_remote::all();
 			foreach ($remotes as $remote){
 				if ($remote->getRemoteName() == $datas['source']){
 					$blea->setConfiguration('antennareceive',$remote->getId());
@@ -180,12 +174,6 @@ if (isset($result['devices'])) {
 				$presentcmd->setEqLogic_id($blea->getId());
 				$presentcmd->save();
 			}
-			if ($datas['rssi']=='same'){
-				$oldrssi = $cmd->execCmd();
-				$cmdremote->event($oldrssi);
-				$presentcmd->event(1);
-				die();
-			}
 			$cmdraw = $blea->getCmd(null, 'rawdata');
 			if (!is_object($cmdraw)) {
 				$cmdraw = new bleaCmd();
@@ -198,16 +186,14 @@ if (isset($result['devices'])) {
 				$cmdraw->setEqLogic_id($blea->getId());
 				$cmdraw->save();
 			}
-			$rssicmd->event($datas['rssi']);
-			$presentcmd->event($datas['present']);
+			$oldrssi = $blea->getCache('rssi' . $datas['source'],-200);
+			$delta = abs($oldrssi-$datas['rssi']);
+			if ($delta >= 10){
+				$blea->checkAndUpdateCmd($rssicmd,$datas['rssi']);
+				$blea->setCache('rssi' . $datas['source'],$datas['rssi']);
+			}
+			$blea->checkAndUpdateCmd($presentcmd,$datas['present']);
 		}
-		$remotelist =['rssilocal'];
-		$remotes = blea_remote::all();
-		foreach ($remotes as $remote){
-			$name = $remote->getRemoteName();
-			$remotelist[]='rssi' . $name;
-		}
-		$cmdrssitoremove=[];
 		if ($blea->getConfiguration('specificclass',0) != 0) {
 			$device= $blea->getConfiguration('device');
 			require_once dirname(__FILE__) . '/../config/devices/'.$device.'/class/'.$device.'.class.php';
@@ -217,13 +203,11 @@ if (isset($result['devices'])) {
 		}
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
-			if ($logicalId == '' || $logicalId == 'present') {
+			if ($logicalId == '') {
 				continue;
 			}
-			if (substr($logicalId,0,4) == 'rssi'){
-				if (!in_array($logicalId,$remotelist)){
-					$cmdrssitoremove[]=$cmd;
-				}
+			if (substr($logicalId,0,4) == 'rssi' || substr($logicalId,0,7) == 'present'){
+				continue;
 			}
 			$path = explode('::', $logicalId);
 			$value = $datas;
@@ -233,28 +217,26 @@ if (isset($result['devices'])) {
 				}
 				$value = $value[$key];
 			}
-			if ($logicalId == 'rssi' && $datas['source'] != 'local') {
-				continue;
-			}
 			$antenna = 'local';
 			$antennaId = $blea->getConfiguration('antennareceive','local');
 			if ($antennaId != 'local' && $antennaId != 'all'){
-				$remote = blea_remote::byId($antennaId);
-				$antenna = $remote->getRemoteName();
+				foreach ($remotes as $cachedremote) {
+					if ($cachedremote->getId() == $antennaId) { 
+						$antenna = $cachedremote->getRemoteName();
+						break;
+					}
+				}
 			}
-			if ($logicalId != 'present' && $antennaId != 'all' && $antenna != $datas['source']){
+			if ($antennaId != 'all' && $antenna != $datas['source']){
 				log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
 				continue;
 			}
 			if (!is_array($value)) {
-				$cmd->event($value);
+				$blea->checkAndUpdateCmd($cmd,$value);
+				if ($logicalId == 'battery') {
+					$blea->batteryStatus($value);
+				}
 			}
-			if ($logicalId == 'battery') {
-				$blea->batteryStatus($value);
-			}
-		}
-		foreach ($cmdrssitoremove as $cmdremove){
-			$cmdremove->remove();
 		}
 		$blea->computePresence();
 	}

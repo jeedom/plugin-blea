@@ -26,29 +26,30 @@ sendVarToJS('plugin', $id);
 ?>
 <div id='div_bleaRemoteAlert' style="display: none;"></div>
 <div class="row row-overflow">
-	<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+	<div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">
 		<div class="bs-sidebar">
 			<ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;margin-bottom: 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter Antenne}}</a>
+				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter Antenne}}</a>
+				<a class="btn btn-warning bleaRemoteAction" style="width : 100%;margin-bottom: 5px;" data-action="refresh"><i class="fas fa-sync"></i> {{Rafraichir}}</a>
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
 	$icon = '<i class="fa fa-heartbeat" style="color:green"></i>';
-	$last = $remote->getConfiguration('lastupdate','0');
+	$last = $remote->getCache('lastupdate','0');
 	if ($last == '0' or time() - strtotime($last)>65){
 		$icon = '<i class="fa fa-deaf" style="color:#b20000"></i>';
 	}
-	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . ' '. $icon.'</a></li>';
+	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . ' '. $icon. ' - v' . $remote->getConfiguration('version','1.0') . ' - ' . $remote->getCache('lastupdate','0') .'</a></li>';
 }
 ?>
 			</ul>
 		</div>
 	</div>
-	 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 remoteThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
+	 <div class="col-lg-19 col-md-8 col-sm-7 col-xs-7 remoteThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
 <legend><i class="fa fa-table"></i>  {{Mes Antennes}}</legend>
 
 <div class="eqLogicThumbnailContainer">
-	<div class="cursor bleaRemoteAction logoPrimary" data-action="add">
+	<div class="cursor bleaRemoteAction logoPrimary" data-action="add" style="width:10px">
       <i class="fa fa-plus-circle"></i>
 	  </br>
     <span>{{Ajouter}}</span>
@@ -65,7 +66,7 @@ foreach ($remotes as $remote) {
 </div>
 </div>
 
-	<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8 bleaRemote" style="border-left: solid 1px #EEE; padding-left: 25px;display:none;">
+	<div class="col-lg-9 col-md-8 col-sm-7 col-xs-7 bleaRemote" style="border-left: solid 1px #EEE; padding-left: 25px;display:none;">
 		<a class="btn btn-success bleaRemoteAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
 		<a class="btn btn-danger bleaRemoteAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
 
@@ -103,18 +104,6 @@ foreach ($remotes as $remote) {
 							<label class="col-sm-2 control-label">{{Device}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Communication}}</label>
-							<div class="col-sm-3">
-								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="lastupdate" title="{{Date de dernière communication}}" style="font-size : 1em;cursor : default;"></span>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Version}}</label>
-							<div class="col-sm-3">
-								<span class="bleaRemoteAttr bleaRemoteAttrcomm label label-default" data-l1key="configuration" data-l2key="version" title="{{Version}}" style="font-size : 1em;cursor : default;"></span>
 							</div>
 						</div>
 						<?php
@@ -186,6 +175,11 @@ foreach ($remotes as $remote) {
 			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fa fa-magic"></i> {{Activer}}');
 		}
 	}
+	$('.bleaRemoteAction[data-action=refresh]').on('click',function(){
+		$('#md_modal').dialog('close');
+		$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+		$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
+	});
 
 	$('.bleaRemoteAction[data-action=add]').on('click',function(){
 		$('.bleaRemote').show();
