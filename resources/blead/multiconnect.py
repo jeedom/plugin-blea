@@ -33,7 +33,6 @@ class Connector():
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
-					self.disconnect()
 					logging.debug('CONNECTOR------Issue connecting to : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE) + ' the device is busy or too far')
 					globals.PENDING_ACTION = False
 					globals.PENDING_TIME = int(time.time())
