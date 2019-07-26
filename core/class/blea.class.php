@@ -181,9 +181,6 @@ class blea extends eqLogic {
 			if (is_object($presentcmd)) {
 				$present = $presentcmd->execCmd();
 			}
-			if (in_array($eqLogic->getConfiguration('device','') , array('niu'))){
-				$present =1;
-			}
 			if ($present == 1){
 				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fa fa-check"></i></span>';
 			} else {
