@@ -19,6 +19,7 @@ class Connector():
 			i = i + 1
 			try:
 				globals.PENDING_ACTION = True
+				globals.PENDING_TIME = int(time.time())
 				if type == 'public':
 					connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
 					self.isconnected = True
@@ -40,6 +41,8 @@ class Connector():
 				time.sleep(1)
 		if self.isconnected:
 			self.conn = connection
+			globals.PENDING_ACTION = False
+			globals.PENDING_TIME = int(time.time())
 			logging.debug('CONNECTOR------Connected... ' + str(self.mac))
 		return
 

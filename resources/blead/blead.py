@@ -363,7 +363,7 @@ def heartbeat_handler(delay):
 		if (globals.LAST_BEAT + 55) < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 			globals.LAST_BEAT = int(time.time())
-		if globals.PENDING_ACTION == True and (globals.PENDING_TIME + 12) <int(time.time()):
+		if globals.PENDING_ACTION == True and (globals.PENDING_TIME + 20) <int(time.time()):
 			globals.PENDING_ACTION == False
 		time.sleep(1)
 

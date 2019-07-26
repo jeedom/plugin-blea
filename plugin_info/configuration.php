@@ -37,6 +37,12 @@ if (!isConnect('admin')) {
        </div>
 	</div>
 	<div class="form-group">
+        <label class="col-lg-4 control-label">{{Autoriser la mise à jour des fichiers des antennes automatiquement lors d'une mise à jour}} <sup><i class="fas fa-question-circle" title="{{Très pratique, mais attention si vos antennes ont des soucis au moment de la maj, alors il peut y avoir une roue crantée infinie}}"></i></sup></label>
+        <div class="col-lg-3">
+           <input type="checkbox" class="configKey" data-l1key="allowUpdateAntennas" />
+       </div>
+	</div>
+	<div class="form-group">
 			<label class="col-lg-4 control-label">{{Options avancées}}</label>
 			<div class="col-lg-5">
 				<a class="btn btn-warning" id="bt_syncconfigBlea"><i class="fas fa-sync-alt"></i> {{Configs modules}}</a>
@@ -66,7 +72,8 @@ if (!isConnect('admin')) {
 	<div class="col-lg-8">
 		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour les fichiers sur toutes les antennes}}</a>
 		<a class="btn btn-success allantennas" data-action="restart"><i class="fas fa-play"></i> {{Redémarrer toutes les antennes}}</a>
-		<a class="btn btn-danger allantennas" data-action="updatedep"><i class="fas fa-arrow-up"></i> {{Mettre à jour les dépendances sur toutes les antennes}}</a>
+		<a class="btn btn-warning allantennas" data-action="updatedep"><i class="fas fa-arrow-up"></i> {{Mettre à jour les dépendances sur toutes les antennes}}</a>
+		<a class="btn btn-danger allantennas" data-action="stop"><i class="fas fa-stop"></i> {{Arrêter toutes les antennes}}</a>
 	</div>
 	</div>
 	<div class="form-group">
@@ -100,19 +107,19 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
        </div>
    </div>
    <div class="form-group">
-    <label class="col-lg-4 control-label">{{Intervalle de scan (s)}} <sup><i class="fas fa-question-circle" tooltip="{{Intervalle de scan présence. Il est déconseillé de descendre en dessous de 20 secondes}}"></i></sup></label>
+    <label class="col-lg-4 control-label">{{Intervalle de scan (s)}} <sup><i class="fas fa-question-circle" title="{{Intervalle de scan présence. Il est déconseillé de descendre en dessous de 20 secondes}}"></i></sup></label>
     <div class="col-lg-2">
         <input class="configKey form-control" data-l1key="scaninterval" placeholder="{{20}}" />
     </div>
 </div>
 	<div class="form-group">
-    <label class="col-lg-4 control-label" tooltip="{{Combien de fois le device ne doit pas etre vu lors d'un scan pour décider qu'il est absent (fortement déconseillé de descendre en dessous de 3 ou 4 pour éviter les faux positifs}}">{{Nombre de scan invisible pour déclencher absence}}</label>
+    <label class="col-lg-4 control-label">{{Nombre de scan invisible pour déclencher absence}} <sup><i class="fas fa-question-circle" title="{{Combien de fois le device ne doit pas etre vu lors d'un scan pour décider qu'il est absent (fortement déconseillé de descendre en dessous de 3 ou 4 pour éviter les faux positifs}}"></i></sup></label>
     <div class="col-lg-2">
         <input class="configKey form-control" data-l1key="absentnumber" placeholder="{{4}}" />
     </div>
 </div>
 	<div class="form-group">
-		<label class="col-lg-4 control-label help" data-help="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence}}">{{Mode de scan}}</label>
+		<label class="col-lg-4 control-label">{{Mode de scan}} <sup><i class="fas fa-question-circle" title="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence le passif etatn très économe pour les piles et suffisant}}"></i></sup></label>
 		<div class="col-lg-2">
 			<select class="configKey form-control" data-l1key="scanmode">
                 <option value="passive">{{Passif}}</option>
