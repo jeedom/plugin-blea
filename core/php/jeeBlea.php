@@ -189,6 +189,9 @@ if (isset($result['devices'])) {
 			$childrenclass = new $class();
 			$datas = $childrenclass->calculateInputValue($blea,$datas);
 		}
+		if (isset($datas['battery'])){
+			$blea->batteryStatus($datas['battery']);
+		}
 		foreach ($blea->getCmd('info') as $cmd) {
 			$logicalId = $cmd->getLogicalId();
 			if ($logicalId == '') {
@@ -207,9 +210,6 @@ if (isset($result['devices'])) {
 			}
 			if (!is_array($value)) {
 				$blea->checkAndUpdateCmd($cmd,$value);
-				if ($logicalId == 'battery') {
-					$blea->batteryStatus($value);
-				}
 			}
 		}
 		$blea->computePresence();
