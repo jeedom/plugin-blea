@@ -571,6 +571,14 @@ class blea extends eqLogic {
 			blea::launchremote($remote->getId());
 		}
 	}
+	
+	public function stop_allremotes(){
+		log::add('blea','info','Stopping remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::stopremote($remote->getId());
+		}
+	}
 
 	public static function saveAntennaPosition($_antennas, $_type = ''){
 		$remotes = blea_remote::all();

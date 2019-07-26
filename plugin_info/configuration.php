@@ -119,7 +119,7 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
     </div>
 </div>
 	<div class="form-group">
-		<label class="col-lg-4 control-label">{{Mode de scan}} <sup><i class="fas fa-question-circle" title="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence le passif étant très économe pour les piles et suffisant}}"></i></sup></label>
+		<label class="col-lg-4 control-label">{{Mode de scan}} <sup><i class="fas fa-question-circle" title="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence le passif etant très économe pour les piles et suffisant}}"></i></sup></label>
 		<div class="col-lg-2">
 			<select class="configKey form-control" data-l1key="scanmode">
                 <option value="passive">{{Passif}}</option>
@@ -193,8 +193,10 @@ $('.allantennas').on('click', function () {
 		action = 'sendremotes';
 	} else if ($(this).attr('data-action') == 'updatedep'){
 		action = 'updateremotes';
-	} else {
+	} else if ($(this).attr('data-action') == 'restart'){
 		action = 'launchremotes';
+	} else if ($(this).attr('data-action') == 'stop'){
+		action = 'stopremotes';
 	}
 	 $.ajax({// fonction permettant de faire de l'ajax
             type: "POST", // methode de transmission des données au fichier php

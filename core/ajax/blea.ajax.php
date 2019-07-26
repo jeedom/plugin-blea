@@ -42,7 +42,6 @@ try {
 	}
 	
 	if (init('action') == 'allantennas') {
-		log::add('blea','error',init('remote') . init('type') . init('remoteId'));
 		if (init('remote') == 'local') {
 			if (init('type') == 'reception'){
 				foreach (eqLogic::byType('blea') as $eqLogic){
@@ -98,6 +97,10 @@ try {
 	
 	if (init('action') == 'updateremotes') {
 		ajax::success(blea::update_allremotes());
+	}
+	
+	if (init('action') == 'stopremotes') {
+		ajax::success(blea::stop_allremotes());
 	}
 
 	if (init('action') == 'autoDetectModule') {
