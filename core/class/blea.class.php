@@ -278,9 +278,10 @@ class blea extends eqLogic {
 		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
 		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
 		$result = false;
-		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','folder-blea.tar.gz')) {
+		$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead']);
+		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','/home/'.$user.'/folder-blea.tar.gz')) {
 			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
-			$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead','tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
+			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
 		}
 		log::add('blea','info',__('Suppression du zip local',__FILE__));
 		exec('rm /tmp/folder-blea.tar.gz');
@@ -1298,7 +1299,7 @@ class blea_remote {
 				return false;
 			} else {
 				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
-				$result = ssh2_scp_send($connection, $_local, '/home/' . $user . '/' . $_target, 0777);
+				$result = ssh2_scp_send($connection, $_local, $_target, 0777);
 				if (!$result){
 					log::add('blea','error','Files could not be sent to ' . $ip);
 					return false;
