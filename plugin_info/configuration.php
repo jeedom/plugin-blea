@@ -37,7 +37,7 @@ if (!isConnect('admin')) {
        </div>
 	</div>
 	<div class="form-group">
-        <label class="col-lg-4 control-label">{{Autoriser la mise à jour des fichiers des antennes automatiquement lors d'une mise à jour}} <sup><i class="fas fa-question-circle" title="{{Très pratique, mais attention si vos antennes ont des soucis au moment de la maj, alors il peut y avoir une roue crantée infinie}}"></i></sup></label>
+        <label class="col-lg-4 control-label">{{Autoriser la mise à jour des fichiers des antennes automatiquement lors d'une mise à jour}} <sup><i class="fas fa-question-circle" title="{{Très pratique, mais attention si vos antennes ont des soucis au moment de la maj, alors il peut y avoir une roue crantée infinie et dans tous les cas la roue restera le temps de maj des antennes}}"></i></sup></label>
         <div class="col-lg-3">
            <input type="checkbox" class="configKey" data-l1key="allowUpdateAntennas" />
        </div>
@@ -119,7 +119,7 @@ foreach (jeedom::getBluetoothMapping() as $name => $value) {
     </div>
 </div>
 	<div class="form-group">
-		<label class="col-lg-4 control-label">{{Mode de scan}} <sup><i class="fas fa-question-circle" title="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence le passif etatn très économe pour les piles et suffisant}}"></i></sup></label>
+		<label class="col-lg-4 control-label">{{Mode de scan}} <sup><i class="fas fa-question-circle" title="{{Par défaut le scan est passif, pour certains devices type ticatag lors il faut qu'il soit actif pour détecter les appuis boutons, mais peut rester passif pour la présence le passif étant très économe pour les piles et suffisant}}"></i></sup></label>
 		<div class="col-lg-2">
 			<select class="configKey form-control" data-l1key="scanmode">
                 <option value="passive">{{Passif}}</option>
