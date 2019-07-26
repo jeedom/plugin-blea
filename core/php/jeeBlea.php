@@ -174,18 +174,6 @@ if (isset($result['devices'])) {
 				$presentcmd->setEqLogic_id($blea->getId());
 				$presentcmd->save();
 			}
-			$cmdraw = $blea->getCmd(null, 'rawdata');
-			if (!is_object($cmdraw)) {
-				$cmdraw = new bleaCmd();
-				$cmdraw->setLogicalId('rawdata');
-				$cmdraw->setIsVisible(0);
-				$cmdraw->setIsHistorized(0);
-				$cmdraw->setName(__('Données brutes', __FILE__));
-				$cmdraw->setType('info');
-				$cmdraw->setSubType('string');
-				$cmdraw->setEqLogic_id($blea->getId());
-				$cmdraw->save();
-			}
 			$oldrssi = $blea->getCache('rssi' . $datas['source'],-200);
 			$delta = abs($oldrssi-$datas['rssi']);
 			if ($delta >= 10){
@@ -216,20 +204,6 @@ if (isset($result['devices'])) {
 					continue (2);
 				}
 				$value = $value[$key];
-			}
-			$antenna = 'local';
-			$antennaId = $blea->getConfiguration('antennareceive','local');
-			if ($antennaId != 'local' && $antennaId != 'all'){
-				foreach ($remotes as $cachedremote) {
-					if ($cachedremote->getId() == $antennaId) { 
-						$antenna = $cachedremote->getRemoteName();
-						break;
-					}
-				}
-			}
-			if ($antennaId != 'all' && $antenna != $datas['source']){
-				log::add('blea','debug','Ignoring this antenna (' . $datas['source'] . ' only allowed ' . $antenna .') must not trigger events except for presence and rssi : ' . $logicalId );
-				continue;
 			}
 			if (!is_array($value)) {
 				$blea->checkAndUpdateCmd($cmd,$value);

@@ -87,7 +87,10 @@ class ScanDelegate(DefaultDelegate):
 							return
 						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
 					try:
-						action = device().parse(data,mac,name,manuf)
+						if globals.KNOWN_DEVICES[mac.upper()]['refresherallowed'] in [globals.daemonname,'all']:
+							action = device().parse(data,mac,name,manuf)
+						else:
+							logging.debug('SCANNER------It\'s a known packet and this device is not Included but i\'m not antenna allowed not parsing only sending simple datas ' +str(mac))
 					except Exception as e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 					action['id'] = mac.upper()
@@ -95,7 +98,6 @@ class ScanDelegate(DefaultDelegate):
 					action['name'] = name
 					action['rssi'] = rssi
 					action['source'] = globals.daemonname
-					action['rawdata'] = str(dev.getScanData())
 					action['present'] = 1
 					if globals.LEARN_MODE:
 						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == device().name) :
@@ -131,7 +133,6 @@ class ScanDelegate(DefaultDelegate):
 				action['name'] = name
 				action['rssi'] = rssi
 				action['source'] = globals.daemonname
-				action['rawdata'] = str(dev.getScanData())
 				action['present'] = 1
 				if mac in globals.IGNORE:
 					return
