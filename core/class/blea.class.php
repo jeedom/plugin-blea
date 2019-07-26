@@ -315,10 +315,8 @@ class blea extends eqLogic {
 		log::add('blea','info',__('Lancement du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
 		$last = $remoteObject->getCache('lastupdate','0');
-		if ($last != '0' and time() - strtotime($last)<65){
-			blea::stopremote($_remoteId);
-			sleep(5);
-		}
+		blea::stopremote($_remoteId);
+		sleep(5);
 		$user=$remoteObject->getConfiguration('remoteUser');
 		$device=$remoteObject->getConfiguration('remoteDevice');
 		$script_path = '/home/'.$user.'/blead/resources/blead';
@@ -368,25 +366,20 @@ class blea extends eqLogic {
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
 		$value = json_encode($value);
-		$last = $remoteObject->getCache('lastupdate','0');
-		if ($last == '0' or time() - strtotime($last)>65){
-			$success = $remoteObject->execCmd(['fuser -k 55008/tcp >> /dev/null 2>&1 &']);
-			config::save('include_mode', 0, 'blea');
-			event::add('blea::includeState', array(
-			'mode' => 'learn',
-			'state' => 0)
-			);
-		} else {
-			$success = false;
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			if ($socket) {
-				if (socket_connect($socket, $ip, config::byKey('socketport', 'blea'))) {
-					$success = (socket_write($socket, $value, strlen($value)) === strlen($value));
-				}
+		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		if ($socket) {
+			if (socket_connect($socket, $ip, config::byKey('socketport', 'blea'))) {
+				socket_write($socket, $value, strlen($value));
+				socket_close($socket);
 			}
-			socket_close($socket);
 		}
-		return $success;
+		$remoteObject->execCmd(['fuser -k 55008/tcp >> /dev/null 2>&1 &']);
+		config::save('include_mode', 0, 'blea');
+		event::add('blea::includeState', array(
+		'mode' => 'learn',
+		'state' => 0)
+		);
+		return True;
 	}
 
 	public static function devicesParameters($_device = '') {
@@ -537,6 +530,7 @@ class blea extends eqLogic {
 			usleep(500);
 		}
 		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'ready'));
+		log::add('blea', 'info', 'Sending ready to daemons');
 		self::socket_connection($value,True);
 	}
 	
@@ -587,7 +581,7 @@ class blea extends eqLogic {
 				config::save('positiony'.$_type, $y, 'blea');
 			} else {
 				foreach ($remotes as $remote) {
-					if ($name == $remote->getRemoteName()){
+					if (is_object($remote) && $name == $remote->getRemoteName()){
 						$remote->setConfiguration('positionx'.$_type,$x);
 						$remote->setConfiguration('positiony'.$_type,$y);
 						$remote->save();
@@ -829,7 +823,13 @@ class blea extends eqLogic {
 				$emitter = 'local';
 			} else {
 				$islocked = 1;
-				$emitter = blea_remote::byId($this->getConfiguration('antenna','local'))->getRemoteName();
+				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna','local'));
+				if (is_object($emitterAntenna)){
+					$emitter = $emitterAntenna->getRemoteName();
+				} else {
+					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+					$emitter = 'unknown';
+				}
 			}
 		} else {
 			if ($this->getConfiguration('antenna','local') == 'all'){
@@ -837,13 +837,25 @@ class blea extends eqLogic {
 			} else if ($this->getConfiguration('antenna','local') == 'local'){
 				$emitter = 'local';
 			} else {
-				$emitter = blea_remote::byId($this->getConfiguration('antenna','local'))->getRemoteName();
+				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna','local'));
+				if (is_object($emitterAntenna)){
+					$emitter = $emitterAntenna->getRemoteName();
+				} else {
+					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+					$emitter = 'unknown';
+				}
 			}
 		}
 		if ($this->getConfiguration('antennareceive','local') == 'local' || $this->getConfiguration('antennareceive','local') == 'all'){
 			$refresher = $this->getConfiguration('antennareceive','local');
 		} else {
-			$refresher = blea_remote::byId($this->getConfiguration('antennareceive','local'))->getRemoteName();
+			$refresherAntenna = blea_remote::byId($this->getConfiguration('antennareceive','local'));
+			if (is_object($refresherAntenna)){
+				$refresher = $refresherAntenna->getRemoteName();
+			} else {
+				log::add('blea','error','Attention l\'antenne définie en réception pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+				$refresher = 'unknown';
+			}
 		}
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
@@ -1166,7 +1178,7 @@ class bleaCmd extends cmd {
 			} else {
 				$remotes = blea_remote::all();
 				foreach ($remotes as $remote){
-					if ($remote->getRemoteName() == $closest){
+					if (is_object($remote) && $remote->getRemoteName() == $closest){
 						log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName() . __(' car plus proche',__FILE__));
 						$ip = $remote->getConfiguration('remoteIp');
 						$socket = socket_create(AF_INET, SOCK_STREAM, 0);
@@ -1179,12 +1191,14 @@ class bleaCmd extends cmd {
 			}
 		} else {
 			$remote = blea_remote::byId($sender);
-			log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName());
-			$ip = $remote->getConfiguration('remoteIp');
-			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
-			socket_write($socket, $value, strlen($value));
-			socket_close($socket);
+			if (is_object($remote)){
+				log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName());
+				$ip = $remote->getConfiguration('remoteIp');
+				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+				socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
+				socket_write($socket, $value, strlen($value));
+				socket_close($socket);
+			}
 		}
 	}
 }
