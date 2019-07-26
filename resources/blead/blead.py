@@ -277,6 +277,7 @@ def read_socket(name):
 				elif message['cmd'] == 'learnout':
 					logging.debug('SOCKET-READ------Leave learn mode')
 					globals.LEARN_MODE = False
+					globals.LEARN_END= int(time.time())
 					globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 				elif message['cmd'] in ['action','refresh','helper','helperrandom']:
 					logging.debug('SOCKET-READ------Attempt an action on a device')
@@ -333,14 +334,14 @@ def heartbeat_handler(delay):
 					action['rssi'] = -200
 					action['source'] = globals.daemonname
 			if len(action)>2 :
-				if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()):
+				if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()) and globals.LEARN_MODE == False and (globals.LEARN_END + 20) <int(time.time()):
 					if 'present' in globals.SEEN_DEVICES[device]:
 						globals.SEEN_DEVICES[device]['present'] = 0
 					else:
 						globals.SEEN_DEVICES[device]={'present':0}
 					globals.JEEDOM_COM.add_changes('devices::'+device,action)
 				else:
-					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection was too soon')
+					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection or last learn was too soon')
 			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
 				if device in globals.KEEPED_CONNECTION:
 					logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))

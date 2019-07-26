@@ -1,5 +1,5 @@
 import time
-DAEMON_VERSION = '2.6'
+DAEMON_VERSION = '2.6.1'
 BLUEPY_VERSION = '1.0'
 SCAN_MODE = 'passive'
 JEEDOM_COM = ''
@@ -16,6 +16,7 @@ LAST_BLUEPY = int(time.time())
 LAST_VIRTUAL = int(time.time())
 LAST_BEAT = int(time.time())
 LEARN_BEGIN = int(time.time())
+LEARN_END = int(time.time())
 LAST_CLEAR = int(time.time())
 COMPATIBILITY = []
 LAST_STATE={}

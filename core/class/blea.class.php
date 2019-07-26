@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.6';
+	public static $_version = '2.6.1';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
@@ -62,9 +62,6 @@ class blea extends eqLogic {
 		$model = $eqLogic->getModelListParam();
 		if (count($model) > 0) {
 			$eqLogic->setConfiguration('iconModel', array_keys($model[0])[0]);
-			if ($_def['type'] == 'niu') {
-				$eqLogic->setConfiguration('iconModel', 'niu/niu_' . strtolower($_def['color']));
-			}
 		}
 		$eqLogic->save();
 
