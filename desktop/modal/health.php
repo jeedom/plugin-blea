@@ -122,14 +122,22 @@ foreach ($eqLogics as $eqLogic) {
 	$antennareceive = $eqLogic->getConfiguration('antennareceive','local');
 	if ($antenna != 'local' && $antenna != 'all'){
 		$remote = blea_remote::byId($antenna);
-		$antenna = $remote->getRemoteName();
+		if (is_object($remote)){
+			$antenna = $remote->getRemoteName();
+		} else {
+			$remote = 'N/A';
+		}
 	}
 	if ($antenna == 'all'){
 		$antenna = 'Tous';
 	}
 	if ($antennareceive != 'local' && $antennareceive != 'all'){
 		$remote = blea_remote::byId($antennareceive);
-		$antennareceive = $remote->getRemoteName();
+		if (is_object($remote)){
+			$antennareceive = $remote->getRemoteName();
+		} else {
+			$antennareceive = 'N/A';
+		}
 	}
 	if ($antennareceive == 'all'){
 		$antennareceive = 'Tous';
