@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.5';
+	public static $_version = '2.6';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
@@ -77,17 +77,19 @@ class blea extends eqLogic {
 	}
 
 	public static function cron() {
-		$remotes = blea_remote::all();
+		$remotes = blea_remote::getCacheRemotes('allremotes',array());
 		$allEqlogic = eqLogic::byType('blea');
 		foreach ($remotes as $remote) {
-			$last = $remote->getConfiguration('lastupdate','0');
-			$auto = $remote->getConfiguration('remoteDaemonAuto','0');
+			$last = $remote->getCache('lastupdate','0');
 			if (($last == '0' or time() - strtotime($last)>65)) {
+				$auto = $remote->getConfiguration('remoteDaemonAuto','0');
 				foreach ($allEqlogic as $eqLogic){
 					$rssicmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
 					$presentcmd = $eqLogic->getCmd(null, 'present' . $remote->getRemoteName());
 					$eqLogic->checkAndUpdateCmd($presentcmd, 0);
 					$eqLogic->checkAndUpdateCmd($rssicmd, -200);
+					$eqLogic->setCache('rssi' . $remote->getRemoteName(),-200);
+					$eqLogic->computePresence();
 				}
 				if ($auto == 1){
 					log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
@@ -102,13 +104,14 @@ class blea extends eqLogic {
 				$presentcmd = $eqLogic->getCmd(null, 'presentlocal');
 				$eqLogic->checkAndUpdateCmd($presentcmd, 0);
 				$eqLogic->checkAndUpdateCmd($rssicmd, -200);
+				$eqLogic->setCache('rssilocal',-200);
 				$eqLogic->computePresence();
 			}
 		}
 	}
 
 	public static function cron15() {
-		$remotes = blea_remote::all();
+		$remotes = blea_remote::getCacheRemotes('allremotes',array());
 		$availremote= array();
 		foreach ($remotes as $remote) {
 			self::getRemoteLog($remote->getId());
@@ -193,16 +196,15 @@ class blea extends eqLogic {
 	}
 
 	public static function getMobileGraph() {
-		$remotes = blea_remote::all();
+		$remotes = blea_remote::getCacheRemotes('allremotes',array());
 		$eqLogics = array();
 		$antennas = array();
-		$remotes = blea_remote::all();
 		foreach ($remotes as $remote){
 			$info = array();
 			$name = $remote->getRemoteName();
 			$info['x'] = $remote->getConfiguration('positionx',999);
 			$info['y'] = $remote->getConfiguration('positiony',999);
-			$last = $remote->getConfiguration('lastupdate', '0');
+			$last = $remote->getCache('lastupdate', '0');
 			$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 			$antennas[$name]=$info;
 			$availremotename[]=$name;
@@ -242,7 +244,7 @@ class blea extends eqLogic {
 
 	public static function health() {
         $return = array();
-		$remotes = blea_remote::all();
+		$remotes = blea_remote::getCacheRemotes('allremotes',array());
 		if (count($remotes) !=0){
 			$return[] = array(
 				'test' => __('Nombre d\'antennes', __FILE__),
@@ -251,7 +253,7 @@ class blea extends eqLogic {
 				'state' => True,
 			);
 			foreach ($remotes as $remote){
-				$last = $remote->getConfiguration('lastupdate','0');
+				$last = $remote->getCache('lastupdate','0');
 				$name = $remote->getRemoteName();
 				if ($last == '0' or time() - strtotime($last)>60){
 					$result = 'NOK';
@@ -317,7 +319,7 @@ class blea extends eqLogic {
 	public static function launchremote($_remoteId) {
 		log::add('blea','info',__('Lancement du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
-		$last = $remoteObject->getConfiguration('lastupdate','0');
+		$last = $remoteObject->getCache('lastupdate','0');
 		if ($last != '0' and time() - strtotime($last)<65){
 			blea::stopremote($_remoteId);
 			sleep(5);
@@ -338,6 +340,7 @@ class blea extends eqLogic {
 		$cmd .= ' --scanmode ' . config::byKey('scanmode', 'blea', 'passive');
 		$cmd .= ' >> ' . '/tmp/blea' . ' 2>&1 &';
 		log::add('blea','info','Lancement du démon distant ' . $cmd);
+		blea_remote::setCacheRemotes('allremotes',blea_remote::all());
 		config::save('include_mode', 0, 'blea');
 		return $remoteObject->execCmd([$cmd]);
 	}
@@ -352,7 +355,7 @@ class blea extends eqLogic {
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout');
 		}
 		$value = json_encode($value);
-		$last = $remoteObject->getConfiguration('lastupdate','0');
+		$last = $remoteObject->getCache('lastupdate','0');
 		if ($last == '0' or time() - strtotime($last)>65){
 				return;
 		} else {
@@ -370,7 +373,7 @@ class blea extends eqLogic {
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
 		$value = json_encode($value);
-		$last = $remoteObject->getConfiguration('lastupdate','0');
+		$last = $remoteObject->getCache('lastupdate','0');
 		if ($last == '0' or time() - strtotime($last)>65){
 			$success = $remoteObject->execCmd(['fuser -k 55008/tcp >> /dev/null 2>&1 &']);
 			config::save('include_mode', 0, 'blea');
@@ -511,6 +514,7 @@ class blea extends eqLogic {
 			log::add('blea', 'error', __('Impossible de lancer le démon blea, vérifiez la log',__FILE__), 'unableStartDeamon');
 			return false;
 		}
+		blea_remote::setCacheRemotes('allremotes',blea_remote::all());
 		blea::launch_allremotes();
 		message::removeAll('blea', 'unableStartDeamon');
 		config::save('include_mode', 0, 'blea');
@@ -567,8 +571,16 @@ class blea extends eqLogic {
 			blea::launchremote($remote->getId());
 		}
 	}
+	
+	public function stop_allremotes(){
+		log::add('blea','info','Stopping remotes ...');
+		$remotes = blea_remote::all();
+		foreach ($remotes as $remote) {
+			blea::stopremote($remote->getId());
+		}
+	}
 
-	public static function saveAntennaPosition($_antennas){
+	public static function saveAntennaPosition($_antennas, $_type = ''){
 		$remotes = blea_remote::all();
 		$antennas = json_decode($_antennas, true);
 		foreach ($antennas as $antenna => $position) {
@@ -576,13 +588,13 @@ class blea extends eqLogic {
 			$x= explode('|',$position)[0];
 			$y= explode('|',$position)[1];
 			if ($name == 'local'){
-				config::save('positionx', $x, 'blea');
-				config::save('positiony', $y, 'blea');
+				config::save('positionx'.$_type, $x, 'blea');
+				config::save('positiony'.$_type, $y, 'blea');
 			} else {
 				foreach ($remotes as $remote) {
 					if ($name == $remote->getRemoteName()){
-						$remote->setConfiguration('positionx',$x);
-						$remote->setConfiguration('positiony',$y);
+						$remote->setConfiguration('positionx'.$_type,$x);
+						$remote->setConfiguration('positiony'.$_type,$y);
 						$remote->save();
 						break;
 					}
@@ -599,10 +611,10 @@ class blea extends eqLogic {
 			socket_close($socket);
 		}
 		if ($_allremotes){
-		$remotes = blea_remote::all();
+			$remotes = blea_remote::getCacheRemotes('allremotes',array());
 			foreach ($remotes as $remote) {
 				$ip = $remote->getConfiguration('remoteIp');
-				$last = $remote->getConfiguration('lastupdate','0');
+				$last = $remote->getCache('lastupdate','0');
 				if ($last == '0' or time() - strtotime($last)>65){
 					continue;
 				} else {
@@ -1209,11 +1221,31 @@ class blea_remote {
 	/*     * *********************Methode d'instance************************* */
 
 	public function save() {
-		return DB::save($this);
+		DB::save($this);
+		self::setCacheRemotes('allremotes',self::all());
+		return;
 	}
 
 	public function remove() {
 		return DB::remove($this);
+	}
+	
+	public function getCache($_key = '', $_default = '') {
+		$cache = cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue();
+		return utils::getJsonAttr($cache, $_key, $_default);
+	}
+	
+	public function setCache($_key, $_value = null) {
+		cache::set('eqLogicCacheAttr' . $this->getId(), utils::setJsonAttr(cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue(), $_key, $_value));
+	}
+	
+	public function getCacheRemotes($_key = '', $_default = '') {
+		$cache = cache::byKey('BleaPluginRemotes')->getValue();
+		return utils::getJsonAttr($cache, $_key, $_default);
+	}
+	
+	public function setCacheRemotes($_key, $_value = null) {
+		cache::set('BleaPluginRemotes', utils::setJsonAttr(cache::byKey('BleaPluginRemotes')->getValue(), $_key, $_value));
 	}
 
 	public function execCmd($_cmd) {

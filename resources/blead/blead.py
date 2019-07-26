@@ -87,7 +87,10 @@ class ScanDelegate(DefaultDelegate):
 							return
 						globals.KNOWN_DEVICES[mac.upper()]['localname'] = name
 					try:
-						action = device().parse(data,mac,name,manuf)
+						if globals.KNOWN_DEVICES[mac.upper()]['refresherallowed'] in [globals.daemonname,'all']:
+							action = device().parse(data,mac,name,manuf)
+						else:
+							logging.debug('SCANNER------It\'s a known packet and this device is not Included but i\'m not antenna allowed not parsing only sending simple datas ' +str(mac))
 					except Exception as e:
 						logging.debug('SCANNER------Parse failed ' +str(mac) + ' ' + str(e))
 					action['id'] = mac.upper()
@@ -95,7 +98,6 @@ class ScanDelegate(DefaultDelegate):
 					action['name'] = name
 					action['rssi'] = rssi
 					action['source'] = globals.daemonname
-					action['rawdata'] = str(dev.getScanData())
 					action['present'] = 1
 					if globals.LEARN_MODE:
 						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == device().name) :
@@ -131,7 +133,6 @@ class ScanDelegate(DefaultDelegate):
 				action['name'] = name
 				action['rssi'] = rssi
 				action['source'] = globals.daemonname
-				action['rawdata'] = str(dev.getScanData())
 				action['present'] = 1
 				if mac in globals.IGNORE:
 					return
@@ -354,21 +355,17 @@ def heartbeat_handler(delay):
 			globals.LEARN_MODE = False
 			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
 			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-		if (globals.LAST_VIRTUAL + 60)  < int(time.time()):
-			for device in globals.KNOWN_DEVICES:
-				action={}
-				if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
-					if device in list(globals.KEEPED_CONNECTION):
-						logging.debug("HEARTBEAT------Virtually send rssi to device connected as they are not seen anymore " + str(device))
-						action['id'] = device
-						action['rssi'] = 'same'
-						action['present'] = 1
-						action['source'] = globals.daemonname
-						globals.JEEDOM_COM.add_changes('devices::'+device,action)
-						globals.LAST_VIRTUAL = int(time.time())
-		if (globals.LAST_BEAT + 55)  < int(time.time()):
+		if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
+			if device in list(globals.KEEPED_CONNECTION):
+				if device not in globals.SEEN_DEVICES:
+					globals.SEEN_DEVICES[device] = {}
+				globals.SEEN_DEVICES[device]['lastseen'] = int(time.time())
+				globals.SEEN_DEVICES[device]['present'] = 1
+		if (globals.LAST_BEAT + 55) < int(time.time()):
 			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
 			globals.LAST_BEAT = int(time.time())
+		if globals.PENDING_ACTION == True and (globals.PENDING_TIME + 20) <int(time.time()):
+			globals.PENDING_ACTION == False
 		time.sleep(1)
 
 def action_handler(message):

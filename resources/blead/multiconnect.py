@@ -19,6 +19,7 @@ class Connector():
 			i = i + 1
 			try:
 				globals.PENDING_ACTION = True
+				globals.PENDING_TIME = int(time.time())
 				if type == 'public':
 					connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
 					self.isconnected = True
@@ -33,7 +34,6 @@ class Connector():
 					self.isconnected = False
 					if self.mac in globals.KEEPED_CONNECTION:
 						del globals.KEEPED_CONNECTION[self.mac]
-					self.disconnect()
 					logging.debug('CONNECTOR------Issue connecting to : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE) + ' the device is busy or too far')
 					globals.PENDING_ACTION = False
 					globals.PENDING_TIME = int(time.time())
@@ -41,6 +41,8 @@ class Connector():
 				time.sleep(1)
 		if self.isconnected:
 			self.conn = connection
+			globals.PENDING_ACTION = False
+			globals.PENDING_TIME = int(time.time())
 			logging.debug('CONNECTOR------Connected... ' + str(self.mac))
 		return
 

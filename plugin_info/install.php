@@ -33,7 +33,12 @@ function blea_update() {
 	foreach (blea::byType('blea') as $blea) {
 		$blea->save();
 	}
-	log::add('blea','alert','Pensez à mettre à jour vos antennes et relancer leurs dépendances si besoin ...');
+	message::add('blea','Pensez à mettre à jour vos antennes et relancer leurs dépendances si besoin ...');
+	config::save('version',blea::$_version,'blea');
+	if (config::byKey('allowUpdateAntennas','blea',0) == 1) {
+		log::add('blea','info','Mise à jour des fichiers de toutes les antennes');
+		blea::send_allremotes();
+	}
 }
 
 function blea_remove() {

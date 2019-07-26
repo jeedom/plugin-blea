@@ -30,7 +30,7 @@ foreach ($remotes as $remote){
 	$name = $remote->getRemoteName();
 	$info['x'] = $remote->getConfiguration('positionx',999);
 	$info['y'] = $remote->getConfiguration('positiony',999);
-	$last = $remote->getConfiguration('lastupdate', '0');
+	$last = $remote->getCache('lastupdate', '0');
 	$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
 	$antennas[$name] = $info;
 	$availremotename[]=$name;

@@ -1,0 +1,59 @@
+{
+    "kst1": {
+        "name": "Thermomètre Koogeek KST1",
+		"groupe" : "Santé",
+		"configuration" : {
+			"name" : "kst1"
+		},
+        "commands": [
+			{
+                "name": "Temperature",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "°C",
+                "logicalId": "temperature",
+				"display": {
+					"icon": "<i class=\"fas fa-thermometer-half\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Mode",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "",
+                "logicalId": "mode",
+				"display": {
+					"icon": "<i class=\"fas fa-stethoscope\"><\/i>",
+					"generic_type": "DONT"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Koogeek",
+                "name": "Kst1",
+				"doc": "",
+				"type": "Santé",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "",
+				"inclusion" : "Mode inclusion auto et appui sur le bouton. Se connecte pendant 20 secondes lorsque le thermometre est allumé pour etre notifié d'une température. Certaines mesures peuvent passer à la trappe",
+				"imglink": "kst1"
+            }
+        ]
+    }
+}
