@@ -27,6 +27,9 @@ class KST1():
 					return
 			notification = Notification(conn,KST1)
 			conn.writeCharacteristic('0x2c','0100',response=True)
+			batteryData = (conn.readCharacteristic('0x3a')).hex()
+			logging.debug(str(batteryData))
+			action['battery']= int(batteryData,16)
 			notification.subscribe(20)
 		except Exception as e:
 			logging.error(str(e))
