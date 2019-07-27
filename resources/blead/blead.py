@@ -354,6 +354,7 @@ def heartbeat_handler(delay):
 					logging.debug("HEARTBEAT------Removed from keep connection list " + str(device))
 		if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
 			globals.LEARN_MODE = False
+			globals.LEARN_END= int(time.time())
 			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
 			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 		if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
