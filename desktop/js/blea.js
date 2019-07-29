@@ -241,7 +241,7 @@ $('#bt_autoDetectModule').on('click', function () {
 });
 
 $('.deleteUnknown').on('click', function () {
-    bootbox.confirm('{{Etes-vous sûr de vouloir supprimer tous les devices inconnus ? }}', function (result) {
+    bootbox.confirm('{{Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. }}', function (result) {
         if (result) {
             $.ajax({
                 type: "POST",

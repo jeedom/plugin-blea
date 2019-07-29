@@ -1,7 +1,7 @@
 # 29/07/2019
 - Fixes mineurs
 - Séparation des devices inconnus sur la page d'équipement
-- Possibilité de supprimer tous les devices inconnus en un clic
+- Possibilité de supprimer tous les devices inconnus en un clic (uniquement ceux non attribués à un objet)
 - Correction d'un bug sur le scan sélectif "Inconnu"
 - Améliorations globales
 

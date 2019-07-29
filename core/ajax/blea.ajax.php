@@ -35,7 +35,9 @@ try {
 		$eqLogics = eqLogic::byType('blea');
 		foreach ($eqLogics as $eqLogic) {
 			if ($eqLogic->getConfiguration('device','') == 'default') {
-				$eqLogic->remove();
+				if ($eqLogic->getObject_id()==''){
+					$eqLogic->remove();
+				}
 			}
 		}
 		ajax::success();
