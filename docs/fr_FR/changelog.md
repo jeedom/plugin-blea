@@ -1,3 +1,10 @@
+# 29/07/2019
+- Fixes mineurs
+- Séparation des devices inconnus sur la page d'équipement
+- Possibilité de supprimer tous les devices inconnus en un clic
+- Correction d'un bug sur le scan sélectif "Inconnu"
+- Améliorations globales
+
 # 20/07/2019
 - Changement de méthode pour l'ensemble de la gamme playbulb (une seule conf et des visuels) plus de dépendances par rapport aux différentes versions (maintenant a l'inclusion on récupére les adresses des diffférentes méthodes)
 - Rajout de la miscale V2 avec poids et impedance (et tout un tas de mesures calculées). Gestion des utilisateurs pour les calculs (dans le bouton config avancée)

@@ -31,6 +31,16 @@ try {
 		ajax::success();
 	}
 	
+	if (init('action') == 'deleteUnknown') {
+		$eqLogics = eqLogic::byType('blea');
+		foreach ($eqLogics as $eqLogic) {
+			if ($eqLogic->getConfiguration('device','') == 'default') {
+				$eqLogic->remove();
+			}
+		}
+		ajax::success();
+	}
+	
 	if (init('action') == 'getAllTypes') {
 		$list = array();
 		$allconfs = blea::devicesParameters();

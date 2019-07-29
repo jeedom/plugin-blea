@@ -1,0 +1,111 @@
+{
+    "meyerdom4contacts": {
+        "name": "MeyerDOM 4 contacts",
+        "groupe" : "Contacteurs",
+		"configuration" : {
+			"name" : "meyerdom4contacts",
+			"battery_type" : "1x3V CR2450"
+    },
+        "commands": [
+			{
+                "name": "Contact 1",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "contact1",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Contact 2",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "contact2",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Contact 3",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "contact3",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Contact 4",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "contact4",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Analog 1",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "analog1",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Analog 2",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "analog2",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite":"V",
+                "logicalId": "voltage",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      }
+        ],
+		"compatibility": [
+            {
+        "manufacturer": "MeyerDom",
+        "name": "4 contacteurs",
+				"doc": "",
+				"type": "Contacteurs",
+				"battery_type": "1x3V CR2450",
+				"ref" : "",
+				"comlink": "",
+				"remark": "4 contacteurs et 2 analogiques",
+				"inclusion" : "Mode inclusion",
+				"imglink": "meyerdom4contacts"
+            }
+        ]
+    }
+}

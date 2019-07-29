@@ -54,24 +54,48 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	<span>{{Antennes}}</span>
 	</div>
 </div>
-<legend><i class="fa fa-table"></i>  {{Mes devices Blea}}</legend>
+<legend><i class="fa fa-table"></i>  {{Mes devices Blea Connus}}</legend>
 <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
-	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-	$alternateImg = $eqLogic->getConfiguration('iconModel');
-	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
-		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
-	} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
-		echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
-	} else {
-		echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+	if ($eqLogic->getConfiguration('device','') != 'default') {
+		$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+		echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+		$alternateImg = $eqLogic->getConfiguration('iconModel');
+		if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
+		} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
+		} else {
+			echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+		}
+		echo '<br/>';
+		echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+		echo '</div>';
 	}
-	echo '<br/>';
-	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-	echo '</div>';
+}
+?>
+</div>
+<legend><i class="fa fa-table"></i>  {{Mes devices Blea Inconnus}} <i class="deleteUnknown cursor fas fa-trash"></i></legend>
+<div class="eqLogicThumbnailContainer">
+  <?php
+foreach ($eqLogics as $eqLogic) {
+	if ($eqLogic->getConfiguration('device','') == 'default') {
+		$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+		echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+		$alternateImg = $eqLogic->getConfiguration('iconModel');
+		if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
+		} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
+		} else {
+			echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+		}
+		echo '<br/>';
+		echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+		echo '</div>';
+	}
 }
 ?>
 </div>

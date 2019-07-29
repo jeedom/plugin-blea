@@ -145,7 +145,7 @@ class ScanDelegate(DefaultDelegate):
 						if globals.LEARN_MODE_ALL == 0:
 							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known but i\'m configured to ignore unknow packet ' +str(mac))
 							return
-						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == 'unknown') :
+						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == 'default') :
 							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known this device so I learn ' +str(mac))
 							action['learn'] = 1
 							logging.debug(action)
@@ -354,6 +354,7 @@ def heartbeat_handler(delay):
 					logging.debug("HEARTBEAT------Removed from keep connection list " + str(device))
 		if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
 			globals.LEARN_MODE = False
+			globals.LEARN_END= int(time.time())
 			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
 			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
 		if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
