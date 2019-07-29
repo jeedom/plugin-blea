@@ -240,6 +240,32 @@ $('#bt_autoDetectModule').on('click', function () {
 });
 });
 
+$('.deleteUnknown').on('click', function () {
+    bootbox.confirm('{{Etes-vous sûr de vouloir supprimer tous les devices inconnus ? }}', function (result) {
+        if (result) {
+            $.ajax({
+                type: "POST",
+                url: "plugins/blea/core/ajax/blea.ajax.php",
+                data: {
+                    action: "deleteUnknown",
+                },
+                dataType: 'json',
+                global: false,
+                error: function (request, status, error) {
+                    handleAjaxError(request, status, error);
+                },
+                success: function (data) {
+                    if (data.state != 'ok') {
+                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                        return;
+                    }
+                    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+					window.location.reload();
+                }
+            });
+        }
+    });
+});
 
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=iconModel]').on('change', function () {
   if($(this).value() != '' && $(this).value() != null){

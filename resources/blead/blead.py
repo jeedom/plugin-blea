@@ -145,7 +145,7 @@ class ScanDelegate(DefaultDelegate):
 						if globals.LEARN_MODE_ALL == 0:
 							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known but i\'m configured to ignore unknow packet ' +str(mac))
 							return
-						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == 'unknown') :
+						if (globals.LEARN_TYPE == 'all' or globals.LEARN_TYPE == 'default') :
 							logging.debug('SCANNER------It\'s a unknown packet and I don\'t known this device so I learn ' +str(mac))
 							action['learn'] = 1
 							logging.debug(action)

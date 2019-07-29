@@ -1,5 +1,5 @@
 import time
-DAEMON_VERSION = '2.6.2'
+DAEMON_VERSION = '2.6.3'
 BLUEPY_VERSION = '1.0'
 SCAN_MODE = 'passive'
 JEEDOM_COM = ''
