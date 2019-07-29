@@ -62,15 +62,18 @@ class XiaomiHT():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			Firm = bytearray(conn.readCharacteristic('0x24'))
-			batt = bytearray(conn.readCharacteristic('0x18'))
-			battery = batt[0]
+			if (mac in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[mac]['model'] == 'xiaomiht/xiaomiht_cleargrass'):
+				Firm = bytearray(conn.readCharacteristic('0x2a'))
+			else :
+				Firm = bytearray(conn.readCharacteristic('0x24'))
+				batt = bytearray(conn.readCharacteristic('0x18'))
+				battery = batt[0]
+				result['battery'] = battery
 			firmware = "".join(map(chr, Firm))
+			result['firmware'] = firmware
 			notification = Notification(conn,XiaomiHT)
 			conn.writeCharacteristic('0x10','0100',response=True)
 			notification.subscribe(2)
-			result['battery'] = battery
-			result['firmware'] = firmware
 			result['id'] = mac
 			logging.debug('XIAOMIHT------'+str(result))
 			return result

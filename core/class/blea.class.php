@@ -869,6 +869,8 @@ class blea extends eqLogic {
 				'refresherallowed' => $refresher,
 				'specificconfiguration' => $this->getConfiguration('specificconfiguration',array()),
 				'absent' => $this->getConfiguration('absent',''),
+				'type' => $this->getConfiguration('type',''),
+				'model' => $this->getConfiguration('iconModel',''),
 			);
 			$value = json_encode($value);
 			self::socket_connection($value,True);
