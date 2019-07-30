@@ -8,7 +8,7 @@
         "Démon local": "Démon local",
         "Port clef bluetooth": "Port clef bluetooth",
         "Aucun": "Aucun",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)",
+        "Port socket interne (modification dangereuse, doit être le même sur tous les esclaves)": "Port socket interne (modification dangereuse, doit être le même sur tous les esclaves)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -17,14 +17,14 @@
         "Mode exclusion": "Mode exclusion",
         "Configuration": "Configuration",
         "Santé": "Santé",
-        "Mes devices Blea": "Mes devices Blea",
+        "Mes appareils BLEA": "Mes appareils BLEA",
         "Sauvegarder": "Sauvegarder",
         "Supprimer": "Supprimer",
         "Configuration avancée": "Configuration avancée",
         "Dupliquer": "Dupliquer",
         "Equipement": "Equipement",
         "Commandes": "Commandes",
-        "Nom du device": "Nom du device",
+        "Nom de l’appareil": "Nom de l’appareil",
         "Mac": "Mac",
         "Activer": "Activer",
         "Visible": "Visible",
@@ -62,13 +62,13 @@
         "Historiser": "Historiser",
         "Inverser": "Inverser",
         "Arrêter l\\'inclusion": "Arrêter l\\'inclusion",
-        "Arreter inclusion": "Arreter inclusion",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
+        "Arrêter l\\'inclusion": "Arrêter l\\'inclusion",
+        "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Mode inclusion",
         "Arrêter l\\'exclusion": "Arrêter l\\'exclusion",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode",
         "Mode exclusion": "Mode exclusion",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page"
+        "Un périphérique vient d\\'être inclus\/exclus. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclus\/exclus. Veuillez réactualiser la page"
     },
     "plugins\/blea\/core\/class\/blea.class.php": {
         "Défaut": "Défaut"

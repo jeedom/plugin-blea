@@ -54,7 +54,7 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	<span>{{Antennes}}</span>
 	</div>
 </div>
-<legend><i class="fa fa-table"></i>  {{Mes devices Blea Connus}}</legend>
+<legend><i class="fa fa-table"></i>  {{Mes appareils BLEA Connus}}</legend>
 <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 <div class="eqLogicThumbnailContainer">
   <?php
@@ -77,7 +77,7 @@ foreach ($eqLogics as $eqLogic) {
 }
 ?>
 </div>
-<legend><i class="fa fa-table"></i>  {{Mes devices Blea Inconnus}} <i class="deleteUnknown cursor fas fa-trash"></i></legend>
+<legend><i class="fa fa-table"></i>  {{Mes appareils BLEA Inconnus}} <i class="deleteUnknown cursor fas fa-trash"></i></legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
@@ -120,7 +120,7 @@ foreach ($eqLogics as $eqLogic) {
         <form class="form-horizontal">
           <fieldset>
             <div class="form-group">
-              <label class="col-sm-3 control-label">{{Nom du device}}</label>
+              <label class="col-sm-3 control-label">{{Nom de l’appareil}}</label>
               <div class="col-sm-4">
                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA"/>

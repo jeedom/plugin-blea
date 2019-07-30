@@ -8,7 +8,7 @@
         "Démon local": "daemon locais",
         "Port clef bluetooth": "chave porta Bluetooth",
         "Aucun": "não",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Tomada interior da porta (mudança perigosa, devem ser os mesmos, especialmente os escravos)",
+        "Port socket interne (modification dangereuse, doit être le même sur tous les esclaves)": "Tomada interior da porta (mudança perigosa, devem ser os mesmos, especialmente os escravos)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -17,14 +17,14 @@
         "Mode exclusion": "exclusão moda",
         "Configuration": "configuração",
         "Santé": "saúde",
-        "Mes devices Blea": "Meus dispositivos blea",
+        "Mes appareils BLEA": "Meus dispositivos blea",
         "Sauvegarder": "salvar",
         "Supprimer": "remover",
         "Configuration avancée": "configuração avançada",
         "Dupliquer": "duplicar",
         "Equipement": "equipamento",
         "Commandes": "comandos",
-        "Nom du device": "Nome do dispositivo",
+        "Nom de l’appareil": "Nome do dispositivo",
         "Mac": "Mac",
         "Activer": "ativar",
         "Visible": "visível",
@@ -62,13 +62,13 @@
         "Historiser": "historicizar",
         "Inverser": "inverter",
         "Arrêter l\\'inclusion": "Pare \\\\ inclusão",
-        "Arreter inclusion": "parar de inclusão",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Você é a inclusão de modo. Clique novamente no botão \\\\ de inclusão para sair deste modo (se não o modo permanecerá ativo de um minuto)",
+        "Arrêter l\\'inclusion": "parar de inclusão",
+        "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Você é a inclusão de modo. Clique novamente no botão \\\\ de inclusão para sair deste modo (se não o modo permanecerá ativo de um minuto)",
         "Mode inclusion": "inclusão moda",
         "Arrêter l\\'exclusion": "Pare \\\\ exclusão",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Você está em exclusão moda. Clique novamente no botão \\\\ de exclusão para sair deste modo",
         "Mode exclusion": "exclusão moda",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Um dispositivo apenas \\\\ ser incluída \\ / excluídos. Atualize a página"
+        "Un périphérique vient d\\'être inclus\/exclus. Veuillez réactualiser la page": "Um dispositivo apenas \\\\ ser incluída \\ / excluídos. Atualize a página"
     },
     "plugins\/blea\/core\/class\/blea.class.php": {
         "Défaut": "falha"

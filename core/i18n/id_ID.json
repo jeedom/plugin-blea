@@ -8,7 +8,7 @@
         "Démon local": "Layanan lokal",
         "Port clef bluetooth": "kunci pelabuhan Bluetooth",
         "Aucun": "Tak ada",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket bagian dalam (perubahan berbahaya, harus sama terutama budak)",
+        "Port socket interne (modification dangereuse, doit être le même sur tous les esclaves)": "Port socket bagian dalam (perubahan berbahaya, harus sama terutama budak)",
         "55008": "55.008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -17,14 +17,14 @@
         "Mode exclusion": "mode pengecualian",
         "Configuration": "Konfigurasi",
         "Santé": "Bidang Kesehatan",
-        "Mes devices Blea": "perangkat Blea saya",
+        "Mes appareils BLEA": "perangkat Blea saya",
         "Sauvegarder": "Menyimpan",
         "Supprimer": "Menghapus",
         "Configuration avancée": "konfigurasi lanjutan",
         "Dupliquer": "Duplikat",
         "Equipement": "Peralatan",
         "Commandes": "Perintah",
-        "Nom du device": "Nama perangkat",
+        "Nom de l’appareil": "Nama perangkat",
         "Mac": "mac",
         "Activer": "Mengaktifkan",
         "Visible": "Terlihat",
@@ -62,13 +62,13 @@
         "Historiser": "Historicize",
         "Inverser": "Membalikkan",
         "Arrêter l\\'inclusion": "Berhenti inklusi \\\\",
-        "Arreter inclusion": "berhenti inklusi",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Anda modus inklusi. Klik lagi pada \\\\ tombol inklusi untuk keluar dari mode ini (jika tidak modus akan tetap aktif satu menit)",
+        "Arrêter l\\'inclusion": "berhenti inklusi",
+        "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Anda modus inklusi. Klik lagi pada \\\\ tombol inklusi untuk keluar dari mode ini (jika tidak modus akan tetap aktif satu menit)",
         "Mode inclusion": "Modus Inklusi",
         "Arrêter l\\'exclusion": "Berhenti pengecualian \\\\",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Anda berada dalam mode pengecualian. Klik lagi pada \\\\ tombol pengecualian untuk keluar dari mode ini",
         "Mode exclusion": "mode pengecualian",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Sebuah perangkat hanya \\\\ dimasukkan \\ / dikecualikan. Muat ulang halaman"
+        "Un périphérique vient d\\'être inclus\/exclus. Veuillez réactualiser la page": "Sebuah perangkat hanya \\\\ dimasukkan \\ / dikecualikan. Muat ulang halaman"
     },
     "plugins\/blea\/core\/class\/blea.class.php": {
         "Défaut": "kesalahan"
