@@ -1,3 +1,10 @@
+# 29/07/2019
+- Fixes mineurs
+- Séparation des devices inconnus sur la page d'équipement
+- Possibilité de supprimer tous les devices inconnus en un clic (uniquement ceux non attribués à un objet)
+- Correction d'un bug sur le scan sélectif "Inconnu"
+- Améliorations globales
+
 # 20/07/2019
 - Changement de méthode pour l'ensemble de la gamme playbulb (une seule conf et des visuels) plus de dépendances par rapport aux différentes versions (maintenant a l'inclusion on récupére les adresses des diffférentes méthodes)
 - Rajout de la miscale V2 avec poids et impedance (et tout un tas de mesures calculées). Gestion des utilisateurs pour les calculs (dans le bouton config avancée)
@@ -41,8 +48,8 @@
 
 # 09/03/2019
 
-- Added automatic daemon management on antennas.
-- Negative temp management
+- Ajout de la gestion automatique du daemon sur les antennes.
+- Gestion temp négative
 - Correction sur le rafraichissement des nuts (info batterie)
 
 # 16/01/2019
@@ -56,7 +63,7 @@
 
 # 06/04/2018
 
-- Fix a refresh notification bug on Hygrothermograph and Miflora (probably needs relaunching of dependencies for impacted people)
+- Correction probable d'un bug de refresh notification sur Hygrothermographe et Miflora (necessite probablement une relance des dépendances pour les gens impactés)
 
 # 28/03/2018
 
@@ -67,7 +74,7 @@
 
 # 10/02/2018
 
-- Fixed a bug on the network graph modal if a device had no object
+- Correction d'un bug sur la modal de graph réseau si jamais un équipement n'avait pas d'objet
 
 # 01/03/2018
 
