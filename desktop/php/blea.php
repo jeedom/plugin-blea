@@ -259,7 +259,7 @@ foreach ($groups as $group) {
 		</div>
 	</div>
 	<div class="form-group cancontrol">
-		<label class="col-sm-6 control-label help" data-help="{{Utile pour savoir qu'elle antenne contrôllera l'équipement. Choisir tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
+		<label class="col-sm-6 control-label help" data-help="{{Utile pour savoir quelle antenne contrôlera l'équipement. Choisir Tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes}}">{{Antenne d'émission}}</label>
 		<div class="col-sm-4">
 			<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
 				<?php
@@ -283,27 +283,27 @@ foreach ($groups as $group) {
 	</div>
 	<legend><i class="fas fa-sync"></i>  {{Refresh}}</legend>
 	<div class="form-group">
-		<label class="col-sm-6 control-label help" data-help="{{Demandera les infos en forcés. A eviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
+		<label class="col-sm-6 control-label help" data-help="{{Demandera les infos en forcé. A éviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
 		<div class="col-sm-4">
 		 <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr canberefreshed" data-l1key="configuration" data-l2key="needsrefresh" /></label>
 		</div>
 	</div>
 	</br>
 	<div class="form-group refreshdelay">
-		<label class="col-sm-6 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour et cela peut engendre un blocage du scan}}">{{Refresh des infos (en s)}}</label>
+		<label class="col-sm-6 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes, il n'y aura pas de mise à jour et cela peut engendrer un blocage du scan}}">{{Refresh des infos (en s)}}</label>
 		<div class="col-sm-4">
 		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
 		</div>
 	</div>
 	<div class="form-group canbelocked">
-		<label class="col-sm-6 control-label help" data-help="{{Essaiera de garder la connection avec l'appareil (pour les appareils lent a se connecter). Attention une fois une connection ouverte certains appareils ne sont plus visibles. Si Tous est sélectionné cette option ne sera pas utilisé. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
+		<label class="col-sm-6 control-label help" data-help="{{Essaiera de garder la connexion avec l'appareil (pour les appareils lents à se connecter). Attention, une fois une connexion ouverte, certains appareils ne sont plus visibles. Si Tous est sélectionné, cette option ne sera pas utilisée. Evitez absolument cette option sur des devices fonctionnant sur batterie}}">{{Garder la connection}}</label>
 		<div class="col-sm-4">
 			<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" /></label>
 		</div>
 	</div>
 	</br>
 	<div class="form-group">
-		<label class="col-sm-6 control-label help" data-help="{{Nombre de scan où le device est invisible pour le déclarer non présent sur l'antenne (spécifique au device, sinon la valeur globale du plugin est utilisée}}">{{Nombre de scan}}</label>
+		<label class="col-sm-6 control-label help" data-help="{{Nombre de scans où le device est invisible pour le déclarer non présent sur l'antenne (spécifique au device, sinon la valeur globale du plugin est utilisée}}">{{Nombre de scans}}</label>
 		<div class="col-sm-4">
 		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="absent" placeholder="Nombre de scans (3 ou 4 est un bon chiffre)"/>
 		</div>
