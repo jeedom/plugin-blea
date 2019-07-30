@@ -1,3 +1,6 @@
+# 30/07/2019
+- Correction d'un bug sur le dotti lié au passage à python3
+
 # 29/07/2019
 - Fixes mineurs
 - Séparation des devices inconnus sur la page d'équipement
