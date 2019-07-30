@@ -292,7 +292,7 @@ foreach ($groups as $group) {
 	<div class="form-group refreshdelay">
 		<label class="col-sm-6 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes il n'y aura pas de mise à jour et cela peut engendre un blocage du scan}}">{{Refresh des infos (en s)}}</label>
 		<div class="col-sm-4">
-		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Delai en secondes"/>
+		<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Délai en secondes"/>
 		</div>
 	</div>
 	<div class="form-group canbelocked">
