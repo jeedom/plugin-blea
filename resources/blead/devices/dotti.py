@@ -62,7 +62,7 @@ class Dotti():
 				maxint=0
 				maxhex='#FFFFFF'
 				if len(data) == 64:
-					for pixel, value in data.iteritems():
+					for pixel, value in data.items():
 						shex = self.rgb_to_hex((int(value[0]), int(value[1]), int(value[2])));
 						if shex not in temp:
 							temp[shex] = 1
@@ -71,7 +71,7 @@ class Dotti():
 						if temp[shex] > maxint:
 							maxint = temp[shex]
 							maxhex = shex
-					for pixel, value in data.iteritems():
+					for pixel, value in data.items():
 						total_pixel = total_pixel + 1
 						if mac in globals.LAST_STORAGE:
 							if int(pixel) in globals.LAST_STORAGE[mac] and globals.LAST_STORAGE[mac][int(pixel)].lower() == self.rgb_to_hex((int(value[0]),int(value[1]), int(value[2]))).lower():
@@ -86,7 +86,7 @@ class Dotti():
 				save_pixel=0
 				total_pixel=0
 				colorArray ={}
-				for pixel, value in data.iteritems():
+				for pixel, value in data.items():
 					total_pixel = total_pixel + 1
 					if mac in globals.LAST_STORAGE:
 						if isinstance(value,(list,)):
