@@ -42,7 +42,7 @@
 		var dialog_title = '';
 		var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
 		dialog_title = '{{Inclusion BLEA}}';
-		dialog_message += '<label class="control-label" > {{Quel type de produits voulez vous inclure : }} </label> ' +
+		dialog_message += '<label class="control-label" > {{Quel type de produit voulez-vous inclure : }} </label> ' +
 		'<div>' +
 		' <select id="type">' +
 		'<option value="all">{{Tous}}</option>';
