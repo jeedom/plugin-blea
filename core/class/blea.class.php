@@ -37,7 +37,6 @@ class blea extends eqLogic {
 			));
 			return false;
 		}
-		$device = self::devicesParameters($_def['type']);
 		$blea = blea::byLogicalId($_def['id'], 'blea');
 		if (!is_object($blea)) {
 			$eqLogic = new blea();
@@ -277,7 +276,6 @@ class blea extends eqLogic {
 		log::add('blea','info','Compression du dossier local');
 		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
 		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
-		$result = false;
 		$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead']);
 		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','/home/'.$user.'/folder-blea.tar.gz')) {
 			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
@@ -314,7 +312,6 @@ class blea extends eqLogic {
 	public static function launchremote($_remoteId) {
 		log::add('blea','info',__('Lancement du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
-		$last = $remoteObject->getCache('lastupdate','0');
 		blea::stopremote($_remoteId);
 		sleep(5);
 		$user=$remoteObject->getConfiguration('remoteUser');
@@ -364,8 +361,8 @@ class blea extends eqLogic {
 		log::add('blea','info',__('Arret du démon distant',__FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
-		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
-		$value = json_encode($value);
+		$values = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
+		$value = json_encode($values);
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 		if ($socket) {
 			if (socket_connect($socket, $ip, config::byKey('socketport', 'blea'))) {
@@ -466,7 +463,7 @@ class blea extends eqLogic {
 		if ($deamon_info['launchable'] != 'ok') {
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		}
-		$unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
+		exec('sudo rfkill unblock all >/dev/null 2>&1');
 		if (config::byKey('port', 'blea','none') == 'none') {
 			foreach (jeedom::getBluetoothMapping() as $name => $value) {
 				config::save('port', $name ,'blea');
@@ -488,7 +485,7 @@ class blea extends eqLogic {
 		$cmd .= ' --scanmode ' . config::byKey('scanmode', 'blea', 'passive');
 		$cmd .= ' --pid ' . jeedom::getTmpFolder('blea') . '/deamon.pid';
 		log::add('blea', 'info', 'Lancement démon blea : ' . $cmd);
-		$result = exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');
+		exec($cmd . ' >> ' . log::getPathToLog('blea_local') . ' 2>&1 &');
 		$i = 0;
 		while ($i < 30) {
 			$deamon_info = self::deamon_info();
@@ -617,8 +614,8 @@ class blea extends eqLogic {
 	}
 
 	public static function changeLogLive($_level) {
-		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
-		$value = json_encode($value);
+		$values = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
+		$value = json_encode($values);
 		self::socket_connection($value,True);
 	}
 
@@ -645,7 +642,7 @@ class blea extends eqLogic {
 			}
 		}
 	}
-	public static function getTintedColor($hex, $lum) {
+	public static function getTintedColor($hex1, $lum) {
 		$initColor = $hex;
 		$hex = str_replace('#','',$hex);
 		$lum = -((100-$lum)/100);
@@ -669,7 +666,6 @@ class blea extends eqLogic {
 			$_conf = $this->getConfiguration('device');
 		}
 		$modelList = array();
-		$param = false;
 		$files = array();
 		foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
 			if (!is_dir(dirname(__FILE__) . '/../config/devices/' . $dir)) {
@@ -886,10 +882,10 @@ class blea extends eqLogic {
 	}
 
 	public function applyModuleConfiguration() {
-	$device = self::devicesParameters($this->getConfiguration('device'));
-	if (!is_array($device)) {
-		return true;
-	}
+		$device = self::devicesParameters($this->getConfiguration('device'));
+		if (!is_array($device)) {
+			return true;
+		}
 		if ($this->getConfiguration('applyDevice') == $this->getConfiguration('device')){
 			$model=$this->getConfiguration('iconModel','');
 			if (isset($device['models'])) {
@@ -958,7 +954,6 @@ class blea extends eqLogic {
 			'message' => __('Création des commandes', __FILE__),
 		));
 
-		$ids = array();
 		$arrayToRemove = [];
 		if (isset($device['commands'])) {
 			foreach ($this->getCmd() as $eqLogic_cmd) {
@@ -1352,7 +1347,7 @@ class blea_remote {
 				return false;
 			} else {
 				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
-				$result = ssh2_scp_recv($connection, $_target, $_local);
+				ssh2_scp_recv($connection, $_target, $_local);
 				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
 				$stream = ssh2_exec($connection, $execmd);
 				$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);

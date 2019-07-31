@@ -8,8 +8,3 @@ $Parsedown = new Parsedown();
 
 $markdown = file_get_contents($docdir);
 echo $Parsedown->text($markdown);
-
-?>
-
-
-

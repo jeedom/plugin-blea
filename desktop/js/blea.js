@@ -42,7 +42,7 @@
 		var dialog_title = '';
 		var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
 		dialog_title = '{{Inclusion BLEA}}';
-		dialog_message += '<label class="control-label" > {{Quel type de produits voulez vous inclure : }} </label> ' +
+		dialog_message += '<label class="control-label" > {{Quel type d\'équipement voulez-vous inclure : }} </label> ' +
 		'<div>' +
 		' <select id="type">' +
 		'<option value="all">{{Tous}}</option>';
@@ -50,7 +50,7 @@
 			dialog_message += '<option value="'+list[device]+'"> '+device+'</option>';
 		}
 		dialog_message += '</select></div><br>'+
-		'<label class="lbl lbl-warning" for="type">{{Choisissez le type de produit que vous souhaitez ajouter}}</label> ';
+		'<label class="lbl lbl-warning" for="type">{{Choisissez le type d\'équipement que vous souhaitez ajouter}}</label> ';
 		dialog_message += '</form>';
 		bootbox.dialog({
 			title: dialog_title,
@@ -92,12 +92,12 @@ $('#bt_specificmodal').on('click', function () {
 });
 
 $('#bt_remoteblea').on('click', function () {
-    $('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+    $('#md_modal').dialog({title: "{{Gestion des antennes Bluetooth}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 });
 
 $('#bt_advancedblea').on('click', function () {
-    $('#md_modal').dialog({title: "{{Réglages avancées}}"});
+    $('#md_modal').dialog({title: "{{Réglages avancés}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.advanced').dialog('open');
 });
 
@@ -160,10 +160,10 @@ function getModelListParam(_conf,_id) {
 }
 
 $('#bt_autoDetectModule').on('click', function () {
-    var dialog_title = '{{Recharge configuration}}';
+    var dialog_title = '{{Recharger la configuration}}';
     var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
     dialog_title = '{{Recharger la configuration}}';
-    dialog_message += '<label class="control-label" > {{Sélectionner le mode de rechargement de la configuration ?}} </label> ' +
+    dialog_message += '<label class="control-label" > {{Sélectionner le mode de rechargement de la configuration}} </label> ' +
     '<div> <div class="radio"> <label > ' +
     '<input type="radio" name="command" id="command-0" value="0" checked="checked"> {{Sans supprimer les commandes}} </label> ' +
     '</div><div class="radio"> <label > ' +
@@ -186,7 +186,7 @@ $('#bt_autoDetectModule').on('click', function () {
                className: "btn-success",
                callback: function () {
                     if ($("input[name='command']:checked").val() == "1"){
-						bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+                            bootbox.confirm('Voulez-vous vraiment récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
                             if (result) {
                                 $.ajax({
                                     type: "POST",
@@ -241,7 +241,7 @@ $('#bt_autoDetectModule').on('click', function () {
 });
 
 $('.deleteUnknown').on('click', function () {
-    bootbox.confirm('{{Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. }}', function (result) {
+    bootbox.confirm('Voulez-vous vraiment supprimer tous les équipements inconnus ? Cela ne supprimera que les équipements inconnus qui ne sont attribués à aucun objet.}}', function (result) {
         if (result) {
             $.ajax({
                 type: "POST",
@@ -255,12 +255,12 @@ $('.deleteUnknown').on('click', function () {
                     handleAjaxError(request, status, error);
                 },
                 success: function (data) {
-                    if (data.state != 'ok') {
+                    if (data.state !== 'ok') {
                         $('#div_alert').showAlert({message: data.result, level: 'danger'});
                         return;
                     }
                     $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
-					window.location.reload();
+                    window.location.reload();
                 }
             });
         }
@@ -268,7 +268,7 @@ $('.deleteUnknown').on('click', function () {
 });
 
  $('.eqLogicAttr[data-l1key=configuration][data-l2key=iconModel]').on('change', function () {
-  if($(this).value() != '' && $(this).value() != null){
+  if($(this).value() !== '' && $(this).value() !== null){
     $('#img_device').attr("src", 'plugins/blea/core/config/devices/'+$(this).value()+'.jpg');
 }
 });
@@ -349,15 +349,15 @@ $('body').on('blea::includeState', function (_event,_options) {
 				$.hideAlert();
 				$('.include:not(.card)').removeClass('btn-default').addClass('btn-success');
 				$('.include').attr('data-state', 0);
-				$('.include').empty().append('<i class="fa fa-spinner fa-pulse"></i><br/><span>{{Arrêter Scan}}</span>');
+				$('.include').empty().append('<i class="fa fa-spinner fa-pulse"></i><br/><span>{{Arrêter scan}}</span>');
 				$('#div_inclusionAlert').showAlert({message: '{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}', level: 'warning'});
 			}
 		} else {
-			if($('.include').attr('data-state') != 1){
+			if($('.include').attr('data-state') !== 1){
 				$.hideAlert();
 				$('.include:not(.card)').addClass('btn-default').removeClass('btn-success btn-danger');
 				$('.include').attr('data-state', 1);
-				$('.include').empty().append('<i class="fa fa-bullseye"></i><br/><span>{{Lancer Scan}}</span>');
+				$('.include').empty().append('<i class="fa fa-bullseye"></i><br/><span>{{Lancer scan}}</span>');
 			}
 		}
 	}
@@ -365,9 +365,9 @@ $('body').on('blea::includeState', function (_event,_options) {
 
 $('body').on('blea::includeDevice', function (_event,_options) {
     if (modifyWithoutSave) {
-        $('#div_inclusionAlert').showAlert({message: '{{Un périphérique vient d\'être inclu/exclu. Veuillez réactualiser la page}}', level: 'warning'});
+        $('#div_inclusionAlert').showAlert({message: '{{Un équipement vient d\'être inclus/exclus. Veuillez réactualiser la page.}}', level: 'warning'});
     } else {
-        if (_options == '') {
+        if (_options === '') {
             window.location.reload();
         } else {
             window.location.href = 'index.php?v=d&p=blea&m=blea&id=' + _options;

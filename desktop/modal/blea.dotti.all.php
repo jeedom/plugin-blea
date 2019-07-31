@@ -85,16 +85,16 @@ $('.bt_delImageMini').on('click', function () {
 								handleAjaxError(request, status, error);
 							},
 							success: function(data) {
-								if (data.state != 'ok') {
+								if (data.state !== 'ok') {
 									$('.eventDisplayMini').showAlert({message:  data.result,level: 'danger'});
 									setTimeout(function() { deleteAlertMini() }, 2000);
 									return;
 								}
 								$('.eventDisplayMini').showAlert({message:  'Suppression effectuée' ,level: 'success'});
-								setTimeout(function() { deleteAlertMini() }, 2000);
+								setTimeout(function() { deleteAlertMini(); }, 2000);
 								modifyWithoutSave=false;
 								$('#md_modal2').dialog('close');
-								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
+								$('#md_modal2').dialog({title: "{{Votre collection}}"});
 								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.dotti.all').dialog('open');
 							}
 						});
@@ -167,7 +167,7 @@ $('.bt_delImageMini').on('click', function () {
 								handleAjaxError(request, status, error);
 							},
 							success: function(data) {
-								if (data.state != 'ok') {
+								if (data.state !== 'ok') {
 									$('.eventDisplayMini').showAlert({message:  data.result,level: 'danger'});
 									setTimeout(function() { deleteAlertMini() }, 2000);
 									return;
@@ -175,7 +175,7 @@ $('.bt_delImageMini').on('click', function () {
 								$('.eventDisplayMini').showAlert({message:  'Renommage effectué' ,level: 'success'});
 								setTimeout(function() { deleteAlertMini() }, 2000);
 								$('#md_modal2').dialog('close');
-								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
+								$('#md_modal2').dialog({title: "{{Votre collection}}"});
 								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.dotti.all').dialog('open');
 								modifyWithoutSave=false;
 							}

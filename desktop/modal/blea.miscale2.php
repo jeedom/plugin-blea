@@ -38,7 +38,7 @@ $listUsers = $eqLogic->getConfiguration('specificconfiguration',array());
 			<th>{{Taille (en cm)}}</th>
 			<th>{{Poids}}</th>
 			<th>{{Année naissance ( ex : 30-04-1984)}}</th>
-			<th>{{Sex}}</th>
+			<th>{{Sexe}}</th>
 			<th>{{Action}}</th>
 		</tr>
 	</thead>
@@ -114,7 +114,7 @@ function saveUserList(userList) {
             handleAjaxError(request, status, error);
         },
         success: function (data) { // si l'appel a bien fonctionné
-        if (data.state != 'ok') {
+        if (data.state !== 'ok') {
             $('.ListUserDisplay').showAlert({message: data.result, level: 'danger'});
             return;
         }

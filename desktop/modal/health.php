@@ -32,10 +32,10 @@ $eqLogics = blea::byType('blea');
 			<th>{{Statut}}</th>
 			<th>{{Batterie}}</th>
 			<th>{{Rssi}}</th>
-			<th>{{Antenne Emission}}</th>
+			<th>{{Antenne Émission}}</th>
 			<th>{{Antenne Réception}}</th>
 			<th>{{Présent}}</th>
-			<th>{{Refresh Forcé}}</th>
+			<th>{{Rafraîchissement forcé}}</th>
 			<th>{{Dernière communication}}</th>
 			<th>{{Date création}}</th>
 		</tr>

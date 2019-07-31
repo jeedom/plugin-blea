@@ -20,7 +20,6 @@ if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
 
-$remotes = blea_remote::all();
 $eqLogics = array();
 $antennas = array();
 $remotes = blea_remote::all();
@@ -82,9 +81,9 @@ sendVarToJS('antennas', $antennas);
     }
 </style>
 <div id="graph_network" class="tab-pane graphBlea">
-<a class="btn btn-success bleaRemoteAction" data-action="saveanttenna"><i class="fas fa-hdd"></i> {{Position Antennes}}</a>
+<a class="btn btn-success bleaRemoteAction" data-action="saveanttenna"><i class="fas fa-hdd"></i> {{Position antennes}}</a>
 <a class="btn btn-success bleaRemoteAction" data-action="refresh"><i class="fas fa-sync"></i></a>
-<i class="fa fa-question-circle" style="cursor:pointer;font-size:2em" title="{{Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne local via des pointillés}}"></i>
+<i class="fa fa-question-circle" style="cursor:pointer;font-size:2em" title="{{Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU n'émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne locale via des pointillés.}}"></i>
 </div>
 
 <script>

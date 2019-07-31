@@ -37,8 +37,8 @@ $listUsers = $eqLogic->getConfiguration('specificconfiguration',array());
 			<th>{{Surnom}}</th>
 			<th>{{Taille (en cm)}}</th>
 			<th>{{Poids}}</th>
-			<th>{{Année naissance ( ex : 30-04-1984)}}}</th>
-			<th>{{Sex}}</th>
+			<th>{{Année naissance (ex : 30-04-1984)}}}</th>
+			<th>{{Sexe}}</th>
 			<th>{{Action}}</th>
 		</tr>
 	</thead>

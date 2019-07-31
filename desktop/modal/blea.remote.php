@@ -29,8 +29,8 @@ sendVarToJS('plugin', $id);
 	<div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">
 		<div class="bs-sidebar">
 			<ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter Antenne}}</a>
-				<a class="btn btn-warning bleaRemoteAction" style="width : 100%;margin-bottom: 5px;" data-action="refresh"><i class="fas fa-sync"></i> {{Rafraichir}}</a>
+				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter antenne}}</a>
+				<a class="btn btn-warning bleaRemoteAction" style="width : 100%;margin-bottom: 5px;" data-action="refresh"><i class="fas fa-sync"></i> {{Rafraîchir}}</a>
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
@@ -46,7 +46,7 @@ foreach ($remotes as $remote) {
 		</div>
 	</div>
 	 <div class="col-lg-19 col-md-8 col-sm-7 col-xs-7 remoteThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-<legend><i class="fa fa-table"></i>  {{Mes Antennes}}</legend>
+<legend><i class="fa fa-table"></i> {{Mes antennes}}</legend>
 
 <div class="eqLogicThumbnailContainer">
 	<div class="cursor bleaRemoteAction logoPrimary" data-action="add" style="width:10px">
@@ -81,7 +81,7 @@ foreach ($remotes as $remote) {
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Ip}}</label>
+							<label class="col-sm-2 control-label">{{IP}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteIp"/>
 							</div>
@@ -91,17 +91,17 @@ foreach ($remotes as $remote) {
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">{{User}}</label>
+							<label class="col-sm-2 control-label">{{Utilisateur}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteUser"/>
 							</div>
-							<label class="col-sm-1 control-label">{{Password}}</label>
+							<label class="col-sm-1 control-label">{{Mot de passe}}</label>
 							<div class="col-sm-3">
 								<input type="password" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remotePassword"/>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">{{Device}}</label>
+							<label class="col-sm-2 control-label">{{Équipement}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="bleaRemoteAttr form-control" data-l1key="configuration" data-l2key="remoteDevice" placeholder="{{ex : hci0}}"/>
 							</div>
@@ -131,7 +131,7 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-success bleaRemoteAction" data-action="launchremote"><i class="fa fa-play"></i> {{Lancer}}</a>
 						</div>
 						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
+							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arrêt}}</a>
 						</div>
 						<div class="col-sm-2">
 							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="far fa-file-alt"></i> {{Log}}</a>
@@ -152,7 +152,7 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-success bleaRemoteAction" data-action="all" data-type="reception"><i class="fas fa-sign-in-alt fa-rotate-90"></i> {{Réception}}</a>
 						</div>
 						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
+							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Émission}}</a>
 						</div>
 						</div>
 						<div class="alert alert-info">{{La durée d'installation des dépendances sur une antenne peut prendre jusqu'à presque 30 minutes selon les antennes}}</div>
@@ -177,7 +177,7 @@ foreach ($remotes as $remote) {
 	}
 	$('.bleaRemoteAction[data-action=refresh]').on('click',function(){
 		$('#md_modal').dialog('close');
-		$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+		$('#md_modal').dialog({title: "{{Gestion des antennes Bluetooth}}"});
 		$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 	});
 
@@ -277,13 +277,13 @@ foreach ($remotes as $remote) {
 				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
 			},
 			success: function (data) {
-				if (data.state != 'ok') {
+				if (data.state !== 'ok') {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
 				$('#div_bleaRemoteAlert').showAlert({message: '{{Sauvegarde réussie}}', level: 'success'});
 				$('#md_modal').dialog('close');
-				$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+				$('#md_modal').dialog({title: "{{Gestion des antennes Bluetooth}}"});
 				$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 				setTimeout(function() { displaybleaRemote(data.result.id) }, 200);
 
@@ -332,7 +332,7 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupérée}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupéré}}', level: 'success'});
 			}
 		});
 	});
@@ -355,7 +355,7 @@ foreach ($remotes as $remote) {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
-				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupérée}}', level: 'success'});
+				$('#div_bleaRemoteAlert').showAlert({message: '{{Log récupéré}}', level: 'success'});
 			}
 		});
 	});
@@ -386,7 +386,7 @@ foreach ($remotes as $remote) {
 	$('.bleaRemoteAction[data-action=all]').on('click',function(){
 	var type = $(this).attr('data-type');
 	var remoteId=$('.li_bleaRemote.active').attr('data-bleaRemote_id');
-	bootbox.confirm('{{Etes-vous sûr de vouloir mettre tous les équipements sur cette antenne en : }}' +$(this).attr('data-type'), function (result) {
+	bootbox.confirm('{{Voulez-vous vraiment mettre tous les équipements sur cette antenne en : }}' +$(this).attr('data-type'), function (result) {
 		if (result) {
 			$.ajax({
 				type: "POST",
@@ -402,11 +402,11 @@ foreach ($remotes as $remote) {
 					handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
 				},
 				success: function (data) {
-					if (data.state != 'ok') {
+					if (data.state !== 'ok') {
 						$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 						return;
 					}
-					$('#div_bleaRemoteAlert').showAlert({message: '{{Réussie}}', level: 'success'});
+					$('#div_bleaRemoteAlert').showAlert({message: '{{Réussi}}', level: 'success'});
 				}
 			});
 		}
@@ -427,7 +427,7 @@ foreach ($remotes as $remote) {
 				handleAjaxError(request, status, error,$('#div_bleaRemoteAlert'));
 			},
 			success: function (data) {
-				if (data.state != 'ok') {
+				if (data.state !== 'ok') {
 					$('#div_bleaRemoteAlert').showAlert({message: data.result, level: 'danger'});
 					return;
 				}
@@ -484,7 +484,7 @@ foreach ($remotes as $remote) {
 	});
 
 	$('.bleaRemoteAction[data-action=remove]').on('click',function(){
-		bootbox.confirm('{{Etês-vous sûr de vouloir supprimer cette Antenne ?}}', function (result) {
+		bootbox.confirm('{{Voulez-vous vraiment supprimer cette antenne ?}}', function (result) {
 			if (result) {
 				$.ajax({
 					type: "POST",
@@ -506,7 +506,7 @@ foreach ($remotes as $remote) {
 						$('.bleaRemote').hide();
 						$('.remoteThumbnailDisplay').show();
 						$('#md_modal').dialog('close');
-						$('#md_modal').dialog({title: "{{Gestion des antennes bluetooth}}"});
+						$('#md_modal').dialog({title: "{{Gestion des antennes Bluetooth}}"});
 						$('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.remote&id=blea').dialog('open');
 					}
 				});

@@ -19,7 +19,7 @@ if (!isConnect('admin')) {
 	throw new Exception('401 Unauthorized');
 }
 if (init('id') == '') {
-	throw new Exception('{{L\'id de l\'équipement ne peut etre vide : }}' . init('op_id'));
+	throw new Exception('{{L\'id de l\'équipement ne peut être vide : }}' . init('op_id'));
 }
 sendVarToJS('id', init('id'));
 ?>
@@ -181,7 +181,7 @@ while ($i < 65) {
 	});
 	
 	$('.biblioNumber').on('click', function () {
-    $('#md_modal2').dialog({title: "{{Votre Collection}}"});
+    $('#md_modal2').dialog({title: "{{Votre collection}}"});
     $('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.dotti.all').dialog('open');
 });
 
