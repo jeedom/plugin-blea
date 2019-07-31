@@ -30,19 +30,19 @@ sendVarToJS('id', init('id'));
 			<span style="margin-right:15px;"><label class="fa fa-circle pixelCircle" style="color : #000000;font-size:2em; margin-top:10px;margin-left:15px; cursor: pointer;"><input class="pixelcolor" type="color" value="#000000" style="width:0;height:0;visibility:hidden"></label>{{Couleur}}</span>
 		</div>
 		<div class="form-group">
-			<a class="btn btn-xs btn-success" id="bt_fill" style="margin-left:20px"><i class="fa fa-tint"></i> {{Remplir}}</a>
+			<a class="btn btn-xs btn-success" id="bt_fill" style="margin-left:20px"><i class="fas fa-tint"></i> {{Remplir}}</a>
 		</div>
 		<div class="form-group">
-			<a class="btn btn-xs btn-danger" id="bt_fillblack" style="margin-left:20px"><i class="fa fa-times"></i> {{Vider}}</a>
+			<a class="btn btn-xs btn-danger" id="bt_fillblack" style="margin-left:20px"><i class="fas fa-times"></i> {{Vider}}</a>
 		</div>
 		<div class="form-group">
-			<a class="btn btn-xs btn-warning replacecolor" id="bt_replace" style="margin-left:20px;"><i class="fa fa-flask"></i> {{Pot de peinture}}</a>
+			<a class="btn btn-xs btn-warning replacecolor" id="bt_replace" style="margin-left:20px;"><i class="fas fa-flask"></i> {{Pot de peinture}}</a>
 		</div>
 		<div class="form-group">
-			<a class="btn btn-xs btn-success copycolor" id="bt_copyColor" style="margin-left:20px"><i class="fa fa-pencil"></i> {{Pipette}}</a>
+			<a class="btn btn-xs btn-success copycolor" id="bt_copyColor" style="margin-left:20px"><i class="fas fa-pencil-alt"></i> {{Pipette}}</a>
 		</div>
 		<div class="form-group">
-			<a class="btn btn-xs btn-danger erasecolor" id="bt_erase" style="margin-left:20px"><i class="fa fa-eraser"></i> {{Gommer}}</a>
+			<a class="btn btn-xs btn-danger erasecolor" id="bt_erase" style="margin-left:20px"><i class="fas fa-eraser"></i> {{Gommer}}</a>
 		</div>
 		<div class="form-group">
 			<label class="checkbox-inline"><input class="realtime" type="checkbox" unchecked />{{Temps réel}}</label>
@@ -77,9 +77,9 @@ while ($i < 65) {
 	</div>
 	<div class="col-lg-4">
 		<div class="form-group">
-			<a class="btn btn-warning" id="bt_sendAll"><i class="fa fa-paint-brush"></i> {{Afficher sur le Dotti}}</a>
-			<a class="btn btn-success" id="bt_displayExport"><i class="fa fa-download"></i></a>
-			<a class="btn btn-danger" id="bt_Import"><i class="fa fa-upload"></i></a>
+			<a class="btn btn-warning" id="bt_sendAll"><i class="fas fa-paint-brush"></i> {{Afficher sur le Dotti}}</a>
+			<a class="btn btn-success" id="bt_displayExport"><i class="fas fa-download"></i></a>
+			<a class="btn btn-danger" id="bt_Import"><i class="fas fa-upload"></i></a>
 			<span class="biblioNumber pull-right label label-info" style="font-size:1em;cursor:pointer">
 			</span>
 		</div>
@@ -87,7 +87,7 @@ while ($i < 65) {
 			<div class="input-group">
 				<input class="nameDottiScreen form-control" id="texte" type='text'/>
 				<span class="input-group-btn">
-					<a class="btn btn-success" id="bt_saveImage"><i class="fa fa-floppy-o"></i></a>
+					<a class="btn btn-success" id="bt_saveImage"><i class="fas fa-save"></i></a>
 				</span>
 			</div>
 		</div>
@@ -95,7 +95,7 @@ while ($i < 65) {
 			<div class="input-group">
 				<select class="memoryload form-control"></select>
 				<span class="input-group-btn">
-					<a class="btn btn-danger" id="bt_delImage"><i class="fa fa-trash-o"></i></a>
+					<a class="btn btn-danger" id="bt_delImage"><i class="fas fa-trash"></i></a>
 				</span>
 			</div>
 		</div>
