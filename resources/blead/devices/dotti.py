@@ -18,7 +18,7 @@ class Dotti():
 		action={}
 		action['present'] = 1
 		return action
-		
+
 	def action(self,message):
 		mac = message['device']['id']
 		if mac not in globals.LAST_STORAGE:
@@ -49,7 +49,7 @@ class Dotti():
 				data = message['command']['data']
 				conn.writeCharacteristic('0x2a','0601'+utils.twoDigitHex(int(data[0]))+utils.twoDigitHex(int(data[1]))+utils.twoDigitHex(int(data[2]))+'00')
 				colorArray ={}
-				for i in range(64): 
+				for i in range(64):
 					colorArray[int(i) + 1] = self.rgb_to_hex((int(data[0]), int(data[1]), int(data[2])))
 				globals.LAST_STORAGE[mac] = colorArray
 				logging.debug('Color sent')
@@ -80,7 +80,7 @@ class Dotti():
 						logging.debug('DOTTI------I use color all screen method to improve display speed in :'+str(maxhex))
 						conn.writeCharacteristic(handle,'0601'+str(maxhex).replace('#','')+'00')
 						colorArray ={}
-						for i in range(64): 
+						for i in range(64):
 							colorArray[int(i) + 1] = str(maxhex)
 						globals.LAST_STORAGE[mac] = colorArray
 				save_pixel=0
@@ -117,7 +117,7 @@ class Dotti():
 			logging.debug("DOTTI------Failed to finish : %s" % str(e))
 		conn.disconnect()
 		return
-		
+
 	def hex_to_rgb(self,value):
 		value = value.lstrip('#')
 		lv = len(value)

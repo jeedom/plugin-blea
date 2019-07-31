@@ -185,7 +185,7 @@ class dottiblea extends blea {
 		if (file_exists($file)) {
 			$dataMemory = json_decode(file_get_contents($file), true);
 		}
-		$dataColor = '';
+		$dataColor = array();
 		foreach ($dataMemory as $name => $data) {
 			if (strtolower($_name) == strtolower($name)) {
 				foreach ($data as $pixel => $color) {
