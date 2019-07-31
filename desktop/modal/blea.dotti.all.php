@@ -30,9 +30,9 @@ foreach ($dataMemory as $name=>$data){
 	
 echo '<div class="form-group pull-left">';
 echo '<div class="miniImageName" data-name="' . $name .'"><span class="label label-info" style="font-size:1em;cursor:default">' . ucfirst($name) . '</span>
-<a class="btn btn-xs btn-success bt_renameImageMini"><i class="fa fa-retweet"></i></a>
-<a class="btn btn-xs btn-warning bt_loadImageMini"><i class="fa fa-download"></i></a>
-<a class="btn btn-xs btn-danger bt_delImageMini"><i class="fa fa-trash-o"></i></a></div>';
+<a class="btn btn-xs btn-success bt_renameImageMini"><i class="fas fa-retweet"></i></a>
+<a class="btn btn-xs btn-warning bt_loadImageMini"><i class="fas fa-download"></i></a>
+<a class="btn btn-xs btn-danger bt_delImageMini"><i class="fas fa-trash"></i></a></div>';
 $i = 1;
 while ($i < 65) {
 	$j = 1;
