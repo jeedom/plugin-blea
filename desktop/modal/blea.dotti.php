@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 if (init('id') == '') {
 	throw new Exception('{{L\'id de l\'équipement ne peut être vide : }}' . init('op_id'));

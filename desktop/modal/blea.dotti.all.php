@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 echo '<div class="row" style="height:100%; width: 100%">';
 echo '<div class="eventDisplayMini"></div>';

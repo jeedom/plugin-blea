@@ -16,7 +16,7 @@
  */
 
 if (!isConnect('admin')) {
-	throw new Exception('401 Unauthorized');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 $eqLogics = blea::byType('blea');
 ?>
