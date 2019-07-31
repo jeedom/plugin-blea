@@ -133,7 +133,7 @@ $('.bt_delImageMini').on('click', function () {
 	
 	$('.bt_renameImageMini').on('click', function () {
 		var oriname = $(this).closest('.miniImageName').attr('data-name');
-		var newname = prompt("Quel nouveau nom voulez vous donner à l'image?", "")
+		var newname = prompt("Quel nouveau nom voulez-vous donner à l'image?", "")
 		if (newname == ''){
 			$('.eventDisplayMini').showAlert({message:  'Vous devez spécifier un nom pour sauver une image',level: 'danger'});
 			setTimeout(function() { deleteAlertMini()}, 2000);
