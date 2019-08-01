@@ -8,7 +8,7 @@
         "Démon local": "Layanan lokal",
         "Port clef bluetooth": "kunci pelabuhan Bluetooth",
         "Aucun": "Tak ada",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket bagian dalam (perubahan berbahaya, harus sama terutama budak)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket interne (modification dangereuse, doit être le même surtout les esclaves)",
         "55008": "55.008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -62,8 +62,8 @@
         "Historiser": "Historicize",
         "Inverser": "Membalikkan",
         "Arrêter l\\'inclusion": "Berhenti inklusi \\\\",
-        "Arreter inclusion": "berhenti inklusi",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Anda modus inklusi. Klik lagi pada \\\\ tombol inklusi untuk keluar dari mode ini (jika tidak modus akan tetap aktif satu menit)",
+        "Arreter inclusion": "Arrêter inclusion",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Modus Inklusi",
         "Arrêter l\\'exclusion": "Berhenti pengecualian \\\\",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Anda berada dalam mode pengecualian. Klik lagi pada \\\\ tombol pengecualian untuk keluar dari mode ini",

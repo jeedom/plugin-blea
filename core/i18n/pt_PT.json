@@ -8,7 +8,7 @@
         "Démon local": "daemon locais",
         "Port clef bluetooth": "chave porta Bluetooth",
         "Aucun": "não",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Tomada interior da porta (mudança perigosa, devem ser os mesmos, especialmente os escravos)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket interne (modification dangereuse, doit être le même surtout les esclaves)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -62,8 +62,8 @@
         "Historiser": "historicizar",
         "Inverser": "inverter",
         "Arrêter l\\'inclusion": "Pare \\\\ inclusão",
-        "Arreter inclusion": "parar de inclusão",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Você é a inclusão de modo. Clique novamente no botão \\\\ de inclusão para sair deste modo (se não o modo permanecerá ativo de um minuto)",
+        "Arreter inclusion": "Arrêter inclusion",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "inclusão moda",
         "Arrêter l\\'exclusion": "Pare \\\\ exclusão",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Você está em exclusão moda. Clique novamente no botão \\\\ de exclusão para sair deste modo",
