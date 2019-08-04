@@ -56,7 +56,7 @@ class jeedom_com():
 			changes = self.changes
 			self.changes = {}
 			logging.debug('Send to jeedom : '+str(changes))
-			i=1
+			i = 1
 			bad_status_code = True
 			while i <= self.retry:
 				try:
@@ -108,10 +108,10 @@ class jeedom_com():
 
 	def thread_change(self,change):
 		logging.debug('Send to jeedom :  %s' % (str(change),))
-		i=0
-		while i < self.retry:
+		i = 1
+		while i <= self.retry:
 			try:
-				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=False)
+				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5*i, 120), verify=False)
 				if r.status_code == requests.codes.ok:
 					break
 			except Exception as error:
