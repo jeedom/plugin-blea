@@ -8,7 +8,7 @@
         "Démon local": "Yerel Daemon",
         "Port clef bluetooth": "bluetooth anahtarın port u",
         "Aucun": "Hiçbir",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Iç port socket (değişim tehlikeli, her eğer de ayni olması lazım)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket interne (modification dangereuse, doit être le même surtout les esclaves)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -62,8 +62,8 @@
         "Historiser": "Tarihe göre sırala",
         "Inverser": "Ters çevir",
         "Arrêter l\\'inclusion": "Eklemeyi durdur",
-        "Arreter inclusion": "Ekleme durdur",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Dahil etme modundasınız. Bu moddan çıkmak için butona tekrar tıklayın (yoksa bu mod bir dakika aktif kalır)",
+        "Arreter inclusion": "Arrêter inclusion",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "İçerleme modu",
         "Arrêter l\\'exclusion": "Dışlamayı durdur",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Dışlama modundasınız. Bu moddan çıkmak için tekrar dışlama butonuna tıklayın",

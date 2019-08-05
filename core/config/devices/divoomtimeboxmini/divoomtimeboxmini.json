@@ -1,0 +1,165 @@
+{
+    "divoomtimeboxmini": {
+        "name": "TimeBox Mini",
+        "groupe" : "Afficheur",
+		"configuration" : {
+			"specificmodal" : 1,
+			"specificclass" : 1,
+			"cancontrol" : 1,
+			"name" : "divoomtimeboxmini",
+			"specificwidgets" : 1,
+			"canbelocked" : 1
+		},
+        "commands": [
+          {
+    				"name": "Couleur",
+                    "type": "action",
+                    "subtype": "color",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:sendcolor,value:calcul,type:display",
+    				"configuration": {
+    					"logicalwidget" : "sendcolor"
+    				}
+                },{
+          				"name": "Couleur Clignotant",
+                          "type": "action",
+                          "subtype": "color",
+                          "isVisible": 1,
+                          "unite": "",
+                          "logicalId": "name:divoomtimeboxmini,classlogical:sendcolor,value:calcul,type:display,blink:1",
+          				"configuration": {
+          					"logicalwidget" : "sendcolorBlink"
+          				}
+                      },
+    			{
+    				"name": "Off",
+                    "type": "action",
+                    "subtype": "other",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:blackscreen,value:calcul,type:display",
+    				"configuration": {
+    					"logicalwidget" : "blackscreen"
+    				}
+                },
+    			{
+    				"name": "Afficher texte",
+                    "type": "action",
+                    "subtype": "message",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:show_text,type:show_text,value:calcul",
+    				"display": {
+    					"title_disable": 0,
+    					"title_placeholder": "Options"
+    				},
+    				"configuration": {
+    					"logicalwidget" : "sendtext"
+    				}
+    			},
+				{
+					"name": "Afficher test",
+							"type": "action",
+							"subtype": "other",
+							"isVisible": 1,
+							"unite": "",
+							"logicalId": "name:divoomtimeboxmini,classlogical:show_text_test,type:show_text_test,value:calcul",
+					"configuration": {
+					"logicalwidget" : "show_text_test"
+					}
+				},
+    			{
+    				"name": "Image aléatoire",
+                    "type": "action",
+                    "subtype": "message",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:sendrandom,type:display,value:calcul",
+    				"display": {
+    					"title_disable": 0,
+    					"title_placeholder": "Options",
+    					"message_placeholder": "Vide ou liste d'icône sépraré par ;"
+    				}
+                },
+    			{
+    				"name": "Image Précédente",
+                    "type": "action",
+                    "subtype": "other",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:lastimage,type:display,value:calcul"
+                },
+    			{
+    				"name": "Raz priorité",
+                    "type": "action",
+                    "subtype": "other",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoomtimeboxmini,classlogical:resetpriority,type:display,value:calcul,callback:no"
+                },
+			{
+				"name": "Charger Image",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:divoomtimeboxmini,classlogical:loadimage,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 0,
+					"title_placeholder": "Nom",
+					"message_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "loadimage"
+				}
+            },
+			{
+				"name": "Afficher Heure",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:divoomtimeboxmini,classlogical:show_clock,type:show_clock,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 1,
+					"title_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "show_clock"
+				}
+            },
+			{
+				"name": "Afficher Température",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:divoomtimeboxmini,classlogical:show_temp,type:show_temp,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 1,
+					"title_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "show_temp"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Divoom",
+                "name": "TimeBox Mini",
+				"doc": "",
+				"type": "Afficheur",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Fonction garder la connection obligatoire pour pas avoir le logo bluetooth",
+				"inclusion" : "Mode inclusion",
+				"imglink": "divoomtimeboxmini"
+            }
+        ]
+    }
+}

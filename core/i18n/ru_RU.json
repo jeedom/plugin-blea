@@ -8,7 +8,7 @@
         "Démon local": "Локальный демон",
         "Port clef bluetooth": "ключ порт Bluetooth",
         "Aucun": "Нет",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Порт внутреннего сокета (изменения опасны, особенно для ведомых устройств)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket interne (modification dangereuse, doit être le même surtout les esclaves)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -62,8 +62,8 @@
         "Historiser": "История",
         "Inverser": "Обратный",
         "Arrêter l\\'inclusion": "Стоп \\\\ включение",
-        "Arreter inclusion": "Остановите включение",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Вы включение режима. Снова нажмите на кнопку \\\\ включения для выхода из этого режима (если не режим будет оставаться активным одной минуты)",
+        "Arreter inclusion": "Arrêter inclusion",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Режим включения",
         "Arrêter l\\'exclusion": "Стоп \\\\ исключение",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Вы в моде исключения. Снова нажмите на кнопку \\\\ исключения, чтобы выйти из этого режима",
