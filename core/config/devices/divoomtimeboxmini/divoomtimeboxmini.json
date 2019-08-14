@@ -8,7 +8,8 @@
 			"cancontrol" : 1,
 			"name" : "divoomtimeboxmini",
 			"specificwidgets" : 1,
-			"canbelocked" : 1
+			"canbelocked" : 1,
+			"islocked" : 1
 		},
         "commands": [
           {

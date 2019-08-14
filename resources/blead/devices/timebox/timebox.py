@@ -47,7 +47,6 @@ class TimeBox:
         self.isconnected = False
         self.mac = ''
 
-
     def show_text(self, txt, speed=10, font=None):
         """
           Display text & scroll, call is blocking
@@ -131,6 +130,7 @@ class TimeBox:
         messaged between 0x01 and 0x02."""
         logging.debug('DIVOOM------Send payload')
         msg = self.messages.make_message(payload)
+        logging.debug('MEEEEEEEEEEESSSSAAAAGE    ' + str(bytes(bytearray(msg)).hex()))
         return self.socket.send(bytes(bytearray(msg)))
 
     def set_time(self, time=None):
@@ -202,6 +202,7 @@ class TimeBox:
     def set_static_image(self, image):
         """Set the image on the TimeBox"""
         msg = self.messages.static_image_message(image)
+        logging.debug('MEEEEEEEEEEESSSSAAAAGE    ' + str(bytes(bytearray(msg)).hex()))
         self.socket.send(bytes(bytearray(msg)))
 
     def set_dynamic_images(self, images, frame_delay=1):
@@ -210,6 +211,7 @@ class TimeBox:
         for img in images:
             msg = self.messages.dynamic_image_message(img, fnum, frame_delay)
             fnum = fnum + 1
+            logging.debug('MEEEEEEEEEEESSSSAAAAGE    ' + str(bytes(bytearray(msg)).hex()))
             self.socket.send(bytes(bytearray(msg)))
 
     def show_temperature(self, color=None):
@@ -227,35 +229,3 @@ class TimeBox:
             color = ImageColor.getrgb(color)
             args += list(color)
         self.send_command("set view", args)
-
-
-if __name__ == '__main__':
-    from PIL import ImageFont
-    t = TimeBox()
-    t.connect()
-    t.show_clock()
-    t.set_time(datetime.datetime.now()-datetime.timedelta(hours=1))
-    time.sleep(2)
-    t.set_time(datetime.datetime.now())
-    t.show_clock(color="blue")
-    time.sleep(2)
-    t.show_static_image(os.path.join(os.path.dirname(__file__),"testdata/color.png"))
-    time.sleep(1)
-    t.show_animated_image(os.path.join(os.path.dirname(__file__),"testdata/exp.gif"))
-    time.sleep(1)
-    for speed in [10, 15, 20, 25]:
-        t.show_text([("Hello", "blue")], speed=speed)
-    time.sleep( 1)
-    for font in [None, ImageFont.load(os.path.join(os.path.dirname(__file__),'fonts/slkscr.pil')),
-    ImageFont.truetype(os.path.join(os.path.dirname(__file__),'fonts/11x7 Matrix.ttf'),13),
-    ImageFont.truetype(os.path.join(os.path.dirname(__file__),'fonts/tallround.ttf'),13)]:
-        t.show_text([
-                 ("Hello", "blue"),
-                 (" world!", "red"),
-                 (" abcdefghijklmnopqrstuvwxyz", "green"),
-                 (" abcdefghijklmnopqrstuvwxyz".upper(), "yellow"),
-                 ("!.,;@$*�#()'|�~&", "green"),
-                 ], font=font)
-
-    t.show_clock(color=[0x00,0x00,0xFF])
-    t.close()

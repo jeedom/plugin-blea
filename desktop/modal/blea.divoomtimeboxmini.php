@@ -62,10 +62,10 @@ while ($i < 122) {
 		if ($i >= 12){
 			$notfirstline = ' pixelNotFirstLine';
 		}
-		echo '<label class="fa fa-square pixel' . $notfirstline .'" data-pixel="' . $i . '" style="color : #000000;font-size:3em; margin-top:10px;margin-left:15px; cursor: pointer;border-radius:0"></label>  ';
+		echo '<label class="fa fa-square pixel' . $notfirstline .'" data-pixel="' . $i . '" style="color : #000000;font-size:2em; margin-top:0px;margin-left:6px; cursor: pointer;border-radius:0"></label>  ';
 		$j++;
 		$i++;
-		
+
 	}
 	echo '<br/>';
 }
@@ -176,7 +176,7 @@ while ($i < 122) {
 		$('.uploadimagedivoomtimeboxmini').hide();
 		getImageCode();
 	});
-	
+
 	$('.biblioNumber').on('click', function () {
     $('#md_modal2').dialog({title: "{{Votre Collection}}"});
     $('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoomtimeboxmini.all').dialog('open');
@@ -191,7 +191,7 @@ while ($i < 122) {
 		}catch (e) {
 		}
 	}
-	
+
 	$('.imagedivoomtimeboxmini').on('change',function(){
 		autoLoadJson();
 	});
@@ -207,7 +207,7 @@ while ($i < 122) {
 		$('.closeimagedivoomtimeboxmini').hide();
 		$('.uploadimagedivoomtimeboxmini').hide();
 	});
-	
+
 	$('#bt_saveImage').on('click', function () {
 		var array = {};
 		$('.pixel').each(function( index ) {
@@ -371,7 +371,7 @@ while ($i < 122) {
 			sendPixelArray(array,id);
 		}
 	})
-	
+
 	$('#bt_fillblack').on('click', function() {
 		$('.pixel').each(function( index ) {
 			$(this).css('color', '#000000');
@@ -388,7 +388,7 @@ while ($i < 122) {
 	$('#bt_sendAll').on('click', function() {
 		sendAll();
 	});
-	
+
 	function sendAll() {
 		var array = {};
 		$('.pixel').each(function( index ) {
@@ -396,7 +396,7 @@ while ($i < 122) {
 		});
 		sendPixelArray(array,id);
 	}
-	
+
 	function hexc(colorval) {
 		var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 		delete(parts[0]);
@@ -439,7 +439,7 @@ while ($i < 122) {
 			}
 		});
 	}
-	
+
 	function deleteAlert() {
 		$('.eventDisplay').hideAlert();
 	}
@@ -502,7 +502,7 @@ while ($i < 122) {
 			}
 		});
 	}
-	
+
 	function getImageCode(){
 		$('.imagedivoomtimeboxmini').val('');
 		$.ajax({

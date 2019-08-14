@@ -34,26 +34,28 @@ echo'<div class="form-group pull-right">
 <a class="btn btn-warning bt_syncimages pull-right" title="Envoyer les fichiers images sur les antennes"><i class="fas fa-retweet"></i></a></br></br>';
 foreach ($dataMemory as $name=>$data){
 
-echo '<div class="form-group pull-left">';
+echo '<div class="form-group pull-left" style="overflow:hidden;height:10em">';
 echo '<div class="miniImageName" data-name="' . $name .'"><span class="label label-info" style="font-size:1em;cursor:default">' . ucfirst($name) . '</span>
 <a class="btn btn-xs btn-success bt_renameImageMini"><i class="fas fa-retweet"></i></a>
 <a class="btn btn-xs btn-warning bt_loadImageMini"><i class="fas fa-download"></i></a>
 <a class="btn btn-xs btn-danger bt_delImageMini"><i class="fas fa-trash"></i></a></div>';
 $i = 1;
+$line = 0;
 while ($i < 122) {
 	$j = 1;
 	while ($j < 12) {
 		$marginTop = '0px';
 		if ($i >= 12){
-			$marginTop = '-15px';
+			$marginTop = (-0.9*$line).'em';
 		}
-		echo '<label class="fa fa-stop" style="color : ' . $data[$i] . ';font-size:2.1em; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
+		echo '<label class="fa fa-stop" style="color : ' . $data[$i] . ';font-size:0.8em;vertical-align:top; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
 		$j++;
 		$i++;
 
 	}
 	if ($i != 122){
 		echo '<br/>';
+		$line+=1;
 	}
 }
 

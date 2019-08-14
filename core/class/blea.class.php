@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.6.4';
+	public static $_version = '2.7';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
@@ -508,7 +508,7 @@ class blea extends eqLogic {
 		config::save('include_mode', 0, 'blea');
 		return true;
 	}
-	
+
 	public static function syncconfBlea($_background = true) {
 		log::remove('blea_syncconf');
 		log::add('blea_syncconf', 'info', 'Arrêt du démon en cours');
@@ -533,7 +533,7 @@ class blea extends eqLogic {
 		log::add('blea', 'info', 'Sending ready to daemons');
 		self::socket_connection($value,True);
 	}
-	
+
 	public function launch_allremotes(){
 		log::add('blea','info','Launching remotes ...');
 		$remotes = blea_remote::all();
@@ -542,7 +542,7 @@ class blea extends eqLogic {
 			sleep(1);
 		}
 	}
-	
+
 	public function send_allremotes(){
 		log::add('blea','info','Updating files on remotes ...');
 		$remotes = blea_remote::all();
@@ -551,7 +551,7 @@ class blea extends eqLogic {
 			blea::launchremote($remote->getId());
 		}
 	}
-	
+
 	public function update_allremotes(){
 		log::add('blea','info','Updating remotes ...');
 		$remotes = blea_remote::all();
@@ -560,7 +560,7 @@ class blea extends eqLogic {
 			blea::launchremote($remote->getId());
 		}
 	}
-	
+
 	public function stop_allremotes(){
 		log::add('blea','info','Stopping remotes ...');
 		$remotes = blea_remote::all();
@@ -735,7 +735,7 @@ class blea extends eqLogic {
 		}
 		return [$modelList, $needsrefresh,$remark,$specificmodal,$cancontrol,$canbelocked];
 	}
-	
+
 	public function preSave() {
 		$device = self::devicesParameters($this->getConfiguration('device'));
 		if (isset($device['configuration']['name'])) {
@@ -776,7 +776,7 @@ class blea extends eqLogic {
 		}
 		return $closest;
 	}
-	
+
 	public function computePresence() {
 		$globalPresence = 0;
 		$presentcmd = $this->getCmd(null, 'present');
@@ -827,7 +827,7 @@ class blea extends eqLogic {
 				if (is_object($emitterAntenna)){
 					$emitter = $emitterAntenna->getRemoteName();
 				} else {
-					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
 					$emitter = 'unknown';
 				}
 			}
@@ -841,7 +841,7 @@ class blea extends eqLogic {
 				if (is_object($emitterAntenna)){
 					$emitter = $emitterAntenna->getRemoteName();
 				} else {
-					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
 					$emitter = 'unknown';
 				}
 			}
@@ -853,7 +853,7 @@ class blea extends eqLogic {
 			if (is_object($refresherAntenna)){
 				$refresher = $refresherAntenna->getRemoteName();
 			} else {
-				log::add('blea','error','Attention l\'antenne définie en réception pour ' . $this->getHumanName() . ' n\'existe plus.'); 
+				log::add('blea','error','Attention l\'antenne définie en réception pour ' . $this->getHumanName() . ' n\'existe plus.');
 				$refresher = 'unknown';
 			}
 		}
@@ -1240,21 +1240,21 @@ class blea_remote {
 	public function remove() {
 		return DB::remove($this);
 	}
-	
+
 	public function getCache($_key = '', $_default = '') {
 		$cache = cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue();
 		return utils::getJsonAttr($cache, $_key, $_default);
 	}
-	
+
 	public function setCache($_key, $_value = null) {
 		cache::set('eqLogicCacheAttr' . $this->getId(), utils::setJsonAttr(cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue(), $_key, $_value));
 	}
-	
+
 	public function getCacheRemotes($_key = '', $_default = '') {
 		$cache = cache::byKey('BleaPluginRemotes')->getValue();
 		return utils::getJsonAttr($cache, $_key, $_default);
 	}
-	
+
 	public function setCacheRemotes($_key, $_value = null) {
 		cache::set('BleaPluginRemotes', utils::setJsonAttr(cache::byKey('BleaPluginRemotes')->getValue(), $_key, $_value));
 	}

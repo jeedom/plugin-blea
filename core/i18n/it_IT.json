@@ -62,7 +62,11 @@
         "Historiser": "Storicizza",
         "Inverser": "Inverti",
         "Arrêter l\\'inclusion": "Smettere di \\\\ inclusione",
+<<<<<<< HEAD
+        "Arreter inclusion": "Arrêter inclusion",
+=======
         "Arreter inclusion": "Ferma inclusione",
+>>>>>>> branch 'beta' of https://github.com/jeedom/plugin-blea.git
         "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Modalità inclusione",
         "Arrêter l\\'exclusion": "Smettere di \\\\ esclusione",
