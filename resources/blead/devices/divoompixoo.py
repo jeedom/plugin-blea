@@ -44,6 +44,8 @@ class DivoomPixoo():
 		if not conn.isconnected:
 			conn.connect(mac,1)
 			if not conn.isconnected:
+				if mac in globals.KEEPED_CONNECTION:
+					del globals.KEEPED_CONNECTION[mac]
 				return
 		try:
 			result = conn.socket.getpeername()
@@ -52,6 +54,8 @@ class DivoomPixoo():
 			if not conn.isconnected:
 				conn.connect(mac,1)
 				if not conn.isconnected:
+					if mac in globals.KEEPED_CONNECTION:
+						del globals.KEEPED_CONNECTION[mac]
 					return
 		try:
 			if message['command']['type']=="show_clock":
@@ -115,6 +119,10 @@ class DivoomPixoo():
 				conn.set_visual(message['command']['effectype'],message['command']['visual'])
 			elif message['command']['type']=='notifs':
 				conn.set_notifs(message['command']['icon'])
+			elif message['command']['type']=='offtotal':
+				conn.send_raw('4100')
+			elif message['command']['type']=='blackscreen':
+				conn.send_raw('4501000000640000')
 			elif message['command']['type']=='clock':
 				mode = '0'
 				clock = '0'
@@ -137,6 +145,8 @@ class DivoomPixoo():
 				conn.set_clock(mode,clock,weather,temp,date,color)
 		except Exception as e:
 			logging.debug("PIXOO------Failed to finish : %s" % str(e))
+			if mac in globals.KEEPED_CONNECTION:
+				del globals.KEEPED_CONNECTION[mac]
 		#conn.disconnect()
 		return
 

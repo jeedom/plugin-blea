@@ -44,6 +44,17 @@
     					"logicalwidget" : "blackscreen"
     				}
                 },
+    {
+      "name": "Off Total",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "unite": "",
+              "logicalId": "name:divoompixoo,classlogical:offtotal,value:calcul,type:offtotal",
+      "configuration": {
+        "logicalwidget" : "offtotal"
+      }
+          },
     			{
     				"name": "Afficher texte",
                     "type": "action",

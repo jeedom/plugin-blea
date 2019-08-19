@@ -20,7 +20,7 @@
 class blea extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 	public static $_widgetPossibility = array('custom' => true);
-	public static $_version = '2.7';
+	public static $_version = '2.8';
 	public static $_bluepy_version = '1.1.4';
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(

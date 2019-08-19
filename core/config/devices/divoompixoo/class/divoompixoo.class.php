@@ -287,7 +287,7 @@ class divoompixooblea extends blea {
 			$return = self::sendData($_eqLogic,'color', hex2rgb($_options['color']));
 		}
 		elseif ($logicalid == 'blackscreen') {
-			$return = self::sendData($_eqLogic,'color', hex2rgb('#000000'));
+			$_data['type'] = 'blackscreen';
 		}
 		elseif ($logicalid == 'loadimage') {
 			$options = arg2array($_options['message']);
