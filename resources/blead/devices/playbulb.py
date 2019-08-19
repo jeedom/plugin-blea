@@ -36,15 +36,15 @@ class Playbulb():
 		value=''
 		characteristics=[]
 		try:
-			characteristics = conn.conn.getCharacteristics(0x0001)
+			characteristics = conn.getCharacteristics(0x0001,retry=2)
 		except Exception as e:
 			logging.debug(str(e))
 			try:
-				characteristics = conn.conn.getCharacteristics(0x0001)
+				characteristics = conn.getCharacteristics(0x0001,retry=2)
 			except Exception as e:
 				logging.debug(str(e))
 				try:
-					characteristics = conn.conn.getCharacteristics(0x0001)
+					characteristics = conn.getCharacteristics(0x0001,retry=2)
 				except Exception as e:
 					logging.debug(str(e))
 					conn.disconnect()

@@ -1,0 +1,63 @@
+{
+    "meyerdom2analog": {
+        "name": "MeyerDOM 2 analogiques",
+        "groupe" : "Contacteurs",
+		"configuration" : {
+			"name" : "meyerdom2analog",
+			"battery_type" : "1x3V CR2450"
+    },
+        "commands": [
+      {
+                "name": "Analog 1",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "analog1",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Analog 2",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "analog2",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite":"V",
+                "logicalId": "voltage",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      }
+        ],
+		"compatibility": [
+            {
+        "manufacturer": "MeyerDom",
+        "name": "2 Analogiques",
+				"doc": "",
+				"type": "Contacteurs",
+				"battery_type": "1x3V CR2450",
+				"ref" : "",
+				"comlink": "",
+				"remark": "2 analogiques",
+				"inclusion" : "Mode inclusion",
+				"imglink": "meyerdom2analog"
+            }
+        ]
+    }
+}

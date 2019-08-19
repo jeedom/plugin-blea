@@ -8,7 +8,7 @@
         "Démon local": "Demonio local",
         "Port clef bluetooth": "Clave puerto Bluetooh",
         "Aucun": "Ninguno",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Port socket (modificación peligrosa, debe ser el mismo sobre todo los esclavos)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Puerto socket interno (modificación peligrosa, debe ser el mismo sobre todo los esclavos)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -62,8 +62,8 @@
         "Historiser": "Historizar",
         "Inverser": "Invertir",
         "Arrêter l\\'inclusion": "Detener la inclusión",
-        "Arreter inclusion": "Detener inclusión",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Estas en modo de inclusión. Vuelve a hacer clic en el botón de inclusión para salir de este modo (de lo contrario el modo permanecerá activo 1 minuto)",
+        "Arreter inclusion": "Detener la inclusión",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Modo inclusión",
         "Arrêter l\\'exclusion": "Parar la exclusión",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "Estas en modo de exclusión. Vuelve a hacer clic en el botón exclusión para salir de este modo",

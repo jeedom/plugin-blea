@@ -8,7 +8,7 @@
         "Démon local": "Local daemon",
         "Port clef bluetooth": "Bluetooth dongle port",
         "Aucun": "None",
-        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Internal socket port (Warning: must be the same on all slaves)",
+        "Port socket interne (modification dangereuse, doit etre le meme surtout les esclaves)": "Internal socket port (warning: this must  be the same for all slaves)",
         "55008": "55008"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
@@ -63,7 +63,7 @@
         "Inverser": "Invert",
         "Arrêter l\\'inclusion": "Stop inclusion",
         "Arreter inclusion": "Stop inclusion",
-        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "You are in inclusion mode. Please click again on the inclusion button to exit this mode (otherwise it will remain active for 1 minute)",
+        "Vous etes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode inclusion. Recliquez sur le bouton d\\'inclusion pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Mode inclusion": "Inclusion mode",
         "Arrêter l\\'exclusion": "Stop exclusion",
         "Vous etes en mode exclusion. Recliquez sur le bouton d\\'exclusion pour sortir de ce mode": "You are in exclusion mode. Please click again on the exclusion button to exit this mode",

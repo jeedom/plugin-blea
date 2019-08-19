@@ -15,9 +15,6 @@ class Miflora():
 		validname = ['Flower mate','Flower care',self.name]
 		if name in validname:
 			return True
-		if data.lower().startswith("95fe") and (mac.lower().startswith("c4:7c:8d")):
-			#broadcasted advertising data
-			return True
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
