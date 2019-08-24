@@ -20,7 +20,7 @@
       </div>
       <div class="col-xs-12">
         <center>
-      <select class="memoryload#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;" onfocus="this.selectedIndex = -1;">
+      <select class="memoryload#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
       </select>
   </center>
       </div>
@@ -50,7 +50,7 @@
 </div>
 	<div class="col-xs-12">
 	<center>
-      <select class="typeclock#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;" onfocus="this.selectedIndex = -1;">
+      <select class="typeclock#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
           <option value='0'>Grand texte</option>
           <option value='1'>Simple Défilant</option>
           <option value='2'>Cadre</option>
@@ -72,7 +72,8 @@
   	<i class="gotoclock fa fa-chevron-left" style="position:absolute;top:120px;left:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
     <div class="col-xs-12">
   	<center>
-        <select class="visualeffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;" onfocus="this.selectedIndex = -1;">
+        <select class="visualeffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Effet</option>
             <option value='0'>Pixel Color</option>
             <option value='1'>Trou noir</option>
             <option value='2'>Couleur verticale</option>
@@ -94,7 +95,8 @@
       </div>
   <div class="col-xs-12">
   	<center>
-        <select class="musicaleffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;" onfocus="this.selectedIndex = -1;">
+        <select class="musicaleffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Effet</option>
             <option value='0'>Equalizer vertical</option>
             <option value='1'>Canard chantant</option>
             <option value='2'>Vumeter</option>
@@ -132,7 +134,8 @@
       </div>
     <div class="col-xs-12">
     <center>
-        <select class="notify#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;" onfocus="this.selectedIndex = -1;">
+        <select class="notify#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Notif</option>
             <option value='0'>Kakao Talk</option>
             <option value='1'>Instagram</option>
             <option value='2'>Snapchat</option>
@@ -194,7 +197,7 @@
   });
     if('#loadimage#' != ''){
  			loadimage#id# = json_decode('#loadimage#');
- 			loadloadimage#id# = '';
+ 			loadloadimage#id# = '<option value="">Choisir Image</option>';
  			for(var i in loadimage#id#){
  				loadloadimage#id# += '<option value="' + loadimage#id#[i] + '">' + loadimage#id#[i].charAt(0).toUpperCase() + loadimage#id#[i].slice(1) + '</option>';
  			}

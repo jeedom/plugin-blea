@@ -18,6 +18,10 @@
 if (!isConnect('admin')) {
 	throw new Exception('401 Unauthorized');
 }
+if (init('id') == '') {
+	throw new Exception('{{L\'id de l\'équipement ne peut etre vide : }}' . init('op_id'));
+}
+sendVarToJS('id', init('id'));
 echo '<div class="row" style="height:100%; width: 100%">';
 echo '<div class="eventDisplayMini"></div>';
 echo '<div class="col-lg-12">';
@@ -63,13 +67,16 @@ echo '</div>';
 }
 $dir = dirname(__FILE__) . '/../../data/divoompixoo';
 $files = array();
-echo '<div class="col-lg-12">';
 foreach (ls($dir, '*') as $file) {
+	$files[] = $file;
+}
+usort($files, 'strnatcasecmp');
+echo '<div class="col-lg-12">';
+foreach ($files as $file) {
 	echo '<div class="form-group pull-left">';
-	echo '<div class="miniImageName" data-name="' . $file .'"><span class="label label-info" style="font-size:1em;cursor:default">' . ucfirst($file) . '</span>
-<a class="btn btn-xs btn-success bt_renameImageMiniFile"><i class="fas fa-retweet"></i></a>
+	echo '<div class="miniImageName" style="cursor:context-menu" data-name="' . $file .'"><span class="label label-info bt_renameImageMiniFile cursor" style="font-size:1em;">' . ucfirst($file) . '</span>
 <a class="btn btn-xs btn-danger bt_delImageMiniFile"><i class="fas fa-trash"></i></a></div>';
-echo '<center><img class="" src="plugins/blea/data/divoompixoo/'.$file . '" height="48"/></center>';
+echo '<center><img class="bt_loadImageMiniFile cursor" data-name="' . $file .'" src="plugins/blea/data/divoompixoo/'.$file . '" height="48"/></center>';
 echo '</div>';
 }
 echo '</div>';
@@ -112,7 +119,7 @@ $('#bt_uploadFile').fileupload({
    $('.eventDisplayMini').showAlert({message: '{{Fichier(s) ajouté(s) avec succès}}', level: 'success'});
    $('#md_modal2').dialog('close');
 	$('#md_modal2').dialog({title: "{{Votre Collection}}"});
-	$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+	$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
   }
 });
 $('.bt_delImageMini').on('click', function () {
@@ -153,7 +160,7 @@ $('.bt_delImageMini').on('click', function () {
 								modifyWithoutSave=false;
 								$('#md_modal2').dialog('close');
 								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
-								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
 							}
 						});
 					}
@@ -200,7 +207,7 @@ $('.bt_delImageMini').on('click', function () {
 								modifyWithoutSave=false;
 								$('#md_modal2').dialog('close');
 								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
-								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
 							}
 						});
 					}
@@ -231,6 +238,32 @@ $('.bt_delImageMini').on('click', function () {
 				}
 				$('.memoryload').value(oriname);
 				$('#md_modal2').dialog('close');
+				modifyWithoutSave=false;
+			}
+		});
+	});
+
+	$('.bt_loadImageMiniFile').on('click', function () {
+		var oriname = $(this).attr('data-name');
+		$.ajax({
+			type: "POST",
+			url: "plugins/blea/core/config/devices/divoompixoo/ajax/divoompixoo.ajax.php",
+			data: {
+				action: "loadImageFile",
+				id: id,
+				name: oriname
+			},
+			dataType: 'json',
+			global: false,
+			error: function(request, status, error) {
+				handleAjaxError(request, status, error);
+			},
+			success: function(data) {
+				if (data.state != 'ok') {
+					$('.eventDisplayMini').showAlert({message:  data.result,level: 'danger'});
+					setTimeout(function() { deleteAlertMini() }, 2000);
+					return;
+				}
 				modifyWithoutSave=false;
 			}
 		});
@@ -281,7 +314,7 @@ $('.bt_delImageMini').on('click', function () {
 								setTimeout(function() { deleteAlertMini() }, 2000);
 								$('#md_modal2').dialog('close');
 								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
-								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
 								modifyWithoutSave=false;
 							}
 						});
@@ -336,7 +369,7 @@ $('.bt_delImageMini').on('click', function () {
 								setTimeout(function() { deleteAlertMini() }, 2000);
 								$('#md_modal2').dialog('close');
 								$('#md_modal2').dialog({title: "{{Votre Collection}}"});
-								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+								$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
 								modifyWithoutSave=false;
 							}
 						});

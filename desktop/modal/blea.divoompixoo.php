@@ -179,7 +179,7 @@ while ($i < 257) {
 
 	$('.biblioNumber').on('click', function () {
     $('#md_modal2').dialog({title: "{{Votre Collection}}"});
-    $('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all').dialog('open');
+    $('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo.all&id='+id).dialog('open');
 });
 
 	function autoLoadJson(){

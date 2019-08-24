@@ -46,6 +46,11 @@ try {
 		ajax::success(divoompixooblea::renameImage($oriname,$newname,True));
 	}
 
+  if (init('action') == 'loadImageFile') {
+    $name = init('name');
+		ajax::success(divoompixooblea::loadImageFile($name,init('id')));
+	}
+
 	if (init('action') == 'saveImage') {
 		$id = init('id');
 		if ($id ==''){
