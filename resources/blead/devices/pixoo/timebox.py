@@ -48,7 +48,7 @@ class TimeBox:
       logging.debug('DIVOOM------Show animated image')
       messages = divoom_image.build_animation(path)
       logging.debug(str(messages))
-      self.show_static_image(os.path.join(os.path.dirname(__file__),'images/black.bmp'))
+      self.show_static_image(os.path.join(os.path.dirname(__file__),'images/noir.png'))
       for message in messages:
           self.send_raw(message)
 

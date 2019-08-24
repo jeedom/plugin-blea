@@ -76,7 +76,7 @@ if (isset($result['started'])) {
 			}
 		}
 		usleep(500);
-		blea::sendIdToDeamon();
+		blea::sendIdToDeamon($result['source']);
 	}
 }
 if (isset($result['heartbeat'])) {

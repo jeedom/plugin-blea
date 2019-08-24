@@ -1,3 +1,9 @@
+# 19/08/2019
+- Rajout d'un message pour penser à changer le niveau de l'api dans Jeedom si vous utilisez des antennes
+- Rajout de certains appareils DIVOOM (attention ils nécessitent une relance des dépendances). Je ne le rajoute pas en contrôle de dépendances car ce sont justes des dépendances spécifiques pour eux, inutile donc de forcer tout le monde à relancer les dépendances)
+- Rajout du niveau de batterie sur les cleargrass
+- Améliorations mineures
+
 # 30/07/2019
 - Correction d'un bug sur le dotti lié au passage à python3
 
