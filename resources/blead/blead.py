@@ -312,63 +312,66 @@ def heartbeat_handler(delay):
 	while not globals.READY:
 		time.sleep(1)
 	while 1:
-		for device in globals.KNOWN_DEVICES:
-			noseeninterval = globals.SCAN_INTERVAL*globals.NOSEEN_NUMBER
-			action = {}
-			if 'absent' in globals.KNOWN_DEVICES[device] and globals.KNOWN_DEVICES[device]['absent'] != '':
-				noseeninterval = globals.SCAN_INTERVAL*int(globals.KNOWN_DEVICES[device]['absent'])
-			if device in globals.SEEN_DEVICES and 'present' in globals.SEEN_DEVICES[device]:
-				if globals.SEEN_DEVICES[device]['present'] == 1:
-					if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):
+		try:
+			for device in globals.KNOWN_DEVICES:
+				noseeninterval = globals.SCAN_INTERVAL*globals.NOSEEN_NUMBER
+				action = {}
+				if 'absent' in globals.KNOWN_DEVICES[device] and globals.KNOWN_DEVICES[device]['absent'] != '':
+					noseeninterval = globals.SCAN_INTERVAL*int(globals.KNOWN_DEVICES[device]['absent'])
+				if device in globals.SEEN_DEVICES and 'present' in globals.SEEN_DEVICES[device]:
+					if globals.SEEN_DEVICES[device]['present'] == 1:
+						if (globals.SEEN_DEVICES[device]['lastseen'] + noseeninterval) < int(time.time()):
+							logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
+							action['present']=0
+							action['id']=device
+							action['rssi'] = -200
+							action['source'] = globals.daemonname
+				else:
+					if (globals.START_TIME + noseeninterval) < int(time.time()):
 						logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
+						globals.SEEN_DEVICES[device]={'present':0}
 						action['present']=0
 						action['id']=device
 						action['rssi'] = -200
 						action['source'] = globals.daemonname
-			else:
-				if (globals.START_TIME + noseeninterval) < int(time.time()):
-					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device))
-					globals.SEEN_DEVICES[device]={'present':0}
-					action['present']=0
-					action['id']=device
-					action['rssi'] = -200
-					action['source'] = globals.daemonname
-			if len(action)>2 :
-				if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()) and globals.LEARN_MODE == False and (globals.LEARN_END + 20) <int(time.time()):
-					if 'present' in globals.SEEN_DEVICES[device]:
-						globals.SEEN_DEVICES[device]['present'] = 0
+				if len(action)>2 :
+					if globals.PENDING_ACTION == False and (globals.PENDING_TIME + 6) <int(time.time()) and globals.LEARN_MODE == False and (globals.LEARN_END + 20) <int(time.time()):
+						if 'present' in globals.SEEN_DEVICES[device]:
+							globals.SEEN_DEVICES[device]['present'] = 0
+						else:
+							globals.SEEN_DEVICES[device]={'present':0}
+						globals.JEEDOM_COM.add_changes('devices::'+device,action)
 					else:
-						globals.SEEN_DEVICES[device]={'present':0}
-					globals.JEEDOM_COM.add_changes('devices::'+device,action)
-				else:
-					logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection or last learn was too soon')
-			if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
-				if device in globals.KEEPED_CONNECTION:
-					logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))
-					try:
-						globals.KEEPED_CONNECTION[device].disconnect()
-					except Exception as e:
-						logging.debug(str(e))
+						logging.info('Not SEEEEEEEEEN------ since ' +str(noseeninterval) +'s '+ str(device) + ' but not sendig because last connection or last learn was too soon')
+				if not globals.PENDING_ACTION and globals.KNOWN_DEVICES[device]['islocked'] == 0 or globals.KNOWN_DEVICES[device]['emitterallowed'] not in [globals.daemonname,'all']:
 					if device in globals.KEEPED_CONNECTION:
-						del globals.KEEPED_CONNECTION[device]
-					logging.debug("HEARTBEAT------Removed from keep connection list " + str(device))
-		if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
-			globals.LEARN_MODE = False
-			globals.LEARN_END= int(time.time())
-			logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
-			globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
-		if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
-			if device in list(globals.KEEPED_CONNECTION):
-				if device not in globals.SEEN_DEVICES:
-					globals.SEEN_DEVICES[device] = {}
-				globals.SEEN_DEVICES[device]['lastseen'] = int(time.time())
-				globals.SEEN_DEVICES[device]['present'] = 1
-		if (globals.LAST_BEAT + 55) < int(time.time()):
-			globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
-			globals.LAST_BEAT = int(time.time())
-		if globals.PENDING_ACTION == True and (globals.PENDING_TIME + 20) <int(time.time()):
-			globals.PENDING_ACTION == False
-		time.sleep(1)
+						logging.debug("HEARTBEAT------This antenna should not keep a connection with this device, disconnecting " + str(device))
+						try:
+							globals.KEEPED_CONNECTION[device].disconnect()
+						except Exception as e:
+							logging.debug(str(e))
+						if device in globals.KEEPED_CONNECTION:
+							del globals.KEEPED_CONNECTION[device]
+						logging.debug("HEARTBEAT------Removed from keep connection list " + str(device))
+				if globals.KNOWN_DEVICES[device]['islocked'] == 1 and globals.KNOWN_DEVICES[device]['emitterallowed'] == globals.daemonname:
+					if device in list(globals.KEEPED_CONNECTION):
+						if device not in globals.SEEN_DEVICES:
+							globals.SEEN_DEVICES[device] = {}
+						globals.SEEN_DEVICES[device]['lastseen'] = int(time.time())
+						globals.SEEN_DEVICES[device]['present'] = 1
+			if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
+				globals.LEARN_MODE = False
+				globals.LEARN_END= int(time.time())
+				logging.debug('HEARTBEAT------Quitting learn mode (60s elapsed)')
+				globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0,'source' : globals.daemonname});
+			if (globals.LAST_BEAT + 55) < int(time.time()):
+				globals.JEEDOM_COM.send_change_immediate({'heartbeat' : 1,'source' : globals.daemonname,'version' : globals.DAEMON_VERSION});
+				globals.LAST_BEAT = int(time.time())
+			if globals.PENDING_ACTION == True and (globals.PENDING_TIME + 20) <int(time.time()):
+				globals.PENDING_ACTION == False
+			time.sleep(1)
+		except Exception as e:
+			logging.debug('Exception in handler ' + str(e))
 
 def action_handler(message):
 	manuf =''
