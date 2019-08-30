@@ -1,3 +1,7 @@
+# 22/08/2019
+- Rajout du Divoom Tivoo
+- Améliorations mineures
+
 # 19/08/2019
 - Rajout d'un message pour penser à changer le niveau de l'api dans Jeedom si vous utilisez des antennes
 - Rajout de certains appareils DIVOOM (attention ils nécessitent une relance des dépendances). Je ne le rajoute pas en contrôle de dépendances car ce sont justes des dépendances spécifiques pour eux, inutile donc de forcer tout le monde à relancer les dépendances)
