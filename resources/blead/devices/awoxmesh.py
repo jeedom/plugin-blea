@@ -21,10 +21,10 @@ import copy
 #: Set mesh groups.
 #: First byte : 1 to add group, 0 to remove group
 #: Second an third bytes : 2 bytes in little endian order. Group ids are in the form 0x80xx.
-#: Data : 3 bytes  
+#: Data : 3 bytes
 C_MESH_GROUP = 0xd7
 
-#: Set the mesh id. The light will still answer to the 0 mesh id. Calling the 
+#: Set the mesh id. The light will still answer to the 0 mesh id. Calling the
 #: command again replaces the previous mesh id.
 #: Data : the new mesh id, 2 bytes in little endian order
 C_MESH_ADDRESS = 0xe0
@@ -38,28 +38,28 @@ C_POWER = 0xd0
 #: Data : one byte
 C_LIGHT_MODE = 0x33
 
-#: Data : one byte 0 to 6 
+#: Data : one byte 0 to 6
 C_PRESET = 0xc8
 
 #: White temperature. one byte 0 to 0x7f
 C_WHITE_TEMPERATURE = 0xf0
 
-#: one byte 1 to 0x7f 
+#: one byte 1 to 0x7f
 C_WHITE_BRIGHTNESS = 0xf1
 
 #: 4 bytes : 0x4 red green blue
 C_COLOR = 0xe2
 
-#: one byte : 0xa to 0x64 .... 
-C_COLOR_BRIGHTNESS = 0xf2 
+#: one byte : 0xa to 0x64 ....
+C_COLOR_BRIGHTNESS = 0xf2
 
-#: Data 4 bytes : How long a color is displayed in a sequence in milliseconds as 
+#: Data 4 bytes : How long a color is displayed in a sequence in milliseconds as
 #:   an integer in little endian order
-C_SEQUENCE_COLOR_DURATION = 0xf5 
+C_SEQUENCE_COLOR_DURATION = 0xf5
 
-#: Data 4 bytes : Duration of the fading between colors in a sequence, in 
+#: Data 4 bytes : Duration of the fading between colors in a sequence, in
 #:   milliseconds, as an integer in little endian order
-C_SEQUENCE_FADE_DURATION = 0xf6 
+C_SEQUENCE_FADE_DURATION = 0xf6
 
 #: 7 bytes
 C_TIME = 0xe4
@@ -95,21 +95,21 @@ class Awoxmesh():
 		self.mesh_name = P_JEEDOM_MESHNAME
 		self.mesh_password = P_JEEDOM_MESHPASSWORD
 		self.mesh_longtermkey = P_JEEDOM_LONGTERMKEY
-		
+
 
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() == P_DEFAULTNAME:
 			logging.info('Detected unpaired device')
-		
+
 		if manuf.lower().startswith("6001") or name.lower() == self.name:
 			return True
-			
+
 		return False
 
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
-			
+
 		action['version'] = 'awox'
 		if mac.upper() not in globals.KNOWN_DEVICES and globals.LEARN_MODE:
 			if name.lower() == P_DEFAULTNAME and self.auto_pairing:
@@ -129,22 +129,22 @@ class Awoxmesh():
 				action['version'] = 'awoxremote'
 			if char.lower().startswith('ESMLm'):  # ESMLm_c9 and ESMLm_c13
 				action['version'] = 'awox'
-		
+
 		return action
-		
+
 
 	def auth(self,conn):
 		logging.debug('Authenticating...')
-		
+
 		try:
 			self.session_random = urandom(8)
 			message = make_pair_packet (self.mesh_name, self.mesh_password, self.session_random)
-			
+
 			# send pairing message
-			conn.writeCharacteristic(PAIR_CHAR_UUID,message)	
+			conn.writeCharacteristic(PAIR_CHAR_UUID,message)
 			# set status char to 1 (for notification?)
 			conn.writeCharacteristic(STATUS_CHAR_UUID,'01')
-			
+
 			# get Pairing reply
 			reply = bytearray (conn.readCharacteristic(PAIR_CHAR_UUID))
 			if reply[0] == 0xd :
@@ -157,14 +157,14 @@ class Awoxmesh():
 					#logging.debug("Unexpected pair value : %s", repr (reply))
 					logging.debug('Error while trying to auth..')
 				return False
-	
+
 		except Exception as e:
 			logging.debug("Exception found while authenticating : " + str(e))
 			return False
-	
+
 		return True
-		
-		
+
+
 	def sendAction(self,conn,subhandle,data,sendNotif=True):
 		try:
 			packet = make_command_packet (self.session_key, conn.mac, self.mesh_id, subhandle, data)
@@ -172,7 +172,7 @@ class Awoxmesh():
 			if sendNotif == True:
 				notification = Notification(conn, Awoxmesh, {'mac': conn.mac, 'session':self.session_key})
 				notification.subscribe(timer=NOTIF_TIMEOUT,disconnect=False)
-			
+
 			logging.debug("Sending packet for "+ conn.mac + " : " + packet + " with session key : "+ "".join("%02x" % b for b in self.session_key))
 			return conn.writeCharacteristic(COMMAND_CHAR_UUID, packet)
 		except Exception as e:
@@ -185,11 +185,11 @@ class Awoxmesh():
 		#logging.debug('Doing Awox action')
 		result = {}
 		ret = True
-		
+
 		mac = message['device']['id']
 		result['id'] = mac
 		globals.PENDING_ACTION = True
-		
+
 		localname=''
 		if 'localname' in message['device']:
 			localname = message['device']['localname']
@@ -197,7 +197,7 @@ class Awoxmesh():
 			if localname.startswith("R-"):
 				self.mesh_name = localname
 				self.mesh_password = P_DEFAULTPASSWORD
-		
+
 		handle = ''
 		value = '0'
 		cmd = ''
@@ -222,10 +222,10 @@ class Awoxmesh():
 			self.mesh_id = int(message['command']['gp'])+32768
 		if 'target' in message['command']:
 			self.mesh_id = int(message['command']['target'])
-		
+
 		if cmd!='':
 			logging.debug('Running action ' + cmd)
-		
+
 		# case of new pairing will work only if unpaired
 		if cmd == 'setNewPairing' or cmd == 'firstInit':
 			self.mesh_name = P_JEEDOM_MESHNAME
@@ -235,7 +235,7 @@ class Awoxmesh():
 			message['command']['cmd'] = "status"
 			self.action(message)
 			return
-			
+
 		if mac in globals.KEEPED_CONNECTION:
 			logging.debug('Already a connection for ' + mac + ' use it')
 			conn = globals.KEEPED_CONNECTION[mac]
@@ -243,7 +243,7 @@ class Awoxmesh():
 			logging.debug('Creating a new connection for ' + mac)
 			conn = Connector(mac)
 			globals.KEEPED_CONNECTION[mac]=conn
-		
+
 		i=1
 		authresult = False
 		while i <= 3:
@@ -264,7 +264,7 @@ class Awoxmesh():
 			logging.debug('Ending action due to authentication error on device')
 			globals.PENDING_ACTION = False
 			return
-		
+
 		if cmd == 'power':
 			data = struct.pack('B', int(value))
 			self.sendAction(conn,C_POWER,data)
@@ -278,9 +278,9 @@ class Awoxmesh():
 			self.setGroupId(conn, int(value),delete=True)
 		elif cmd == 'setWhiteHex':
 			# temperature + brightness (hex)
-			data = value[:2].decode("hex")
+			data = bytearray.fromhex(value[:2])
 			self.sendAction(conn,C_WHITE_TEMPERATURE,data, False)
-			data = value[-2:].decode("hex")
+			data = bytearray.fromhex(value[-2:])
 			self.sendAction(conn,C_WHITE_BRIGHTNESS,data)
 		elif cmd == 'setWhite':
 			# temperature-brightness (value 0 to 100)
@@ -290,7 +290,7 @@ class Awoxmesh():
 			temp = struct.pack('B', int(int(data[0])*127/100))
 			brightness = struct.pack('B', int(int(data[1])*127/100))
 			self.sendAction(conn,C_WHITE_TEMPERATURE, temp, False)
-			self.sendAction(conn,C_WHITE_BRIGHTNESS, brightness)			
+			self.sendAction(conn,C_WHITE_BRIGHTNESS, brightness)
 		elif cmd == 'setWhiteTemperature':
 			# temperature from 1 to 100)
 			result['whitetemperature'] = value
@@ -306,7 +306,7 @@ class Awoxmesh():
 			# red + green + blue (hex)
 			result['color'] = value
 			value = '04' + value.replace("#", "")
-			data = value.decode("hex")
+			data = bytearray.fromhex(value)
 			self.sendAction(conn,C_COLOR,data)
 		elif cmd == 'setColorLight':
 			# color(#hex)-brightness(0-100)
@@ -315,8 +315,8 @@ class Awoxmesh():
 			result['colorbrightness'] = data[1]
 			color = '04' + data[0].replace("#", "")
 			brightness = struct.pack('B', int(int(data[1])*64/100))
-			self.sendAction(conn,C_COLOR, color.decode("hex"), False)
-			self.sendAction(conn,C_COLOR_BRIGHTNESS, brightness)	
+			self.sendAction(conn,C_COLOR, bytearray.fromhex(color), False)
+			self.sendAction(conn,C_COLOR_BRIGHTNESS, brightness)
 		elif cmd == 'setColorBrightness':
 			# a value between 0xa and 0x64
 			result['colorbrightness'] = value
@@ -337,7 +337,7 @@ class Awoxmesh():
 		elif cmd == 'playScenario':
 			# color/white/power&duration|color/white/power&duration|...|X (number of iteration for last value)
 			# ex: #DF0101-100&5|100-100&7|50-50&10|0&5|1&0|3
-			self.playScenario(conn, value)	
+			self.playScenario(conn, value)
 		elif cmd == 'setLightMode':		# does nothing
 			# duration: in milliseconds.
 			data = struct.pack ("B", int(value))
@@ -347,14 +347,14 @@ class Awoxmesh():
 			notification.subscribe(timer=NOTIF_TIMEOUT,disconnect=False)
 			conn.readCharacteristic(STATUS_CHAR_UUID)
 		else:
-			data = value.decode("hex")
+			data = bytearray.fromhex(value)
 			handle = int(handle,16)
 			self.sendAction(conn,handle,data)
-		
+
 		logging.info('Value ' + value + ' sent to controller')
-		
+
 		globals.PENDING_ACTION = False
-		
+
 		# prepare results
 		if ret:
 			if cmd == 'power':
@@ -385,7 +385,7 @@ class Awoxmesh():
 			if globals.KNOWN_DEVICES[mac.upper()]['localname'].startswith("R-"):
 				self.mesh_name = globals.KNOWN_DEVICES[mac.upper()]['localname']
 				self.mesh_password = P_DEFAULTPASSWORD
-				
+
 		if mac in globals.KEEPED_CONNECTION:
 			logging.debug('Already a connection for ' + mac + ' use it')
 			conn = globals.KEEPED_CONNECTION[mac]
@@ -393,7 +393,7 @@ class Awoxmesh():
 			logging.debug('Creating a new connection for ' + mac)
 			conn = Connector(mac)
 			globals.KEEPED_CONNECTION[mac]=conn
-		
+
 		i=1
 		authresult = False
 		while i <= 2:
@@ -414,14 +414,14 @@ class Awoxmesh():
 			logging.debug('Ending action due to authentication error on device')
 			globals.PENDING_ACTION = False
 			return result
-		
+
 		# send message
 		notification = Notification(conn, Awoxmesh, {'mac': conn.mac, 'session':self.session_key})
 		notification.subscribe(timer=NOTIF_TIMEOUT,disconnect=False)
 		conn.readCharacteristic(STATUS_CHAR_UUID)
-		
+
 		return {}
-		
+
 	def handlenotification(self,conn,handle,data,action={}):
 		result  = {}
 		try:
@@ -429,7 +429,7 @@ class Awoxmesh():
 				message = decrypt_packet (action['session'], action['mac'], data)
 				if not isinstance(message,str):
 					return
-				
+
 				result = self.parseResult(message, action['mac'])
 				if result['messagetype'] == 220:  # only status broadcast device notification
 					for device in globals.KNOWN_DEVICES:
@@ -439,12 +439,12 @@ class Awoxmesh():
 							globals.JEEDOM_COM.add_changes('devices::'+device,result)
 							break
 				logging.debug('Notif content : ' + result['debug'] + '   (raw: '+message+ ')')
-			
+
 			#self.unlock(action['mac'])
 		except Exception as e:
 			logging.debug("Exception found while receiving notification : " + str(e))
 
-			
+
 	def parseResult(self, message, mac):
 		result  = {}
 		result['id'] = mac
@@ -453,46 +453,46 @@ class Awoxmesh():
 		result['debug'] = message[6:10] +'-'+ message[14:16] +'-'+ message[20:22] +'-'+ message[22:24] +'-'+ message[24:26] +'-'+ message[26:30] +'-'+ message[30:-2]
 		meshid = int(mac[-2:], 16)  # last hex of mac address
 		result['meshid'] = meshid
-		
+
 		filter = int(message[6:8], 16)
 		filter2 = int(message[14:16], 16)   # status msg is 220 (DC in hexa), others are for some commands
 		result['messagetype'] = int(message[14:16], 16)   # status msg is 220 (DC in hexa), others are for some commands
-		
+
 		msgmeshid = int(message[20:22], 16)
 		is_remote = True if int(message[22:24], 16)==1 else False
 		mode = int(message[24:26], 16)
 		msgtype = int(message[14:16], 16)
-		
+
 		result['targetmeshid'] = msgmeshid
 		if filter > 0 and filter2 != 220:
 			result['targetmeshid'] = filter
-			
+
 		if not is_remote and filter2 == 220:
 			result['status'] = mode%2
-			
+
 			modestring = ''
 			if mode==1 or mode==5:
 				modestring = 'Blanc'
 				mode=1
-			elif mode==3: 
+			elif mode==3:
 				modestring = 'Couleur'
 			elif mode==7:
 				modestring = 'Sequence'
-				
+
 			if mode%2 == 1:
 				result['mode'] = mode
 				result['modestring'] = modestring
-				
+
 			result['whitetemperature'] = int(int(message[28:30], 16)*100/127)  # convert to value from 0 to 100
 			result['whitebrightness'] = int(int(message[26:28], 16)*100/127)  # convert to value from 0 to 100
 			result['color'] = "#" + message[32:38]
 			result['colorbrightness'] = int(int(message[30:32], 16)*100/64)  # convert to value from 0 to 100
-		
+
 		if is_remote:
 			result['battery'] = int(int(message[26:28], 16)*100/255)  # convert to value from 0 to 100
-		
+
 		return result
-			
+
 
 	def setMeshPairing (self, mac, localname, new_mesh_name, new_mesh_password, new_mesh_long_term_key):
 		if mac in globals.KEEPED_CONNECTION:
@@ -500,45 +500,45 @@ class Awoxmesh():
 		else:
 				conn = Connector(mac)
 		conn.connect()
-		
+
 		defaultmeshname = localname.encode()
 		is_a_remote = False
 		char = conn.readCharacteristic(MODEL_UUID)
 		if char.lower() == 'ERCUm':  #if this is a remote
 			is_a_remote = True
 			logging.info("[Unpaired device] Remote detected, trying with name "+defaultmeshname)
-		
+
 		if defaultmeshname == self.mesh_name:
 			logging.info("Device already paired to Jeedom. Do a reset of the device beforehand")
 		else:
 			session_random = urandom(8)
-			message = make_pair_packet (defaultmeshname, P_DEFAULTPASSWORD, session_random)
+			message = make_pair_packet (defaultmeshname.decode(), P_DEFAULTPASSWORD, session_random)
 			conn.writeCharacteristic(PAIR_CHAR_UUID,message)
 			conn.writeCharacteristic(STATUS_CHAR_UUID,'01')
 			reply = bytearray (conn.readCharacteristic(PAIR_CHAR_UUID))
 			if reply[0] == 0xd :
 				logging.info("[Unpaired device] Connected (Auth OK with default password).")
-				session_key = make_session_key (defaultmeshname, P_DEFAULTPASSWORD, session_random, reply[1:9])
+				session_key = make_session_key (defaultmeshname.decode(), P_DEFAULTPASSWORD, session_random, reply[1:9])
 			else :
 				if reply[0] == 0xe :
 					logging.info("[Unpaired device] Auth error : check name and password or make sure device is unpaired.")
 				else :
 					logging.info('[Unpaired device] Error while trying to auth..')
 				return False
-			
-			logging.info('Step 1 - Mesh Name : ' + new_mesh_name.encode())
+
+			logging.info('Step 1 - Mesh Name : ' + new_mesh_name)
 			message = encrypt (session_key, new_mesh_name.encode())
 			message.insert (0, 0x4)
 			conn.writeCharacteristic(PAIR_CHAR_UUID, "".join("%02x" % b for b in message))
-			logging.info('Step 2 - Mesh Password : ' + new_mesh_password.encode())
+			logging.info('Step 2 - Mesh Password : ' + new_mesh_password)
 			message = encrypt (session_key, new_mesh_password.encode())
 			message.insert (0, 0x5)
 			conn.writeCharacteristic(PAIR_CHAR_UUID, "".join("%02x" % b for b in message))
-			logging.info('Step 3 - LongtermKey : ' + new_mesh_long_term_key.encode())
+			logging.info('Step 3 - LongtermKey : ' + new_mesh_long_term_key)
 			message = encrypt (session_key, new_mesh_long_term_key.encode())
 			message.insert (0, 0x6)
 			conn.writeCharacteristic(PAIR_CHAR_UUID, "".join("%02x" % b for b in message))
-			
+
 			time.sleep (2)
 			logging.info('Step 4 - Get Confirmation')
 			reply = bytearray (conn.readCharacteristic(PAIR_CHAR_UUID))
@@ -548,17 +548,17 @@ class Awoxmesh():
 				logging.info ("Mesh network settings accepted.")
 			else:
 				logging.info ("Mesh network settings change failed : %s", repr(reply))
-				
+
 			time.sleep (2)
-		
+
 		if not is_a_remote and self.auth(conn):
 			logging.info('Step 5 - Set a default group')
 			self.setGroupId (conn, P_DEFAULTGROUP, delete=False)
 			time.sleep (1)
 			value = '0407ed3c'  # green
-			data = value.decode("hex")
+			data = bytearray.fromhex(value)
 			self.sendAction(conn,C_COLOR,data)
-		
+
 		conn.disconnect()
 		return True
 
@@ -587,7 +587,7 @@ class Awoxmesh():
 							continue
 						color = '04' + data[0].replace("#", "")
 						brightness = struct.pack('B', int(int(data[1])*64/100))
-						self.sendAction(conn,C_COLOR, color.decode("hex"), False)
+						self.sendAction(conn,C_COLOR, bytearray.fromhex(color), False)
 						self.sendAction(conn,C_COLOR_BRIGHTNESS, brightness, lastStep)
 					elif '-' in cmd:		# white
 						data = cmd.split('-')
@@ -600,20 +600,20 @@ class Awoxmesh():
 					else:	# power
 						data = struct.pack('B', int(cmd))
 						self.sendAction(conn, C_POWER, data, lastStep)
-					
+
 					if not lastStep:
 						time.sleep(timer)
-					
+
 		except Exception as e:
 			logging.debug("Something wrong with the scenario : " + str(e))
-			
+
 		return
 
 	def setMeshId (self, conn, mesh_id):
 		data = struct.pack ("<H", mesh_id)
 		self.sendAction(conn,C_MESH_ADDRESS,data, False)
 		self.mesh_id = mesh_id
-		
+
 	def setGroupId (self, conn, group_id, delete=False):
 		data = struct.pack ("<H", group_id+32768)  # 32768 to get first hex byte to 80
 		if delete:
@@ -622,7 +622,7 @@ class Awoxmesh():
 			data = b'\x01' + data
 		self.sendAction(conn,C_MESH_GROUP,data, True)
 		logging.debug('Device added to group ' + str(group_id))
-		
+
 	def resetMesh (self, conn):
 		self.sendAction(conn,C_MESH_RESET,b'\x00', False)
 
@@ -634,7 +634,11 @@ globals.COMPATIBILITY.append(Awoxmesh)
 def encrypt (key, value):
 	assert (len(key) == 16)
 	k = bytearray (key)
-	val = bytearray(value.ljust (16, b'\x00'))
+	if type(value) is str:
+		val = bytearray(value.ljust (16, '\u0000'))
+	else:
+		val = bytearray(value.ljust (16, b'\x00'))
+	#logging.debug('after val assign')
 	k.reverse ()
 	val.reverse ()
 	cipher = AES.new(bytes(k), AES.MODE_ECB)
@@ -705,16 +709,16 @@ def make_command_packet (key, address, dest_id, command, data):
 	packet = s + check[0:2] + payload
 	#return packet
 	return "".join("%02x" % b for b in packet)
- 
+
 def decrypt_packet (key, address, packet):
 	"""
 	Args :
 		address: The mac address as a string.
 		packet : The 20 bytes packet read on the characteristic.
 	Returns :
-		The packet with the payload part decrypted, or None if the checksum 
+		The packet with the payload part decrypted, or None if the checksum
 		didn't match.
-		
+
 	"""
 	# Build nonce
 	a = bytearray.fromhex(address.replace (":",""))
@@ -737,20 +741,20 @@ def decrypt_packet (key, address, packet):
 	return "".join("%02x" % b for b in dec_packet)
 
 def make_pair_packet (mesh_name, mesh_password, session_random):
-	m_n = bytearray (mesh_name.ljust (16, b'\x00'))
-	m_p = bytearray (mesh_password.ljust (16, b'\x00'))
+	m_n = bytearray (mesh_name.ljust (16, '\u0000'), 'ascii')
+	m_p = bytearray (mesh_password.ljust (16, '\u0000'), 'ascii')
 	s_r = session_random.ljust (16, b'\x00')
 	name_pass = bytearray ([ a ^ b for (a,b) in zip(m_n, m_p) ])
 	enc = encrypt (s_r ,name_pass)
 	packet = bytearray(b'\x0c' + session_random) # 8bytes session_random
 	packet += enc[0:8]
-	
+
 	return "".join("%02x" % b for b in packet)
 
 def make_session_key (mesh_name, mesh_password, session_random, response_random):
 	random = session_random + response_random
-	m_n = bytearray (mesh_name.ljust (16, b'\x00'))
-	m_p = bytearray (mesh_password.ljust (16, b'\x00'))
+	m_n = bytearray (mesh_name.ljust (16, '\u0000'), 'ascii')
+	m_p = bytearray (mesh_password.ljust (16, '\u0000'), 'ascii')
 	name_pass = bytearray([ a ^ b for (a,b) in zip(m_n, m_p) ])
 	key = encrypt (name_pass, random)
 	return key
