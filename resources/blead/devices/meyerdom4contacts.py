@@ -27,8 +27,6 @@ class Meyerdom4contacts():
 				action['contact3'] = 1
 			if manuf[6:8] == '31':
 				action['contact4'] = 1
-			action['analog1'] = int(bytearray.fromhex(manuf[8:16]).decode())
-			action['analog2'] = int(bytearray.fromhex( manuf[16:24]).decode())
 			action['voltage'] = float(bytearray.fromhex(manuf[24:]).decode())
 		except Exception as e:
 			logging.error(str(e))

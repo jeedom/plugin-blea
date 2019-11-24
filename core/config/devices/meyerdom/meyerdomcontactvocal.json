@@ -1,0 +1,51 @@
+{
+    "meyerdomcontactvocal": {
+        "name": "MeyerDOM contact vocal",
+        "groupe" : "Contacteurs",
+		"configuration" : {
+			"name" : "meyerdomcontactvocal",
+			"battery_type" : "1x3V CR2450"
+    },
+        "commands": [
+			{
+                "name": "Contact",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "contact1",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      },
+      {
+                "name": "Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite":"V",
+                "logicalId": "voltage",
+	              "template": {
+					             "dashboard": "line",
+					           "mobile": "line"
+				         }
+      }
+        ],
+		"compatibility": [
+            {
+        "manufacturer": "MeyerDom",
+        "name": "Contact Vocal",
+				"doc": "",
+				"type": "Contacteurs",
+				"battery_type": "1x3V CR2450",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Contacteur Vocal",
+				"inclusion" : "Mode inclusion",
+				"imglink": "meyerdomcontactvocal"
+            }
+        ]
+    }
+}

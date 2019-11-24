@@ -1,0 +1,277 @@
+{
+    "divoompixoo": {
+        "name": "Pixoo",
+        "groupe" : "Afficheur",
+		"configuration" : {
+			"specificmodal" : 1,
+			"specificclass" : 1,
+			"cancontrol" : 1,
+			"name" : "divoompixoo",
+			"specificwidgets" : 1,
+			"canbelocked" : 1,
+			"islocked" : 1
+		},
+        "commands": [
+          {
+    				"name": "Couleur",
+                    "type": "action",
+                    "subtype": "color",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoompixoo,classlogical:sendcolor,value:calcul,type:display",
+    				"configuration": {
+    					"logicalwidget" : "sendcolor"
+    				}
+                },{
+          				"name": "Couleur Clignotant",
+                          "type": "action",
+                          "subtype": "color",
+                          "isVisible": 1,
+                          "unite": "",
+                          "logicalId": "name:divoompixoo,classlogical:sendcolor,value:calcul,type:display,blink:1",
+          				"configuration": {
+          					"logicalwidget" : "sendcolorBlink"
+          				}
+                      },
+    			{
+    				"name": "Off",
+                    "type": "action",
+                    "subtype": "other",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoompixoo,classlogical:blackscreen,value:calcul,type:display",
+    				"configuration": {
+    					"logicalwidget" : "blackscreen"
+    				}
+                },
+    {
+      "name": "Off Total",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "unite": "",
+              "logicalId": "name:divoompixoo,classlogical:offtotal,value:calcul,type:offtotal",
+      "configuration": {
+        "logicalwidget" : "offtotal"
+      }
+          },
+    			{
+    				"name": "Afficher texte",
+                    "type": "action",
+                    "subtype": "message",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoompixoo,classlogical:show_text,type:show_text,value:calcul",
+    				"display": {
+    					"title_disable": 0,
+    					"title_placeholder": "Options"
+    				},
+    				"configuration": {
+    					"logicalwidget" : "sendtext"
+    				}
+    			},
+    			{
+    				"name": "Image aléatoire",
+                    "type": "action",
+                    "subtype": "message",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoompixoo,classlogical:sendrandom,type:display,value:calcul",
+    				"display": {
+    					"title_disable": 0,
+    					"title_placeholder": "Options",
+    					"message_placeholder": "Vide ou liste d'icône sépraré par ;"
+    				}
+                },
+    			{
+    				"name": "Affichage Précédent",
+                    "type": "action",
+                    "subtype": "other",
+                    "isVisible": 1,
+                    "unite": "",
+                    "logicalId": "name:divoompixoo,classlogical:lastimage,type:display,value:calcul"
+                },
+			{
+				"name": "Charger Image",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:divoompixoo,classlogical:loadimage,type:display,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 0,
+					"title_placeholder": "Nom",
+					"message_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "loadimage"
+				}
+            },
+			{
+				"name": "Envoie Raw",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:divoompixoo,classlogical:raw,type:raw,value:calcul",
+				"display": {
+					"title_disable": 0,
+					"message_disable": 1,
+					"title_placeholder": "Options"
+				},
+				"configuration": {
+					"logicalwidget" : "show_raw"
+				}
+        },
+        {
+				      "name": "Luminosité",
+              "type": "action",
+              "subtype": "slider",
+              "isVisible": 1,
+              "unite": "%",
+              "logicalId": "name:divoompixoo,classlogical:luminosity,type:luminosity,value:calcul",
+				      "configuration": {
+                "logicalwidget" : "luminosity"
+				       }
+        },
+        {
+				      "name": "Température",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:temperature,type:temperature,value:calcul",
+              "display": {
+                "title_placeholder": "Icone (valeur numérique)",
+                "message_placeholder": "Température"
+              },
+				      "configuration": {
+                "logicalwidget" : "temperature"
+				       }
+        },
+        {
+				      "name": "Effets",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:effets,type:visual,value:calcul",
+              "display": {
+      					"title_disable": 1,
+                "message_placeholder": "Effets (valeur numérique)"
+              },
+				      "configuration": {
+                "logicalwidget" : "effets"
+				       }
+        },
+        {
+				      "name": "Effets Musique",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:effetsmusic,type:visual,value:calcul",
+              "display": {
+      					"title_disable": 1,
+                "message_placeholder": "Effets (valeur numérique)"
+              },
+				      "configuration": {
+                "logicalwidget" : "effetsmusic"
+				       }
+        },
+        {
+				      "name": "Images favorites",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:favoris,type:visual,value:calcul",
+				      "configuration": {
+                "logicalwidget" : "favoris"
+				       }
+        },
+        {
+				      "name": "Icones Notifications",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:notifs,type:notifs,value:calcul",
+              "display": {
+      					"title_disable": 1,
+                "message_placeholder": "Icones (valeur numérique)"
+              },
+				      "configuration": {
+                "logicalwidget" : "notifs"
+				       }
+        },
+        {
+				      "name": "Afficher température",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:showtemp,type:clock,temp:1,value:calcul",
+				      "configuration": {
+                "logicalwidget" : "showtemp"
+				       }
+        },
+        {
+				      "name": "Afficher météo",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:showweather,type:clock,weather:1,value:calcul",
+				      "configuration": {
+                "logicalwidget" : "showweather"
+				       }
+        },
+        {
+				      "name": "Afficher date",
+              "type": "action",
+              "subtype": "other",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:showdate,type:clock,date:1,value:calcul",
+				      "configuration": {
+                "logicalwidget" : "showdate"
+				       }
+        },
+        {
+				      "name": "Afficher heure",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:showtime,type:clock,clock:1,value:calcul",
+              "display": {
+                "message_placeholder": "Mode (valeur numérique 0-7)",
+                "title_placeholder": "Couleur (exemple : #ff0000)"
+              },
+				      "configuration": {
+                "logicalwidget" : "showtime"
+				       }
+        },
+        {
+				      "name": "Afficher séquence",
+              "type": "action",
+              "subtype": "message",
+              "isVisible": 1,
+              "logicalId": "name:divoompixoo,classlogical:showtimeseq,type:clock,value:calcul",
+              "display": {
+                "message_placeholder": "Arguments (mode=1 weather=1 date=1 temp=1 clock=1)",
+                "title_placeholder": "Couleur clock (exemple : #ff0000)"
+              },
+				      "configuration": {
+                "logicalwidget" : "showtimeseq"
+				       }
+        }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Divoom",
+                "name": "Pixoo",
+				"doc": "",
+				"type": "Afficheur",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Fonction garder la connection recommandée",
+				"inclusion" : "Mode inclusion",
+				"imglink": "divoompixoo"
+            }
+        ]
+    }
+}

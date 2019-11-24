@@ -1,0 +1,352 @@
+<div class="eqLogic-widget eqLogic allowResize" style="height:250px;border:#border#;border-radius:#border-radius#;background-color: #background-color#;color: #color#;#style#;" data-page="home" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" >
+  <span class="statusCmd pull-right" style="position : absolute;left : 2px;z-index: 1030;"></span>
+  <center class="widget-name"><a href="#eqLink#" style="font-size : 1.5em;#hideEqLogicName#">#name_display#</a></center>
+
+  <div class="row page home">
+	<i class="gotoclock fa fa-chevron-right" style="position:absolute;top:120px;right:3px;z-index: 500;font-size:1.5em"></i>
+	<i class="gototext fa fa-chevron-left" style="position:absolute;top:120px;left:3px;z-index: 500;font-size: 1.5em"></i>
+  <div class="col-xs-12">
+    <center>
+      <input class="pixelcolor#uid#" type="color" value="#000000" style="margin-top:5px"/>
+    </center>
+  </div>
+    <div class="col-xs-12">
+      <center>
+        <a class="ui-btn ui-mini ui-btn-inline ui-btn-b cmd blackscreen#uid#" data-cmd_id="#cmd_blackscreen_id#" title="Eteindre"><i class="fas fa-power-off"></i></a>
+          <a class="ui-btn ui-mini ui-btn-inline ui-btn-b blink#uid#" title="Clignoter"><i class="icon jeedom-alerte blinkcolor#uid#"></i></a>
+          <label class="ui-btn ui-mini ui-btn-inline ui-btn-b" for="bt_uploadFile" id="LblBrowse" style="display:inline-block;"><i class="fas fa-upload"></i></label>
+         <input id="bt_uploadFile" type="file" name="file" data-url="plugins/blea/core/config/devices/divoompixoo/ajax/divoompixoo.ajax.php?action=fileupload" style="display:none">
+     </center>
+      </div>
+      <div class="col-xs-12">
+        <center>
+      <select class="memoryload#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+      </select>
+  </center>
+      </div>
+    <div class="col-xs-12">
+      <center>
+        <div class="luminosity#uid# full-width-slider" style="width: 80%;text-align: right;">
+      		<input type="range" min="0" max="100" data-theme="a" value="100"/>
+      	</div>
+</center>
+ </div>
+        </div>
+  <div class="row page clock" style="display:none;">
+	<i class="gotoeffects fa fa-chevron-right" style="position:absolute;top:120px;right:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+	<i class="gotohome fa fa-chevron-left" style="position:absolute;top:120px;left:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+    <div class="col-xs-12">
+	<center>
+        <input class="clockcolor#uid#" type="color" value="#0000ff" style="margin-top:5px"/>
+        </center>
+	</div>
+  <div class="col-xs-12">
+    <center>
+      <a class="ui-btn ui-mini ui-btn-inline ui-btn-b clockmode"><i class="fas fa-clock clock#uid#" style="color:orange;"></i></a>
+      <a class="ui-btn ui-mini ui-btn-inline ui-btn-b clockmode"><i class="fas fa-cloud weather#uid#"></i></a>
+      <a class="ui-btn ui-mini ui-btn-inline ui-btn-b clockmode"><i class="fas fa-temperature-low temp#uid#"></i></a>
+      <a class="ui-btn ui-mini ui-btn-inline ui-btn-b clockmode"><i class="fas fa-calendar-alt date#uid#"></i></a>
+      </center>
+</div>
+	<div class="col-xs-12">
+	<center>
+      <select class="typeclock#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+          <option value='0'>Grand texte</option>
+          <option value='1'>Simple Défilant</option>
+          <option value='2'>Cadre</option>
+          <option value='3'>Analogique</option>
+          <option value='4'>Grand texte inversé</option>
+          <option value='5'>Petit Analogique</option>
+          <option value='6'>Simple</option>
+        </select>
+	</center>
+    </div>
+	<div class="col-xs-12">
+	<center>
+      <a class="ui-btn ui-mini ui-btn-inline ui-btn-b sendclock#uid#" style="margin-top:-1px"><i class="fas fa-share-square"></i> Définir séquence</a>
+	</center>
+    </div>
+  </div>
+  <div class="row page effects" style="display:none;">
+    <i class="gototext fa fa-chevron-right" style="position:absolute;top:120px;right:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+  	<i class="gotoclock fa fa-chevron-left" style="position:absolute;top:120px;left:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+    <div class="col-xs-12">
+  	<center>
+        <select class="visualeffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Effet</option>
+            <option value='0'>Pixel Color</option>
+            <option value='1'>Trou noir</option>
+            <option value='2'>Couleur verticale</option>
+            <option value='3'>Cercles</option>
+            <option value='4'>Arc en ciel tournant</option>
+            <option value='5'>Explosion</option>
+            <option value='6'>Ondulation couleur</option>
+            <option value='7'>Automne</option>
+            <option value='8'>Vague couleur</option>
+            <option value='9'>Feu</option>
+            <option value='10'>Compte à rebours</option>
+            <option value='11'>Zen</option>
+            <option value='12'>Losange coloré</option>
+            <option value='13'>Brume</option>
+            <option value='14'>Ondulation losange</option>
+            <option value='15'>Flèches colorées</option>
+          </select>
+  	</center>
+      </div>
+  <div class="col-xs-12">
+  	<center>
+        <select class="musicaleffects#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Effet</option>
+            <option value='0'>Equalizer vertical</option>
+            <option value='1'>Canard chantant</option>
+            <option value='2'>Vumeter</option>
+            <option value='3'>Ragga chantant</option>
+            <option value='4'>Matrix</option>
+            <option value='5'>Grenouille</option>
+            <option value='6'>Double équalizer</option>
+            <option value='7'>Visage chantant</option>
+            <option value='8'>Carré tombant</option>
+            <option value='9'>Danceur Hip Hop</option>
+            <option value='10'>Explosion</option>
+            <option value='11'>Danseuse tahitienne</option>
+            <option value='12'>Perso 1</option>
+            <option value='13'>Perso 2</option>
+            <option value='14'>Perso 3</option>
+            <option value='15'>Perso 4</option>
+            <option value='16'>Perso 5</option>
+            <option value='17'>Perso 6</option>
+            <option value='18'>Perso 7</option>
+            <option value='19'>Perso 8</option>
+            <option value='20'>Perso 9</option>
+            <option value='21'>Perso 10</option>
+            <option value='22'>Perso 11</option>
+            <option value='23'>Perso 12</option>
+            <option value='24'>Perso 13</option>
+            <option value='25'>Perso 14</option>
+            <option value='26'>Perso 15</option>
+            <option value='27'>Perso 16</option>
+            <option value='28'>Perso 17</option>
+            <option value='29'>Perso 18</option>
+            <option value='30'>Perso 19</option>
+            <option value='31'>Perso 20</option>
+          </select>
+  	</center>
+      </div>
+    <div class="col-xs-12">
+    <center>
+        <select class="notify#uid#" style="color:#cmdColor#;background-color:#background-color#;border-radius: 10px;">
+			<option value='0'>Choisir Notif</option>
+            <option value='0'>Kakao Talk</option>
+            <option value='1'>Instagram</option>
+            <option value='2'>Snapchat</option>
+            <option value='3'>Facebook</option>
+            <option value='4'>Twitter</option>
+            <option value='5'>Appel</option>
+            <option value='6'>Appel Manqué</option>
+            <option value='7'>Whatsapp</option>
+            <option value='8'>SMS</option>
+            <option value='9'>Skype</option>
+            <option value='10'>Line</option>
+            <option value='11'>WeChat</option>
+            <option value='12'>Pingouin</option>
+            <option value='13'>Tango</option>
+            <option value='14'>Viber</option>
+          </select>
+    </center>
+      </div>
+      <div class="col-xs-12">
+      <center>
+        <a class="ui-btn ui-mini ui-btn-inline ui-btn-b sendfavorites" title="Mettre Favoris" style="margin-top:-1px"><i class="fas fa-share-square"></i> Mettre favoris</a>
+      </center>
+        </div>
+</div>
+<div class="row page text" style="display:none;">
+<i class="gotohome fa fa-chevron-right" style="position:absolute;top:120px;right:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+<i class="gotoeffects fa fa-chevron-left" style="position:absolute;top:120px;left:3px;cursor:pointer;z-index: 500;font-size:1.5em"></i>
+<div class="col-xs-12">
+  <center>
+    <input class="textcolor#uid#" type="color" value="#0000ff" style="margin-top:5px"/>
+</center>
+</div>
+<div class="col-xs-12">
+  <center>
+      <textarea class="text#uid#" data-concat="1" style="height:60px;width:80%"></textarea>
+</center>
+</div>
+<div class="col-xs-12">
+  <center>
+        <div class="speed#uid# full-width-slider" style="width: 80%;text-align: right;">
+      		<input type="range" min="0" max="20" data-theme="a" value="12"/>
+      	</div>
+</center>
+</div>
+<div class="col-xs-12">
+  <center>
+    <a class="ui-btn ui-mini ui-btn-inline ui-btn-b sendtext#uid#" title="Envoyer Texte" style="margin-top:-1px"><i class="fas fa-keyboard"></i> Envoyer Texte</a>
+</center>
+</div>
+</div>
+<script type="text/javascript" src="3rdparty/jquery.fileupload/jquery.fileupload.js"></script>
+<script>
+  $('.eqLogic[data-eqLogic_uid=#uid#] .blink#uid#').on('click', function() {
+    if ($(this).children().css('color') == 'rgb(255, 165, 0)' || $(this).children().css('color') == 'orange') {
+        $(this).children().css('color', '');
+    } else {
+      $(this).children().css('color', 'orange');
+    }
+  });
+    if('#loadimage#' != ''){
+ 			loadimage#id# = json_decode('#loadimage#');
+ 			loadloadimage#id# = '<option value="">Choisir Image</option>';
+ 			for(var i in loadimage#id#){
+ 				loadloadimage#id# += '<option value="' + loadimage#id#[i] + '">' + loadimage#id#[i].charAt(0).toUpperCase() + loadimage#id#[i].slice(1) + '</option>';
+ 			}
+ 			$(".eqLogic[data-eqLogic_uid=#uid#] .memoryload#uid#").append(loadloadimage#id#);
+ 		}
+ 	$('.eqLogic[data-eqLogic_uid=#uid#] .memoryload#uid#').on('change',function(){
+    if ($('.blinkcolor#uid#').css('color') == 'rgb(255, 165, 0)' || $('.blinkcolor#uid#').css('color') == 'orange'){
+      jeedom.cmd.execute({id: '#cmd_loadimage_id#', value: {'title': $(this).value(), 'message' : 'blink=1'}});
+    } else {
+ 		   jeedom.cmd.execute({id: '#cmd_loadimage_id#', value: {'title': $(this).value()}});
+  }
+ 	});
+ 	$('#bt_divoompixooScreen#uid#').on('click', function () {
+ 	    id = #id#;
+     $('#md_modal').dialog({title: "Dessiner"});
+     $('#md_modal').load('index.php?v=d&plugin=blea&modal=blea.divoompixoo&id='+ id+'').dialog('open');
+ });
+    $('.eqLogic[data-eqLogic_uid=#uid#] .cmd').on('click', function() {
+      jeedom.cmd.execute({id: $(this).data('cmd_id')});
+    });
+    $('.pixelcolor#uid#').on('change', function() {
+      if ($('.blinkcolor#uid#').css('color') == 'rgb(255, 165, 0)' || $('.blinkcolor#uid#').css('color') == 'orange'){
+        jeedom.cmd.execute({id: '#cmd_sendcolorBlink_id#', value: {color : $(this).val()}});
+      } else {
+ 	      jeedom.cmd.execute({id: '#cmd_sendcolor_id#', value: {color : $(this).val()}});
+      }
+ });
+
+ $("body").undelegate(".eqLogic[data-eqLogic_uid=#uid#] .luminosity#uid#",'slidestop');
+ $("body").delegate(".eqLogic[data-eqLogic_uid=#uid#] .luminosity#uid#",'slidestop', function (event, ui) {
+   jeedom.cmd.execute({id: '#cmd_luminosity_id#', value: {slider: $(".eqLogic[data-eqLogic_uid=#uid#] .luminosity#uid# input").value()}});
+ });
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .clockmode').on('click', function() {
+   if ($(this).children().css('color') == 'rgb(255, 165, 0)' || $(this).children().css('color') == 'orange') {
+       $(this).children().css('color', '');
+   } else {
+     $(this).children().css('color', 'orange');
+   }
+ });
+
+ $('.sendclock#uid#').on('click',function(){
+   var color = '';
+   var clock = '0';
+   var weather = '0';
+   var temp = '0';
+   var date = '0';
+   var mode = '0';
+   var message = '';
+   color = $('.clockcolor#uid#').val();
+   mode = $('select.typeclock#uid#').val();
+   if ($('.clock#uid#').css('color') == 'rgb(255, 165, 0)' || $('.clock#uid#').css('color') == 'orange'){
+     clock ='1';
+   }
+   if ($('.weather#uid#').css('color') == 'rgb(255, 165, 0)' || $('.weather#uid#').children().css('color') == 'orange'){
+     weather ='1';
+   }
+   if ($('.temp#uid#').css('color') == 'rgb(255, 165, 0)' || $('.temp#uid#').children().css('color') == 'orange'){
+     temp ='1';
+   }
+   if ($('.date#uid#').css('color') == 'rgb(255, 165, 0)' || $('.date#uid#').children().css('color') == 'orange'){
+     date ='1';
+   }
+   message = 'clock='+clock+' weather='+weather+' temp='+temp+' date='+date+' mode='+mode;
+   jeedom.cmd.execute({id: '#cmd_showtimeseq_id#', value: {'title': color, 'message' : message}});
+ });
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .visualeffects#uid#').on('change',function(){
+   jeedom.cmd.execute({id: '#cmd_effets_id#', value: {'message': $(this).value()}});
+ });
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .musicaleffects#uid#').on('change',function(){
+   jeedom.cmd.execute({id: '#cmd_effetsmusic_id#', value: {'message': $(this).value()}});
+ })
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .favorites#uid#').on('change',function(){
+
+ })
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .notify#uid#').on('change',function(){
+   jeedom.cmd.execute({id: '#cmd_notifs_id#', value: {'message': $(this).value()}});
+ })
+
+ $('.eqLogic[data-eqLogic_uid=#uid#] .sendfavorites').on('click', function() {
+   jeedom.cmd.execute({id: '#cmd_favoris_id#'});
+ });
+
+
+
+ $('.sendtext#uid#').on('click',function(){
+   var color = '';
+   var speed = '';
+   var options = '';
+   var text = '';
+   speed = $(".eqLogic[data-eqLogic_uid=#uid#] .speed#uid# input").value();
+   color = $('.textcolor#uid#').val();
+   text = $('.text#uid#').val();
+   options = 'color='+color+ ' speed='+speed;
+   jeedom.cmd.execute({id: '#cmd_sendtext_id#', value: {'title': options, 'message' : text}});
+ });
+
+	if ($('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page')=='home'){
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .home').show();
+	} else if ($('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page')=='clock'){
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .clock').show();
+	} else if ($('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page')=='effects'){
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .effects').show();
+  }else if ($('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page')=='text'){
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .text').show();
+  };
+
+	$('.eqLogic[data-eqLogic_uid=#uid#] .gotoclock').on('click', function() {
+		$('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page','clock');
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .clock').show();
+	});
+	$('.eqLogic[data-eqLogic_uid=#uid#] .gotohome').on('click', function() {
+		$('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page','home');
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .home').show();
+	});
+	$('.eqLogic[data-eqLogic_uid=#uid#] .gotoeffects').on('click', function() {
+		$('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page','effects');
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .effects').show();
+	});
+	$('.eqLogic[data-eqLogic_uid=#uid#] .gototext').on('click', function() {
+		$('.eqLogic[data-eqLogic_uid=#uid#]').attr('data-page','text');
+		$('.eqLogic[data-eqLogic_uid=#uid#] .page').hide();
+		$('.eqLogic[data-eqLogic_uid=#uid#] .text').show();
+	});
+   $('.eqLogic[data-eqLogic_uid=#uid#] .cmd').on('click', function() {
+     jeedom.cmd.execute({id: $(this).data('cmd_id')});
+   });
+
+   $('#bt_uploadFile').fileupload({
+     dataType: 'json',
+     replaceFileInput: false,
+     done: function (e, data) {
+       if (data.result.state != 'ok') {
+         $('#div_alert').showAlert({message: data.result.result, level: 'danger'});
+         return;
+       }
+      $('#div_alert').showAlert({message: 'Fichier(s) ajouté(s) avec succès', level: 'success'});
+     }
+   });
+ </script>
+</div>
