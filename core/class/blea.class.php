@@ -281,10 +281,10 @@ class blea extends eqLogic {
 		$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead']);
 		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','/home/'.$user.'/folder-blea.tar.gz')) {
 			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
-			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
+			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm -f /home/'.$user.'/folder-blea.tar.gz']);
 		}
 		log::add('blea','info',__('Suppression du zip local',__FILE__));
-		exec('rm /tmp/folder-blea.tar.gz');
+		exec('rm -f /tmp/folder-blea.tar.gz');
 		log::add('blea','info',__('Finie',__FILE__));
 		return $result;
 	}
@@ -294,7 +294,7 @@ class blea extends eqLogic {
 		$name = $remoteObject->getRemoteName();
 		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name).$_dependancy;
 		log::add('blea','info','Suppression de la log ' . $local);
-		exec('rm '. $local);
+		exec('rm -f '. $local);
 		log::add('blea','info',__('Récupération de la log distante',__FILE__));
 		if ($remoteObject->getFiles($local,'/tmp/blea'.$_dependancy)) {
 			$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
