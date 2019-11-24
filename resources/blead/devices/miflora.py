@@ -15,9 +15,6 @@ class Miflora():
 		validname = ['Flower mate','Flower care',self.name]
 		if name in validname:
 			return True
-		if data.lower().startswith("95fe") and (mac.lower().startswith("c4:7c:8d")):
-			#broadcasted advertising data
-			return True
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
@@ -31,6 +28,8 @@ class Miflora():
 				if val_type in ['04']:	 # type: temperature
 					t_data = int(val_data[2:4]+val_data[0:2],16)
 					temp = t_data/10.0
+					if temp>3276.8:
+						temp = 0-(6553.6 - temp)
 					logging.debug('XiaomiFlower------ Advertising Data=> Temp' + str(temp))
 					action['temperature'] = temp
 				elif val_type in ['06']: # type: humidity
@@ -61,6 +60,8 @@ class Miflora():
 				elif val_type in ['0d']: # type: temp&moist
 					t_data = int(val_data[2:4]+val_data[0:2],16)
 					temp = t_data/10.0
+					if temp>3276.8:
+						temp = 0-(6553.6 - temp)
 					h_data = int(val_data[6:8]+val_data[4:6],16)
 					hum = h_data/10.0
 					logging.debug('XiaomiFlower------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))

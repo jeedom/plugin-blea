@@ -76,7 +76,7 @@ if (isset($result['started'])) {
 			}
 		}
 		usleep(500);
-		blea::sendIdToDeamon();
+		blea::sendIdToDeamon($result['source']);
 	}
 }
 if (isset($result['heartbeat'])) {
@@ -147,7 +147,7 @@ if (isset($result['devices'])) {
 				$rssicmd = new bleaCmd();
 				$rssicmd->setLogicalId('rssi' . $datas['source']);
 				$rssicmd->setIsVisible(0);
-				$rssicmd->setIsHistorized(1);
+				$rssicmd->setIsHistorized(0);
 				$rssicmd->setName(__('Rssi '. $datas['source'], __FILE__));
 				$rssicmd->setType('info');
 				$rssicmd->setSubType('numeric');
@@ -165,7 +165,7 @@ if (isset($result['devices'])) {
 				$presentcmd = new bleaCmd();
 				$presentcmd->setLogicalId('present' . $datas['source']);
 				$presentcmd->setIsVisible(0);
-				$presentcmd->setIsHistorized(1);
+				$presentcmd->setIsHistorized(0);
 				$presentcmd->setName(__('Present '. $datas['source'], __FILE__));
 				$presentcmd->setType('info');
 				$presentcmd->setSubType('binary');

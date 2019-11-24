@@ -155,7 +155,7 @@ foreach ($remotes as $remote) {
 							<a class="btn btn-danger bleaRemoteAction" data-action="all" data-type="emission"><i class="fas fa-sign-in-alt fa-rotate-270"></i> {{Emission}}</a>
 						</div>
 						</div>
-						<div class="alert alert-info">{{La durée d'installation des dépendances sur une antenne peut prendre jusqu'à presque 30 minutes selon les antennes}}</div>
+						<div class="alert alert-info">{{La durée d'installation des dépendances sur une antenne peut prendre jusqu'à presque 30 minutes selon les antennes. SI vous utilisez des antennes PENSEZ à autoriser l'api du plugin sur autre chose que LOCALHOST}}</div>
 				</div>
 						</fieldset>
 				</form>

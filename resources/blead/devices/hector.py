@@ -40,11 +40,12 @@ class Hector():
 			pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
 			pression_read = 0
 			while (pression <= 83457 and pression_read < 3):
-				time.sleep(1)
+				time.sleep(0.2)
+				logging.debug('Hector ----- read ' + str(pression_read))
 				pression = struct.unpack('4B',conn.readCharacteristic('0x44'))
 				pression = int(str(hex(pression[0])[2:].zfill(2) + hex(pression[1])[2:].zfill(2)+ hex(pression[2])[2:].zfill(2)+ hex(pression[3])[2:].zfill(2)),16)
 				pression_read += 1
-			logging.debug(str(pression))
+				logging.debug('Hector -----'+str(pression))
 			result['temperature'] = float(temperature)/10
 			result['humidity'] = float(humidity)/10
 			result['pressure'] = float(pression)/100

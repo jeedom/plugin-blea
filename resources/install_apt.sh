@@ -9,7 +9,7 @@ echo "*			 Installation des dépendances			 *"
 echo "********************************************************"
 sudo apt-get update
 echo 20 > ${PROGRESS_FILE}
-sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev rfkill
+sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev libopenjp2-7 libtiff5 libatlas-base-dev rfkill
 sudo apt-get install -y python3-pip --reinstall
 sudo pip3 install -U setuptools
 echo 40 > ${PROGRESS_FILE}
@@ -18,6 +18,9 @@ echo 50 > ${PROGRESS_FILE}
 sudo pip3 install pyudev
 sudo pip3 install pyserial
 sudo pip3 install requests
+sudo pip3 install pybluez
+sudo pip3 install pillow
+sudo pip3 install numpy
 echo 60 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1

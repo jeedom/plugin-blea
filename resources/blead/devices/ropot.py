@@ -6,7 +6,7 @@ import struct
 from multiconnect import Connector
 from notification import Notification
 
-class Miflora():
+class Ropot():
 	def __init__(self):
 		self.name = 'ropot'
 		self.ignoreRepeat = False
@@ -33,7 +33,7 @@ class Miflora():
 			conn.writeCharacteristic('0x33','a01f',response=True)
 			battery = batteryFirm[0]
 			firmware = "".join(map(chr, batteryFirm[2:]))
-			notification = Notification(conn,Miflora)
+			notification = Notification(conn,Ropot)
 			conn.writeCharacteristic('0x36','0100',response=True)
 			notification.subscribe(2)
 			result['battery'] = battery
@@ -61,4 +61,4 @@ class Miflora():
 			result['source'] = globals.daemonname
 			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
-globals.COMPATIBILITY.append(Miflora)
+globals.COMPATIBILITY.append(Ropot)

@@ -15,15 +15,11 @@ class XiaomiHT():
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if name.lower() in ['mj_ht_v1','cleargrass temp & rh', self.name]:
 			return True
-		if data.lower().startswith("95fe") and (mac.lower().startswith("4c:65:a8") or mac.lower().startswith("58:2d:34")):
-			#broadcasted advertising data
-			return True
 
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
 		if data.lower().startswith("95fe"):
-			##todo parse data
 			logging.debug('Xiaomi PARSE data: ' + data )
 			val_type = data[26:28].lower()
 			val_len =  data[30:32]
@@ -51,6 +47,18 @@ class XiaomiHT():
 				 logging.debug('XiaomiHT------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))
 				 action['temperature'] = temp
 				 action['moisture'] = hum
+		if data.lower().startswith("cdfd"):
+			logging.debug('Xiaomi PARSE data: ' + data )
+			t_data = data[26:28] + data[24:26]
+			temp = int(t_data,16)/10.0
+			h_data = data[30:32] + data[28:30]
+			hum = int(h_data,16)/10.0
+			b_data = data[36:38]
+			batt = int(b_data,16)
+			logging.debug('XiaomiHT------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum) + ' Batt : ' + str(batt))
+			action['temperature'] = temp
+			action['moisture'] = hum
+			action['battery'] = batt
 		return action
 
 	def read(self,mac):

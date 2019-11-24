@@ -9,9 +9,8 @@ import utils
 
 class YeelightCandela():
 	def __init__(self):
-		self.name = 'yeelight_ms'
+		self.name = 'yeelightcandela'
 		self.ignoreRepeat = True
-		self.key = '000abf684a8000000000000000000000'
 
 	def isvalid(self,name,manuf='',data='',mac=''):
 		if 'yeelight_ms' in [name.lower()] or name.lower()==self.name:
