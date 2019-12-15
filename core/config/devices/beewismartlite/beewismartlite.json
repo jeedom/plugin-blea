@@ -1,0 +1,224 @@
+{
+	"beewismartlite": {
+		"name": "BeeWi Smart Lite",
+		"groupe" : "Lumières",
+		"configuration" : {
+			"cancontrol" : 1,
+			"name" : "beewismartlite",
+			"canbelocked" : 1,
+			"needsrefresh" : 0
+		},
+		"commands": [
+			{	
+				"name": "Off",
+				"type": "action",
+				"subtype": "other",
+				"value": "Etat",
+				"isVisible": 0,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:0,type:switchoff",
+				"display": {
+					"icon": "<i class=\"icon jeedom2-light-bulb7\"><\/i>",
+					"generic_type": "LIGHT_OFF"
+				}
+			},
+			{	
+				"name": "On",
+				"type": "action",
+				"subtype": "other",
+				"value": "Etat",
+				"isVisible": 0,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:0,type:switchon",
+				"display": {
+					"icon": "<i class=\"icon jeedom2-light-bulb2\"><\/i>",
+					"generic_type": "LIGHT_ON"
+				}
+			},
+			{
+				"name": "Intensité",
+				"type": "action",
+				"subtype": "slider",
+				"value": "Etat",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:#slider#,type:brightness",
+				"configuration": {
+					"minValue": 0,
+					"maxValue": 10
+				},
+				"template": {
+					"dashboard":"light",
+					"mobile":"light"
+				},
+				"display": {
+				"forceReturnLineBefore": 0,
+				"generic_type": "LIGHT_SLIDER"
+				}
+			},
+			{
+				"name": "Etat",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"logicalId": "brightness",
+				"configuration": {
+					"minValue": 0,
+					"maxValue": 10
+				},
+				"display": {
+					"generic_type": "LIGHT_STATE"
+				}
+			},
+			{
+				"name": "Température",
+				"type": "action",
+				"subtype": "slider",
+				"value": "Etat Température",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:#slider#,type:tone",
+				"configuration": {
+					"minValue": 0,
+					"maxValue": 9
+				},
+				"display": {
+				"forceReturnLineBefore": 1,
+				"generic_type": "LIGHT_SET_TEMP_COLOR"
+				}
+			},
+			{
+				"name": "Etat Température",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"logicalId": "tone",
+				"display": {
+					"generic_type": "LIGHT_TEMP_COLOR"
+				}
+			},
+			{
+				"name": "Couleur",
+				"type": "action",
+				"subtype": "color",
+				"value": "Etat Couleur",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:#color#,type:color",
+				"display": {
+				"forceReturnLineBefore": 1,
+				"generic_type": "LIGHT_SET_COLOR"
+				}
+			},
+			{
+				"name": "Etat Couleur",
+				"type": "info",
+				"subtype": "other",
+				"isVisible": 0,
+				"logicalId": "color",
+				"display": {
+					"generic_type": "LIGHT_COLOR"
+				}
+			},
+			{
+				"name": "Blanc",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 0,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:0,type:white",
+				"display": {
+					"forceReturnLineBefore": 0
+				}
+			},
+			{
+				"name": "Etat Blanc",
+				"type": "info",
+				"subtype": "binary",
+				"isVisible": 0,
+				"logicalId": "white"
+			},
+			{
+				"name": "Séquence RGB rapide",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:0,type:sequence",
+				"display": {
+					"forceReturnLineBefore": 0,
+					"icon": "<i class=\"fas fa-forward\"><\/i>"
+				}
+			},
+			{
+				"name": "Séquence 7 couleurs rapide",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:1,type:sequence",
+				"display": {
+					"forceReturnLineBefore": 0,
+					"icon": "<i class=\"fas fa-fast-forward\"><\/i>"
+				}
+			},
+			{
+				"name": "Séquence RGB lent",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:2,type:sequence",
+				"display": {
+					"forceReturnLineBefore": 0,
+					"icon": "<i class=\"fas fa-backward\"><\/i>"
+				}
+			},
+			{
+				"name": "Séquence 7 couleurs lent",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:3,type:sequence",
+				"display": {
+					"forceReturnLineBefore": 0,
+					"icon": "<i class=\"fas fa-fast-backward\"><\/i>"
+				}
+			},
+			{
+				"name": "Séquence multi couleurs",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"unite": "",
+				"logicalId": "name:beewismartlite,value:4,type:sequence",
+				"display": {
+					"forceReturnLineBefore": 0,
+					"icon": "<i class=\"icon divers-triangular42\"><\/i>"
+				}
+			},
+			{
+				"name": "Rafraichir",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"logicalId": "refresh"
+			}
+		],
+		"compatibility": [
+			{
+				"manufacturer": "BeeWi",
+				"name": "SmartLite BBL227",
+				"doc": "",
+				"type": "Lumières",
+				"battery_type": "",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Il faut valider l'appairage pendant la première minute après avoir allumé l'ampoule",
+				"inclusion" : "Mode inclusion",
+				"imglink": "beewismartlite"
+			}
+		]
+	}
+}
