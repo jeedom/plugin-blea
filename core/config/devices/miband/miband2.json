@@ -39,7 +39,7 @@
 					"mobile": "line"
 				},
 				"display": {
-					"icon": "<i class=\"fa fa-heartbeat\"><\/i>",
+					"icon": "<i class=\"fas fa-heartbeat\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -72,7 +72,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,
@@ -89,7 +89,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 0,
@@ -120,7 +120,7 @@
                 "isVisible": 1,
                 "logicalId": "name:miband2,handle:0x25,value:03,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
-					"icon": "<i class=\"fa fa-rss\"><\/i>",
+					"icon": "<i class=\"fas fa-rss\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -131,7 +131,7 @@
                 "isVisible": 1,
                 "logicalId": "name:miband2,handle:0x25,value:02,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
-					"icon": "<i class=\"fa fa-phone\"><\/i>",
+					"icon": "<i class=\"fas fa-phone\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -142,7 +142,7 @@
                 "isVisible": 1,
                 "logicalId": "name:miband2,handle:0x25,value:01,key:5b4b29dee0ed7cadf3b402d71782024f",
 				"display": {
-					"icon": "<i class=\"fa fa-envelope\"><\/i>",
+					"icon": "<i class=\"fas fa-envelope\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -158,7 +158,7 @@
 					"mobile": "line"
 				},
 				"display": {
-					"icon": "<i class=\"fa fa-heart\"><\/i>",
+					"icon": "<i class=\"fas fa-heart\"><\/i>",
 					"generic_type": "DONT"
 				}
             },

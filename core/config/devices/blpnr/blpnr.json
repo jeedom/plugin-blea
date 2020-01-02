@@ -110,7 +110,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,

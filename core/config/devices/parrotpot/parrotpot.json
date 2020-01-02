@@ -15,7 +15,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"icon": "<i class=\"fas fa-sun\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 0,
@@ -32,7 +32,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
 					"generic_type": "DONT"
                 },
                 "isVisible": 0,
@@ -49,7 +49,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
 					"generic_type": "DONT"
                 },
                 "isVisible": 0,
@@ -66,7 +66,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
 					"generic_type": "DONT"
                 },
                 "isVisible": 0,
@@ -83,7 +83,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-tint\"><\/i>",
+					"icon": "<i class=\"fas fa-tint\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 0,
@@ -100,7 +100,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-tint\"><\/i>",
+					"icon": "<i class=\"fas fa-tint\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,
@@ -117,7 +117,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
 					"generic_type": "DONT"
                 },
                 "isVisible": 1,
@@ -134,7 +134,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"icon": "<i class=\"fas fa-sun\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,
@@ -151,7 +151,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 0,
@@ -168,7 +168,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 0,

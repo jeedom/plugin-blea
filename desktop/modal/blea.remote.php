@@ -29,15 +29,15 @@ sendVarToJS('plugin', $id);
 	<div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">
 		<div class="bs-sidebar">
 			<ul id="ul_eqLogic" class="nav nav-list bs-sidenav">
-				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter Antenne}}</a>
+				<a class="btn btn-default bleaRemoteAction" style="width : 100%;margin-top : 5px;" data-action="add"><i class="fas fa-plus-circle"></i> {{Ajouter Antenne}}</a>
 				<a class="btn btn-warning bleaRemoteAction" style="width : 100%;margin-bottom: 5px;" data-action="refresh"><i class="fas fa-sync"></i> {{Rafraichir}}</a>
 				<li class="filter" style="margin-bottom: 5px;"><input class="filter form-control input-sm" placeholder="{{Rechercher}}" style="width: 100%"/></li>
 				<?php
 foreach ($remotes as $remote) {
-	$icon = '<i class="fa fa-heartbeat" style="color:green"></i>';
+	$icon = '<i class="fas fa-heartbeat" style="color:green"></i>';
 	$last = $remote->getCache('lastupdate','0');
 	if ($last == '0' or time() - strtotime($last)>65){
-		$icon = '<i class="fa fa-deaf" style="color:#b20000"></i>';
+		$icon = '<i class="fas fa-deaf" style="color:#b20000"></i>';
 	}
 	echo '<li class="cursor li_bleaRemote" data-bleaRemote_id="' . $remote->getId() . '" data-bleaRemote_name="' . $remote->getRemoteName() . '"><a>' . $remote->getRemoteName() . ' '. $icon. ' - v' . $remote->getConfiguration('version','1.0') . ' - ' . $remote->getCache('lastupdate','0') .'</a></li>';
 }
@@ -46,12 +46,12 @@ foreach ($remotes as $remote) {
 		</div>
 	</div>
 	 <div class="col-lg-19 col-md-8 col-sm-7 col-xs-7 remoteThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
-<legend><i class="fa fa-table"></i>  {{Mes Antennes}}</legend>
+<legend><i class="fas fa-table"></i>  {{Mes Antennes}}</legend>
 
 <div class="eqLogicThumbnailContainer">
 	<div class="cursor bleaRemoteAction logoPrimary" data-action="add" style="width:10px">
-      <i class="fa fa-plus-circle"></i>
-	  </br>
+      <i class="fas fa-plus-circle"></i>
+	  <br/>
     <span>{{Ajouter}}</span>
   </div>
   <?php
@@ -67,12 +67,12 @@ foreach ($remotes as $remote) {
 </div>
 
 	<div class="col-lg-9 col-md-8 col-sm-7 col-xs-7 bleaRemote" style="border-left: solid 1px #EEE; padding-left: 25px;display:none;">
-		<a class="btn btn-success bleaRemoteAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-		<a class="btn btn-danger bleaRemoteAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
+		<a class="btn btn-success bleaRemoteAction pull-right" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+		<a class="btn btn-danger bleaRemoteAction pull-right" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
 
 			<form class="form-horizontal">
 					<fieldset>
-						<legend><i class="fa fa-arrow-circle-left returnAction cursor"></i> {{Général}}</legend>
+						<legend><i class="fas fa-arrow-circle-left returnAction cursor"></i> {{Général}}</legend>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">{{Nom}}</label>
 							<div class="col-sm-3">
@@ -111,12 +111,12 @@ foreach ($remotes as $remote) {
 							echo '<div class="form-group">
 						<label class="col-sm-2 control-label">{{Envoi des fichiers nécessaires}}</label>
 						<div class="col-sm-3">
-							<a class="btn btn-warning bleaRemoteAction" data-action="sendFiles"><i class="fa fa-upload"></i> {{Envoyer les fichiers}}</a>
+							<a class="btn btn-warning bleaRemoteAction" data-action="sendFiles"><i class="fas fa-upload"></i> {{Envoyer les fichiers}}</a>
 						</div>';
 						if (method_exists( $id ,'dependancyRemote')){
 							echo '<label class="col-sm-2 control-label">{{Installation des dépendances}}</label>
 						<div class="col-sm-3">
-							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fa fa-spinner"></i> {{Lancer les dépendances}}</a>
+							<a class="btn btn-warning bleaRemoteAction" data-action="dependancyRemote"><i class="fas fa-spinner"></i> {{Lancer les dépendances}}</a>
 						</div>
 						<div class="col-sm-2">
 							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLogDependancy"><i class="far fa-file-alt"></i> {{Log dépendances}}</a>
@@ -128,10 +128,10 @@ foreach ($remotes as $remote) {
 							echo '<div class="form-group">
 						<label class="col-sm-2 control-label">{{Gestion du démon}}</label>
 						<div class="col-sm-2">
-							<a class="btn btn-success bleaRemoteAction" data-action="launchremote"><i class="fa fa-play"></i> {{Lancer}}</a>
+							<a class="btn btn-success bleaRemoteAction" data-action="launchremote"><i class="fas fa-play"></i> {{Lancer}}</a>
 						</div>
 						<div class="col-sm-2">
-							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fa fa-stop"></i> {{Arret}}</a>
+							<a class="btn btn-danger bleaRemoteAction" data-action="stopremote"><i class="fas fa-stop"></i> {{Arret}}</a>
 						</div>
 						<div class="col-sm-2">
 							<a class="btn btn-success bleaRemoteAction" data-action="getRemoteLog"><i class="far fa-file-alt"></i> {{Log}}</a>
@@ -168,11 +168,11 @@ foreach ($remotes as $remote) {
 		if(auto == 1){
 			$('.bleaRemoteAction[data-action=stopremote]').hide();
 			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-success').addClass('btn-danger');
-			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fa fa-times"></i> {{Désactiver}}');
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fas fa-times"></i> {{Désactiver}}');
 		}else{
 			$('.bleaRemoteAction[data-action=stopremote]').show();
 			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').removeClass('btn-danger').addClass('btn-success');
-			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fa fa-magic"></i> {{Activer}}');
+			$('.bleaRemoteAction[data-action=changeAutoModeRemote]').html('<i class="fas fa-magic"></i> {{Activer}}');
 		}
 	}
 	$('.bleaRemoteAction[data-action=refresh]').on('click',function(){
