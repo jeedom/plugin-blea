@@ -21,25 +21,25 @@ class XiaomiHT():
 		action['present'] = 1
 		if data.lower().startswith("95fe"):
 			logging.debug('Xiaomi PARSE data: ' + data )
-			val_type = data[26:28].lower()
+			val_type = data[26:30].lower()
 			val_len =  data[30:32]
 			val_data = data[32:40]
-			if val_type in ['04']:	 # type: temperature
+			if   val_type in ['0410']: # type: temperature
 				t_data = val_data[2:4] + val_data[0:2]
 				temp = int(t_data,16)/10.0
 				logging.debug('XiaomiHT------ Advertising Data=> Temp' + str(temp))
 				action['temperature'] = temp
-			elif val_type in ['06']: # type: moisture
+			elif val_type in ['0610']: # type: moisture
 				h_data = val_data[2:4] + val_data[0:2]
 				hum = int(h_data,16)/10.0
 				logging.debug('XiaomiHT------ Advertising Data=> Moist: ' + str(hum))
 				action['moisture'] = hum
-			elif val_type in ['0a']: # type: battery
+			elif val_type in ['0a10']: # type: battery
 				b_data = val_data[0:2]
 				batt = int(b_data,16)
 				logging.debug('XiaomiHT------ Advertising Data=> Batt: ' + str(batt))
 				action['battery'] = batt
-			elif val_type in ['0d']: # type: temp&moist
+			elif val_type in ['0d10']: # type: temp&moist
 				 t_data = val_data[2:4] + val_data[0:2]
 				 temp = int(t_data,16)/10.0
 				 h_data = val_data[6:8] + val_data[4:6]
