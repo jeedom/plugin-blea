@@ -36,6 +36,7 @@ sudo hciconfig hci0 up >/dev/null 2>&1
 sudo hciconfig hci1 up >/dev/null 2>&1
 sudo hciconfig hci2 up >/dev/null 2>&1
 sudo rm -R /tmp/bluepy
+sudo chmod -R 777 /usr/local/lib/python3.5/dist-packages/bluepy
 cd /tmp
 echo 85 > ${PROGRESS_FILE}
 sudo pip3 install cryptography
