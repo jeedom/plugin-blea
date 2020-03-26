@@ -1,5 +1,16 @@
 {
-    "plugin_info\/configuration.php": {
+    "plugins\/blea\/mobile\/html\/blea.html": {
+        "Arrêter Scan": "Arrêter Scan",
+        "Lancer Scan": "Lancer Scan",
+        "Santé": "Santé",
+        "Réseau": "Réseau",
+        "Image": "Image",
+        "Nom": "Nom",
+        "Batterie": "Batterie",
+        "Présent": "Présent",
+        "Dernière comm": "Dernière comm"
+    },
+    "plugins\/blea\/plugin_info\/configuration.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Général": "Général",
         "Autoriser l'inclusion de devices inconnus": "Autoriser l'inclusion de devices inconnus",
@@ -39,7 +50,63 @@
         "Etes-vous sûr de vouloir télécharger les dernières configurations des modules ? Ceci relancera le plugin Blea.": "Etes-vous sûr de vouloir télécharger les dernières configurations des modules ? Ceci relancera le plugin Blea.",
         "Téléchargement des configurations": "Téléchargement des configurations"
     },
-    "desktop\/modal\/blea.miscale.php": {
+    "plugins\/blea\/desktop\/modal\/blea.dotti.all.php": {
+        "Annuler": "Annuler",
+        "Continuer": "Continuer",
+        "Votre Collection": "Votre Collection"
+    },
+    "plugins\/blea\/desktop\/modal\/health.php": {
+        "Image": "Image",
+        "Module": "Module",
+        "ID": "ID",
+        "Mac": "Mac",
+        "Type": "Type",
+        "Statut": "Statut",
+        "Batterie": "Batterie",
+        "Rssi": "Rssi",
+        "Antenne Emission": "Antenne Emission",
+        "Antenne Réception": "Antenne Réception",
+        "Présent": "Présent",
+        "Refresh Forcé": "Refresh Forcé",
+        "Dernière communication": "Dernière communication",
+        "Date création": "Date création",
+        "OK": "OK",
+        "NOK": "NOK",
+        "Secteur": "Secteur",
+        "Absent": "Absent",
+        "Oui": "Oui",
+        "Non": "Non"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.divoompixoo.php": {
+        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
+        "Couleur": "Couleur",
+        "Remplir": "Remplir",
+        "Vider": "Vider",
+        "Pot de peinture": "Pot de peinture",
+        "Pipette": "Pipette",
+        "Gommer": "Gommer",
+        "Regrouper pixel": "Regrouper pixel",
+        "Afficher sur le Divoom": "Afficher sur le Divoom",
+        "Votre Collection": "Votre Collection",
+        "Annuler": "Annuler",
+        "Continuer": "Continuer"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.dotti.php": {
+        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
+        "Couleur": "Couleur",
+        "Remplir": "Remplir",
+        "Vider": "Vider",
+        "Pot de peinture": "Pot de peinture",
+        "Pipette": "Pipette",
+        "Gommer": "Gommer",
+        "Temps réel": "Temps réel",
+        "Regrouper pixel": "Regrouper pixel",
+        "Afficher sur le Dotti": "Afficher sur le Dotti",
+        "Votre Collection": "Votre Collection",
+        "Annuler": "Annuler",
+        "Continuer": "Continuer"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.miscale.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "EqLogic ID ne peut être vide": "EqLogic ID ne peut être vide",
         "EqLogic non trouvé": "EqLogic non trouvé",
@@ -52,7 +119,45 @@
         "Sex": "Sex",
         "Action": "Action"
     },
-    "desktop\/modal\/blea.remote.php": {
+    "plugins\/blea\/desktop\/modal\/blea.divoomtimeboxmini.php": {
+        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
+        "Couleur": "Couleur",
+        "Remplir": "Remplir",
+        "Vider": "Vider",
+        "Pot de peinture": "Pot de peinture",
+        "Pipette": "Pipette",
+        "Gommer": "Gommer",
+        "Regrouper pixel": "Regrouper pixel",
+        "Afficher sur le Divoom": "Afficher sur le Divoom",
+        "Votre Collection": "Votre Collection",
+        "Annuler": "Annuler",
+        "Continuer": "Continuer"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.divoomtimeboxmini.all.php": {
+        "Fichier(s) ajouté(s) avec succès": "Fichier(s) ajouté(s) avec succès",
+        "Votre Collection": "Votre Collection",
+        "Annuler": "Annuler",
+        "Continuer": "Continuer"
+    },
+    "plugins\/blea\/desktop\/modal\/syncconf.blea.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Pause": "Pause",
+        "Rechercher": "Rechercher"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.miscale2.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "EqLogic ID ne peut être vide": "EqLogic ID ne peut être vide",
+        "EqLogic non trouvé": "EqLogic non trouvé",
+        "Sauvegarder": "Sauvegarder",
+        "Ajouter un utilisateur": "Ajouter un utilisateur",
+        "Surnom": "Surnom",
+        "Taille (en cm)": "Taille (en cm)",
+        "Poids": "Poids",
+        "Année naissance ( ex : 30-04-1984)": "Année naissance ( ex : 30-04-1984)",
+        "Sex": "Sex",
+        "Action": "Action"
+    },
+    "plugins\/blea\/desktop\/modal\/blea.remote.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Ajouter Antenne": "Ajouter Antenne",
         "Rafraichir": "Rafraichir",
@@ -96,146 +201,20 @@
         "Arrêt réussi": "Arrêt réussi",
         "Etês-vous sûr de vouloir supprimer cette Antenne ?": "Etês-vous sûr de vouloir supprimer cette Antenne ?"
     },
-    "desktop\/modal\/blea.dotti.all.php": {
-        "Annuler": "Annuler",
-        "Continuer": "Continuer",
-        "Votre Collection": "Votre Collection"
-    },
-    "desktop\/modal\/blea.divoomtimeboxmini.all.php": {
-        "Fichier(s) ajouté(s) avec succès": "Fichier(s) ajouté(s) avec succès",
-        "Votre Collection": "Votre Collection",
-        "Annuler": "Annuler",
-        "Continuer": "Continuer"
-    },
-    "desktop\/modal\/blea.graph.php": {
+    "plugins\/blea\/desktop\/modal\/blea.graph.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Position Antennes": "Position Antennes",
         "Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne local via des pointillés": "Représentation relative de la puissance des liens sur les antennes. Vous pouvez déplacer les antennes et sauver leur position pour les retrouver à la même place. Concernant les équipements, ceux-ci prennent une position d'équilibre (vous pouvez aussi les déplacer mais ils s'équilibreront). Si les antennes sont toutes d'un coté de l'équipement, il peut y avoir plusieurs positions d'équilibres de part et d'autres. Cependant dans le cas d'un équipement avec des antennes autour de lui (le plus en triangle possible), il y aura une seule position d'équilibre qui sera proche de la réelle. Certains modules comme les NIU émettent que lors de l'appui, donc au bout d'un moment il n'y a plus de signal, à ce moment là les modules sont rattachés virtuellement à l'antenne local via des pointillés",
         "Réseau BLEA": "Réseau BLEA"
     },
-    "desktop\/modal\/blea.divoompixoo.all.php": {
+    "plugins\/blea\/desktop\/modal\/blea.divoompixoo.all.php": {
         "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
         "Fichier(s) ajouté(s) avec succès": "Fichier(s) ajouté(s) avec succès",
         "Votre Collection": "Votre Collection",
         "Annuler": "Annuler",
         "Continuer": "Continuer"
     },
-    "desktop\/modal\/health.php": {
-        "Image": "Image",
-        "Module": "Module",
-        "ID": "ID",
-        "Mac": "Mac",
-        "Type": "Type",
-        "Statut": "Statut",
-        "Batterie": "Batterie",
-        "Rssi": "Rssi",
-        "Antenne Emission": "Antenne Emission",
-        "Antenne Réception": "Antenne Réception",
-        "Présent": "Présent",
-        "Refresh Forcé": "Refresh Forcé",
-        "Dernière communication": "Dernière communication",
-        "Date création": "Date création",
-        "OK": "OK",
-        "NOK": "NOK",
-        "Secteur": "Secteur",
-        "Absent": "Absent",
-        "Oui": "Oui",
-        "Non": "Non"
-    },
-    "desktop\/modal\/blea.divoomtimeboxmini.php": {
-        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
-        "Couleur": "Couleur",
-        "Remplir": "Remplir",
-        "Vider": "Vider",
-        "Pot de peinture": "Pot de peinture",
-        "Pipette": "Pipette",
-        "Gommer": "Gommer",
-        "Regrouper pixel": "Regrouper pixel",
-        "Afficher sur le Divoom": "Afficher sur le Divoom",
-        "Votre Collection": "Votre Collection",
-        "Annuler": "Annuler",
-        "Continuer": "Continuer"
-    },
-    "desktop\/modal\/blea.divoompixoo.php": {
-        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
-        "Couleur": "Couleur",
-        "Remplir": "Remplir",
-        "Vider": "Vider",
-        "Pot de peinture": "Pot de peinture",
-        "Pipette": "Pipette",
-        "Gommer": "Gommer",
-        "Regrouper pixel": "Regrouper pixel",
-        "Afficher sur le Divoom": "Afficher sur le Divoom",
-        "Votre Collection": "Votre Collection",
-        "Annuler": "Annuler",
-        "Continuer": "Continuer"
-    },
-    "desktop\/modal\/blea.miscale2.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "EqLogic ID ne peut être vide": "EqLogic ID ne peut être vide",
-        "EqLogic non trouvé": "EqLogic non trouvé",
-        "Sauvegarder": "Sauvegarder",
-        "Ajouter un utilisateur": "Ajouter un utilisateur",
-        "Surnom": "Surnom",
-        "Taille (en cm)": "Taille (en cm)",
-        "Poids": "Poids",
-        "Année naissance ( ex : 30-04-1984)": "Année naissance ( ex : 30-04-1984)",
-        "Sex": "Sex",
-        "Action": "Action"
-    },
-    "desktop\/modal\/blea.dotti.php": {
-        "L\\'id de l\\'équipement ne peut etre vide : ": "L\\'id de l\\'équipement ne peut etre vide : ",
-        "Couleur": "Couleur",
-        "Remplir": "Remplir",
-        "Vider": "Vider",
-        "Pot de peinture": "Pot de peinture",
-        "Pipette": "Pipette",
-        "Gommer": "Gommer",
-        "Temps réel": "Temps réel",
-        "Regrouper pixel": "Regrouper pixel",
-        "Afficher sur le Dotti": "Afficher sur le Dotti",
-        "Votre Collection": "Votre Collection",
-        "Annuler": "Annuler",
-        "Continuer": "Continuer"
-    },
-    "desktop\/modal\/syncconf.blea.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Pause": "Pause",
-        "Rechercher": "Rechercher"
-    },
-    "desktop\/js\/blea.js": {
-        "Inclusion BLEA": "Inclusion BLEA",
-        "Quel type de produit voulez-vous inclure : ": "Quel type de produit voulez-vous inclure : ",
-        "Tous": "Tous",
-        "Choisissez le type de produit que vous souhaitez ajouter": "Choisissez le type de produit que vous souhaitez ajouter",
-        "Annuler": "Annuler",
-        "Démarrer": "Démarrer",
-        "Santé BLEA": "Santé BLEA",
-        "Réseau BLEA": "Réseau BLEA",
-        "Configuration spécifique": "Configuration spécifique",
-        "Gestion des antennes bluetooth": "Gestion des antennes bluetooth",
-        "Réglages avancées": "Réglages avancées",
-        "Recharge configuration": "Recharge configuration",
-        "Recharger la configuration": "Recharger la configuration",
-        "Sélectionner le mode de rechargement de la configuration ?": "Sélectionner le mode de rechargement de la configuration ?",
-        "Sans supprimer les commandes": "Sans supprimer les commandes",
-        "En supprimant et recréant les commandes": "En supprimant et recréant les commandes",
-        "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.",
-        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes",
-        "Opération réalisée avec succès": "Opération réalisée avec succès",
-        "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ",
-        "Commande": "Commande",
-        "Afficher": "Afficher",
-        "Historiser": "Historiser",
-        "Inverser": "Inverser",
-        "Valeur retour d\\'état": "Valeur retour d\\'état",
-        "Durée avant retour d\\'état (min)": "Durée avant retour d\\'état (min)",
-        "Arrêter Scan": "Arrêter Scan",
-        "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)",
-        "Lancer Scan": "Lancer Scan",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page"
-    },
-    "desktop\/php\/blea.php": {
+    "plugins\/blea\/desktop\/php\/blea.php": {
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)",
         "Gestion": "Gestion",
         "Arrêter Scan": "Arrêter Scan",
@@ -284,33 +263,48 @@
         "Logical ID (info) ou Commande brute (action)": "Logical ID (info) ou Commande brute (action)",
         "Options": "Options"
     },
-    "core\/ajax\/blea.ajax.php": {
-        "Blea eqLogic non trouvé : ": "Blea eqLogic non trouvé : ",
-        "Remote inconnu : ": "Remote inconnu : ",
-        "Erreur": "Erreur"
+    "plugins\/blea\/desktop\/js\/blea.js": {
+        "Inclusion BLEA": "Inclusion BLEA",
+        "Quel type de produit voulez-vous inclure : ": "Quel type de produit voulez-vous inclure : ",
+        "Tous": "Tous",
+        "Choisissez le type de produit que vous souhaitez ajouter": "Choisissez le type de produit que vous souhaitez ajouter",
+        "Annuler": "Annuler",
+        "Démarrer": "Démarrer",
+        "Santé BLEA": "Santé BLEA",
+        "Réseau BLEA": "Réseau BLEA",
+        "Configuration spécifique": "Configuration spécifique",
+        "Gestion des antennes bluetooth": "Gestion des antennes bluetooth",
+        "Réglages avancées": "Réglages avancées",
+        "Recharge configuration": "Recharge configuration",
+        "Recharger la configuration": "Recharger la configuration",
+        "Sélectionner le mode de rechargement de la configuration ?": "Sélectionner le mode de rechargement de la configuration ?",
+        "Sans supprimer les commandes": "Sans supprimer les commandes",
+        "En supprimant et recréant les commandes": "En supprimant et recréant les commandes",
+        "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.",
+        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes",
+        "Opération réalisée avec succès": "Opération réalisée avec succès",
+        "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ",
+        "Commande": "Commande",
+        "Afficher": "Afficher",
+        "Historiser": "Historiser",
+        "Inverser": "Inverser",
+        "Valeur retour d\\'état": "Valeur retour d\\'état",
+        "Durée avant retour d\\'état (min)": "Durée avant retour d\\'état (min)",
+        "Arrêter Scan": "Arrêter Scan",
+        "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)",
+        "Lancer Scan": "Lancer Scan",
+        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page"
     },
-    "core\/config\/devices\/divoompixoo\/ajax\/divoompixoo.ajax.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Répertoire de téléversement non trouvé : ": "Répertoire de téléversement non trouvé : ",
-        "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)": "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)",
-        "Le fichier est trop gros (maximum 500ko)": "Le fichier est trop gros (maximum 500ko)",
-        "Impossible de déplacer le fichier temporaire": "Impossible de déplacer le fichier temporaire",
-        "Impossible de téléverser le fichier (limite du serveur web ?)": "Impossible de téléverser le fichier (limite du serveur web ?)",
-        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
+    "plugins\/blea\/core\/php\/jeeBlea.php": {
+        "Aucun équipement trouvé pour : ": "Aucun équipement trouvé pour : ",
+        "Rssi '. $datas['source']": "Rssi '. $datas['source']",
+        "Present '. $datas['source']": "Present '. $datas['source']"
     },
-    "core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
-        "Décompression du dossier distant": "Décompression du dossier distant",
-        "Suppression du zip local": "Suppression du zip local",
-        "Finie": "Finie"
+    "plugins\/blea\/core\/config\/devices\/miscale\/class\/miscale.class.php": {
+        "Poids ' . $user['name']": "Poids ' . $user['name']",
+        "$value['name'] . ' ' . $user['name']": "$value['name'] . ' ' . $user['name']"
     },
-    "core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
-    },
-    "core\/config\/devices\/dotti\/class\/dotti.class.php": {
-        "Le champs message doit être un numérique : ": "Le champs message doit être un numérique : "
-    },
-    "core\/config\/devices\/divoomtimeboxmini\/ajax\/divoomtimeboxmini.ajax.php": {
+    "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/ajax\/divoomtimeboxmini.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Répertoire de téléversement non trouvé : ": "Répertoire de téléversement non trouvé : ",
         "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)": "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)",
@@ -319,25 +313,42 @@
         "Impossible de téléverser le fichier (limite du serveur web ?)": "Impossible de téléverser le fichier (limite du serveur web ?)",
         "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
     },
-    "core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
+    "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
         "Décompression du dossier distant": "Décompression du dossier distant",
         "Suppression du zip local": "Suppression du zip local",
         "Finie": "Finie"
     },
-    "core\/config\/devices\/miscale\/class\/miscale.class.php": {
+    "plugins\/blea\/core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
+    },
+    "plugins\/blea\/core\/config\/devices\/dotti\/class\/dotti.class.php": {
+        "Le champs message doit être un numérique : ": "Le champs message doit être un numérique : "
+    },
+    "plugins\/blea\/core\/config\/devices\/miscale2\/class\/miscale2.class.php": {
         "Poids ' . $user['name']": "Poids ' . $user['name']",
         "$value['name'] . ' ' . $user['name']": "$value['name'] . ' ' . $user['name']"
     },
-    "core\/config\/devices\/miscale2\/class\/miscale2.class.php": {
-        "Poids ' . $user['name']": "Poids ' . $user['name']",
-        "$value['name'] . ' ' . $user['name']": "$value['name'] . ' ' . $user['name']"
+    "plugins\/blea\/core\/config\/devices\/divoompixoo\/ajax\/divoompixoo.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Répertoire de téléversement non trouvé : ": "Répertoire de téléversement non trouvé : ",
+        "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)": "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)",
+        "Le fichier est trop gros (maximum 500ko)": "Le fichier est trop gros (maximum 500ko)",
+        "Impossible de déplacer le fichier temporaire": "Impossible de déplacer le fichier temporaire",
+        "Impossible de téléverser le fichier (limite du serveur web ?)": "Impossible de téléverser le fichier (limite du serveur web ?)",
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
     },
-    "core\/php\/jeeBlea.php": {
-        "Aucun équipement trouvé pour : ": "Aucun équipement trouvé pour : ",
-        "Rssi '. $datas['source']": "Rssi '. $datas['source']",
-        "Present '. $datas['source']": "Present '. $datas['source']"
+    "plugins\/blea\/core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
+        "Décompression du dossier distant": "Décompression du dossier distant",
+        "Suppression du zip local": "Suppression du zip local",
+        "Finie": "Finie"
     },
-    "core\/class\/blea.class.php": {
+    "plugins\/blea\/core\/ajax\/blea.ajax.php": {
+        "Blea eqLogic non trouvé : ": "Blea eqLogic non trouvé : ",
+        "Remote inconnu : ": "Remote inconnu : ",
+        "Erreur, vérifiez la log Blea": "Erreur, vérifiez la log Blea"
+    },
+    "plugins\/blea\/core\/class\/blea.class.php": {
         "Nouveau module detecté ' . $_def['type']": "Nouveau module detecté ' . $_def['type']",
         "Information manquante pour ajouter l\\'équipement. Inclusion impossible": "Information manquante pour ajouter l\\'équipement. Inclusion impossible",
         "Module inclu avec succès ' .$_def['name'].' ' . $_def['id']": "Module inclu avec succès ' .$_def['name'].' ' . $_def['id']",
@@ -353,10 +364,10 @@
         "Arret du démon distant": "Arret du démon distant",
         "Le port n\\'est pas configuré": "Le port n\\'est pas configuré",
         "Veuillez vérifier la configuration": "Veuillez vérifier la configuration",
-        "Impossible de lancer le démon blea": "Impossible de lancer le démon blea",
+        "Impossible de lancer le démon blea, vérifiez la log": "Impossible de lancer le démon blea, vérifiez la log",
         "Défaut": "Défaut",
         "Present": "Present",
-        "Périphérique reconnu": "Périphérique reconnu",
+        "Périphérique reconnu, intégration en cours": "Périphérique reconnu, intégration en cours",
         "Création des commandes": "Création des commandes",
         "Envoi des commandes post-inclusion": "Envoi des commandes post-inclusion",
         "Envoi depuis local car plus proche": "Envoi depuis local car plus proche",
@@ -369,16 +380,5 @@
         "Secteur": "Secteur",
         "Présent": "Présent",
         "Absent": "Absent"
-    },
-    "mobile\/html\/blea.html": {
-        "Arrêter Scan": "Arrêter Scan",
-        "Lancer Scan": "Lancer Scan",
-        "Santé": "Santé",
-        "Réseau": "Réseau",
-        "Image": "Image",
-        "Nom": "Nom",
-        "Batterie": "Batterie",
-        "Présent": "Présent",
-        "Dernière comm": "Dernière comm"
     }
 }
