@@ -1,0 +1,676 @@
+<div class="eqLogic-widget eqLogic allowResize"
+	style="height: #height#; width: #width#; border: #border#; border-radius: #border-radius#; background-color: #background-color#; color: #color#;#style#"
+	data-eqLogic_id="#id#" data-eqLogic_uid="#uid#"
+	data-version="#version#">
+
+	<div class="widget-name" style="text-align: center; width: 100%">
+		<a href="#eqLink#" style="font-size: 1.5em;#hideEqLogicName#">#name_display#</a>
+		<span class="pull-right cursor"> <i id="youraqualin#id#"
+			class="fas fa-info-circle"
+			style="color: var(- -eqTitle-color) !important;"></i>
+		</span> <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh#">
+			<i class="fas fa-sync"></i>
+		</span>
+	</div>
+	<div style="text-align: center; width: 100%">
+		<div class="cmd cmd-widget tooltipstered" data-type="info"
+			data-subtype="string" data-template="default"
+			data-cmd_id="#program_id#" data-cmd_uid="#program_uid#"
+			data-version="#version#" data-eqlogic_id="#id#"
+			data-alertlevel="none">
+			<div class="title #program_hide_name#">
+				<span class="cmdName "><i class="icon nature-watering1"></i>
+					Programme </span> <strong class="state">#program#</strong>
+			</div>
+		</div>
+		<span class="cmd cmd-widget" data-cmd_id="#sprayMist_id#"></span>
+		<div class="cmd cmd-widget tooltipstered" data-type="info"
+			data-subtype="string" data-template="default"
+			data-cmd_id="#sprayMist_id#" data-cmd_uid="#sprayMist_uid#"
+			data-version="#version#" data-eqlogic_id="#id#"
+			data-alertlevel="none">
+			<div class="title #sprayMist_hide_name#">
+				<span class="cmdName ">Mode </span> <strong class="state">#sprayMist#</strong>
+			</div>
+		</div>
+		<div class="cmd cmd-widget reportModeHidden" data-type="action"
+			data-subtype="other" data-template="default"
+			data-cmd_id="#name:aqualin,value:00,action:sprayMist_id#"
+			data-cmd_uid="#name:aqualin,value:00,action:sprayMist_uid#"
+			data-version="#version#" data-eqlogic_id="#id#">
+			<div class="content-xs">
+				<a class="btn btn-sm btn-default action tooltips tooltipstered1">Arrosage</a>
+			</div>
+		</div>
+		<div class="cmd cmd-widget reportModeHidden" data-type="action"
+			data-subtype="other" data-template="default"
+			data-cmd_id="#name:aqualin,value:01,action:sprayMist_id#"
+			data-cmd_uid="#name:aqualin,value:01,action:sprayMist_uid#"
+			data-version="#version#" data-eqlogic_id="#id#">
+			<div class="content-xs">
+				<a class="btn btn-sm btn-default action tooltips tooltipstered1">Brumisateur</a>
+			</div>
+		</div>
+
+		<div id="spray">
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#activeSpray_id#"
+				data-cmd_uid="#activeSpray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div class="title #activeSpray_hide_name#">
+					<span class="cmdName ">Statut (arrosage) </span> <strong
+						class="state">#activeSpray#</strong>
+				</div>
+			</div>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#autoSpray_id#"
+				data-cmd_uid="#autoSpray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div class="title #autoSpray_hide_name#">
+					<span class="cmdName ">Arrosage automatique info</span> <strong
+						class="state">#autoSpray#</strong>
+				</div>
+			</div>
+			
+			<div class="cmd cmd-widget cursor" data-type="action"
+				data-subtype="other" data-template="tmplimg"
+				data-cmd_id="#name:aqualin,action:autoOnSpray_id#"
+				data-cmd_uid="#name:aqualin,action:autoOnSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#">
+				<div class="title #name:aqualin,action:autoOnSpray_hide_name#">
+					<div class="cmdName">Arrosage automatique info</div>
+				</div>
+				<div class="content-sm ">
+					<span class="imgCmd"></span>
+				</div>
+				<div class="value">
+					<span class="timeCmd#name:aqualin,action:autoOnSpray_uid# timeCmd label label-default value"></span>
+				</div>
+			</div>
+
+			<div class="cmd cmd-widget cursor" data-type="action"
+				data-subtype="other" data-template="tmplimg"
+				data-cmd_id="#name:aqualin,action:autoOffSpray_id#"
+				data-cmd_uid="#name:aqualin,action:autoOffSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#">
+
+				<div class="title #name:aqualin,action:autoOffSpray_hide_name#">
+					<div class="cmdName">Arrosage automatique info</div>
+				</div>
+				<div class="content-sm ">
+					<span class="imgCmd"></span>
+				</div>
+				<div class="value">
+					<span class="timeCmd#name:aqualin,action:autoOffSpray_uid# timeCmd label label-default value"></span>
+				</div>
+			</div>
+
+
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#cycleSpray_id#"
+				data-cmd_uid="cycleSpray_uid" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fas fa-recycle"></i> Cycle
+						arrosage info </span> <strong class="state">#cycleSpray#</strong>
+				</div>
+			</div>
+			<br>
+			<div class="cmd cmd-widget reportModeHidden" data-type="action"
+				data-subtype="other" data-template="default"
+				data-cmd_id="#name:aqualin,value:day,action:cycleSpray_id#"
+				data-cmd_uid="#name:aqualin,value:day,action:cycleSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#">
+				<div>
+					<a class="btn btn-sm btn-default action tooltips tooltipstered"><i
+						class="fas fa-recycle"></i> Cycle arrosage jours</a>
+				</div>
+
+			</div>
+			<br>
+			<div class="cmd cmd-widget reportModeHidden" data-type="action"
+				data-subtype="other" data-template="default"
+				data-cmd_id="#name:aqualin,value:week,action:cycleSpray_id#"
+				data-cmd_uid="#name:aqualin,value:week,action:cycleSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#">
+				<div>
+					<a class="btn btn-sm btn-default action tooltips tooltipstered"><i
+						class="fas fa-recycle"></i> Cycle Arrosage hebdomadaire</a>
+				</div>
+
+			</div>
+			<br>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#dayCycleSpray_id#"
+				data-cmd_uid="dayCycleSpray_uid" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fas fa-recycle"></i>
+						Fréquence arrosage (jour) info </span> <strong class="state">#dayCycleSpray#</strong>
+				</div>
+			</div>
+			<div class="cmd cmd-widget 0 30 " data-type="action"
+				data-subtype="slider" data-template="heure"
+				data-cmd_id="#name:aqualin,value:#slider#,action:dayCycleSpray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:dayCycleSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#"
+				style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+				<div class="title ">
+					<span class="cmdName" style="font-weight: bold; font-size: 12px;"><i
+						class="fa fa-calendar-day"></i> Fréquence arrosage (jour)</span>
+				</div>
+				<div class="content-sm"
+					style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+					<div class="row">
+						<input id="stateTime60570" type="text"
+							class="value form-control input-sm" value="7"
+							style="display: none">
+						<div class="">
+							<div class="affichage">
+								<span class="affichagechaineComplete" style="font-size: 1.1em;"
+									id="chaineComplete60570"></span>
+							</div>
+							<div class="btn-group btn-group-xs mx-0 px-0">
+								<a class="btn-xs mx-0 px-0 bt_minusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 2px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusM"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusM"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusS"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusS"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_off"
+									style="font-size: 0.9em; padding-left: 5px; padding-right: 0px; display: none"><i
+									class="fas fa-power-off"></i></a> <a class="btn-xs mx-0 px-0 bt_on"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px; display: none"><i
+									class="far fa-clock"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#weekdaysCycleSpray_id#"
+				data-cmd_uid="#weekdaysCycleSpray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fa fa-calendar-day"></i>
+						Journées avec arrosage info </span> <strong class="state">#weekdaysCycleSpray#</strong>
+				</div>
+			</div>
+			<br>
+			<div class="cmd cmd-widget" data-type="action" data-subtype="slider"
+				data-template="default"
+				data-cmd_id="#name:aqualin,value:#slider#,action:weekdaysCycleSpray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:weekdaysCycleSpray_uid#"
+				data-version="#version#" data-eqlogic_id="#id#">
+				<div class="title ">
+					<div class="cmdName">
+						<i class="fa fa-calendar-week"></i> Journées avec arrosage
+					</div>
+				</div>
+
+				<div>
+					<input type="text" class="input in_value form-control-xs"
+						value="LMmJVsD" style="display: none" disabled>
+					<div class="btn-group btn-group-toggle weekDays-selector">
+						<input type="checkbox" id="weekday-mon_cmd60572__1889281481__"
+							class="weekday-mon"> <label
+							for="weekday-mon_cmd60572__1889281481__">L</label> <input
+							type="checkbox" id="weekday-tue_cmd60572__1889281481__"
+							class="weekday-tue"> <label
+							for="weekday-tue_cmd60572__1889281481__">M</label> <input
+							type="checkbox" id="weekday-wed_cmd60572__1889281481__"
+							class="weekday-wed"> <label
+							for="weekday-wed_cmd60572__1889281481__">M</label> <input
+							type="checkbox" id="weekday-thu_cmd60572__1889281481__"
+							class="weekday-thu"> <label
+							for="weekday-thu_cmd60572__1889281481__">J</label> <input
+							type="checkbox" id="weekday-fri_cmd60572__1889281481__"
+							class="weekday-fri"> <label
+							for="weekday-fri_cmd60572__1889281481__">V</label> <input
+							type="checkbox" id="weekday-sat_cmd60572__1889281481__"
+							class="weekday-sat"> <label
+							for="weekday-sat_cmd60572__1889281481__">S</label> <input
+							type="checkbox" id="weekday-sun_cmd60572__1889281481__"
+							class="weekday-sun"> <label
+							for="weekday-sun_cmd60572__1889281481__">D</label>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#durationSpray_id#"
+				data-cmd_uid="#durationSpray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fa fa-calendar-day"></i>
+						Durée arrosage info </span> <strong class="state">#durationSpray#</strong>
+				</div>
+			</div>
+
+			<div class="cmd cmd-widget 0 30 " data-type="action"
+				data-subtype="slider" data-template="heure"
+				data-cmd_id="#name:aqualin,value:#slider#,action:durationSpray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:durationSpray_id#"
+				data-version="#version#" data-eqlogic_id="#id#"
+				style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+				<div class="title ">
+					<span class="cmdName" style="font-weight: bold; font-size: 12px;"><i
+						class="fas fa-stopwatch"></i> Durée arrosage</span>
+				</div>
+				<div class="content-sm"
+					style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+					<div class="row">
+						<input id="stateTime60574" type="text"
+							class="value form-control input-sm" value="2"
+							style="display: none">
+						<div class="">
+							<div class="affichage">
+								<span class="affichagechaineComplete" style="font-size: 1.1em;"
+									id="chaineComplete60574"></span>
+							</div>
+							<div class="btn-group btn-group-xs mx-0 px-0">
+								<a class="btn-xs mx-0 px-0 bt_minusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 2px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusM"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusM"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusS"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusS"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_off"
+									style="font-size: 0.9em; padding-left: 5px; padding-right: 0px; display: none"><i
+									class="fas fa-power-off"></i></a> <a class="btn-xs mx-0 px-0 bt_on"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px; display: none"><i
+									class="far fa-clock"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#start1Spray_id#"
+				data-cmd_uid="#start1Spray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fa fa-calendar-day"></i>
+						Séquence 1 info </span> <strong class="state">#start1Spray#</strong>
+				</div>
+			</div>
+			<div class="cmd cmd-widget 0 2359 " data-type="action"
+				data-subtype="slider" data-template="heure"
+				data-cmd_id="#name:aqualin,value:#slider#,action:start1Spray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:start1Spray_uid#"
+				data-version="dashboard" data-eqlogic_id="#id#"
+				style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+				<div class="title ">
+					<span class="cmdName" style="font-weight: bold; font-size: 12px;">Séquence
+						1</span>
+				</div>
+				<div class="content-sm"
+					style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+					<div class="row">
+						<input id="stateTime60576" type="text"
+							class="value form-control input-sm" value="2155"
+							style="display: none">
+						<div class="">
+							<div class="affichage">
+								<span class="affichagechaineComplete" style="font-size: 1.1em;"
+									id="chaineComplete60576"></span>
+							</div>
+							<div class="btn-group btn-group-xs mx-0 px-0">
+								<a class="btn-xs mx-0 px-0 bt_minusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 2px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusM"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusM"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusS"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusS"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_off"
+									style="font-size: 0.9em; padding-left: 5px; padding-right: 0px; display: none"><i
+									class="fas fa-power-off"></i></a> <a class="btn-xs mx-0 px-0 bt_on"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px; display: none"><i
+									class="far fa-clock"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#start2Spray_id#"
+				data-cmd_uid="#start2Spray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fa fa-calendar-day"></i>
+						Séquence 2 info </span> <strong class="state">#start2Spray#</strong>
+				</div>
+			</div>
+			<div class="cmd cmd-widget 0 2359 " data-type="action"
+				data-subtype="slider" data-template="heure"
+				data-cmd_id="#name:aqualin,value:#slider#,action:start2Spray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:start2Spray_uid#"
+				data-version="dashboard" data-eqlogic_id="#id#"
+				style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+				<div class="title ">
+					<span class="cmdName" style="font-weight: bold; font-size: 12px;">Séquence
+						2</span>
+				</div>
+				<div class="content-sm"
+					style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+					<div class="row">
+						<input id="stateTime60578" type="text"
+							class="value form-control input-sm" value="9999"
+							style="display: none">
+						<div class="">
+							<div class="affichage">
+								<span class="affichagechaineComplete" style="font-size: 1.1em;"
+									id="chaineComplete60578"></span>
+							</div>
+							<div class="btn-group btn-group-xs mx-0 px-0">
+								<a class="btn-xs mx-0 px-0 bt_minusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 2px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusM"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusM"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusS"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusS"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_off"
+									style="font-size: 0.9em; padding-left: 5px; padding-right: 0px; display: none"><i
+									class="fas fa-power-off"></i></a> <a class="btn-xs mx-0 px-0 bt_on"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px; display: none"><i
+									class="far fa-clock"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="cmd cmd-widget " data-type="info" data-subtype="string"
+				data-template="default" data-cmd_id="#rainDelaySpray_id#"
+				data-cmd_uid="#rainDelaySpray_uid#" data-version="#version#"
+				data-eqlogic_id="#id#">
+				<div>
+					<span class="cmdName "><i class="fa fa-calendar-day"></i>
+						Suspension arrosage (jour) info </span> <strong class="state">#rainDelaySpray#</strong>
+				</div>
+			</div>
+			<div class="cmd cmd-widget 0 30 " data-type="action"
+				data-subtype="slider" data-template="heure"
+				data-cmd_id="#name:aqualin,value:#slider#,action:rainDelaySpray_id#"
+				data-cmd_uid="#name:aqualin,value:#slider#,action:rainDelaySpray_uid#"
+				data-version="dashboard" data-eqlogic_id="1378"
+				style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+				<div class="title ">
+					<span class="cmdName" style="font-weight: bold; font-size: 12px;"><i
+						class="far fa-pause-circle"></i> Suspension arrosage (jour)</span>
+				</div>
+				<div class="content-sm"
+					style="min-width: 90px; min-height: 62px; margin-right: 5px; margin-left: 5px; padding: 0px !important;">
+					<div class="row">
+						<input id="stateTime60580" type="text"
+							class="value form-control input-sm" value="1"
+							style="display: none">
+						<div class="">
+							<div class="affichage">
+								<span class="affichagechaineComplete" style="font-size: 1.1em;"
+									id="chaineComplete60580"></span>
+							</div>
+							<div class="btn-group btn-group-xs mx-0 px-0">
+								<a class="btn-xs mx-0 px-0 bt_minusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusH"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 2px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusM"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusM"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_minusS"
+									style="font-size: 0.9em; padding-left: 2px; padding-right: 0px"><i
+									class="fa fa-minus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_plusS"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px"><i
+									class="fa fa-plus-circle"></i></a> <a
+									class="btn-xs mx-0 px-0 bt_off"
+									style="font-size: 0.9em; padding-left: 5px; padding-right: 0px; display: none"><i
+									class="fas fa-power-off"></i></a> <a class="btn-xs mx-0 px-0 bt_on"
+									style="font-size: 0.9em; padding-left: 0px; padding-right: 0px; display: none"><i
+									class="far fa-clock"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12">
+
+		<span class="spread" data-cmd_id="#spread_id#" title="Arrosage"
+			style="font-size: 14px;"> <i id="#spread_id#"
+			class="icon jeedom-alerte"></i> <i class="fas fa-circle fa-lg"
+			style="color: #spread#; Cursor: default"></i>
+		</span> <span class="mist" data-cmd_id="#mist_id#" title="Brumisateur "
+			style="font-size: 14px; margin-left: 30px;"> <i id="#mist_id#"
+			class="icon jeedom-eau"></i> <i class="fas fa-circle fa-lg"
+			style="color: #mist#; Cursor: default"></i>
+		</span>
+
+	</div>
+	<script type="text/javascript">
+		console.log("ààà debug start")
+		if ('#refresh#' != '') {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click',
+					function() {
+						jeedom.cmd.execute({
+							id : '#refresh#'
+						});
+					});
+		} else {
+			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').remove();
+		}
+		
+		//info program
+		jeedom.cmd.update['#program_id#'] = function(_options){
+			console.log('ààà program _options.display_value ='+_options.display_value)
+		}
+		jeedom.cmd.update['#program_id#']({display_value:'#program_state#',valueDate:'#program_valueDate#',collectDate:'#program_collectDate#',alertLevel:'#program_alertLevel#'});
+		
+		//info sprayMist
+		jeedom.cmd.update['#sprayMist_id#'] = function(_options){
+			console.log('ààà sprayMist _options.display_value ='+_options.display_value)
+		}
+		jeedom.cmd.update['#sprayMist_id#']({display_value:'#sprayMist_state#',valueDate:'#sprayMist_valueDate#',collectDate:'#sprayMist_collectDate#',alertLevel:'#sprayMist_alertLevel#'});
+		
+		//action mode Arrosage
+		$('.cmd[data-cmd_uid=#name:aqualin,value:00,action:sprayMist_uid#]:last .action').off('click').on('click', function() {
+			jeedom.cmd.execute({id : '#name:aqualin,value:00,action:sprayMist_id#'});
+		});
+		if ($('.cmd[data-cmd_uid=#name:aqualin,value:00,action:sprayMist_uid#]').last().prev().data('subtype') != undefined
+				&& $('.cmd[data-cmd_id=#name:aqualin,value:00,action:sprayMist_id#]').last().prev().data('subtype') != 'other'
+				&& $('.cmd[data-cmd_uid=#name:aqualin,value:00,action:sprayMist_uid#]').last().prev().css('display') != 'block') {
+			$('.cmd[data-cmd_uid=#name:aqualin,value:00,action:sprayMist_uid#]').last().prepend('<br/>');
+		}
+		if ("spray" != '#sprayMist#') {
+			$('.cmd[data-cmd_uid=#name:aqualin,value:00,action:sprayMist_uid#]:last .action').attr('title', "Arrosage")
+		}
+		
+		//action mode Brumisateur
+		$('.cmd[data-cmd_uid=#name:aqualin,value:01,action:sprayMist_uid#]:last .action').off('click').on('click', function() {
+			jeedom.cmd.execute({id : '#name:aqualin,value:01,action:sprayMist_id#'});
+		});
+		if ($('.cmd[data-cmd_uid=#name:aqualin,value:01,action:sprayMist_uid#]').last().prev().data('subtype') != undefined
+				&& $('.cmd[data-cmd_id=#name:aqualin,value:01,action:sprayMist_id#]').last().prev().data('subtype') != 'other'
+				&& $('.cmd[data-cmd_uid=#name:aqualin,value:01,action:sprayMist_uid#]').last().prev().css('display') != 'block') {
+			$('.cmd[data-cmd_uid=#name:aqualin,value:01,action:sprayMist_uid#]').last().prepend('<br/>');
+		}
+		if ("mist" != '#sprayMist#') {
+			$('.cmd[data-cmd_uid=#name:aqualin,value:01,action:sprayMist_uid#]:last .action').attr('title', "Brumisateur")
+		}
+		
+		//info autoSpray
+		jeedom.cmd.update['#autoSpray_id#'] = function(_options){
+			console.log('ààà autoSpray _options.display_value ='+_options.display_value)
+		}
+		jeedom.cmd.update['#autoSpray_id#']({display_value:'#autoSpray_state#',valueDate:'#autoSpray_valueDate#',collectDate:'#autoSpray_collectDate#',alertLevel:'#autoSpray_alertLevel#'});
+		
+		//activation spray on
+	    jeedom.cmd.update['#name:aqualin,action:autoOnSpray_uid#'] = function(_options){
+		  console.log('ààà debug autoOnSpray 1')
+	      var cmd = $('.cmd[data-cmd_id=#name:aqualin,action:autoOnSpray_uid#]');
+	      if('0' == '1'){
+	        jeedom.cmd.displayDuration(_options.valueDate,  cmd.find('.timeCmd'));
+	      }else{
+	    	cmd.find('.timeCmd').parent().remove();
+	      }
+	      console.log('ààà autoOnSpray _options.display_value ='+_options.display_value)
+	      if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 99 || _options.display_value == 'on') {
+	        cmd.attr('data-state','on')
+	        if (jeedom.cmd.normalizeName('Arrosage automatique on') == 'on') {
+	          cmd.hide();
+	        }else{
+	          cmd.show().find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_on.png'/>","<img src='data/img/IconAction/arrosage_on.png'/>"));
+	        }
+	      } else {
+	    	console.log('ààà debug autoOnSpray 2')
+	        cmd.attr('data-state','off');
+	        if (jeedom.cmd.normalizeName('Arrosage automatique on') == 'off') {
+	          cmd.hide();
+	        }else{
+	          cmd.show().find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_off.png'/>","<img src='data/img/IconAction/arrosage_off.png'/>"));
+	        }
+	      }
+	      var style = '';
+	      if(!isNaN('#name:aqualin,action:autoOnSpray_largeurDesktop#')){
+	        style = 'width:#name:aqualin,action:autoOnSpray_largeurDesktop#px !important;'
+	      }
+	      cmd.find('.imgCmd img').attr('style',style);
+	      cmd.on('changeThemeEventCmd').on('changeThemeEventCmd',function (event, theme) {
+	        if(cmd.attr('data-state') == 'on'){
+	          cmd.find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_on.png'/>","<img src='data/img/IconAction/arrosage_on.png'/>"))
+	        }else{
+	          cmd.find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_off.png'/>","<img src='data/img/IconAction/arrosage_off.png'/>"))
+	        }
+	        var style = '';
+	        if(!isNaN('#name:aqualin,action:autoOnSpray_largeurDesktop#')){
+	          style = 'width:#name:aqualin,action:autoOnSpray_largeurDesktop#px !important;'
+	        }
+	        cmd.find('.imgCmd img').attr('style',style);
+	      });
+	    }
+		
+	    //jeedom.cmd.update['#name:aqualin,action:autoOffSpray_id#']({display_value:'0',valueDate:'2020-03-29 14:31:17',collectDate:'2020-03-29 14:31:17',alertLevel:'none'});
+	    jeedom.cmd.update['#name:aqualin,action:autoOnSpray_uid#']({display_value:'#name:aqualin,action:autoOnSpray_state#'});
+	    $('.cmd[data-cmd_uid=#name:aqualin,action:autoOnSpray_uid#] .imgCmd').off().on('click', function () {
+	      jeedom.cmd.execute({id: '#name:aqualin,action:autoOnSpray_id#'});
+	    });
+	    
+		
+		//activation spray off
+	    jeedom.cmd.update['#name:aqualin,action:autoOffSpray_id#'] = function(_options){
+	      var cmd = $('.cmd[data-cmd_id=#name:aqualin,action:autoOffSpray_id#]');
+	      if('0' == '1'){
+	        jeedom.cmd.displayDuration(_options.valueDate,  cmd.find('.timeCmd'));
+	      }else{
+	    	cmd.find('.timeCmd').parent().remove();
+	      }
+	      console.log('ààà autoOffSpray _options.display_value ='+_options.display_value)
+	      if (_options.display_value == '1' || _options.display_value >= 1 || _options.display_value == '99' || _options.display_value == 99 || _options.display_value == 'on') {
+	        cmd.attr('data-state','on')
+	        if (jeedom.cmd.normalizeName('Arrosage automatique on') == 'on') {
+	          cmd.hide();
+	        }else{
+	          cmd.show().find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_on.png'/>","<img src='data/img/IconAction/arrosage_on.png'/>"));
+	        }
+	      } else {
+	        cmd.attr('data-state','off');
+	        if (jeedom.cmd.normalizeName('Arrosage automatique on') == 'off') {
+	          cmd.hide();
+	        }else{
+	          cmd.show().find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_off.png'/>","<img src='data/img/IconAction/arrosage_off.png'/>"));
+	        }
+	      }
+	      var style = '';
+	      if(!isNaN('#name:aqualin,action:autoOffSpray_largeurDesktop#')){
+	        style = 'width:#name:aqualin,action:autoOffSpray_largeurDesktop#px !important;'
+	      }
+	      cmd.find('.imgCmd img').attr('style',style);
+	      cmd.off('changeThemeEventCmd').on('changeThemeEventCmd',function (event, theme) {
+	        if(cmd.attr('data-state') == 'on'){
+	          cmd.find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_on.png'/>","<img src='data/img/IconAction/arrosage_on.png'/>"))
+	        }else{
+	          cmd.find('.imgCmd').empty().append(jeedom.widgets.getThemeImg("<img src='data/img/IconAction/arrosage_off.png'/>","<img src='data/img/IconAction/arrosage_off.png'/>"))
+	        }
+	        var style = '';
+	        if(!isNaN('#name:aqualin,action:autoOffSpray_largeurDesktop#')){
+	          style = 'width:#name:aqualin,action:autoOffSpray_largeurDesktop#px !important;'
+	        }
+	        cmd.find('.imgCmd img').attr('style',style);
+	      });
+	    }
+		
+	    jeedom.cmd.update['#name:aqualin,action:autoOffSpray_id#']({display_value:'#name:aqualin,action:autoOffSpray_state#'});
+	    $('.cmd[data-cmd_uid=#name:aqualin,action:autoOffSpray_uid#] .imgCmd').off().on('click', function () {
+	      jeedom.cmd.execute({id: '#name:aqualin,action:autoOffSpray_id#'});
+	    });
+	    
+	    jeedom.cmd.execute({id: '#name:aqualin,action:autoOnSpray_id#'});
+	    
+	    
+	    $('body').on('changeThemeEvent', function (event,theme) {
+	      $('.cmd[data-cmd_id=#name:aqualin,action:autoOnSpray_id#]').trigger('changeThemeEventCmd',theme);
+	      $('.cmd[data-cmd_id=#name:aqualin,action:autoOffSpray_id#]').trigger('changeThemeEventCmd',theme);
+	    });
+	    
+	    console.log("ààà debug end")
+	  
+	</script>
+</div>

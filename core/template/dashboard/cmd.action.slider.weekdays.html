@@ -1,0 +1,129 @@
+<div class="cmd cmd-widget" data-type="action" data-subtype="slider" data-template="default" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <div class="title #hide_name#">
+    <div class="cmdName">#name_display#</div>
+  </div>
+  
+  <div class="content-xs ">
+    
+    <input type="text" class="input in_value form-control-xs" value="#state#" style="display: none" disabled/>
+     <div class="btn-group btn-group-toggle weekDays-selector">
+  	
+          <input type="checkbox" id="weekday-mon_#uid#" class="weekday-mon"/>
+		  <label for="weekday-mon_#uid#">L</label>
+		  <input type="checkbox" id="weekday-tue_#uid#" class="weekday-tue"/>
+		  <label for="weekday-tue_#uid#">M</label>
+		  <input type="checkbox" id="weekday-wed_#uid#" class="weekday-wed" />
+		  <label for="weekday-wed_#uid#">M</label>
+		  <input type="checkbox" id="weekday-thu_#uid#" class="weekday-thu" />
+		  <label for="weekday-thu_#uid#">J</label>
+		  <input type="checkbox" id="weekday-fri_#uid#" class="weekday-fri" />
+		  <label for="weekday-fri_#uid#">V</label>
+		  <input type="checkbox" id="weekday-sat_#uid#" class="weekday-sat" />
+		  <label for="weekday-sat_#uid#">S</label>
+		  <input type="checkbox" id="weekday-sun_#uid#" class="weekday-sun" />
+		  <label for="weekday-sun_#uid#">D</label>
+	</div>
+  </div>
+
+  <script>
+  console.log("--> début weekdays");
+  var week = "lmmjvsd"
+  String.prototype.replaceAt=function(index, replacement) {
+      return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+  }
+  
+  $.include(['plugins/blea/docs/assets/css/cmd.action.slider.weekdays/weekdays.css'], function() {
+  })
+  
+  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val();
+  a = (typeof a == "string" ? a.trim() : week)
+  a = ( a != "" ? a : week)
+  console.log("-> weekdays value = "+a);
+  var b = new Array('mon','tue','wed','thu','fri','sat','sun'); 
+  for (let i = 0; i < 7; i++) {
+  	  if (a[i] == a[i].toLowerCase()) {
+  		  $('.cmd[data-cmd_uid=#uid#] .weekday-'+b[i]).prop('checked', false);
+  	  } else {
+  		  $('.cmd[data-cmd_uid=#uid#] .weekday-'+b[i]).prop('checked', true);
+  	  }
+  }
+  //lundi
+  $('.cmd[data-cmd_uid=#uid#] .weekday-mon').on('click', function () {
+	  console.log("debug ici");
+	  console.log("objet click ="+this);
+	  $('.cmd[data-cmd_uid=#uid#] .weekday-mon').css( "border", "9px solid red" );
+	  var day = 0
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+	  //a = (a.toLowerCase() == week ? a : week);
+	  b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+  //mardi
+  $('.cmd[data-cmd_uid=#uid#] .weekday-tue').on('click', function () {
+	  var day = 1
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+	  //a = (a.toLowerCase() == week ? a : week);
+	  b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+   //mercredi
+   $('.cmd[data-cmd_uid=#uid#] .weekday-wed').on('click', function () {
+	  var day = 2
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+	  //a = (a.toLowerCase() == week ? a : week);
+	  b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+	  $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+   //jeudi
+   $('.cmd[data-cmd_uid=#uid#] .weekday-thu').on('click', function () {
+	  var day = 3
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+      //a = (a.toLowerCase() == week ? a : week);
+      b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+      $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+      $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+   //vendredi
+   $('.cmd[data-cmd_uid=#uid#] .weekday-fri').on('click', function () {
+	  var day = 4
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+      //a = (a.toLowerCase() == week ? a : week);
+      b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+      $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+      $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+   //samedi
+   $('.cmd[data-cmd_uid=#uid#] .weekday-sat').on('click', function () {
+	  var day = 5
+	  var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+      //a = (a.toLowerCase() == week ? a : week);
+      b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+      $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+      $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+   //dimanche
+   $('.cmd[data-cmd_uid=#uid#] .weekday-sun').on('click', function () {
+	  var day = 6
+      var a = $('.cmd[data-cmd_uid=#uid#] .in_value').val().trim();
+      //a = (a.toLowerCase() == week ? a : week);
+      b = (a[day] == a[day].toLowerCase() ? a.replaceAt(day,week[day].toUpperCase()) : a.replaceAt(day,week[day]))
+      $('.cmd[data-cmd_uid=#uid#] .in_value').value(b) 
+      $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
+    });
+  
+    $('.cmd[data-cmd_uid=#uid#] .in_value').on('change', function () {
+      if (typeof timerHandle#uid# !== 'undefined') {
+        clearTimeout(timerHandle#uid#);
+      }
+      timerHandle#uid# = setTimeout(function() {
+    	//console.log("update cmd value = "+$('.cmd[data-cmd_uid=#uid#] .in_value').val().replace("#unite#", "").replace(" ", ""));
+        jeedom.cmd.execute({id:'#id#', value: { slider : $('.cmd[data-cmd_uid=#uid#] .in_value').val().replace("#unite#", "").replace(" ", "")}});
+      }, 1000)
+    });
+   
+    //console.log("fin weekdays");
+  </script>
+</div>

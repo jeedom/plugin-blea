@@ -1,0 +1,163 @@
+<div class="cmd cmd-widget reportModeHidden" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#">
+  <div class="content-xs">
+    <a class="btn btn-sm btn-default action tooltips">#name_display#</a>
+  </div>
+  
+  <script>
+  /**** mode **/ var mode = ("#mode#" != '#'+'mode#') ? "#mode#" : "spray" ; //
+    console.log("ààà identifiant de la commande = #id#")
+    var cmdId = #id#
+    var cmdUid = "#uid#"
+    console.log("ààà ici")
+    if ($("span:contains('Statut (arrosage)')").length == 1) {
+    	console.log("ààà Statut (arrosage) found ! length ="+$("span:contains('Statut (arrosage)')").length)
+    	var cmdId_statut_spray = parseInt($("span:contains('Statut (arrosage)')").parent().parent().attr('data-cmd_id'))
+    	console.log("ààà first id ="+cmdId_statut_spray)
+    } else {
+    	console.log("ààà Statut (arrosage) NOT found !"+$("span:contains('Statut (arrosage)')").length)
+    }
+    if ($("span:contains('Statut (brumisateur)')").length == 1) {
+    	console.log("ààà Statut (brumisateur) found ! length ="+$("span:contains('Statut (brumisateur)')").length)
+    	var cmdId_statut_mist = parseInt($("span:contains('Statut (brumisateur)')").parent().parent().attr('data-cmd_id'))
+    	console.log("ààà first id ="+cmdId_statut_mist)
+    } else {
+    	console.log("ààà Statut (brumisateur) NOT found !"+$("span:contains('Statut (arrosage)')").length)
+    }
+    if ($("span:contains('Durée restante')").length == 1) {
+    	console.log("ààà Durée restante found ! length ="+$("span:contains('Durée restante')").length)
+    	var cmdId_remainingDuration = parseInt($("span:contains('Durée restante')").parent().parent().attr('data-cmd_id'))
+    	console.log("ààà first id ="+cmdId_remainingDuration)
+    } else {
+    	console.log("ààà Durée restante NOT found !"+$("span:contains('Durée restante')").length)
+    }
+    
+    console.log('ààà debug ajout des div...')
+    if ($("span:contains('Statut (arrosage)')").length == 1 && $("span:contains('Statut (brumisateur)')").length == 1) {
+    	if ($('#spray').length == 0) {
+       	 $( '<div id="spray">' ).insertBefore( $("span:contains('Statut (arrosage)')").parent().parent() );
+       	 console.log("ààà il faut ajouter le div spray")
+    	}
+    }
+    
+    if ($("span:contains('Statut (brumisateur)')").length == 1 && $("span:contains('Durée restante')").length == 1) {
+    	if ($('#mist').length == 0) {
+       	 $( '<div id="mist">' ).insertBefore( $("span:contains('Statut (brumisateur)')").parent().parent() );
+       	 console.log("ààà il faut ajouter le div mist")
+    	}
+    }
+    
+    console.log("ààà il faut à présent déplacer les div à présent !!!")
+    
+    for (let i = cmdId_statut_spray; i < cmdId_statut_mist; i++) {
+    	console.log('ààà déplacement dun élément spray '+i)
+    	if ($('.cmd[data-cmd_id="'+i+'"]').next().is('br')) {
+    		console.log('ààà j ai trouvé un br à déplacer  !!')
+    		console.log('ààà je commence par le supprimer... !!')
+    		$('.cmd[data-cmd_id="'+i+'"]').next().remove();
+    		$('.cmd[data-cmd_id="'+i+'"]').appendTo("#spray");
+    		console.log('ààà je le remets... !!')
+    		$( '<br>' ).insertAfter( $('.cmd[data-cmd_id="'+i+'"]') );
+    	} else {
+    		$('.cmd[data-cmd_id="'+i+'"]').appendTo("#spray");
+    	}
+    	
+    	//pour gérer les <br>...
+    	//$('.cmd[data-cmd_id="'+i+'"]').next().show();
+	}
+    
+    console.log("ààà détection Arrosage automatique info ="+$("div.cmdName:contains('Arrosage automatique info')").length)
+    var cmdId1 = cmdId + 2
+    
+   $('.cmd[data-cmd_uid=#uid#]:last .action').off('click').on('click', function () {
+      console.log("ààà click detected = on or off ?"+mode)
+      console.log("ààà bis cmdid et cmdid2 et uid ="+cmdId+" et "+cmdId1+" et "+cmdUid)
+      jeedom.cmd.execute({id: '#id#'});
+      if ("#name#" == "Arrosage") {
+    	  /*
+    	  var show = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+    	  var cmdIdNew = 0
+    	  show.forEach((indice,index) => {
+    		  cmdIdNew = cmdId + indice
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').show();
+    		  //pour gérer les <br>...
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').next().show();
+    	  })
+    	  */
+    	  /*
+    	  var hide = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37];
+    	  hide.forEach((indice,index) => {
+    		  cmdIdNew = cmdId + indice
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').hide();
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').next().hide();
+    	  })
+    	  */
+    	  /*
+    	  for (let i = cmdId_statut_spray; i < cmdId_statut_mist; i++) {
+    		  $('.cmd[data-cmd_id="'+i+'"]').show();
+    		  //pour gérer les <br>...
+    		  $('.cmd[data-cmd_id="'+i+'"]').next().show();
+		  }
+    	  if ($("div.cmdName:contains('Arrosage automatique info')").length > 0) {
+    		  $("div.cmdName:contains('Arrosage automatique info')").hide();
+    		  console.log("ààà on cache arrosage automatique info")
+    	  }
+    	    
+    	  for (let i = cmdId_statut_mist; i < cmdId_remainingDuration; i++) {
+    		  $('.cmd[data-cmd_id="'+i+'"]').hide();
+    		  //pour gérer les <br>...
+    		  $('.cmd[data-cmd_id="'+i+'"]').next().hide();
+		  }
+    	  */
+    	  console.log("ààà arrosage click")
+    	  $("#spray").show();
+    	  $("#mist").hide();
+    	  
+      } else {
+    	  /*
+    	  var show = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36];
+    	  var cmdIdNew = 0
+    	  show.forEach((indice,index) => {
+    		  cmdIdNew = cmdId + indice
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').show();
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').next().show();
+    	  })
+    	  var hide = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+    	  hide.forEach((indice,index) => {
+    		  cmdIdNew = cmdId + indice
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').hide();
+    		  $('.cmd[data-cmd_id="'+cmdIdNew+'"]').next().hide();
+    	  })
+    	  */
+    	  /*
+    	  for (let i = cmdId_statut_spray; i < cmdId_statut_mist; i++) {
+    		  $('.cmd[data-cmd_id="'+i+'"]').hide();
+    		  //pour gérer les <br>...
+    		  $('.cmd[data-cmd_id="'+i+'"]').next().hide();
+		  }
+    	  for (let i = cmdId_statut_mist; i < cmdId_remainingDuration; i++) {
+    		  $('.cmd[data-cmd_id="'+i+'"]').show();
+    		  //pour gérer les <br>...
+    		  $('.cmd[data-cmd_id="'+i+'"]').next().show();
+		  }
+    	  */
+    	  console.log("ààà brumisateur click")
+    	  $("#spray").hide();
+    	  $("#mist").show();
+      }
+      
+      if ($('p.separator').length == 0) {
+    	 $( '<p class="separator">--------------<p>' ).insertBefore( $("span:contains('Durée restante')") );
+    	 console.log("ààà il faut ajouter une ligne")
+      }
+     
+      
+    });
+    if ($('.cmd[data-cmd_uid=#uid#]').last().prev().data('subtype') != undefined && $('.cmd[data-cmd_id=#id#]').last().prev().data('subtype') != 'other'
+    && $('.cmd[data-cmd_uid=#uid#]').last().prev().css('display') != 'block') {
+      $('.cmd[data-cmd_uid=#uid#]').last().prepend('<br/>');
+    }
+    if("#name#" != '#name_display#'){
+      $('.cmd[data-cmd_uid=#uid#]:last .action').attr('title',"#name#")
+    }
+  </script>
+</div>
