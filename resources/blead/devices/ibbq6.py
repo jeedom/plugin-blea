@@ -7,7 +7,7 @@ import struct
 from multiconnect import Connector
 from notification import Notification
 
-class Ibbq4():
+class Ibbq6():
 	def __init__(self):
 		self.name = 'ibbq6'
 		self.ignoreRepeat = False
@@ -24,7 +24,7 @@ class Ibbq4():
 		t3 = manuf[30:32] + manuf[28:30]
 		t4 = manuf[34:36] + manuf[32:34]
 		t5 = manuf[38:40] + manuf[36:38]
-		t6 = manuf[44:48] + manuf[40:44]
+		t6 = manuf[42:44] + manuf[40:42]
 		temp1=int(t1,16)/10.0
 		temp2=int(t2,16)/10.0
 		temp3=int(t3,16)/10.0
