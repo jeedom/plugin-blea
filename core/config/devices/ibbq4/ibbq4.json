@@ -1,0 +1,215 @@
+{
+    "ibbq4": {
+        "name": "Inkbird IBT-4XS",
+        "groupe" : "Température",
+		"configuration" : {
+			"needsrefresh" : 0,
+			"name" : "ibbq4",
+			"battery_type" : "Batterie",
+			"xiaomi" : 1,
+			"delay" : 1800,
+			"cancontrol" : 0
+    },
+        "commands": [
+			{
+                "name": "Température 1",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temp1",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température 2",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temp2",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température 3",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temp3",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température 4",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temp4",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Set Temp 1",
+                "type": "action",
+                "subtype": "slider",
+				"value": "Consigne1",
+                "isVisible": 1,
+                "logicalId": "name:ibbq,value:#slider#,handle:0x34,type:setTarget,probe:0",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				}
+            },
+			{
+                "name": "Set Temp 1",
+                "type": "action",
+                "subtype": "slider",
+				"value": "Consigne1",
+                "isVisible": 1,
+                "logicalId": "name:ibbq,value:#slider#,handle:0x34,type:setTarget,probe:0",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				}
+            },
+			{
+                "name": "Set Temp 2",
+                "type": "action",
+                "subtype": "slider",
+				"value": "Consigne2",
+                "isVisible": 1,
+                "logicalId": "name:ibbq,value:#slider#,handle:0x34,type:setTarget,probe:1",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				}
+            },
+			{
+                "name": "Set Temp 3",
+                "type": "action",
+                "subtype": "slider",
+				"value": "Consigne3",
+                "isVisible": 1,
+                "logicalId": "name:ibbq,value:#slider#,handle:0x34,type:setTarget,probe:2",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				}
+            },
+			{
+                "name": "Set Temp 4",
+                "type": "action",
+                "subtype": "slider",
+				"value": "Consigne4",
+                "isVisible": 1,
+                "logicalId": "name:ibbq,value:#slider#,handle:0x34,type:setTarget,probe:3",
+				"configuration": {
+						"minValue": 0,
+						"maxValue": 255
+				}
+            },
+			{
+                "name": "Send Status",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "icon": "<i class=\"fab fa-bluetooth-b\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "sendstatus",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Firmware",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "firmware"
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+        "manufacturer": "Inkbird",
+        "name": "Inkbird IBT-4XS",
+				"doc": "",
+				"type": "Capteurs",
+				"battery_type": "Batterie",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Capteurs de Température barbecue",
+				"inclusion" : "Mode inclusion",
+				"imglink": "ibbq4"
+            }
+        ]
+    }
+}
