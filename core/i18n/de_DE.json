@@ -63,7 +63,7 @@
         "Type": "Typ",
         "Statut": "Status",
         "Batterie": "Batterie",
-        "Rssi": "",
+        "Rssi": "Rssi",
         "Antenne Emission": "",
         "Antenne Réception": "",
         "Présent": "Anwesend",
