@@ -6,7 +6,7 @@
         "Réseau": "",
         "Image": "Immagine",
         "Nom": "Nome",
-        "Batterie": "",
+        "Batterie": "Batteria",
         "Présent": "",
         "Dernière comm": ""
     },
@@ -57,23 +57,23 @@
     },
     "plugins\/blea\/desktop\/modal\/health.php": {
         "Image": "Immagine",
-        "Module": "",
+        "Module": "Modulo",
         "ID": "",
         "Mac": "",
         "Type": "Tipo",
         "Statut": "Stato",
-        "Batterie": "",
+        "Batterie": "Batteria",
         "Rssi": "",
         "Antenne Emission": "",
         "Antenne Réception": "",
         "Présent": "",
         "Refresh Forcé": "",
         "Dernière communication": "",
-        "Date création": "",
+        "Date création": "Data di creazione",
         "OK": "Bene",
         "NOK": "",
         "Secteur": "",
-        "Absent": "",
+        "Absent": "Assente",
         "Oui": "Sì",
         "Non": "No"
     },
@@ -241,7 +241,7 @@
         "Objet parent": "Oggetto padre",
         "Catégorie": "Categoria",
         " . $info['groupe'] . ": "",
-        "Modèle": "",
+        "Modèle": "Modello",
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "",
         "Antenne de réception": "",
         "Local": "Locale",
@@ -260,7 +260,7 @@
         "Nombre de scans": "",
         "Ajouter une commande": "Aggiungi un comando",
         "Nom": "Nome",
-        "Logical ID (info) ou Commande brute (action)": "",
+        "Logical ID (info) ou Commande brute (action)": "ID logico (info) o Control lordo (quota)",
         "Options": "Opzioni"
     },
     "plugins\/blea\/desktop\/js\/blea.js": {
@@ -288,12 +288,12 @@
         "Afficher": "Mostra",
         "Historiser": "Storicizza",
         "Inverser": "Inverti",
-        "Valeur retour d\\'état": "",
-        "Durée avant retour d\\'état (min)": "",
+        "Valeur retour d\\'état": "Valore di feedback",
+        "Durée avant retour d\\'état (min)": "Durata prima del feedback (min=",
         "Arrêter Scan": "",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "",
         "Lancer Scan": "",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": ""
+        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Un dispositivo è stato incluso\/escluso. Si prega di ricaricare la pagina."
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "",
@@ -379,6 +379,6 @@
         "OK": "Bene",
         "Secteur": "",
         "Présent": "",
-        "Absent": ""
+        "Absent": "Assente"
     }
 }

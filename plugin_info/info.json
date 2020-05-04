@@ -1,15 +1,15 @@
 {
-	"id" : "blea",
-	"name" : "Bluetooth Advertisement",
-	"description" : "Plugin pour la gestion de la sécurité",
-	"licence" : "AGPL",
-	"author" : "Ludovic SARAKHA",
-	"require" : "3.0",
-	"mobile" : "blea",
-	"category" : "automation protocol",
-	"maxDependancyInstallTime" : 60,
-	"hasOwnDeamon" : true,
-        "hasDependency" : true,
-        "changelog" : "https://jeedom.github.io/plugin-blea/#language#/changelog",
-        "documentation" : "https://jeedom.github.io/plugin-blea/#language#/"
+    "id": "blea",
+    "name": "Bluetooth Advertisement",
+    "description": "Plugin pour la gestion de la sécurité",
+    "licence": "AGPL",
+    "author": "Ludovic SARAKHA",
+    "require": "3.0",
+    "mobile": "blea",
+    "category": "automation protocol",
+    "maxDependancyInstallTime": 60,
+    "hasOwnDeamon": true,
+    "hasDependency": true,
+    "changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/changelog",
+    "documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/"
 }

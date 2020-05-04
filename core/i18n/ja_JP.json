@@ -6,7 +6,7 @@
         "Réseau": "",
         "Image": "画像",
         "Nom": "表題",
-        "Batterie": "",
+        "Batterie": "バッテリー",
         "Présent": "",
         "Dernière comm": ""
     },
@@ -57,23 +57,23 @@
     },
     "plugins\/blea\/desktop\/modal\/health.php": {
         "Image": "画像",
-        "Module": "",
+        "Module": "モジュール",
         "ID": "",
         "Mac": "マック",
         "Type": "タイプ",
         "Statut": "ステータス",
-        "Batterie": "",
+        "Batterie": "バッテリー",
         "Rssi": "",
         "Antenne Emission": "",
         "Antenne Réception": "",
         "Présent": "",
         "Refresh Forcé": "",
         "Dernière communication": "最後の通信",
-        "Date création": "",
+        "Date création": "作成日",
         "OK": "[OK]を",
         "NOK": "",
         "Secteur": "",
-        "Absent": "",
+        "Absent": "不在の",
         "Oui": "はい",
         "Non": "ではありません"
     },
@@ -241,7 +241,7 @@
         "Objet parent": "親オブジェクト",
         "Catégorie": "カテゴリ",
         " . $info['groupe'] . ": "",
-        "Modèle": "",
+        "Modèle": "モデル",
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "",
         "Antenne de réception": "",
         "Local": "ローカル",
@@ -260,7 +260,7 @@
         "Nombre de scans": "",
         "Ajouter une commande": "コマンドの追加",
         "Nom": "表題",
-        "Logical ID (info) ou Commande brute (action)": "",
+        "Logical ID (info) ou Commande brute (action)": "論理ID（情報）または総コントロール（株）",
         "Options": "オプション"
     },
     "plugins\/blea\/desktop\/js\/blea.js": {
@@ -281,19 +281,19 @@
         "Sans supprimer les commandes": "",
         "En supprimant et recréant les commandes": "",
         "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "",
-        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "",
-        "Opération réalisée avec succès": "",
+        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "あなたはすべてのコントロールを再作成してもよろしいですか？これは、既存の注文を削除します",
+        "Opération réalisée avec succès": "操作は正常に完了しました",
         "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "",
         "Commande": "オーダー",
         "Afficher": "ディスプレイ",
         "Historiser": "Historicize",
         "Inverser": "逆",
-        "Valeur retour d\\'état": "",
-        "Durée avant retour d\\'état (min)": "",
+        "Valeur retour d\\'état": "戻り値\\「sの状態",
+        "Durée avant retour d\\'état (min)": "\\状態を返すまでの時間（分）",
         "Arrêter Scan": "",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "",
         "Lancer Scan": "",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": ""
+        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "デバイスだけ\\ \/含ま除外すること。ページを再読み込みしてください"
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "",
@@ -379,6 +379,6 @@
         "OK": "[OK]を",
         "Secteur": "",
         "Présent": "",
-        "Absent": ""
+        "Absent": "不在の"
     }
 }
