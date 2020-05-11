@@ -9,7 +9,7 @@ This plugin is a plugin allowing you to receive events from certain bluetooth de
 
 ![blea icon](../images/blea_icon.png)
 
-Configuration
+Setup
 -------------
 
 Plugin configuration
@@ -50,12 +50,12 @@ On the upper part of this page, you have several buttons.
 
 - Inclusion button : this button allows to put Jeedom in Inclusion.
 - Exclusion button : this button allows to put Jeedom in Exclusion.
-- Setup button : this button opens the plugin configuration window.
+- Configuration button : this button opens the plugin configuration window.
 - Health button : this button allows you to have a Health overview of all your modules.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement
+Device
 ==========
 
 When you click on one of your modules, you arrive on the configuration page of this module. Like everywhere in Jeedom you can here on the left side :
@@ -95,7 +95,7 @@ You will have 4 orders :
   - 01 : simple press
   - 02 : double support
   - 03 : long press
-  - 04 : relachement
+  - 04 : relaxation
 - Buttons : gives a textual representation of the type of support
 - Rssi : gives the signal strength value
 - Drums : gives the battery value

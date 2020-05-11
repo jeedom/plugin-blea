@@ -2,14 +2,14 @@
 BLEA (Bluetooth-Werbung)
 ==============================
 
-Description
+Beschreibung
 -----------
 
 Dieses Plugin ist ein Plugin, mit dem Sie Ereignisse von bestimmten Bluetooth-Geräten (z. B. NIUs von Nodon) empfangen können.
 
 ![blea icon](../images/blea_icon.png)
 
-Configuration
+Konfiguration
 -------------
 
 Plugin Konfiguration
@@ -17,7 +17,7 @@ Plugin Konfiguration
 
 a. Installation / Erstellung
 
-> **Tip**
+> **Spitze**
 >
 > Um das Plugin nutzen zu können, müssen Sie herunterladen und installieren
 > aktiviere es wie jedes Jeedom Plugin.
@@ -28,7 +28,7 @@ a. Installation / Erstellung
 
 Auf dieser Seite haben Sie wenig zu tun. Es wird dringend empfohlen, die Installation der Abhängigkeiten zu starten (auch wenn sie in Ordnung erscheinen).. Dann am Ende der Aktualisierung der Seite.
 
-> **Important**
+> **Wichtig**
 >
 > Das Wichtigste dabei ist, dass Sie Ihren Controller auswählen
 > Bluetooth
@@ -55,7 +55,7 @@ Im oberen Teil dieser Seite befinden sich mehrere Schaltflächen.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement
+Gerät
 ==========
 
 Wenn Sie auf eines Ihrer Module klicken, gelangen Sie auf die Konfigurationsseite dieses Moduls. Wie überall in Jeedom können Sie hier auf der linken Seite :
@@ -95,7 +95,7 @@ Sie haben 4 Bestellungen :
   - 01 : einfache Presse
   - 02 : doppelte Unterstützung
   - 03 : lange drücken
-  - 04 : relachement
+  - 04 : Entspannung
 - Tasten : gibt eine Textdarstellung der Art der Unterstützung
 - Rssi : gibt den Signalstärkewert an
 - Batterie : gibt den Batteriewert an
@@ -141,10 +141,10 @@ Wenn kein Fehler aufgetreten ist und Ihre Antenne im Plugin gut erstellt wurde, 
 4) Wenn alles gut geht, können Sie auf "Daemon starten" klicken. Nach maximal einer Minute sollte das Datum der letzten Kommunikation aktualisiert werden. Dies bedeutet, dass der Daemon korrekt mit dem BLEA-Plugin kommuniziert.
 5) Letzter optionaler, aber empfohlener Schritt: Aktivieren Sie die automatische Verwaltung des Dämons, indem Sie auf die entsprechende Schaltfläche klicken. Dies führt dazu, dass das Plugin bei einem Verbindungsverlust automatisch versucht, den Remote-Daemon neu zu starten (nützlich, wenn Ihr Remote-Pi vorübergehend vom Stromnetz getrennt oder nach Aktualisierungen neu gestartet wurde)..
 
-Changelog
+Änderungsprotokoll
 =========
 
-Änderungsprotokoll detailliert :
+Changelog detailliert :
 <https://github.com/jeedom/plugin-blea/commits/master>
 
 Liste der kompatiblen Geräte

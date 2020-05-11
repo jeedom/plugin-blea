@@ -2,14 +2,14 @@
 BLEA (anuncio de Bluetooth)
 ==============================
 
-Description
+Descripción
 -----------
 
 Este complemento es un complemento que le permite recibir eventos de ciertos dispositivos bluetooth (como NIU de Nodon)
 
 ![blea icon](../images/blea_icon.png)
 
-Configuration
+Configuración
 -------------
 
 Configuración del plugin
@@ -17,7 +17,7 @@ Configuración del plugin
 
 a. Instalación / Creación
 
-> **Tip**
+> **Punta**
 >
 > Para usar el complemento, debe descargar, instalar y
 > activarlo como cualquier complemento de Jeedom.
@@ -28,7 +28,7 @@ a. Instalación / Creación
 
 En esta página tienes poco que hacer. Se recomienda encarecidamente comenzar la instalación de las dependencias (incluso si aparecen bien). Luego, al final de actualizar la página.
 
-> **Important**
+> **Importante**
 >
 > Lo más importante aquí es seleccionar su controlador
 > Bluetooth
@@ -55,7 +55,7 @@ En la parte superior de esta página, tiene varios botones..
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement
+Dispositivos
 ==========
 
 Cuando hace clic en uno de sus módulos, llega a la página de configuración de este módulo. Como en todas partes en Jeedom, puedes aquí en el lado izquierdo :
@@ -95,7 +95,7 @@ Tendrás 4 pedidos :
   - 01 : prensa simple
   - 02 : doble soporte
   - 03 : pulsación larga
-  - 04 : relachement
+  - 04 : relajamiento
 - Botones : da una representación textual del tipo de soporte
 - Rssi : da el valor de intensidad de la señal
 - Batería : da el valor de la batería
@@ -141,7 +141,7 @@ Si no hubo ningún error y su antena está bien creada en el complemento, ahora 
 4) Si todo va bien, puede hacer clic en "Lanzar el demonio", después de un máximo de un minuto la fecha de la última comunicación debería actualizarse, esto significa que el demonio se está comunicando correctamente con el complemento BLEA.
 5) Último paso opcional pero recomendado: activar la gestión automática del demonio haciendo clic en el botón correspondiente. Esto hará que el complemento intente reiniciar automáticamente el demonio remoto en caso de una pérdida de conexión (útil si su pi remoto se ha desconectado temporalmente de la red eléctrica o se ha reiniciado después de las actualizaciones).
 
-Changelog
+Cambios
 =========
 
 Registro de cambios detallado :
