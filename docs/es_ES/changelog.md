@@ -1,5 +1,5 @@
 # 30/08/2019
-- Adición de una gestión excepcional.
+- Adición de una gestión excepcional
 
 # 22/08/2019
 - Adición de Tivoo Divoom
@@ -16,7 +16,7 @@
 
 # 29/07/2019
 - Menor fijo
-- Separación de dispositivos desconocidos en la página del equipo.
+- Separación de dispositivos desconocidos en la página del equipo
 - Posibilidad de eliminar todos los dispositivos desconocidos con un solo clic (solo aquellos no asignados a un objeto)
 - Corrección de un error en el escaneo selectivo "Desconocido"
 - Mejoras generales
@@ -42,7 +42,7 @@
 - Si una antena no se ha comunicado durante más de un minuto, la presencia de esta antena se establece en 0
 - Adición de la posibilidad de recuperar nuevas configuraciones sin actualizar el complemento
 - Adición de un modo pasivo o activo para el escaneo
-- Reorganización de la página del equipo.
+- Reorganización de la página del equipo
 - Adición de una serie de opciones de escaneo para considerar ausente específico para el equipo (si se define reemplazará el global para este equipo)
 - Adición de la posibilidad de definir en un clic todo el equipo en una antena o en local
 - Capacidad para elegir exactamente el tipo de producto a incluir durante un escaneo (con la capacidad de elegir todo)
@@ -50,9 +50,9 @@
 # 26/06/2019
 - Agregar el xiaomi cleargrass
 - Adición de Xiaomi lywsd02
-- Comienzo de la gestión dinámica del modelo.
+- Comienzo de la gestión dinámica del modelo
 - Comience a reescribir el rango de playbulb para tener más diferencia dependiendo de los firmwares
-- Corrección de errores en el estado del demonio en algunos casos.
+- Corrección de errores en el estado del demonio en algunos casos
 - Desbloqueo de funciones de actualización / retraso : cada usuario hace lo que quiere (tenga cuidado)
 - NB : ya no es necesario actualizar para xiaomi HT miflora : ganancia de batería, mejor alcance, más datos. Recomiendo no activar la actualización forzada que ya no es necesaria a menos que su dispositivo no se anuncie correctamente
 
@@ -64,7 +64,7 @@
 
 # 09/03/2019
 
-- Adición de la gestión automática del demonio en las antenas..
+- Adición de la gestión automática del demonio en las antenas.
 - Gestión de temperatura negativa
 - Corrección en el refresco de las nueces (información de la batería)
 

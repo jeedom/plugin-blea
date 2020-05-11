@@ -311,7 +311,7 @@
         "Le fichier est trop gros (maximum 50ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
         "Décompression du dossier distant": "",
@@ -320,7 +320,7 @@
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
         "401 - Accès non autorisé": "401 - Несанкционированный доступ",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/class\/dotti.class.php": {
         "Le champs message doit être un numérique : ": ""
@@ -336,7 +336,7 @@
         "Le fichier est trop gros (maximum 500ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
         "Décompression du dossier distant": "",

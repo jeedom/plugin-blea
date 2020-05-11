@@ -2,14 +2,14 @@
 BLEA (anúncio em Bluetooth)
 ==============================
 
-Descrição
+Description
 -----------
 
 Este plugin é um plugin que permite que você receba eventos de determinados dispositivos bluetooth (como NIUs da Nodon)
 
 ![blea icon](../images/blea_icon.png)
 
-Configuração
+Configuration
 -------------
 
 Configuração do plugin
@@ -55,7 +55,7 @@ Na parte superior desta página, você tem vários botões.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipamento
+Equipement
 ==========
 
 Quando você clica em um de seus módulos, você chega na página de configuração deste módulo. Como em qualquer lugar em Jeedom, você pode aqui no lado esquerdo :
@@ -95,7 +95,7 @@ Você terá 4 pedidos :
   - 01 : imprensa simples
   - 02 : suporte duplo
   - 03 : Pressão longa
-  - 04 : relaxamento
+  - 04 : relachement
 - Botões : fornece uma representação textual do tipo de suporte
 - Rssi : fornece o valor da força do sinal
 - Bateria : dá o valor da bateria
@@ -103,7 +103,7 @@ Você terá 4 pedidos :
 Outros módulos
 --------------------
 
-Outros módulos podem ser incluídos, como farol NUT, pulseira fitbit, etc..
+Outros módulos podem ser incluídos, como farol NUT, pulseira fitbit, etc.
 
 Eles permitirão a detecção de presença com detecção em um
 Janela de 1 minuto.

@@ -240,19 +240,19 @@
         "Visible": "Visivél",
         "Objet parent": "Objeto pai",
         "Catégorie": "Categoria",
-        " . $info['groupe'] . ": ". $ info ['grupo'].",
+        " . $info['groupe'] . ": "$ info ['grupo']",
         "Modèle": "Modelo",
-        "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "Antena que receberá as informações, tome cuidado para não colocar dispositivos do tipo botão para evitar repeti-las (a menos que seja isso que você deseja). No entanto, presença e rssi serão sistematicamente levados em consideração por todas as antenas.",
+        "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "Antena que receberá as informações, tome cuidado para não colocar dispositivos do tipo botão para evitar repeti-las (a menos que seja isso que você deseja). No entanto, presença e rssi serão sistematicamente levados em consideração por todas as antenas",
         "Antenne de réception": "Antena de recepção",
         "Local": "Local",
-        "Remote : ' . $remote->getRemoteName() .": "Remoto: '. $ remote-> getRemoteName ().",
+        "Remote : ' . $remote->getRemoteName() .": "Remoto: '. $ remote-> getRemoteName ()",
         "Tous": "Tudo",
         "Utile pour savoir quelle antenne contrôlera l'équipement. Choisir Tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes": "Útil para saber qual antena controlará o equipamento. Escolher Tudo terá a consequência de potencialmente acionar a ação quantas vezes houver antenas",
         "Antenne d'émission": "Antena transmissora",
         "Refresh": "Atualizar",
         "Demandera les infos en forcé. A éviter absolument sauf si nécessaire et si le device le permet": "Forçadamente solicitar informações. Evite absolutamente, a menos que seja necessário e se o dispositivo permitir",
         "Refresh Forcé": "Atualizar Forçado",
-        "Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes, il n'y aura pas de mise à jour et cela peut engendrer un blocage du scan": "Não é necessário definir valores muito baixos; se os valores forem idênticos aos anteriores, não haverá atualização e isso poderá causar um bloqueio na verificação.",
+        "Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes, il n'y aura pas de mise à jour et cela peut engendrer un blocage du scan": "Não é necessário definir valores muito baixos; se os valores forem idênticos aos anteriores, não haverá atualização e isso poderá causar um bloqueio na verificação",
         "Refresh des infos (en s)": "Atualização de informações (s)",
         "Essaiera de garder la connexion avec l'appareil (pour les appareils lents à se connecter). Attention, une fois une connexion ouverte, certains appareils ne sont plus visibles. Si Tous est sélectionné, cette option ne sera pas utilisée. Evitez absolument cette option sur des devices fonctionnant sur batterie": "Tentará manter a conexão com o dispositivo (para dispositivos que demoram para se conectar). Observe que quando a conexão é aberta, alguns dispositivos não são mais visíveis. Se Tudo estiver selecionado, esta opção não será usada. Evite absolutamente essa opção em dispositivos que funcionam com bateria",
         "Garder la connection": "Mantenha a conexão",
@@ -280,10 +280,10 @@
         "Sélectionner le mode de rechargement de la configuration ?": "Selecione o modo de recarregamento da configuração?",
         "Sans supprimer les commandes": "Sem excluir pedidos",
         "En supprimant et recréant les commandes": "Ao excluir e recriar pedidos",
-        "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "Observe que \"Ao excluir e recriar\" excluirá os comandos existentes.",
+        "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "Observe que \"Ao excluir e recriar\" excluirá os comandos existentes",
         "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Tem certeza de que deseja recriar todos os controles? Isto irá remover ordens existentes",
         "Opération réalisée avec succès": "Operação concluída com êxito",
-        "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "Tem certeza de que deseja excluir todos os dispositivos desconhecidos? Isso excluirá apenas dispositivos desconhecidos que não estão atribuídos a um objeto.",
+        "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "Tem certeza de que deseja excluir todos os dispositivos desconhecidos? Isso excluirá apenas dispositivos desconhecidos que não estão atribuídos a um objeto",
         "Commande": "Ordem",
         "Afficher": "Display",
         "Historiser": "Historicizar",
@@ -311,7 +311,7 @@
         "Le fichier est trop gros (maximum 50ko)": "O arquivo é muito grande (máximo de 50kb)",
         "Impossible de déplacer le fichier temporaire": "Não é possível mover o arquivo temporário",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "Não foi possível fazer o upload do arquivo (limite do servidor web?)",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
         "Décompression du dossier distant": "Descompactando a pasta remota",
@@ -320,7 +320,7 @@
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
         "401 - Accès non autorisé": "401 - Acesso não autorizado",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/class\/dotti.class.php": {
         "Le champs message doit être un numérique : ": "O campo da mensagem deve ser numérico:"
@@ -336,7 +336,7 @@
         "Le fichier est trop gros (maximum 500ko)": "O arquivo é muito grande (máximo de 500kb)",
         "Impossible de déplacer le fichier temporaire": "Não é possível mover o arquivo temporário",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "Não foi possível fazer o upload do arquivo (limite do servidor web?)",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
         "Décompression du dossier distant": "Descompactando a pasta remota",

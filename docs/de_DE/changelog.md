@@ -7,7 +7,7 @@
 
 # 19.08.2019
 - Hinzufügen einer Nachricht, um zu überlegen, ob die API-Ebene in Jeedom geändert werden soll, wenn Sie Antennen verwenden
-- Hinzufügen einiger DIVOOM-Geräte (beachten Sie, dass für sie ein Neustart der Abhängigkeiten erforderlich ist). Ich füge es nicht in die Abhängigkeitssteuerung ein, da dies nur spezifische Abhängigkeiten für sie sind, sodass nicht jeder gezwungen werden muss, die Abhängigkeiten neu zu starten.
+- Hinzufügen einiger DIVOOM-Geräte (beachten Sie, dass für sie ein Neustart der Abhängigkeiten erforderlich ist). Ich füge es nicht in die Abhängigkeitssteuerung ein, da dies nur spezifische Abhängigkeiten für sie sind, sodass nicht jeder gezwungen werden muss, die Abhängigkeiten neu zu starten
 - Hinzufügen von Batteriestand auf Cleargrass
 - Kleinere Verbesserungen
 
@@ -30,7 +30,7 @@
 - Behebung eines Fehlers bei der Regeneration von Bestellungen auf Anfrage
 - Beim Einschluss werden die Sende- und Empfangsantennen automatisch von der Antenne ausgefüllt, die den Einschluss aktiviert hat
 - Änderung des Anwesenheitsbegriffs (keine Notwendigkeit für Wiederholung immer, keine Notwendigkeit für Rückkehrzustand und Rückkehrzustandszeit) jetzt ein Anwesenheitsbefehl durch Antenne und lokal und ein Anwesenheitsbefehl abhängig von den anderen
-- Eine Anpassung des Scanintervalls und der Anzahl der Scans oder eines Geräts ist jetzt nicht sichtbar, um es als nicht vorhanden zu deklarieren (Anwesenheit und insbesondere Abwesenheit der Verstärkungserkennung).
+- Eine Anpassung des Scanintervalls und der Anzahl der Scans oder eines Geräts ist jetzt nicht sichtbar, um es als nicht vorhanden zu deklarieren (Anwesenheit und insbesondere Abwesenheit der Verstärkungserkennung)
 - Möglichkeit, alle Antennen mit einem Klick zu aktualisieren
 - Möglichkeit, alle Antennen mit einem Klick neu zu starten
 - Während eines Plugin-Updates werden die Antennen aktualisiert und neu gestartet (kann manchmal ausfallen)
@@ -43,7 +43,7 @@
 - Hinzu kommt die Möglichkeit, neue Konfigurationen abzurufen, ohne das Plugin zu aktualisieren
 - Hinzufügen eines passiven oder aktiven Modus für den Scan
 - Neuordnung der Ausrüstungsseite
-- Hinzufügen einer Reihe von Scanoptionen, um zu berücksichtigen, dass das Gerät nicht vorhanden ist (falls definiert, wird das globale für dieses Gerät ersetzt).
+- Hinzufügen einer Reihe von Scanoptionen, um zu berücksichtigen, dass das Gerät nicht vorhanden ist (falls definiert, wird das globale für dieses Gerät ersetzt)
 - Hinzu kommt die Möglichkeit, mit einem Klick alle Geräte auf einer Antenne oder auf lokaler Ebene zu definieren
 - Möglichkeit, genau den Produkttyp auszuwählen, der während eines Scans aufgenommen werden soll (mit der Möglichkeit, alle auszuwählen)
 
@@ -75,7 +75,7 @@
 # 06/07/2018
 
 - Verbessertes Abhängigkeitsskript.
-- Entfernen der Abhängigkeitsprüfung, die während des Wartens ohnehin grün bleibt (denken Sie während der Installation daran, die Abhängigkeiten zu starten).
+- Entfernen der Abhängigkeitsprüfung, die während des Wartens ohnehin grün bleibt (denken Sie während der Installation daran, die Abhängigkeiten zu starten)
 
 # 04/06/2018
 
