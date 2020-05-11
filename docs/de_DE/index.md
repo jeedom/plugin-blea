@@ -1,28 +1,15 @@
 
-BLEA (Bluetooth-Werbung)
-==============================
+# BLEA Plugin (Bluetooth Werbung)
 
-Description
------------
+Dieses Plugin ist ein Plugin, mit dem Sie Ereignisse von bestimmten Bluetooth-Geräten empfangen können (z. B. NIUs von Nodon und anderen)
 
-Dieses Plugin ist ein Plugin, mit dem Sie Ereignisse von bestimmten Bluetooth-Geräten (z. B. NIUs von Nodon) empfangen können
-
-![blea icon](../images/blea_icon.png)
-
-Configuration
--------------
-
-Plugin Konfiguration
-========================
-
-a. Installation / Erstellung
+# Plugin Konfiguration
 
 > **Spitze**
 >
-> Um das Plugin nutzen zu können, müssen Sie herunterladen und installieren
-> aktiviere es wie jedes Jeedom Plugin.
+> Um das Plugin verwenden zu können, müssen Sie es wie jedes Jeedom-Plugin herunterladen, installieren und aktivieren.
 
-- Danach kommen Sie zu dieser Seite :
+Danach kommen Sie zu dieser Seite :
 
 ![gestion](../images/gestion.jpg)
 
@@ -30,15 +17,13 @@ Auf dieser Seite haben Sie wenig zu tun. Es wird dringend empfohlen, die Install
 
 > **Wichtig**
 >
-> Das Wichtigste dabei ist, dass Sie Ihren Controller auswählen
-> Bluetooth
+> Das Wichtigste dabei ist, dass Sie Ihren Bluetooth-Controller auswählen
 
 Die andere auf dieser Seite verfügbare Option ist : **Ausgeschlossene Geräte automatisch löschen**. Dadurch wird die Jeedom-Ausrüstung entfernt, wenn sie ausgeschlossen ist.
 
 Sie können auch den Status von Abhängigkeiten überprüfen und neu starten. Starten Sie bei Problemen mit dem Plugin die Abhängigkeiten immer neu, auch wenn Sie im Zweifelsfall in Ordnung sind.
 
-Das Plugin
-=========
+# Das Plugin
 
 Rendez vous dans le menu Plugins &gt; Protocole Domotique pour retrouver le plugin.
 
@@ -55,8 +40,7 @@ Im oberen Teil dieser Seite befinden sich mehrere Schaltflächen.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement
-==========
+# Equipement
 
 Wenn Sie auf eines Ihrer Module klicken, gelangen Sie auf die Konfigurationsseite dieses Moduls. Wie überall in Jeedom können Sie hier auf der linken Seite :
 
@@ -73,13 +57,11 @@ Auf der rechten Seite finden Sie :
 - Wählen Sie ein Modell, wenn für dieses Profil mehrere Modelle verfügbar sind.
 - Siehe das Bild.
 
-Welche Module
-=============
+# Welche Module
 
 Derzeit werden nur bestimmte Module erkannt.
 
-NIU-Fall
------------
+## NIU-Fall
 
 NIU ist sehr einfach einzuschließen. Setzen Sie Jeedom in Inclusion und drücken Sie die Taste (so einfach ist das).
 
@@ -100,26 +82,22 @@ Sie haben 4 Bestellungen :
 - Rssi : gibt den Signalstärkewert an
 - Batterie : gibt den Batteriewert an
 
-Andere Module
---------------------
+## Andere Module
 
 Andere Module wie Beacon NUT, Fitbit Bracelet usw. können enthalten sein.
 
-Sie ermöglichen die Anwesenheitserkennung mit Erkennung auf einem
-1 Minute Fenster.
+Sie ermöglichen die Anwesenheitserkennung mit Erkennung in einem 1-Minuten-Slot.
 
 Offensichtlich werden viele andere Module hinzugefügt.
 
-Remote-Antennenkonfiguration
-================================
+# Remote-Antennenkonfiguration
 
 Bluetooth hat eine relativ begrenzte Reichweite. Je nach Standort Ihrer Jeedom-Box befindet sich möglicherweise ein Teil Ihres Hauses außerhalb der Reichweite Ihrer Antenne.
 Aber es gibt eine Lösung: Es ist möglich, das Netzwerk durch die Installation zusätzlicher Antennen zu erweitern.
 
 Am einfachsten ist es, einen raspBerry pi zu verwenden (vorhanden oder dediziert, je nachdem, welche Ausrüstung Sie bereits haben). Wir gehen hier davon aus, dass das raspBerry bereits mit einem Raspbian installiert ist und dass sowohl ssh als auch Bluetooth aktiviert sind.
 
-Erstellt die Antenne
---------------
+## Erstellt die Antenne
 
 Sie müssen zur Plugin-Seite (Plugins> Home Automation Protocol) gehen und auf "Antennen" klicken"
 
@@ -130,8 +108,7 @@ Sie müssen zur Plugin-Seite (Plugins> Home Automation Protocol) gehen und auf "
 5) Geben Sie das Bluetooth-Gerät auf dem Pi ein ("hci0" bei einer Standardinstallation)
 6) Speichern
 
-Installation des Daemons
-----------------------
+## Installation des Daemons
 
 Wenn kein Fehler aufgetreten ist und Ihre Antenne im Plugin gut erstellt wurde, müssen Sie jetzt die erforderlichen Abhängigkeiten installieren und den Dämon auf der Antenne starten, der die Verbindung zwischen den Bluetooth-Geräten unter herstellt Reichweite der Antenne und des Plugins (und damit Jeedom).
 
@@ -141,13 +118,7 @@ Wenn kein Fehler aufgetreten ist und Ihre Antenne im Plugin gut erstellt wurde, 
 4) Wenn alles gut geht, können Sie auf "Daemon starten" klicken. Nach maximal einer Minute sollte das Datum der letzten Kommunikation aktualisiert werden. Dies bedeutet, dass der Daemon korrekt mit dem BLEA-Plugin kommuniziert.
 5) Letzter optionaler, aber empfohlener Schritt: Aktivieren Sie die automatische Verwaltung des Dämons, indem Sie auf die entsprechende Schaltfläche klicken. Dies führt dazu, dass das Plugin bei einem Verbindungsverlust automatisch versucht, den Remote-Daemon neu zu starten (nützlich, wenn Ihr Remote-Pi vorübergehend vom Stromnetz getrennt oder nach Aktualisierungen neu gestartet wurde).
 
-Changelog
-=========
 
-Changelog detailliert :
-<https://github.com/jeedom/plugin-blea/commits/master>
+# Liste der kompatiblen Geräte
 
-Liste der kompatiblen Geräte
-=================================
-
-<https://jeedom.github.io/documentation/#equipment>
+Sie können finden [hier](https://doc.jeedom.com/de_DE/blea/equipement.compatible) die Liste der kompatiblen Geräte

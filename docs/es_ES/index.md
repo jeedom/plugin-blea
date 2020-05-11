@@ -1,28 +1,15 @@
 
-BLEA (anuncio de Bluetooth)
-==============================
+# Complemento BLEA (anuncio de Bluetooth)
 
-Description
------------
+Este complemento es un complemento que le permite recibir eventos de ciertos dispositivos bluetooth (como NIU de Nodon y otros)
 
-Este complemento es un complemento que le permite recibir eventos de ciertos dispositivos bluetooth (como NIU de Nodon)
-
-![blea icon](../images/blea_icon.png)
-
-Configuration
--------------
-
-Configuración del plugin
-========================
-
-a. Instalación / Creación
+# Configuración del plugin
 
 > **Punta**
 >
-> Para usar el complemento, debe descargar, instalar y
-> activarlo como cualquier complemento de Jeedom.
+> Para usar el complemento, debe descargarlo, instalarlo y activarlo como cualquier complemento de Jeedom.
 
-- Después de eso vendrás a esta página :
+Después de eso vendrás a esta página :
 
 ![gestion](../images/gestion.jpg)
 
@@ -30,15 +17,13 @@ En esta página tienes poco que hacer. Se recomienda encarecidamente comenzar la
 
 > **Importante**
 >
-> Lo más importante aquí es seleccionar su controlador
-> Bluetooth
+> Lo más importante aquí es seleccionar su controlador Bluetooth
 
 La otra opción disponible en esta página es : **Eliminar automáticamente los dispositivos excluidos**. Esto elimina el equipo Jeedom cuando se excluye.
 
 También puede verificar el estado de las dependencias y reiniciarlas. En caso de problemas con el complemento, reinicie siempre las dependencias, incluso si está bien en caso de duda.
 
-El complemento
-=========
+# El complemento
 
 Rendez vous dans le menu Plugins &gt; Protocole Domotique pour retrouver le plugin.
 
@@ -55,8 +40,7 @@ En la parte superior de esta página, tiene varios botones.
 
 ![blea screenshot2](../images/blea_screenshot2.jpg)
 
-Equipement
-==========
+# Equipement
 
 Cuando hace clic en uno de sus módulos, llega a la página de configuración de este módulo. Como en todas partes en Jeedom, puedes aquí en el lado izquierdo :
 
@@ -73,13 +57,11 @@ En el lado derecho encontrarás :
 - Elija un modelo si para este perfil hay varios modelos disponibles.
 - Ver lo visual.
 
-Que módulos
-=============
+# Que módulos
 
 Por el momento, solo se reconocen ciertos módulos específicos.
 
-Caso NIU
------------
+## Caso NIU
 
 NIU es muy fácil de incluir, ponga Jeedom en Inclusion y luego presione el botón (así de simple).
 
@@ -100,26 +82,22 @@ Tendrás 4 pedidos :
 - Rssi : da el valor de intensidad de la señal
 - Batería : da el valor de la batería
 
-Otros módulos
---------------------
+## Otros módulos
 
 Se pueden incluir otros módulos, como la baliza NUT, la pulsera fitbit, etc.
 
-Permitirán la detección de presencia con detección en un
-Ventana de 1 minuto.
+Permitirán la detección de presencia con detección en un espacio de 1 minuto.
 
 Obviamente se agregarán muchos otros módulos.
 
-Configuración de antena remota
-================================
+# Configuración de antena remota
 
 Bluetooth tiene un alcance relativamente limitado, es posible que parte de su hogar esté fuera del alcance de su antena dependiendo de la ubicación de su caja Jeedom.
 Pero hay una solución: Es posible extender la red instalando antenas adicionales.
 
 La forma más fácil es usar un raspBerry pi (existente o dedicado dependiendo del equipo que ya tenga). Asumiremos aquí que el raspBerry ya está instalado con un raspbian y que ssh y bluetooth están activados.
 
-Creado la antena
---------------
+## Creado la antena
 
 Debe ir a la página de complementos (Complementos> Protocolo de automatización del hogar) y hacer clic en "Antenas"
 
@@ -130,8 +108,7 @@ Debe ir a la página de complementos (Complementos> Protocolo de automatización
 5) Ingrese el equipo bluetooth en el pi ("hci0" en una instalación predeterminada)
 6) Guardar
 
-Instalación del demonio
-----------------------
+## Instalación del demonio
 
 Si no hubo ningún error y su antena está bien creada en el complemento, ahora debe instalar las dependencias necesarias y ejecutar el demonio en la antena que se encargará de hacer el enlace entre los dispositivos Bluetooth en alcance de la antena y el complemento (y, por lo tanto, Jeedom).
 
@@ -141,13 +118,7 @@ Si no hubo ningún error y su antena está bien creada en el complemento, ahora 
 4) Si todo va bien, puede hacer clic en "Lanzar el demonio", después de un máximo de un minuto la fecha de la última comunicación debería actualizarse, esto significa que el demonio se está comunicando correctamente con el complemento BLEA.
 5) Último paso opcional pero recomendado: activar la gestión automática del demonio haciendo clic en el botón correspondiente. Esto hará que el complemento intente reiniciar automáticamente el demonio remoto en caso de una pérdida de conexión (útil si su pi remoto se ha desconectado temporalmente de la red eléctrica o se ha reiniciado después de las actualizaciones).
 
-Changelog
-=========
 
-Registro de cambios detallado :
-<https://github.com/jeedom/plugin-blea/commits/master>
+# Listado de equipos compatibles
 
-Listado de equipos compatibles
-=================================
-
-<https://jeedom.github.io/documentation/#equipment>
+Puedes encontrar [aquí](https://doc.jeedom.com/es_ES/blea/equipement.compatible) la lista de equipos compatibles

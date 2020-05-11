@@ -1,5 +1,7 @@
 {
     "changelog.md": {
+        "IMPORTANT": "IMPORTANT",
+        "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte",
         "30\/08\/2019": "30\/08\/2019",
         "Rajout d'une gestion d'exception": "Rajout d'une gestion d'exception",
         "22\/08\/2019": "22\/08\/2019",
@@ -83,22 +85,17 @@
         "Rajout de certaines confs awox mesh": "Rajout de certaines confs awox mesh"
     },
     "index.md": {
-        "BLEA (Bluetooth advertisement)": "BLEA (Bluetooth advertisement)",
-        "Description": "Description",
-        "Ce plugin est un plugin permettant de pouvoir recevoir les événements de certains périphériques bluetooth (tel que les NIU de chez Nodon)": "Ce plugin est un plugin permettant de pouvoir recevoir les événements de certains périphériques bluetooth (tel que les NIU de chez Nodon)",
-        "Configuration": "Configuration",
+        "Plugin BLEA (Bluetooth advertisement)": "Plugin BLEA (Bluetooth advertisement)",
+        "Ce plugin est un plugin permettant de pouvoir recevoir les événements de certains périphériques bluetooth (tel que les NIU de chez Nodon et autre)": "Ce plugin est un plugin permettant de pouvoir recevoir les événements de certains périphériques bluetooth (tel que les NIU de chez Nodon et autre)",
         "Configuration du plugin": "Configuration du plugin",
-        "a.  Installation\/Création": "a.  Installation\/Création",
         "Tip": "Tip",
-        "Afin d'utiliser le plugin, vous devez le télécharger, l'installer et": "Afin d'utiliser le plugin, vous devez le télécharger, l'installer et",
-        "l'activer comme tout plugin Jeedom": "l'activer comme tout plugin Jeedom",
+        "Afin d'utiliser le plugin, vous devez le télécharger, l'installer et l'activer comme tout plugin Jeedom": "Afin d'utiliser le plugin, vous devez le télécharger, l'installer et l'activer comme tout plugin Jeedom",
         "Suite à cela vous arriverez sur cette page": "Suite à cela vous arriverez sur cette page",
         "Sur cette page vous avez peu de choses à faire": "Sur cette page vous avez peu de choses à faire",
         "Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK)": "Il est très vivement recommandé de lancer l'installation des dépendances (même si elles apparaissent OK)",
         "Puis à la fin de rafraichir la page": "Puis à la fin de rafraichir la page",
         "Important": "Important",
-        "La chose la plus importante ici est de sélectionner votre Contrôleur": "La chose la plus importante ici est de sélectionner votre Contrôleur",
-        "Bluetooth": "Bluetooth",
+        "La chose la plus importante ici est de sélectionner votre Contrôleur Bluetooth": "La chose la plus importante ici est de sélectionner votre Contrôleur Bluetooth",
         "Supprimer automatiquement les périphériques exclus": "Supprimer automatiquement les périphériques exclus",
         "L'autre option disponible sur cette page est": "L'autre option disponible sur cette page est",
         "Celle-ci permet de supprimer les équipements de Jeedom lorsqu'ils sont exclus": "Celle-ci permet de supprimer les équipements de Jeedom lorsqu'ils sont exclus",
@@ -149,8 +146,7 @@
         "donne la valeur de la batterie": "donne la valeur de la batterie",
         "Cas d'autres modules": "Cas d'autres modules",
         "D'autres modules peuvent être inclus du type beacon NUT, bracelet fitbit, etc": "D'autres modules peuvent être inclus du type beacon NUT, bracelet fitbit, etc",
-        "Ils permettront une détection de présence avec une détection sur un": "Ils permettront une détection de présence avec une détection sur un",
-        "créneau de 1 minute": "créneau de 1 minute",
+        "Ils permettront une détection de présence avec une détection sur un créneau de 1 minute": "Ils permettront une détection de présence avec une détection sur un créneau de 1 minute",
         "Bien évidemment de nombreux autres modules seront rajoutés": "Bien évidemment de nombreux autres modules seront rajoutés",
         "Configuration d'antennes distantes": "Configuration d'antennes distantes",
         "Le bluetooth ayant une portée relativement limitée, il est possible qu'une partie de votre habitation soit hors portée de votre antenne selon l'emplacement de votre box Jeedom": "Le bluetooth ayant une portée relativement limitée, il est possible qu'une partie de votre habitation soit hors portée de votre antenne selon l'emplacement de votre box Jeedom",
@@ -179,8 +175,9 @@
         "5) Dernière étape optionnelle mais recommandée": "5) Dernière étape optionnelle mais recommandée",
         "activez la gestion automatique du démon en cliquant sur le bouton correspondant": "activez la gestion automatique du démon en cliquant sur le bouton correspondant",
         "Cela fera en sorte que le plugin tentera de relancer automatiquement le démon distant en cas de perte de connexion (pratique si votre pi distant a été temporairement débranché du secteur ou qu'il a été redémarré suite à des mises à jours)": "Cela fera en sorte que le plugin tentera de relancer automatiquement le démon distant en cas de perte de connexion (pratique si votre pi distant a été temporairement débranché du secteur ou qu'il a été redémarré suite à des mises à jours)",
-        "Changelog": "Changelog",
-        "Changelog détaillé": "Changelog détaillé",
-        "Liste des équipements compatibles": "Liste des équipements compatibles"
+        "Liste des équipements compatibles": "Liste des équipements compatibles",
+        "ici": "ici",
+        "Vous pouvez trouver": "Vous pouvez trouver",
+        "la liste des équipements compatibles": "la liste des équipements compatibles"
     }
 }
