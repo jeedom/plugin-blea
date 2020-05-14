@@ -1250,12 +1250,12 @@ class blea_remote {
 		cache::set('eqLogicCacheAttr' . $this->getId(), utils::setJsonAttr(cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue(), $_key, $_value));
 	}
 
-	public function getCacheRemotes($_key = '', $_default = '') {
+	public static function getCacheRemotes($_key = '', $_default = '') {
 		$cache = cache::byKey('BleaPluginRemotes')->getValue();
 		return utils::getJsonAttr($cache, $_key, $_default);
 	}
 
-	public function setCacheRemotes($_key, $_value = null) {
+	public static function setCacheRemotes($_key, $_value = null) {
 		cache::set('BleaPluginRemotes', utils::setJsonAttr(cache::byKey('BleaPluginRemotes')->getValue(), $_key, $_value));
 	}
 
