@@ -54,7 +54,7 @@ class Blpnr():
 			checksum1 = sum(liste)%256
 			checksum2 = sum(liste)/256
 			liste.append(checksum1)
-			liste.append(checksum2)
+			liste.append(int(checksum2))
 			message = utils.tuple_to_hex(liste)
 		conn.writeCharacteristic(handle,message)
 		conn.disconnect()
@@ -80,9 +80,8 @@ class Blpnr():
 					return
 			logging.debug('READ notif BLPNR')
 			notification = Notification(conn,Blpnr)
-			#notification.subscribe(10,disconnect=True)
-			notification.subscribe() 
-			conn.writeCharacteristic('0x0011','0d00000d00')
+			conn.writeCharacteristic('0x0011','0d00000d00',response=True)
+			notification.subscribe(10)
 		except Exception as e:
 			logging.error(str(e))
 
@@ -92,7 +91,7 @@ class Blpnr():
 			logging.debug('MODE IS ? READ BLPNR')
 			globals.LAST_STORAGE[mac]={}
 			self.getStatus(mac)
-		elif mac in globals.LAST_STORAGE and globals.LAST_STORAGE[mac] == 'True':
+		elif mac in globals.LAST_STORAGE and globals.LAST_STORAGE[mac][0] == 1:
 			logging.debug('MODE IS ON READ BLPNR')
 			self.getStatus(mac)
 		else:
@@ -101,7 +100,6 @@ class Blpnr():
 	def handlenotification(self,conn,handle,data={},action={}):
 		logging.debug('NOTIFI BLPNR ')
 		conn.disconnect()
-	
 		result={}
 		result['id'] = conn.mac
 		logging.debug('BLPNR id : '+result['id'])
@@ -111,13 +109,10 @@ class Blpnr():
 		logging.debug('BLPNR source : '+result['source'])
 		if (size <= 6):
 			result['mode'] = 'False'
-			logging.debug('BLPNR mode : '+result['mode'])
-			result['battery'] = '0'
-			logging.debug('BLPNR battery : '+result['battery'])
 		else:
-			result['temps'] = str(int(data[6].encode('hex'),16))
-			logging.debug('BLPNR temps : '+result['temps'])
-			tension = int(data[7].encode('hex'),16)
+			result['temps'] = int(data[6])
+			logging.debug('BLPNR temps : '+str(result['temps']))
+			tension = int(data[7])
 			logging.debug('BLPNR tension : '+str(tension))
 			battery = 0			  
 			if tension >= 80:
@@ -130,16 +125,16 @@ class Blpnr():
 				battery = 2	  
 			elif tension >= 60:
 				battery = 1
-			result['battery'] = str(tension)# str(battery * 20)			 
-			logging.debug('BLPNR battery : '+result['battery'])	
-			result['rssi'] = str(int(data[8].encode('hex'),16))
-			result['mode'] = str((int(data[4].encode('hex'),16) > 0))
+			result['battery'] = battery * 20			 
+			logging.debug('BLPNR battery : '+str(result['battery']))
+			result['mode'] = str(data[4] > 0)
 			logging.debug('BLPNR mode : '+result['mode'])
-			if result['mode'] == 'False':
-				result['temps'] = '0'
-				logging.debug('BLPNR temps : '+result['temps'])
-		globals.LAST_STORAGE[conn.mac] = result['mode']
+			globals.LAST_STORAGE[conn.mac][0] = 1
+		if result['mode'] == 'False':
+			result['temps'] = '0'
+			logging.debug('BLPNR temps : '+result['temps'])
+			logging.debug('BLPNR mode : '+result['mode'])
+			globals.LAST_STORAGE[conn.mac][0] = 0
 		globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
-
 			  
 globals.COMPATIBILITY.append(Blpnr)
