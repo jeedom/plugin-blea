@@ -1,7 +1,7 @@
 
 # BLEA plugin (Bluetooth advertisement)
 
-This plugin is a plugin allowing you to receive events from certain bluetooth devices (such as NIUs from Nodon and others)
+This plugin is a plugin allowing you to receive events from certain bluetooth devices (such as NIU from Nodon and other)
 
 # Plugin configuration
 
@@ -95,7 +95,7 @@ Obviously many other modules will be added.
 Bluetooth has a relatively limited range, it is possible that part of your home is out of range of your antenna depending on the location of your Jeedom box.
 But there is a solution: it is possible to extend the network by installing additional antennas.
 
-The easiest way is to use a raspBerry pi (existing or dedicated depending on the equipment you already have). We will assume here that the raspBerry is already installed with a raspbian and that ssh as well as bluetooth are activated.
+The simplest is to use a raspBerry pi (existing or dedicated depending on the equipment you already have). We will assume here that the raspBerry is already installed with a raspbian and that ssh as well as bluetooth are activated.
 
 ## Created the antenna
 

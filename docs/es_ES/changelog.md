@@ -13,7 +13,7 @@
 
 # 19/08/2019
 - Adición de un mensaje para pensar en cambiar el nivel de la API en Jeedom si usa antenas
-- Adición de algunos dispositivos DIVOOM (tenga en cuenta que requieren un relanzamiento de dependencias). No lo agrego en el control de dependencias porque estas son solo dependencias específicas para ellos, por lo que no es necesario forzar a todos a relanzar las dependencias)
+- Adición de algunos dispositivos DIVOOM (tenga en cuenta que requieren un relanzamiento de dependencias). No lo agrego en el control de dependencias porque son solo dependencias específicas para ellos, por lo que no es necesario forzar a todos a relanzar las dependencias)
 - Adición de nivel de batería en cleargrass
 - Pequeñas mejoras
 
@@ -36,13 +36,13 @@
 - Corrección de un error en la regeneración de pedidos a pedido
 - En la inclusión, las antenas de transmisión y recepción se rellenan automáticamente por la antena que ha permitido la inclusión
 - Cambio de la noción de presencia (sin necesidad de repetición siempre, sin necesidad de estado de retorno y tiempo de estado de retorno) ahora un comando de presencia por antena y local y un comando de presencia dependiendo de los demás
-- Ajuste posible ahora del intervalo de escaneo y el número de escaneos o un dispositivo no es visible para declararlo ausente (presencia de detección de ganancia y especialmente ausencia)
+- Ajuste posible ahora del intervalo de escaneo y el número de escaneos o un dispositivo no es visible para declarar su ausencia (presencia de detección de ganancia y especialmente ausencia)
 - Posibilidad de actualizar todas las antenas en un clic
 - Posibilidad de reiniciar todas las antenas con un solo clic
 - Durante una actualización del complemento, las antenas se actualizan y reinician (a veces pueden fallar)
-- Cambie a exploración pasiva excepto aprender (con memoria de la configuración de Jeedom para saber quién es quién)
+- Exploración pasiva, excepto aprender (con memoria de la configuración de Jeedom para saber quién es quién))
 - Cambiar a Python3
-- Modificación personal de bluepy, con mejor manejo de errores (quizás más bloqueo en proxmow, vmware)
+- Modificación personal de bluepy, con mejor manejo de errores (tal vez más bloqueo en proxmow, vmware)
 - Adición de un tiempo de espera de conexión dentro del propio bluepy para evitar que un intento de conexión se repita
 - Si el daemon local está en estado NOK, las presencias locales se establecen en 0
 - Si una antena no se ha comunicado durante más de un minuto, la presencia de esta antena se establece en 0
@@ -51,7 +51,7 @@
 - Reorganización de la página del equipo
 - Adición de una serie de opciones de escaneo para considerar ausente específico para el equipo (si se define reemplazará el global para este equipo)
 - Adición de la posibilidad de definir en un clic todo el equipo en una antena o en local
-- Capacidad para elegir exactamente el tipo de producto a incluir durante un escaneo (con la capacidad de elegir todo)
+- Posibilidad de elegir exactamente el tipo de producto a incluir durante un escaneo (con la posibilidad de elegir todos)
 
 # 26/06/2019
 - Agregar el xiaomi cleargrass
@@ -72,7 +72,7 @@
 
 - Adición de la gestión automática del demonio en las antenas.
 - Gestión de temperatura negativa
-- Corrección en el refresco de las nueces (información de la batería)
+- Corrección en la actualización de las nueces (información de la batería)
 
 # 16/01/2019
 
@@ -85,14 +85,14 @@
 
 # 06/04/2018
 
-- Probable corrección de un error de notificación de actualización en Hygrothermographe y Miflora (probablemente requiere relanzar las dependencias para las personas afectadas)
+- Probable corrección de un error de notificación de actualización en Hygrothermographe y Miflora (probablemente requiere relanzar dependencias para las personas afectadas)
 
 # 28/03/2018
 
 - agregar conf pantalla de sueños
 - modificación del demonio para especificar los registros
 - modificación del reconocimiento de MI_SCALE V1
-- Watchdog bluepy-helper (en prueba)
+- Watchdog bluepy-helper (en juicio)
 
 # 10/02/2018
 

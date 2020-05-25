@@ -1,7 +1,7 @@
 
 # Plug-in BLEA (anúncio em Bluetooth)
 
-Este plugin é um plugin que permite receber eventos de determinados dispositivos bluetooth (como NIUs da Nodon e outros)
+Este plugin é um plugin que permite receber eventos de determinados dispositivos bluetooth (como NIU da Nodon e outros)
 
 # Configuração do plugin
 
@@ -13,7 +13,7 @@ Depois disso, você chegará a esta página :
 
 ![gestion](../images/gestion.jpg)
 
-Nesta página, você tem pouco a fazer. É altamente recomendável iniciar a instalação das dependências (mesmo que pareçam OK). Em seguida, ao final da atualização da página.
+Nesta página, você tem pouco a fazer. É altamente recomendável iniciar a instalação das dependências (mesmo que pareçam OK)). Em seguida, ao final da atualização da página.
 
 > **IMPORTANTE**
 >
@@ -63,7 +63,7 @@ No momento, apenas determinados módulos específicos são reconhecidos.
 
 ## Caso NIU
 
-O NIU é muito fácil de incluir, coloque o Jeedom em Inclusão e pressione o botão (simples assim).
+O NIU é muito fácil de incluir, coloque o Jeedom em Inclusion e pressione o botão (simples assim).
 
 Uma vez criado o NIU, você receberá este :
 
@@ -95,7 +95,7 @@ Obviamente, muitos outros módulos serão adicionados.
 O Bluetooth tem um alcance relativamente limitado; é possível que parte da sua casa esteja fora do alcance da sua antena, dependendo da localização da sua caixa Jeedom.
 Mas existe uma solução: é possível estender a rede instalando antenas adicionais.
 
-A maneira mais fácil é usar um raspBerry pi (existente ou dedicado, dependendo do equipamento que você já possui). Vamos assumir aqui que o raspBerry já está instalado com um raspbian e que ssh e bluetooth estão ativados.
+O mais simples é usar um raspBerry pi (existente ou dedicado, dependendo do equipamento que você já possui). Vamos assumir aqui que o raspBerry já está instalado com um raspbian e que ssh e bluetooth estão ativados.
 
 ## Criou a antena
 
@@ -105,18 +105,18 @@ Você deve ir para a página do plug-in (Plugins> Home Automation Protocol) e cl
 2) escolha um nome
 3) Digite o ip e a porta (22 por padrão)
 4) Digite o nome do usuário ("pi" por padrão) e a senha
-5) Digite o equipamento bluetooth no pi ("hci0" em uma instalação padrão)
+5) Insira o equipamento bluetooth no pi ("hci0" em uma instalação padrão)
 6) Salvar
 
 ## Instalação do daemon
 
-Se não houve erro e sua antena foi criada no plug-in, você deve agora instalar as dependências necessárias e iniciar o daemon na antena, que cuidará de fazer o link entre os dispositivos bluetooth alcance da antena e do plugin (e, portanto, Jeedom).
+Se não houver erro e sua antena estiver bem criada no plug-in, instale agora as dependências necessárias e inicie o daemon na antena, que cuidará de estabelecer o link entre os dispositivos Bluetooth em alcance da antena e do plug-in (e, portanto, o Jeedom).
 
 1) Clique no botão "Enviar arquivos", pode demorar um pouco, aguarde. Uma faixa verde confirmando o sucesso aparecerá, vermelha se houver algum problema. Nesse caso, verifique o log "Blea", verifique a configuração (ip, usuário, senha, ...)
-2) Clique no botão "Iniciar dependências"". Novamente, pode levar tempo, aguarde. Um banner verde confirmará o sucesso ou vermelho, se não (mesmo, verifique o registro Blea)
+2) Clique no botão "Iniciar dependências"". Novamente, pode levar tempo, aguarde. Uma faixa verde confirmará o sucesso ou vermelho, caso contrário (verifique o log do Blea)
 3) Opcional, você pode recuperar manualmente o log de instalação das dependências clicando em "Log de Dependências" e verificar o log, um arquivo de log específico estará disponível na configuração do plugin.
 4) Se tudo correr bem, você pode clicar em "Iniciar o daemon", após um minuto no máximo a data da última comunicação deve ser atualizada, isso significa que o daemon está se comunicando corretamente com o plug-in BLEA.
-5) Última etapa opcional, mas recomendada: ativar o gerenciamento automático do daemon clicando no botão correspondente. Isso fará com que o plug-in tente reiniciar automaticamente o daemon remoto no caso de uma perda de conexão (útil se o pi remoto tiver sido desconectado temporariamente da rede elétrica ou reiniciado após as atualizações).
+5) Última etapa opcional, mas recomendada: ativar o gerenciamento automático do daemon clicando no botão correspondente. Isso fará com que o plug-in tente reiniciar automaticamente o daemon remoto no caso de uma perda de conexão (útil se o seu pi remoto tiver sido desconectado temporariamente da rede elétrica ou reiniciado após as atualizações).
 
 
 # Lista de equipamentos compatíveis

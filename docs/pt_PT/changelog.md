@@ -23,7 +23,7 @@
 # 29/07/2019
 - Menor fixo
 - Separação de dispositivos desconhecidos na página do equipamento
-- Possibilidade de excluir todos os dispositivos desconhecidos com um clique (apenas aqueles não atribuídos a um objeto)
+- Capacidade de excluir todos os dispositivos desconhecidos em um clique (apenas aqueles não atribuídos a um objeto)
 - Correção de um erro na verificação seletiva "Desconhecido"
 - Melhorias gerais
 
@@ -39,8 +39,8 @@
 - Agora é possível fazer o ajuste do intervalo de varredura e o número de varreduras ou um dispositivo não é visível para declará-lo ausente (presença de detecção de ganho e principalmente ausência)
 - Possibilidade de atualizar todas as antenas em um clique
 - Possibilidade de reiniciar todas as antenas em um clique
-- Durante uma atualização de plug-in, as antenas são atualizadas e reiniciadas (às vezes podem falhar)
-- Alterne para varredura passiva, exceto aprender (com memória do conf Jeedom para saber quem é quem)
+- Durante uma atualização do plug-in, as antenas são atualizadas e reiniciadas (às vezes podem falhar)
+- Varredura passiva, exceto aprender (com memória do Jeedom conf para saber quem é quem)
 - Mudando para Python3
 - Modificação pessoal do bluepy, com melhor tratamento de erros (talvez mais bloqueio no proxmow, vmware)
 - Adição de um tempo limite de conexão no próprio bluepy para impedir que uma tentativa de conexão faça um loop
@@ -49,9 +49,9 @@
 - Adição da possibilidade de recuperar novas configurações sem atualizar o plugin
 - Adição de um modo passivo ou ativo para a verificação
 - Reorganização da página de equipamentos
-- Adição de várias opções de varredura para considerar ausentes específicas para o equipamento (se definido, substituirá o global para este equipamento)
+- A adição de várias opções de varredura para considerar ausente específica para o equipamento (se definido substituirá a global para este equipamento)
 - Além da possibilidade de definir em um clique todo o equipamento em uma antena ou em local
-- Capacidade de escolher exatamente o tipo de produto a ser incluído durante uma varredura (com a capacidade de escolher tudo)
+- Capacidade de escolher exatamente o tipo de produto a ser incluído durante uma digitalização (com a possibilidade de escolher todas)
 
 # 26/06/2019
 - Adicionando o xiaomi cleargrass
@@ -66,13 +66,13 @@
 
 - Mudar da página do equipamento para V4 compatível.
 - Melhoria do higrotermógrafo xiaomi (sem necessidade de conexão de dados) obrigado @kipk
-- Melhoria da miflora (sem necessidade de conexão de dados)
+- Melhoria do miflora (sem necessidade de conexão de dados)
 
 # 09/03/2019
 
 - Adição do gerenciamento automático do daemon nas antenas.
 - Gerenciamento de temperatura negativo
-- Correção no refresco das porcas (informações da bateria)
+- Correção na atualização das porcas (informações da bateria)
 
 # 16/01/2019
 
@@ -85,14 +85,14 @@
 
 # 06/06/2018
 
-- Correção provável de um bug de notificação de atualização no Hygrothermographe e Miflora (provavelmente requer o relançamento de dependências para pessoas afetadas)
+- Correção provável de um bug de atualização de notificação no Hygrothermographe e Miflora (provavelmente requer o relançamento de dependências para as pessoas afetadas))
 
 # 28/03/2018
 
 - adicionar conf dreamscreen
 - modificação do daemon para especificar os logs
 - modificação do reconhecimento do MI_SCALE V1
-- Watchdog bluepy-helper (em julgamento)
+- Watchdog bluepy-helper (em teste)
 
 # 10/02/2018
 
