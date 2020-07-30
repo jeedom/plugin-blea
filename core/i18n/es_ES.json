@@ -380,5 +380,8 @@
         "Secteur": "Sector",
         "Présent": "Presente",
         "Absent": "Ausente"
+    },
+    "info.json": {
+        "Plugin pour la gestion de certains devices qui fonctionnent en bluetooth advertisement comme les NIUS de Nodon Pour les NIUS il permet de detecter les différents appuis. Pour certains autres devices il permet de faire de la présence. Aussi compatible avec les boutons ticatag (avec gestion des multiples appuis température et action pour le faire sonner) Compatible Mi flora, Mi scale , awox smartplug, playbulb, miband1 et 1s": "Complemento para la gestión de ciertos dispositivos que funcionan en publicidad bluetooth como el NIUS de Nodon. Para el NIUS permite detectar los diferentes soportes. Para algunos otros dispositivos, permite la presencia. También compatible con botones ticatag (con gestión de múltiples prensas de temperatura y acción para que suene) Compatible Mi flora, Mi scale, awox smartplug, playbulb, miband1 y 1s"
     }
 }
