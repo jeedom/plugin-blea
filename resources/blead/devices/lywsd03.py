@@ -22,35 +22,17 @@ class Lywsd03():
 	def parse(self,data,mac,name,manuf):
 		action={}
 		action['present'] = 1
-                if data.lower().startswith("95fe"):
-			##todo parse data
-			logging.debug('Lywsd03 PARSE data: ' + data )
-			val_type = data[28:30].lower()
-			val_len =  data[32:34]
-			val_data = data[34:42]
-			if val_type in ['04']:	 # type: temperature
-				t_data = val_data[2:4] + val_data[0:2]
-				temp = int(t_data,16)/10.0
-				logging.debug('Lywsd03------ Advertising Data=> Temp' + str(temp))
-				action['temperature'] = temp
-			elif val_type in ['06']: # type: moisture
-				h_data = val_data[2:4] + val_data[0:2]
-				hum = int(h_data,16)/10.0
-				logging.debug('Lywsd03------ Advertising Data=> Moist: ' + str(hum))
-				action['moisture'] = hum
-			elif val_type in ['0a']: # type: battery
-				b_data = val_data[0:2]
-				batt = int(b_data,16)
-				logging.debug('Lywsd03------ Advertising Data=> Batt: ' + str(batt))
-				action['battery'] = batt
-			elif val_type in ['0d']: # type: temp&moist
-				 t_data = val_data[2:4] + val_data[0:2]
-				 temp = int(t_data,16)/10.0
-				 h_data = val_data[6:8] + val_data[4:6]
-				 hum = int(h_data,16)/10.0
-				 logging.debug('Lywsd03------ Advertising Data=> Temp: ' + str(temp) + ' Moist: ' + str(hum))
-				 action['temperature'] = temp
-				 action['moisture'] = hum
+        logging.debug('Lywsd03 PARSE data: ' + data )
+        temp = int.from_bytes(data[0:2],byteorder='little',signed=True)/100
+        logging.debug('Lywsd03------ Advertising Data=> Temp' + str(temp))
+        action['temperature'] = temp
+        hum = int.from_bytes(data[2:3],byteorder='little')
+        logging.debug('Lywsd03------ Advertising Data=> Moist: ' + str(hum))
+        action['moisture'] = hum
+        volt = int.from_bytes(data[3:5],byteorder='little') / 1000.
+        batt = min(int(round((voltage - 2.1),2) * 100), 100)
+        logging.debug('Lywsd03------ Advertising Data=> Batt: ' + str(batt))
+        action['battery'] = batt
 		return action
 
 	def read(self,mac):
@@ -62,12 +44,11 @@ class Lywsd03():
 				conn.connect()
 				if not conn.isconnected:
 					return
-			batt = bytearray(conn.readCharacteristic('0x3a'))
-			battery = batt[0]
+            val=b'\x01\x00'
+            conn.writeCharacteristic(0x0038,val,1,True) #enable notifications of Temperature, Humidity and Battery voltage
+            conn.writeCharacteristic(0x0046,b'\xf4\x01\x00',1,True)
 			notification = Notification(conn,Lywsd03)
 			notification.subscribe(10)
-			result['battery'] = battery
-			result['id'] = mac
 			logging.debug('LYWSD03------'+str(result))
 			return result
 		except Exception as e:
@@ -76,14 +57,18 @@ class Lywsd03():
 
 	def handlenotification(self,conn,handle,data,action={}):
 		result={}
-		if hex(handle) == '0x36':
-			received = bytearray(data)
-			temperature = float(received[1] * 256 + received[0]) / 100
-			moisture = received[2]
-			result['moisture'] = moisture
-			result['temperature'] = temperature
-			result['id'] = conn.mac
-			result['source'] = globals.daemonname
-			globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
+		temperature=int.from_bytes(data[0:2],byteorder='little',signed=True)/100
+        print("Temperature: " + str(temperature))
+        moisture=int.from_bytes(data[2:3],byteorder='little')
+        print("Humidity: " + str(moisture))
+        voltage=int.from_bytes(data[3:5],byteorder='little') / 1000.
+        print("Battery voltage:",voltage)
+        batteryLevel = min(int(round((voltage - 2.1),2) * 100), 100) #3.1 or above --> 100% 2.1 --> 0 %
+        result['moisture'] = moisture
+        result['temperature'] = temperature
+        result['battery'] = batteryLevel
+        result['id'] = conn.mac
+        result['source'] = globals.daemonname
+        globals.JEEDOM_COM.add_changes('devices::'+conn.mac,result)
 
 globals.COMPATIBILITY.append(Lywsd03)
