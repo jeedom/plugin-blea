@@ -6,7 +6,7 @@
         "Réseau": "",
         "Image": "Gambar",
         "Nom": "Nama",
-        "Batterie": "",
+        "Batterie": "Baterai",
         "Présent": "",
         "Dernière comm": ""
     },
@@ -57,23 +57,23 @@
     },
     "plugins\/blea\/desktop\/modal\/health.php": {
         "Image": "Gambar",
-        "Module": "",
+        "Module": "Modul",
         "ID": "",
-        "Mac": "",
+        "Mac": "Mac",
         "Type": "Jenis",
         "Statut": "Status",
-        "Batterie": "",
+        "Batterie": "Baterai",
         "Rssi": "",
         "Antenne Emission": "",
         "Antenne Réception": "",
         "Présent": "",
         "Refresh Forcé": "",
-        "Dernière communication": "",
-        "Date création": "",
+        "Dernière communication": "Pesan terakhir",
+        "Date création": "Tanggal pembuatan",
         "OK": "OK",
         "NOK": "",
         "Secteur": "",
-        "Absent": "",
+        "Absent": "Absen",
         "Oui": "Ya",
         "Non": "Tidak"
     },
@@ -235,13 +235,13 @@
         "Paramètres": "Parameter²",
         "Commandes": "Perintah",
         "Nom du device": "",
-        "Mac": "",
+        "Mac": "Mac",
         "Activer": "Mengaktifkan",
         "Visible": "Terlihat",
         "Objet parent": "Objek induk",
         "Catégorie": "Kategori",
         " . $info['groupe'] . ": "",
-        "Modèle": "",
+        "Modèle": "Model",
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "",
         "Antenne de réception": "",
         "Local": "",
@@ -260,7 +260,7 @@
         "Nombre de scans": "",
         "Ajouter une commande": "Tambahan pesanan",
         "Nom": "Nama",
-        "Logical ID (info) ou Commande brute (action)": "",
+        "Logical ID (info) ou Commande brute (action)": "Logis ID (Info) atau gross Control (share)",
         "Options": "Pilihan"
     },
     "plugins\/blea\/desktop\/js\/blea.js": {
@@ -269,7 +269,7 @@
         "Tous": "Semua",
         "Choisissez le type de produit que vous souhaitez ajouter": "",
         "Annuler": "Tidak jadi",
-        "Démarrer": "",
+        "Démarrer": "Awal",
         "Santé BLEA": "",
         "Réseau BLEA": "",
         "Configuration spécifique": "",
@@ -281,19 +281,19 @@
         "Sans supprimer les commandes": "",
         "En supprimant et recréant les commandes": "",
         "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "",
-        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "",
-        "Opération réalisée avec succès": "",
+        "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Apakah Anda yakin ingin menciptakan semua kontrol? Ini akan menghapus perintah yang ada",
+        "Opération réalisée avec succès": "Operasi berhasil diselesaikan",
         "Etes-vous sûr de vouloir supprimer tous les devices inconnus ? Cela supprimera que les devices Inconnus qui ne sont pas attribués à un objet. ": "",
         "Commande": "Pesanan",
         "Afficher": "Memenitikan",
         "Historiser": "Historicize",
         "Inverser": "Membalikkan",
-        "Valeur retour d\\'état": "",
-        "Durée avant retour d\\'état (min)": "",
+        "Valeur retour d\\'état": "Nilai kondisi kembali",
+        "Durée avant retour d\\'état (min)": "Waktu untuk kembali kondisi (min)",
         "Arrêter Scan": "",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "",
         "Lancer Scan": "",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": ""
+        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Sebuah perangkat hanya \\ dimasukkan \/ dikeluarkan. Muat ulang halaman"
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "",
@@ -311,7 +311,7 @@
         "Le fichier est trop gros (maximum 50ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
         "Décompression du dossier distant": "",
@@ -320,7 +320,7 @@
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
         "401 - Accès non autorisé": "401 - Akses tidak sah",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/class\/dotti.class.php": {
         "Le champs message doit être un numérique : ": ""
@@ -336,7 +336,7 @@
         "Le fichier est trop gros (maximum 500ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
         "Décompression du dossier distant": "",
@@ -379,6 +379,9 @@
         "OK": "OK",
         "Secteur": "",
         "Présent": "",
-        "Absent": ""
+        "Absent": "Absen"
+    },
+    "info.json": {
+        "Plugin pour la gestion de certains devices qui fonctionnent en bluetooth advertisement comme les NIUS de Nodon Pour les NIUS il permet de detecter les différents appuis. Pour certains autres devices il permet de faire de la présence. Aussi compatible avec les boutons ticatag (avec gestion des multiples appuis température et action pour le faire sonner) Compatible Mi flora, Mi scale , awox smartplug, playbulb, miband1 et 1s": ""
     }
 }

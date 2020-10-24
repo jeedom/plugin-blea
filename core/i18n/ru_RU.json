@@ -6,7 +6,7 @@
         "Réseau": "",
         "Image": "Изображение",
         "Nom": "Имя",
-        "Batterie": "",
+        "Batterie": "Аккумулятор",
         "Présent": "",
         "Dernière comm": ""
     },
@@ -57,23 +57,23 @@
     },
     "plugins\/blea\/desktop\/modal\/health.php": {
         "Image": "Изображение",
-        "Module": "",
+        "Module": "Модуль",
         "ID": "Идентификатор",
         "Mac": "макинтош",
         "Type": "Тип",
         "Statut": "статус",
-        "Batterie": "",
+        "Batterie": "Аккумулятор",
         "Rssi": "",
         "Antenne Emission": "",
         "Antenne Réception": "",
         "Présent": "",
         "Refresh Forcé": "",
         "Dernière communication": "Последнее сообщение",
-        "Date création": "",
+        "Date création": "дата создания",
         "OK": "Ок",
         "NOK": "Неактивен",
         "Secteur": "",
-        "Absent": "",
+        "Absent": "отсутствующий",
         "Oui": "да",
         "Non": "не"
     },
@@ -241,7 +241,7 @@
         "Objet parent": "Родительский объект",
         "Catégorie": "категория",
         " . $info['groupe'] . ": "",
-        "Modèle": "",
+        "Modèle": "Модель",
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "",
         "Antenne de réception": "",
         "Local": "местный",
@@ -260,7 +260,7 @@
         "Nombre de scans": "",
         "Ajouter une commande": "Добавить команду",
         "Nom": "Имя",
-        "Logical ID (info) ou Commande brute (action)": "",
+        "Logical ID (info) ou Commande brute (action)": "Логический ID (информация) или брутто управления (доля)",
         "Options": "Опции"
     },
     "plugins\/blea\/desktop\/js\/blea.js": {
@@ -288,12 +288,12 @@
         "Afficher": "дисплей",
         "Historiser": "История",
         "Inverser": "Обратный",
-        "Valeur retour d\\'état": "",
-        "Durée avant retour d\\'état (min)": "",
+        "Valeur retour d\\'état": "Состояние обратной связи",
+        "Durée avant retour d\\'état (min)": "Время обратной связи (мин)",
         "Arrêter Scan": "",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "",
         "Lancer Scan": "",
-        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": ""
+        "Un périphérique vient d\\'être inclu\/exclu. Veuillez réactualiser la page": "Устройство было включено \/ исключено. Пожалуйста, перезагрузите страницу"
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "",
@@ -311,7 +311,7 @@
         "Le fichier est trop gros (maximum 50ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoomtimeboxmini\/class\/divoomtimeboxmini.class.php": {
         "Décompression du dossier distant": "",
@@ -320,7 +320,7 @@
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/ajax\/dotti.ajax.php": {
         "401 - Accès non autorisé": "401 - Несанкционированный доступ",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/dotti\/class\/dotti.class.php": {
         "Le champs message doit être un numérique : ": ""
@@ -336,7 +336,7 @@
         "Le fichier est trop gros (maximum 500ko)": "",
         "Impossible de déplacer le fichier temporaire": "",
         "Impossible de téléverser le fichier (limite du serveur web ?)": "",
-        "Aucune méthode correspondante à : ": "Aucune methode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune methode correspondante à :"
     },
     "plugins\/blea\/core\/config\/devices\/divoompixoo\/class\/divoompixoo.class.php": {
         "Décompression du dossier distant": "",
@@ -379,6 +379,9 @@
         "OK": "Ок",
         "Secteur": "",
         "Présent": "",
-        "Absent": ""
+        "Absent": "отсутствующий"
+    },
+    "info.json": {
+        "Plugin pour la gestion de certains devices qui fonctionnent en bluetooth advertisement comme les NIUS de Nodon Pour les NIUS il permet de detecter les différents appuis. Pour certains autres devices il permet de faire de la présence. Aussi compatible avec les boutons ticatag (avec gestion des multiples appuis température et action pour le faire sonner) Compatible Mi flora, Mi scale , awox smartplug, playbulb, miband1 et 1s": ""
     }
 }

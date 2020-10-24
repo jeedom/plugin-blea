@@ -1,3 +1,9 @@
+# Changelog Bluetooth Advertisement
+
+>**Important**
+>
+>As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text
+
 # 08/30/2019
 - Addition of exceptional management
 
@@ -17,12 +23,12 @@
 # 07/29/2019
 - Fixed minor
 - Separation of unknown devices on the equipment page
-- Possibility to delete all unknown devices with one click (only those not assigned to an object)
+- Ability to delete all unknown devices in one click (only those not assigned to an object)
 - Correction of a bug on the selective scan "Unknown"
 - Overall improvements
 
 # 07/20/2019
-- Change of method for the whole playbulb range (only one conf and visuals) more dependencies compared to the different versions (now at inclusion we recover the addresses of the different methods)
+- Change of method for the entire playbulb range (only one conf and visuals) more dependencies compared to the different versions (now at inclusion we recover the addresses of the different methods)
 - Addition of miscal V2 with weight and impedance (and a whole bunch of calculated measures). User management for calculations (in the advanced config button)
 - Change of miscal V1 (it will be necessary to recreate the users) but we gain some more info
 - For playbulbs I recommend a reinclusion of all devices
@@ -33,8 +39,8 @@
 - Adjustment possible now of the scan interval and the number of scans or a device is not visible to declare it absent (gain detection presence and especially absence)
 - Possibility to update all antennas in one click
 - Possibility to restart all antennas in one click
-- During a plugin update the antennas are updated and restart (can sometimes fail)
-- Switch to passive scan except learn (with memory of the Jeedom conf to know who is who)
+- During an update of the plugin the antennas are updated and restart (can sometimes fail)
+- Passive scan except learn (with memory of the Jeedom conf to know who is who)
 - Switching to Python3
 - Personal modification of bluepy, with better error handling (maybe more blocking on proxmow, vmware)
 - Addition of a connection timeout within bluepy itself to prevent a connection attempt from looping
@@ -45,7 +51,7 @@
 - Reorganization of the equipment page
 - Addition of a number of scan option to consider absent specific to the equipment (if defined will replace the global for this equipment)
 - Addition of the possibility to define in one click all the equipment on an antenna or on local
-- Ability to choose exactly the type of product to include during a scan (with the ability to choose all)
+- Ability to choose exactly the type of product to include during a scan (with the possibility of choosing all)
 
 # 06/26/2019
 - Adding the xiaomi cleargrass
@@ -66,7 +72,7 @@
 
 - Addition of the automatic management of the daemon on the antennas.
 - Negative temp management
-- Correction on the refreshment of the nuts (battery info)
+- Correction on the refresh of the nuts (battery info)
 
 # 01/16/2019
 
@@ -79,14 +85,14 @@
 
 # 04/06/2018
 
-- Probable correction of a refresh notification bug on Hygrothermographe and Miflora (probably requires a relaunch of dependencies for people affected)
+- Probable correction of a refresh notification bug on Hygrothermograph and Miflora (probably requires relaunching dependencies for people affected)
 
 # 03/28/2018
 
 - add conf dreamscreen
 - modification of the daemon to specify the logs
 - modification of the recognition of MI_SCALE V1
-- Watchdog bluepy-helper (on trial)
+- Watchdog bluepy-helper (in trial)
 
 # 02/10/2018
 
