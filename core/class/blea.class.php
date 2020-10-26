@@ -886,33 +886,8 @@ class blea extends eqLogic {
 	}
 
 	public function applyModuleConfiguration() {
-	$device = self::devicesParameters($this->getConfiguration('device'));
-	if (!is_array($device)) {
-		return true;
-	}
-		if ($this->getConfiguration('applyDevice') == $this->getConfiguration('device')){
-			$model=$this->getConfiguration('iconModel','');
-			if (isset($device['models'])) {
-				if (isset($device['models'][$model])) {
-					foreach ($device['models'][$model]['configuration'] as $key => $value) {
-						$this->setConfiguration($key, $value);
-					}
-				} else {
-					if (isset($device['configuration'])) {
-						foreach ($device['configuration'] as $key => $value) {
-							$this->setConfiguration($key, $value);
-						}
-					}
-				}
-			} else {
-				if (isset($device['configuration'])) {
-					foreach ($device['configuration'] as $key => $value) {
-						$this->setConfiguration($key, $value);
-					}
-				}
-			}
-			$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
-			$this->save();
+		$device = self::devicesParameters($this->getConfiguration('device'));
+		if (!is_array($device)) {
 			return true;
 		}
 		$this->setConfiguration('canbelocked',0);
@@ -947,6 +922,14 @@ class blea extends eqLogic {
 		if (isset($device['category'])) {
 			foreach ($device['category'] as $key => $value) {
 				$this->setCategory($key, $value);
+			}
+		}
+		$model=$this->getConfiguration('iconModel','');
+		if (isset($device['models'])) {
+			if (isset($device['models'][$model])) {
+				foreach ($device['models'][$model]['configuration'] as $key => $value) {
+					$this->setConfiguration($key, $value);
+				}
 			}
 		}
 		$cmd_order = 0;
