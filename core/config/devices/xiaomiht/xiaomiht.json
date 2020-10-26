@@ -2,7 +2,7 @@
     "xiaomiht": {
         "name": "Xiaomi Température Humidité",
         "groupe" : "Température",
-        "models" : {"xiaomiht/xiaomiht_cleargrass" : {"configuration" :{"battery_type" : "1x3V CR2032"}}},
+        "models" : {"xiaomiht/xiaomiht_cleargrass" : {"configuration" :{"battery_type" : "1x3V CR2430"}}},
 		"configuration" : {
 			"needsrefresh" : 0,
 			"name" : "xiaomiht",
