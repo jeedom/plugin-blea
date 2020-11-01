@@ -1,0 +1,249 @@
+<!-- WIDGET SPECIFIQUE adapté du widget standard "cmd.action.slider.button"
+Widget créé par @Laco
+Widget modifié et maintenu par @yogui
+
+Mise à jour :
+- Le 2016/11/11 : Création
+- Le 2018/05/10 : Passage jeedom V3
+- Le 2018/05/20 : bug fix si valeur seter par un autre virtueel
+- Le 2019/10/22 : bug fix si valeur mini différente de 0
+- Le 2019/10/23 : Passage jeedom V4
+-->
+<div class="cmd cmd-widget #history#" data-type="action" data-subtype="slider" data-template="heure" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="dashboard" style="min-width:90px;min-height:62px;margin-right: 5px;margin-left: 5px;padding:0px !important;">
+	<input id="stateTime#id#" type="text" class="value form-control input-xm" value="#state#" data-min="#minValue#" data-max="#maxValue#" style="display:none"/>
+	<div class="container" style="width:400px">
+		<div class="row" style="padding-left:0px;padding-right:0px;margin-left: 0px;margin-right: 0px;">
+	        <div class="col-auto title #hide_name#">
+				<span class="cmdName" style="font-weight: bold;font-size : 12px;">#name_display#</span>
+			</div>
+			<div class="col-auto" style="padding-left:0px;padding-right:0px;">
+		        <div class="affichage">
+		        	<span class="affichagechaineComplete"  style="font-size: 1.1em;" id="chaineComplete#id#"></span>
+				</div>
+		        <div class="btn-group btn-group-xs mx-0 px-0">
+					<a class="btn-xs mx-0 px-0 bt_plusH" style="font-size: 0.9em;padding-left:0px;padding-right:0px;" ><i class="fa fa-plus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_minusH" style="font-size: 0.9em;padding-left:0px;padding-right:7px;" ><i class="fa fa-minus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_plusM" style="font-size: 0.9em;padding-left:0px;padding-right:0px;" ><i class="fa fa-plus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_minusM" style="font-size: 0.9em;padding-left:0px;padding-right:0px;" ><i class="fa fa-minus-circle"></i></a>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <script>
+
+    /******************************************************************************************************************************************************/
+    /******************************************* Options de personnalisation Valeur par defaut ************************************************************/
+    /******************************************************************************************************************************************************/
+    /**** Increment decrement **/ var incrementdecrement = ("#incrementdecrement#" != '#'+'incrementdecrement#') ? parseInt("#incrementdecrement#") : 1 ; //
+    /******************************************************************************************************************************************************/
+    /******************************************************************************************************************************************************/
+    /******************************************************************************************************************************************************/
+
+        var heure;
+    	var minute;
+    	var chaineHeure;
+    	var chaineMinute;
+		var chaineComplete;
+      	var Min;
+    	var Max;
+    	var temp;
+
+        // Lit les valeurs min et max 
+		Min =('#minValue#' == '') ? 0 : '#minValue#';
+        Max =('#maxValue#' == '') ? 2359: '#maxValue#';
+        
+		// Assure que les valeurs increment min et max sont dans la bonne plage
+		if (incrementdecrement > 59 || incrementdecrement < 0 ){
+      		console.log("Valeur incrementdecrement incorrecte ", incrementdecrement);  	
+      		incrementdecrement =1;	
+		}
+		if (incrementdecrement > Max ){
+      		console.log("Valeur incrementdecrement incorrecte ", incrementdecrement);  	
+      		incrementdecrement =1;	
+		}		
+		
+    	var Min_Heure  =Math.floor(parseInt(Min) / 100);  	      	
+    	var Min_Minute =parseInt(Min) - Min_Heure*100;
+
+      	if ( Min < 0 || Min > Max || Min > 2359){  
+      		console.log("Valeur Min incorrecte ", Min);  
+      		Min =0;
+        }
+		if ( Min_Minute > 59){
+      		console.log("Valeur Min incorrecte ", Min);  
+      		Min =Min_Heure*100 + 59;
+		}
+      	
+    	var Max_Heure  =Math.floor(parseInt(Max) / 100);
+    	var Max_Minute =parseInt(Max) - Max_Heure*100;
+      	
+      	if (Max>2359){
+     		console.log("Valeur Max incorrecte ", Max);
+          	Max = 2359;
+        }	
+		if ( Max_Minute > 59){
+      		console.log("Valeur Max incorrecte ", Max);  
+      		Max =Max_Heure*100 + 59;
+		}
+		
+		//sauvegarde les valeurs
+		$('head').prepend('<meta name="Max_#id#" content=' +Max+ '>');   
+        $('head').prepend('<meta name="Min_#id#" content=' +Min+ '>');     
+        $('head').prepend('<meta name="incrementdecrement_#id#" content=' +incrementdecrement+ '>');     
+        
+        //masque les boutons + et - pour les heures si max <60
+   		if (Max < 60){
+        	$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+        	$('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+        }
+        
+   		temp = parseInt($('.cmd[data-cmd_uid=#uid#] .value').val());
+   		console.log("**++**** spécial debug valeur à afficher =  ", temp);
+        
+        //valeur 9999 = heure (programmateur ?) non initialisée
+         
+        if (temp > 99){
+        	console.log("!+++! Valeur supérieure à 99, il faut faire quelque chose !!! ", temp);
+        }
+        
+	
+        //Application de la valeur Min
+        if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) < Min){  
+          $('.cmd[data-cmd_uid=#uid#] .value').val((parseInt(Min )));  
+          $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');        
+        }	
+		
+      	// Identification des valeurs Heure et Minute avant modification
+      	if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) >= 0) {	
+            heure = (Max < 60)? 0 : Math.floor(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) / 100);
+      		minute = parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - heure*100;
+        }
+		//sauvegarde Heures et minutes
+        $('head').prepend('<meta name="heure_#id#" content=' +heure+ '>');   
+        $('head').prepend('<meta name="minute_#id#" content=' +minute+ '>');     
+      
+      	// Modification des heures
+      	$('.cmd[data-cmd_uid=#uid#] .bt_minusH').on('click', function () {
+			//relie les valeurs min et max
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+          
+        	if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) >= Min+100) {    
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - 100)});
+				$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+        });
+      	$('.cmd[data-cmd_uid=#uid#] .bt_plusH').on('click', function () {
+			//re1lie les valeurs min et max
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+
+			if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) <= Max-100) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + 100)});
+				$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+        	}
+        });      	
+        
+      	// Modification des minutes
+      	$('.cmd[data-cmd_uid=#uid#] .bt_minusM').on('click', function () {
+			//relie les valeurs min max heure minute seconde incrementdecrement 	
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));	           
+
+            if (  minute>=incrementdecrement && (heure*100)+ minute > Min ) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');              
+            }
+            else if (  heure >=1 && (heure*100)+ minute > Min) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - 40 - incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');             
+            }          
+        });
+        $('.cmd[data-cmd_uid=#uid#] .bt_plusM').on('click', function () {
+          	//relie les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));	  
+
+			if ( (minute < (60-incrementdecrement)) && (heure*100)+ minute < Max) {                   
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+            else if( (heure*100)+ minute < Max ) {
+              jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + 40 + incrementdecrement)});
+           	  $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+        });       
+
+        //  Commande execute 
+        $('.cmd[data-cmd_uid=#uid#] .value').on('change', function () {
+           if (typeof timerHandle !== 'undefined') {
+             clearTimeout(timerHandle);
+             timerHandle = setTimeout(function() {
+                jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val()}});
+            }, 1000)
+           } else {
+            timerHandle = setTimeout(function() {
+                jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val()}});
+            }, 1000)          
+          
+           }
+        });
+
+	 	//Fonction update		
+        jeedom.cmd.update['#id#'] = function(_options){	
+        	// Affichage des heures et des minutes sous forme de chaine de caractères
+			temp = parseInt(_options.display_value);
+        	console.log("ggggg**** spécial debug valeur à afficher =  ", temp);
+        	//temp = 9999;
+			if (_options.display_value>= 0) {
+				if (temp == 9999) {
+					chaineComplete = '-/-';
+				} else {
+					// Mise à jour de la valeur
+	               	$('.cmd[data-cmd_uid=#uid#] .value').val(_options.display_value);
+	              
+	               	// Formatage de la chaine de caractères heure
+					heure = Math.floor(parseInt(_options.display_value) / 100);
+	                chaineHeure = heure;
+
+					// Calcul valeur minute
+					minute = parseInt( _options.display_value) - heure*100;
+	                        
+					// Formatage de la chaine de caractères minute
+					if (minute >= 10) {
+						chaineMinute =  minute;
+					}
+					else {
+						chaineMinute =  "0" + minute;
+					}
+					//Affichage au format Heure-minutes ou juste minutes 
+					if (Max < 60){
+						chaineComplete = chaineMinute + " min";
+					}
+					else{
+						// Calcul de la chaine complète
+						chaineComplete = chaineHeure + " : " +chaineMinute;  
+					}
+				}
+				//mise a jour de la valeur
+				$('#chaineComplete#id#').text(chaineComplete);
+			}
+			
+            //Sauvegarde des valeures heure et minutes
+            $('head').prepend('<meta name="heure_#id#" content=' +heure+ '>');   
+			$('head').prepend('<meta name="minute_#id#" content=' +minute+ '>');     
+
+		}
+        
+		jeedom.cmd.update['#id#']({display_value:'#state#'});
+        
+    </script>
+</div>
