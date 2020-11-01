@@ -10,7 +10,7 @@ echo "Déplacement dans le répertoire de travail"
 cd /tmp
 echo "Récupération des sources (cette étape peut durer quelques minutes)"
 rm -rf /tmp/plugin-blea > /dev/null 2>&1
-sudo git clone -b beta --depth=1 https://github.com/jeedom/plugin-blea.git 
+sudo git clone -b beta --depth=1 https://github.com/Ermax81/plugin-blea.git
 if [ $? -ne 0 ]; then
     echo "Unable to fetch Jeedom Blea git.Please check your internet connexion and github access"
     exit 1
