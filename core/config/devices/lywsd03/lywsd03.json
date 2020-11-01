@@ -85,7 +85,7 @@
 				"ref" : "",
 				"comlink": "",
 				"remark": "Capteurs de Température Humidité avec écran (Lywsd03)",
-				"inclusion" : "Mode inclusion",
+				"inclusion" : "Mode inclusion, le module doit avoir été ajouté au moins une fois à Mihome pour qu'il soit activé",
 				"imglink": "xiaomiht"
             }
         ]
