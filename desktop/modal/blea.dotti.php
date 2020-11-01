@@ -27,7 +27,7 @@ sendVarToJS('id', init('id'));
 <div class="row" style="height:100%; width: 100%">
 	<div class="col-lg-2">
 		<div class="form-group">
-			<span style="margin-right:15px;"><label class="fa fa-circle pixelCircle" style="color : #000000;font-size:2em; margin-top:10px;margin-left:15px; cursor: pointer;"><input class="pixelcolor" type="color" value="#000000" style="width:0;height:0;visibility:hidden"></label>{{Couleur}}</span>
+			<span style="margin-right:15px;"><label class="fas fa-circle pixelCircle" style="color : #000000;font-size:2em; margin-top:10px;margin-left:15px; cursor: pointer;"><input class="pixelcolor" type="color" value="#000000" style="width:0;height:0;visibility:hidden"></label>{{Couleur}}</span>
 		</div>
 		<div class="form-group">
 			<a class="btn btn-xs btn-success" id="bt_fill" style="margin-left:20px"><i class="fas fa-tint"></i> {{Remplir}}</a>
@@ -65,7 +65,7 @@ while ($i < 65) {
 		if ($i >= 9){
 			$notfirstline = ' pixelNotFirstLine';
 		}
-		echo '<label class="fa fa-square pixel' . $notfirstline .'" data-pixel="' . $i . '" style="color : #000000;font-size:4.6em; margin-top:10px;margin-left:15px; cursor: pointer;border-radius:0"></label>  ';
+		echo '<label class="fas fa-square pixel' . $notfirstline .'" data-pixel="' . $i . '" style="color : #000000;font-size:4.6em; margin-top:10px;margin-left:15px; cursor: pointer;border-radius:0"></label>  ';
 		$j++;
 		$i++;
 		
@@ -100,9 +100,9 @@ while ($i < 65) {
 			</div>
 		</div>
 		<div class="form-group">
-			<textarea class="imageDotti form-control" style="display:none" rows="20"></textarea></br>
-			<a class="btn btn-success uploadimageDotti" id="bt_upload" style="display:none"><i class="fa fa-check"></i></a>
-			<a class="btn btn-danger closeimageDotti" id="bt_close" style="display:none"><i class="fa fa-times"></i></a>
+			<textarea class="imageDotti form-control" style="display:none" rows="20"></textarea><br/>
+			<a class="btn btn-success uploadimageDotti" id="bt_upload" style="display:none"><i class="fas fa-check"></i></a>
+			<a class="btn btn-danger closeimageDotti" id="bt_close" style="display:none"><i class="fas fa-times"></i></a>
 		</div>
 	</div>
 </div>
@@ -116,13 +116,13 @@ while ($i < 65) {
 		if ($(this).is(':checked')){
 			$('.pixelNotFirstLine').css('margin-top' , '-17px');
 			$('.pixel').css('margin-left' , '-6px');
-			$('.pixelFirstLine').attr('class', 'fa fa-stop pixel pixelFirstLine');
-			$('.pixelNotFirstLine').attr('class', 'fa fa-stop pixel pixelNotFirstLine');
+			$('.pixelFirstLine').attr('class', 'fas fa-stop pixel pixelFirstLine');
+			$('.pixelNotFirstLine').attr('class', 'fas fa-stop pixel pixelNotFirstLine');
 		} else {
 			$('.pixel').css('margin-top' , '10px');
 			$('.pixel').css('margin-left' , '15px');
-			$('.pixelFirstLine').attr('class', 'fa fa-square pixel pixelFirstLine');
-			$('.pixelNotFirstLine').attr('class', 'fa fa-square pixel pixelNotFirstLine');
+			$('.pixelFirstLine').attr('class', 'fas fa-square pixel pixelFirstLine');
+			$('.pixelNotFirstLine').attr('class', 'fas fa-square pixel pixelNotFirstLine');
 		}
 	});
 	$('#bt_erase').on('click', function () {

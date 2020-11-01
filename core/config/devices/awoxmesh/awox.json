@@ -157,7 +157,7 @@
 				"unite": "",
 				"logicalId": "name:awoxmesh,cmd:setWhite,value:0-100",
 				"display": {
-					"icon": "<i class=\"fa fa-snowflake-o\"><\/i>",
+					"icon": "<i class=\"fas fa-snowflake\"><\/i>",
 					"forceReturnLineBefore": 1
 				}
 			},
@@ -169,7 +169,7 @@
 				"unite": "",
 				"logicalId": "name:awoxmesh,cmd:setWhite,value:50-100",
 				"display": {
-					"icon": "<i class=\"fa fa-circle\"><\/i>"
+					"icon": "<i class=\"fas fa-circle\"><\/i>"
 				}
 			},
 			{
@@ -180,7 +180,7 @@
 				"unite": "",
 				"logicalId": "name:awoxmesh,cmd:setWhite,value:100-100",
 				"display": {
-					"icon": "<i class=\"fa fa-sun-o\"><\/i>",
+					"icon": "<i class=\"fas fa-sun\"><\/i>",
 					"forceReturnLineAfter": 1
 				}
 			},

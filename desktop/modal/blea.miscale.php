@@ -29,8 +29,8 @@ sendVarToJS('configureDeviceId', init('id'));
 $listUsers = $eqLogic->getConfiguration('specificconfiguration',array());
 ?>
 <div class="ListUserDisplay"></div>
-<a class="btn btn-success btn-sm pull-right" id="bt_saveUser"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
-<a class="btn btn-warning btn-sm userAction pull-right" data-action="add"><i class="fa fa-plus-circle"></i> {{Ajouter un utilisateur}}</a><br/><br/>
+<a class="btn btn-success btn-sm pull-right" id="bt_saveUser"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a>
+<a class="btn btn-warning btn-sm userAction pull-right" data-action="add"><i class="fas fa-plus-circle"></i> {{Ajouter un utilisateur}}</a><br/><br/>
 <table class="table table-condensed tablesorter" id="table_userList">
 	<thead>
 		<tr>
@@ -54,7 +54,7 @@ foreach ($listUsers as $id => $data) {
 	} else {
 		echo '<td class="sex"><select><option value="male" selected>Homme</option><option value="female">Femme</option></select></td>';
 	}
-	echo '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td></tr>';
+	echo '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fas fa-times"></i></a></td></tr>';
 	}
 ?>
 	</tbody>
@@ -73,7 +73,7 @@ function addCmdToTable(_cmd) {
     tr += '<td class="weight"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="age"><input type="text" class="form-control" value=""/></td>';
     tr += '<td class="sex"><select><option value="male">Homme</option><option value="female">Femme</option></select></td>';
-	tr += '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fa fa-times"></i></a></td>';
+	tr += '<td><a class="btn btn-danger btn-sm pull-right" id="bt_delUser"><i class="fas fa-times"></i></a></td>';
     tr += '</tr>';
     $('#table_userList tbody').append(tr);
 }

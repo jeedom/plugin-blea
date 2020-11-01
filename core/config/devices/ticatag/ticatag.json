@@ -53,7 +53,7 @@
                 "unite": "",
                 "logicalId": "button",
 				"display": {
-					"icon": "<i class=\"fa fa-circle-o\"><\/i>",
+					"icon": "<i class=\"fas fa-circle\"><\/i>",
 					"generic_type": "DONT"
 				},
 				"configuration": {

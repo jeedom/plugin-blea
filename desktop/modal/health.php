@@ -69,7 +69,7 @@ foreach ($eqLogics as $eqLogic) {
 	} elseif ($eqLogic->getStatus('battery') > 60 && $eqLogic->getStatus('battery') != '') {
 		$battery_status = '<span class="label label-success" style="font-size : 1em;">' . $eqLogic->getStatus('battery') . '%</span>';
 	} else {
-		$battery_status = '<span class="label label-primary" style="font-size : 1em;" title="{{Secteur}}"><i class="fa fa-plug"></i></span>';
+		$battery_status = '<span class="label label-primary" style="font-size : 1em;" title="{{Secteur}}"><i class="fas fa-plug"></i></span>';
 	}
 	echo '<td>' . $battery_status . '</td>';
 	$rssi ='';
@@ -148,15 +148,15 @@ foreach ($eqLogics as $eqLogic) {
 		$present = $presentcmd->execCmd();
 	}
 	if ($present == 1){
-		$present = '<span class="label label-success" style="font-size : 1em;" title="{{Présent}}"><i class="fa fa-check"></i></span>';
+		$present = '<span class="label label-success" style="font-size : 1em;" title="{{Présent}}"><i class="fas fa-check"></i></span>';
 	} else {
-		$present = '<span class="label label-danger" style="font-size : 1em;" title="{{Absent}}"><i class="fa fa-times"></i></span>';
+		$present = '<span class="label label-danger" style="font-size : 1em;" title="{{Absent}}"><i class="fas fa-times"></i></span>';
 	}
 	$refresh = $eqLogic->getConfiguration('needsrefresh', 0);
 	if ($refresh == 1){
-		$refresh = '<span class="label label-success" style="font-size : 1em;" title="{{Oui}}"><i class="fa fa-check"></i></span>';
+		$refresh = '<span class="label label-success" style="font-size : 1em;" title="{{Oui}}"><i class="fas fa-check"></i></span>';
 	} else {
-		$refresh = '<span class="label label-danger" style="font-size : 1em;" title="{{Non}}"><i class="fa fa-times"></i></span>';
+		$refresh = '<span class="label label-danger" style="font-size : 1em;" title="{{Non}}"><i class="fas fa-times"></i></span>';
 	}
 	echo '<td>' . $rssi . '</td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . ucfirst($antenna) . '</span></td>';

@@ -23,7 +23,7 @@ if (!isConnect('admin')) {
 ?>
 <form class="form-horizontal">
     <fieldset>
-	<legend><i class="fa fa-list-alt"></i> {{Général}}</legend>
+	<legend><i class="fas fa-list-alt"></i> {{Général}}</legend>
       <div class="form-group">
         <label class="col-lg-4 control-label">{{Autoriser l'inclusion de devices inconnus}}</label>
         <div class="col-lg-3">
@@ -63,11 +63,11 @@ if (!isConnect('admin')) {
 		 <div class="form-group">
 	<label class="col-lg-4"></label>
 	<div class="col-lg-8">
-		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fa fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
-		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fa fa-paperclip"></i> {{Remettre niveau de log local}}</a>
+		<a class="btn btn-warning changeLogLive" data-log="logdebug"><i class="fas fa-cogs"></i> {{Mode debug forcé temporaire}}</a>
+		<a class="btn btn-success changeLogLive" data-log="lognormal"><i class="fas fa-paperclip"></i> {{Remettre niveau de log local}}</a>
 	</div>
-	</br>
-	</br>
+	<br/>
+	<br/>
 	<label class="col-lg-4"></label>
 	<div class="col-lg-8">
 		<a class="btn btn-warning allantennas" data-action="update"><i class="fas fa-arrow-up"></i> {{Mettre à jour les fichiers sur toutes les antennes}}</a>

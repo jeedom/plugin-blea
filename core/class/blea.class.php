@@ -170,7 +170,7 @@ class blea extends eqLogic {
 			} elseif ($eqLogic->getStatus('battery') > 60 && $eqLogic->getStatus('battery') != '') {
 				$battery_status = '<span style="font-size : 1em;color:green">' . $eqLogic->getStatus('battery') . '%</span>';
 			} else {
-				$battery_status = '<span style="font-size : 1em;color:grey" title="{{Secteur}}"><i class="fa fa-plug"></i></span>';
+				$battery_status = '<span style="font-size : 1em;color:grey" title="{{Secteur}}"><i class="fas fa-plug"></i></span>';
 			}
 			$health .= '<td>' . $battery_status . '</td>';
 			$present = 0;
@@ -179,9 +179,9 @@ class blea extends eqLogic {
 				$present = $presentcmd->execCmd();
 			}
 			if ($present == 1){
-				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fa fa-check"></i></span>';
+				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fas fa-check"></i></span>';
 			} else {
-				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fa fa-times"></i></span>';
+				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fas fa-times"></i></span>';
 			}
 			$health .= '<td>' . $present . '</td>';
 			$health .= '<td><span style="font-size : 0.8em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';

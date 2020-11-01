@@ -39,7 +39,7 @@
 					"mobile": "line"
 				},
 				"display": {
-					"icon": "<i class=\"fa fa-heartbeat\"><\/i>",
+					"icon": "<i class=\"fas fa-heartbeat\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -84,7 +84,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,
@@ -115,7 +115,7 @@
                 "isVisible": 1,
                 "logicalId": "name:miband,handle:0x51,value:04",
 				"display": {
-					"icon": "<i class=\"fa fa-rss\"><\/i>",
+					"icon": "<i class=\"fas fa-rss\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -137,7 +137,7 @@
                 "isVisible": 0,
                 "logicalId": "name:miband,handle:0x51,value:02",
 				"display": {
-					"icon": "<i class=\"fa fa-clock-o\"><\/i>",
+					"icon": "<i class=\"fas fa-clock-o\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -153,7 +153,7 @@
 					"mobile": "line"
 				},
 				"display": {
-					"icon": "<i class=\"fa fa-heart\"><\/i>",
+					"icon": "<i class=\"fas fa-heart\"><\/i>",
 					"generic_type": "DONT"
 				}
             },

@@ -16,7 +16,7 @@
                 "unite": "",
                 "logicalId": "name:tb05,handle:0x25,value:0f0000000000000000000d0a",
 				"display": {
-				"icon": "<i class=\"fa fa-power-off\"><\/i>"
+				"icon": "<i class=\"fas fa-power-off\"><\/i>"
 				}
             },
 			{	
@@ -60,7 +60,7 @@
                 "unite": "",
                 "logicalId": "name:tb05,handle:0x25,value:060201000000000000000d0a",
 				"display": {
-				"icon": "<i class=\"fa fa-cog\"><\/i>"
+				"icon": "<i class=\"fas fa-cog\"><\/i>"
 				}
             },
 			{	

@@ -41,7 +41,7 @@ while ($i < 65) {
 		if ($i >= 9){
 			$marginTop = '-15px';
 		}
-		echo '<label class="fa fa-stop" style="color : ' . $data[$i] . ';font-size:2.1em; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
+		echo '<label class="fas fa-stop" style="color : ' . $data[$i] . ';font-size:2.1em; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
 		$j++;
 		$i++;
 		
