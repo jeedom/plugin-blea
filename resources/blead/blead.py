@@ -530,7 +530,7 @@ args = parser.parse_args()
 
 if args.device:
 	globals.device = args.device
-if args.loglevel:
+if args.loglevel and args.loglevel != "none":
 	globals.log_level = args.loglevel
 if args.pidfile:
 	globals.pidfile = args.pidfile
