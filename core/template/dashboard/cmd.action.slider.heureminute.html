@@ -1,0 +1,636 @@
+<!-- WIDGET SPECIFIQUE adapté du widget standard "cmd.action.slider.button"
+Widget créé par @Laco
+Widget modifié par @yogui
+Widget modified by @minscof
+
+Mise à jour :
+- Le 2016/11/11 : Création
+- Le 2018/05/10 : Passage jeedom V3
+- Le 2018/05/20 : bug fix si valeur seter par un autre virtueel
+- Le 2019/10/22 : bug fix si valeur mini différente de 0
+- Le 2019/10/23 : Passage jeedom V4
+- Le 2019/03/01 : Add new format : HHMMSS, etc..
+-->
+<div class="cmd cmd-widget #minValue# #maxValue# " data-type="action" data-subtype="slider" data-template="heure" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" data-eqLogic_id="#eqLogic_id#" style="min-width:90px;min-height:62px;margin-right: 5px;margin-left: 5px;padding:0px !important;">
+	<div class="title #hide_name#">
+		<span class="cmdName" style="font-weight: bold;font-size : 12px;">#name_display#</span>
+	</div>
+	<div class="content-sm" style="min-width:90px;min-height:62px;margin-right: 5px;margin-left: 5px;padding:0px !important;">
+		<div class="row">
+			<input id="stateTime#id#" type="text" class="value form-control input-sm" value="#state#" style="display:none"/>
+			<div class="">
+		        <div class="affichage">
+		        	<span class="affichagechaineComplete"  style="font-size: 1.1em;" id="chaineComplete#id#"></span>
+				</div>
+		        <div class="btn-group btn-group-xs mx-0 px-0">
+					<a class="btn-xs mx-0 px-0 bt_minusH" style="font-size: 0.9em;padding-left:0px;padding-right:0px" ><i class="fa fa-minus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_plusH" style="font-size: 0.9em;padding-left:0px;padding-right:2px" ><i class="fa fa-plus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_minusM" style="font-size: 0.9em;padding-left:2px;padding-right:0px" ><i class="fa fa-minus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_plusM" style="font-size: 0.9em;padding-left:0px;padding-right:0px" ><i class="fa fa-plus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_minusS" style="font-size: 0.9em;padding-left:2px;padding-right:0px" ><i class="fa fa-minus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_plusS" style="font-size: 0.9em;padding-left:0px;padding-right:0px" ><i class="fa fa-plus-circle"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_off" style="font-size: 0.9em;padding-left:5px;padding-right:0px;display:none" ><i class="fas fa-power-off"></i></a>
+					<a class="btn-xs mx-0 px-0 bt_on" style="font-size: 0.9em;padding-left:0px;padding-right:0px;display:none" ><i class="far fa-clock"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <script>
+    	console.log("_____Widget Start cmd.action.slider.heureminute.html _________________");
+
+    /******************************************************************************************************************************************************/
+    /******************************************* Options de personnalisation Valeur par defaut ************************************************************/
+    /******************************************************************************************************************************************************/
+    /**** Increment decrement **/ var incrementdecrement = ("#incrementdecrement#" != '#'+'incrementdecrement#') ? parseInt("#incrementdecrement#") : 1 ; //
+    /**** Input Format HHMM ou HHMMSS **/ var formatIn = ("#formatIn#" != '#'+'formatIn#') ? "#formatIn#" : "HHMM" ;                                      //
+    /**** Output Format HHMM ou HHMMSS **/ var formatOut = ("#formatOut#" != '#'+'formatOut#') ? "#formatOut#" : formatIn ;                                //
+    /******************************************************************************************************************************************************/
+    /******************************************************************************************************************************************************/
+    /******************************************************************************************************************************************************/
+
+    	var heure;
+    	var minute;
+    	var seconde;
+    	var chaineHeure;
+    	var chaineMinute;
+    	var chaineSeconde;
+		var chaineComplete;
+      	var Min;
+    	var Max;
+    	var CoefH;
+    	var CoefM;
+    	var CoefS;
+    	var temp;
+
+    	console.log("__________________ formatIn=",formatIn);
+    	
+    	function initFormat(formatIn) {
+    		switch (formatIn) {
+    			case 'HHMMSS':
+    				CoefH = 10000;
+          			CoefM = 100;
+          			CoefS = 1;
+          			Max = 23*CoefH+59*CoefM+59*CoefS;
+    		    	break;
+    			case 'HHMM':
+    				CoefH = 100;
+          			CoefM = 1;
+          			CoefS = 0;
+          			Max = 23*CoefH+59*CoefM+59*CoefS;
+    		    	break;
+    		  	case 'MM':
+      				CoefH = 0;
+            		CoefM = 0;
+            		CoefS = 1;
+            		Max = 99;
+      		    	break;
+    		  	case 'MMMM':
+      				CoefH = 0;
+            		CoefM = 0;
+            		CoefS = 1;
+            		Max = 9999;
+      		    	break;
+    		  	case 'SS':
+    		  		CoefH = 0;
+            		CoefM = 0;
+            		CoefS = 1;
+            		Max = 99;
+      		    	break;
+    		  	case 'SSSS':
+      				CoefH = 0;
+            		CoefM = 0;
+            		CoefS = 1;
+            		Max = 9999;
+      		    	break;
+    		  	case 'DD':
+    		  		CoefH = 0;
+            		CoefM = 0;
+            		CoefS = 1;
+            		Max = 99;
+      		    	break;
+	    		default:
+    				CoefH = 100;
+      				CoefM = 1;
+      				CoefS = 0;
+      				formatIn = "HHMM";
+    		    	console.log('Sorry, formatIn unknown =>  default to HHMM');
+    		}
+    	}
+    	
+    	console.log("______________Valeur du formatIn =", formatIn);
+    	console.log("______________Valeur du formatOut =", formatOut);
+    	initFormat(formatIn);
+    	console.log("______________Valeur des 3 coef =", CoefH,CoefM,CoefS,' valeur max =',Max);
+        // Lit les valeurs min et max
+        Min =('#minValue#' == '') ? 0 : '#minValue#';
+	    Max =('#maxValue#' == '') ? Max : '#maxValue#';
+	    console.log("______________Valeur de min =", Min);
+	    console.log("______________Valeur de max =", Max);
+        
+	    // Assure que les valeurs increment min et max sont dans la bonne plage
+		if (incrementdecrement > 59 || incrementdecrement < 0 ) {
+      		console.log("Valeur incrementdecrement incorrecte ", incrementdecrement);  	
+      		incrementdecrement = 1;	
+		}
+		if (incrementdecrement > Max ) {
+      		console.log("Valeur incrementdecrement incorrecte ", incrementdecrement);  	
+      		incrementdecrement = 1;	
+		}		
+		
+		if (CoefH) {
+			var Min_Heure  = Math.floor(parseInt(Min) / CoefH);
+		} else {
+			var Min_Heure  = 0;
+		}
+		
+		if (CoefM) {
+			var Min_Minute = Math.floor((parseInt(Min) - Min_Heure*CoefH) / CoefM);
+		} else {
+			var Min_minute  = 0;
+		}
+        
+        var Min_Seconde = parseInt(Min) - Min_Heure*CoefH - Min_Minute*CoefM;
+    	
+    	if ( Min < 0 || Min > Max || Min > 23*CoefH+59*CoefM+59*CoefS) {  
+	    	console.log("Valeur Min incorrecte ", Min);  
+	    	Min = 0;
+	    }
+    	
+    	if ( Min_Minute > 59) {
+      		console.log("Valeur Min incorrecte ", Min); 
+      		Min = Min_Heure*CoefH + 59*CoefM + 59*CoefS;
+      	}
+    	
+		if ( Min_Seconde > 59){
+	    	console.log("Valeur Min incorrecte ", Min);  
+	    	Min = Min_Heure*CoefH + Min_Minute*CoefM + 59*CoefS;
+		}
+		
+		var Max_Heure = 0;
+		if (CoefH) {
+			Max_Heure  = Math.floor(parseInt(Max) / CoefH);	
+		}
+    	
+    	var Max_Minute = 0;
+    	if (CoefM) {
+    		Max_Minute = Math.floor((parseInt(Max) - Max_Heure*CoefH) / CoefM);	
+    	}
+    	
+    	var Max_Seconde = parseInt(Max) - Max_Heure*CoefH - Max_Minute*CoefM;
+		
+		if (Max>23*CoefH+59*CoefM+59*CoefS){
+	    	console.log("Valeur Max incorrecte ", Max);
+	    	Max_Heure = 23;
+	       	Max = 23*CoefH+59*CoefM+59*CoefS;
+	    }
+		
+		if ( Max_Minute > 59){
+      		console.log("Valeur Max incorrecte ", Max);
+      		Max_Minute = 59;
+      		Max = Max_Heure*CoefH + 59*CoefM + 59*CoefS;
+      	}
+		
+		if ( Max_Seconde > 59){
+      		console.log("Valeur Max incorrecte ", Max);
+      		Max_Seconde = 59;
+      		Max = Max_Heure*CoefH + Max_Minute*CoefM + Max_Seconde*CoefS;
+      	}
+		
+		console.log("_____------Valeur de min =", Min);
+	    console.log("_____------Valeur de max =", Max);
+	    console.log("_____------Valeur de formatIn =", formatIn);
+		
+		//sauvegarde les valeurs first time 
+		$('head').prepend('<meta name="Max_#id#" content=' + Max+ '>');   
+        $('head').prepend('<meta name="Min_#id#" content=' + Min+ '>');     
+        $('head').prepend('<meta name="incrementdecrement_#id#" content=' +incrementdecrement+ '>');     
+        $('head').prepend('<meta name="formatIn_#id#" content=' + formatIn + '>');
+        $('head').prepend('<meta name="formatOut_#id#" content=' + formatOut + '>');
+        
+        
+        //masque les boutons pour activer désactiver
+        $('.cmd[data-cmd_id=#id#] .bt_onM').hide();
+        $('.cmd[data-cmd_id=#id#] .bt_offM').hide();
+        
+        //masque les boutons + et - pour les secondes si HHMM
+   		if (formatOut =='HHMM') {
+        	$('.cmd[data-cmd_id=#id#] .bt_minusS').hide();
+        	$('.cmd[data-cmd_id=#id#] .bt_plusS').hide();
+        }
+        
+   		//masque les boutons + et - pour les minutes pour certains formats
+   		if (formatOut == 'DD' || formatOut == 'MMMM' || formatOut == 'MM' || formatOut == 'SSSS' || formatOut == 'SS') {
+        	$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+        	$('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+        }
+      
+        //masque les boutons + et - pour les heures si max <60 (HHMM) ou max <6000 (HHMMSS)
+   		if (Max < 60*CoefM || formatOut == 'DD' || formatOut == 'MMMM' || formatOut == 'MM' || formatOut == 'SSSS' || formatOut == 'SS') {
+        	$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+        	$('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+        }
+        
+   		temp = parseInt($('.cmd[data-cmd_uid=#uid#] .value').val());
+   		console.log("$$$$$$$$$$$**++**** spécial debug valeur à afficher =  ", temp);
+        
+        //valeur 9999 = heure (programmateur ?) non initialisée
+         
+        if (temp > 99*CoefH){
+        	console.log("$$$$ Valeur supérieure à 99, il faut faire quelque chose !!! ", temp);
+        }        
+	
+        //Application de la valeur Min
+        if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) < Min){  
+          $('.cmd[data-cmd_uid=#uid#] .value').val((parseInt(Min )));  
+          $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');        
+        }	
+		
+      	// Identification des valeurs Heure, Minute, Seconde avant modification
+      	if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) >= 0) {
+      		heure = 0;
+      		if (CoefH) {
+      			heure = (Max < 60*CoefM)? 0 : Math.floor(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) / CoefH);	
+      		}
+            minute = 0;
+            if (CoefM) {
+            	minute = Math.floor(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - heure*CoefH) / CoefM;	
+            }
+      		
+      		seconde = parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - heure*CoefH - minute * CoefM;
+        }
+      	console.log("_____------Valeur de heure =", heure);
+	    console.log("_____------Valeur de minute =", minute);
+	    console.log("_____------Valeur de seconde =", seconde);
+	    console.log("_____------Valeur de formatIn =", formatIn);
+		//sauvegarde Heure minute seconde first time
+        $('head').prepend('<meta name="heure_#id#" content=' +heure+ '>');   
+        $('head').prepend('<meta name="minute_#id#" content=' +minute+ '>');
+        $('head').prepend('<meta name="seconde_#id#" content=' +seconde+ '>');
+        //$('head').prepend('<meta name="formatIn_#id#" content=' +formatIn+ '>'); 
+        
+      
+      	// Baisse des heures
+      	$('.cmd[data-cmd_uid=#uid#] .bt_minusH').on('click', function () {
+			//relit les valeurs min et max
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+          	
+        	if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) >= Min+CoefH) {    
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - CoefH)});
+				$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+        });
+      	
+      	$('.cmd[data-cmd_uid=#uid#] .bt_plusH').on('click', function () {
+			//relit les valeurs min et max
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			
+			if ((formatIn == "HHMM" || formatIn == "HHMMSS") && heure == 0 ) {
+				$('.cmd[data-cmd_id=#id#] .bt_minusH').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_off').hide();
+			}
+			
+			if (parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) <= Max-CoefH) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + CoefH)});
+				$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+        	}
+        });      	
+        
+      	// Modification des minutes
+      	$('.cmd[data-cmd_uid=#uid#] .bt_minusM').on('click', function () {
+			//relit les valeurs min max heure minute seconde incrementdecrement 	
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+
+            if (  minute>=incrementdecrement && ((heure*CoefH) + (minute*CoefM) +(seconde*CoefS)) > Min ) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - incrementdecrement*CoefM)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');              
+            }
+            else if (  heure >=1 && ((heure*CoefH) + (minute*CoefM) +(seconde*CoefS)) > Min) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - 40*CoefM - incrementdecrement*CoefM)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');             
+            }          
+        });
+      	
+        $('.cmd[data-cmd_uid=#uid#] .bt_plusM').on('click', function () {
+          	//relie les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			if (heure == 00 && minute == 00 && seconde == 00) {
+				$('.cmd[data-cmd_id=#id#] .bt_on').hide();
+				if (formatOut == "HHMM" || formatOut == "HHMMSS") {
+					$('.cmd[data-cmd_id=#id#] .bt_plusH').show();	
+				}
+			}
+			
+			if ((formatIn == "HHMM" || formatIn == "HHMMSS") && heure == 0 && minute == 0) {
+				$('.cmd[data-cmd_id=#id#] .bt_minusM').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_minusH').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_off').hide();
+			}
+
+			if ( (minute < (60-incrementdecrement)) && (heure*CoefH + minute*CoefM +seconde*CoefS) < Max) {                   
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + incrementdecrement*CoefM)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+            else if( ((heure*CoefH) + (minute*CoefM) +(seconde*CoefS)) < Max ) {
+              jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + 40*CoefM + incrementdecrement*CoefM)});
+           	  $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            } else {
+            	console.log("_____on ne fait rien ! Inrémente minute =", minute,' Maxi=',Max,' incrementdec=',incrementdecrement, " et ",heure*CoefH + minute*CoefM + seconde*CoefS," coefS=",CoefS, 'formatIn=',formatIn);
+            }
+        });       
+
+        
+     // Modification des secondes
+      	$('.cmd[data-cmd_uid=#uid#] .bt_minusS').on('click', function () {
+			//relit les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			console.log("_____Décrémente seconde =", seconde);
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			
+            if (  seconde>=incrementdecrement && ((heure*CoefH) + (minute*CoefM) +(seconde*CoefS)) > Min ) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');              
+            } else if (  minute >=1 && ((heure*CoefH) + (minute*CoefM) +(seconde*CoefS)) > Min) {
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) - 40*CoefS - incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');             
+            } else {
+            	console.log("_____on ne fait rien ! Décrémente seconde =", seconde,' Mini=',Min,' incrementdec=',incrementdecrement, " et ",heure*CoefH + minute*CoefM + seconde*CoefS," coefS=",CoefS, 'formatIn=',formatIn);
+            }          
+        });
+      	
+        $('.cmd[data-cmd_uid=#uid#] .bt_plusS').on('click', function () {
+          	//relie les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			console.log("_____Incrémente seconde =", seconde);
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+
+			if ( (seconde < (60-incrementdecrement)) && (heure*CoefH + minute*CoefM + seconde*CoefS < Max)) {                   
+                jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + incrementdecrement)});
+            	$('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            }
+            else if( heure*CoefH + minute*CoefM + seconde*CoefS < Max ) {
+              jeedom.cmd.update['#id#']({display_value:(parseInt($('.cmd[data-cmd_uid=#uid#] .value').val()) + 40*CoefS + incrementdecrement)});
+           	  $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+            } else {
+            	console.log("_____on ne fait rien ! Incrémente seconde =", seconde,' Maxi=',Max,' incrementdec=',incrementdecrement, " et ",heure*CoefH + minute*CoefM + seconde*CoefS," coefS=",CoefS, 'formatIn=',formatIn);
+            }
+        });
+        
+        $('.cmd[data-cmd_uid=#uid#] .bt_on').on('click', function () {
+        	//relie les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			console.log("_____Incrémente seconde =", seconde);
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			
+			if (formatOut == "HHMMSS" || formatOut == "HHMM") {
+				$('.cmd[data-cmd_id=#id#] .bt_minusH').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_plusH').show();
+			}
+			if (formatOut == "HHMMSS" || formatOut == "HHMM") {
+				$('.cmd[data-cmd_id=#id#] .bt_minusM').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_plusM').show();
+			}
+			if (formatOut == "HHMMSS" || formatOut == "MMSS" || formatOut == "SS" || formatOut == "MM" || formatOut == "MMMM" || formatOut == "DD") {
+				$('.cmd[data-cmd_id=#id#] .bt_minusS').show();
+			    $('.cmd[data-cmd_id=#id#] .bt_plusS').show();
+			}
+        	jeedom.cmd.update['#id#']({display_value:0});
+		    $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+        	
+        });
+        
+        $('.cmd[data-cmd_uid=#uid#] .bt_off').on('click', function () {
+        	//relie les valeurs min max heure minute seconde incrementdecrement
+			Max = parseInt($('meta[name="Max_#id#"]').attr('content'));
+			Min = parseInt($('meta[name="Min_#id#"]').attr('content'));
+			heure = parseInt($('meta[name="heure_#id#"]').attr('content'));
+			minute = parseInt($('meta[name="minute_#id#"]').attr('content'));
+			seconde = parseInt($('meta[name="seconde_#id#"]').attr('content'));
+			console.log("_____Incrémente seconde =", seconde);
+			incrementdecrement = parseInt($('meta[name="incrementdecrement_#id#"]').attr('content'));
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			
+			
+			chaineComplete = " --/--";
+			$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_minusM').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_plusM').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_minusS').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_plusS').hide();
+		    $('.cmd[data-cmd_id=#id#] .bt_on').show();
+		    $('.cmd[data-cmd_id=#id#] .bt_off').hide();
+		    
+		    $('#chaineComplete#id#').text(chaineComplete);
+		    
+			jeedom.cmd.update['#id#']({display_value:"65635"});
+			chaineComplete = " --/--";
+			$('#chaineComplete#id#').text(chaineComplete);
+		    $('.cmd[data-cmd_uid=#uid#] .value').trigger('change');
+		    
+        	
+        });
+        
+        //  Commande execute 
+        $('.cmd[data-cmd_uid=#uid#] .value').on('change', function () {
+           if (typeof timerHandle !== 'undefined') {
+             clearTimeout(timerHandle);
+             timerHandle = setTimeout(function() {
+                jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val()}});
+            }, 1000)
+           } else {
+            timerHandle = setTimeout(function() {
+                jeedom.cmd.execute({id: '#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .value').val()}});
+            }, 1000)        
+           }
+        });
+
+	 	//Fonction update		
+        jeedom.cmd.update['#id#'] = function(_options){	
+        	// Affichage des heures et des minutes sous forme de chaine de caractères
+			//relie la valeur formatIn
+			formatIn = $('meta[name="formatIn_#id#"]').attr('content');
+			initFormat(formatIn);
+			formatOut = $('meta[name="formatOut_#id#"]').attr('content');
+			console.log('debug ** formatOut =',formatOut);
+        	
+			if (_options.display_value>= 0) {
+        	   	// Mise à jour de la valeur
+               	$('.cmd[data-cmd_uid=#uid#] .value').val(_options.display_value);
+              
+        	   	if (formatOut == "HHMMSS" || formatOut == "HHMM" || formatOut == "MMSS") {
+        	   	   	// Formatage de la chaine de caractères heure
+	               	heure = 0;
+	               	chaineHeure = '';
+	               	if (CoefH) {
+	               		heure = Math.floor(parseInt(_options.display_value) / CoefH);
+	               		chaineHeure = heure;
+	               	}
+					
+					// Calcul valeur minute
+					minute = 0;
+					chaineMinute = '';
+					if (CoefM) {
+						minute = Math.floor((parseInt( _options.display_value) - heure*CoefH) / CoefM);
+					}
+					
+					// Calcul valeur seconde
+					seconde = parseInt( _options.display_value) - heure*CoefH - minute*CoefM;
+	                        
+					// Formatage de la chaine de caractères seconde
+					if (seconde >= 10) {
+						chaineSeconde =  seconde;
+					} else {
+						chaineSeconde =  "0" + seconde;
+					}
+					
+					if (minute < 10 && (heure > 0 || formatOut=="HHMM" || formatOut=="HHMMSS" )) {
+						chaineMinute =  "0" + minute;
+					} else {
+						chaineMinute =  minute;
+					}
+					
+					//Affichage au format Heure-minutes ou juste minutes 
+					if (Max < 60*CoefM){
+						chaineComplete = chaineMinute ;
+					} else {
+						// Calcul de la chaine complète
+						chaineComplete = chaineHeure + "    :    " + chaineMinute;  
+					}
+					if (formatIn == 'HHMMSS') {
+						//chaineComplete = "        " + chaineComplete + "    :    " + chaineSeconde + " sec";
+						chaineComplete = "        " + chaineComplete + "    :    " + chaineSeconde ;
+					} else {
+						//chaineComplete = chaineComplete + " min";
+					}
+					if (formatIn == "HHMM" && heure == 99 && minute == 99) {
+						chaineComplete = " --/--";
+						$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_minusM').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_plusM').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_minusS').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_plusS').hide();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_on').show();
+	    			    $('.cmd[data-cmd_id=#id#] .bt_off').hide();
+					} else if (formatIn == "HHMM" && heure == 00 && minute == 00) {
+						$('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+						$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+						$('.cmd[data-cmd_id=#id#] .bt_minusM').hide();
+						$('.cmd[data-cmd_id=#id#] .bt_minusS').hide();
+						$('.cmd[data-cmd_id=#id#] .bt_off').show();
+						$('.cmd[data-cmd_id=#id#] .bt_on').hide();
+					}
+        	   	} else {
+        	   		//formats autres que HHMMSS et HHMM et MMSS
+        	   		heure = 0;
+	               	chaineHeure = '';
+	               	if (CoefH) {
+	               		heure = Math.floor(parseInt(_options.display_value) / CoefH);
+	               		chaineHeure = heure;
+	               	}
+					
+					// Calcul valeur minute
+					minute = 0;
+					chaineMinute = '';
+					if (CoefM) {
+						minute = Math.floor((parseInt( _options.display_value) - heure*CoefH) / CoefM);
+					}
+					
+					// Calcul valeur seconde
+					seconde = parseInt( _options.display_value) - heure*CoefH - minute*CoefM;
+					chaineSeconde = seconde;
+					
+					chaineComplete = chaineSeconde;
+        	   		if (formatOut == 'SSSS' || formatOut == 'SS') {
+        	   			chaineComplete += ' secondes';
+        	   		}
+        	   		if (formatOut == 'MMMM' || formatOut == 'MM') {
+        	   			chaineComplete += ' minutes';
+        	   		}
+        	   		if (formatOut == 'DDDD' || formatOut == 'DD') {
+        	   			chaineComplete += ' jours';
+        	   		}
+        	   		$('.cmd[data-cmd_id=#id#] .bt_minusM').hide();
+    			    $('.cmd[data-cmd_id=#id#] .bt_plusM').hide();
+        	   	}
+				
+						        
+		        //masque les boutons + et - pour les heures si pas d'heure
+		   		//if (heure == 0) {
+		        //	$('.cmd[data-cmd_id=#id#] .bt_minusH').hide();
+		        //	$('.cmd[data-cmd_id=#id#] .bt_plusH').hide();
+		        //	if (minute == 0) {
+			    //    	$('.cmd[data-cmd_id=#id#] .bt_minusM').hide();
+			    //    	$('.cmd[data-cmd_id=#id#] .bt_plusM').hide();
+			    //   }
+		        //}
+				
+				//mise a jour de la valeur
+				$('#chaineComplete#id#').text(chaineComplete);
+				
+		        console.log("_____Valeur de heure =", heure);
+			    console.log("_____Valeur de minute =", minute);
+			    console.log("_____Valeur de seconde =", seconde);
+			    console.log("_____Valeur de formatIn =", formatIn);
+		        
+			}
+			
+            //Sauvegarde des valeurs heure, minute, seconde : second time !
+            $('head').prepend('<meta name="heure_#id#" content=' +heure+ '>');   
+			$('head').prepend('<meta name="minute_#id#" content=' +minute+ '>');     
+			$('head').prepend('<meta name="seconde_#id#" content=' +seconde+ '>');
+
+		}
+        
+		jeedom.cmd.update['#id#']({display_value:'#state#'});
+        
+    </script>
+</div>

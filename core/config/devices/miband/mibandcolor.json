@@ -67,7 +67,7 @@
                 "type": "info",
                 "subtype": "numeric",
                 "display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "isVisible": 1,
@@ -98,7 +98,7 @@
                 "isVisible": 1,
                 "logicalId": "name:miband,handle:0x51,value:04",
 				"display": {
-					"icon": "<i class=\"fa fa-rss\"><\/i>",
+					"icon": "<i class=\"fas fa-rss\"><\/i>",
 					"generic_type": "DONT"
 				}
             },
@@ -120,7 +120,7 @@
                 "isVisible": 0,
                 "logicalId": "name:miband,handle:0x51,value:02",
 				"display": {
-					"icon": "<i class=\"fa fa-clock-o\"><\/i>",
+					"icon": "<i class=\"fas fa-clock\"><\/i>",
 					"generic_type": "DONT"
 				}
             },

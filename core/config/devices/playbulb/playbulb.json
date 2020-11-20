@@ -57,7 +57,7 @@
                 "isVisible": 1,
                 "logicalId": "name:playbulb,value:00000000",
 				"display": {
-				"icon": "<i class=\"fa fa-power-off\"><\/i>"
+				"icon": "<i class=\"fas fa-power-off\"><\/i>"
 				}
             },
 			{
@@ -118,7 +118,7 @@
                 "isVisible": 1,
                 "logicalId": "name:playbulb,value:ff,type:effect",
 				"display": {
-				"icon": "<i class=\"fa fa-times\"><\/i>"
+				"icon": "<i class=\"fas fa-times\"><\/i>"
 				}
             },
 			{

@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Automatically generated script by
-# vagrantbox/doc/src/vagrant/src-vagrant/deb2sh.py
-# The script is based on packages listed in debpkg_minimal.txt.
-
-#set -x  # make sure each command is printed in the terminal
 echo "Lancement de la synchronisation des configurations"
 echo "Déplacement dans le répertoire de travail"
 cd /tmp
@@ -38,3 +33,4 @@ if [ -d  ${BASEDIR}/../core/config/devices ]; then
 else
 	echo 'Veuillez installer les dépendances'
 fi
+

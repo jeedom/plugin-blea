@@ -52,7 +52,7 @@ while ($i < 257) {
 		if ($i >= 17){
 			$marginTop = (-0.9*$line).'em';
 		}
-		echo '<label class="fa fa-stop" style="color : ' . $data[$i] . ';font-size:0.8em;vertical-align:top; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
+		echo '<label class="fas fa-stop" style="color : ' . $data[$i] . ';font-size:0.8em;vertical-align:top; margin-top:' . $marginTop . ';margin-left:-1px;cursor:default;border-radius:0"></label>';
 		$j++;
 		$i++;
 

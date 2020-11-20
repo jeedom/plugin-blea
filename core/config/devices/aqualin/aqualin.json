@@ -1,0 +1,910 @@
+{
+    "aqualin": {
+        "name": "Aqualin valve",
+        "groupe" : "Plante",
+		"configuration" : {
+			"cancontrol" : 1,
+			"needsrefresh" : 1,
+			"canbelocked" : 0,
+			"name" : "aqualin",
+			"delay" : 600,
+			"specificwidgets" : 0,
+			"specificclass" : 0
+		},
+		"commands": [
+			{
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            },
+            {
+                "name": "Programme",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "logicalId": "program",
+              	"display": {
+              		"showIconAndNamedashboard":1,
+					"icon": "<i class=\"icon nature-watering1\"><\/i>",
+					"generic_type": "DONT"
+				},
+              	"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{	
+				"name": "Mode",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "logicalId": "sprayMist"
+            },
+			{	
+				"name": "Arrosage",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:00,action:sprayMist",
+                "value": "Mode",
+                "configuration":{
+					"updateCmdId":"Mode",
+					"updateCmdToValue":"spray"
+				}
+            },
+            {	
+				"name": "Brumisateur",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:01,action:sprayMist",
+                "value": "Mode",
+                "configuration":{
+					"updateCmdId":"Mode",
+					"updateCmdToValue":"mist"
+				}
+            },
+            {
+                "name": "Statut (arrosage)",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "activeSpray",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Arrosage automatique info",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "autoSpray"
+            },
+            {
+                "name": "Arrosage automatique on",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,action:autoOnSpray",
+                "value": "Arrosage automatique info",
+                "configuration":{
+					"updateCmdId":"Arrosage automatique info"
+				},
+                "template": {
+					"dashboard": "custom::IconAction",
+					"mobile": "custom::IconAction"
+				},
+				"display": {
+					"parameters": {
+						"type":"arrosage",
+						"largeurDesktop":50,
+						"largeurMobile":50
+					}
+				}
+            },
+            {
+                "name": "Arrosage automatique off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,action:autoOffSpray",
+                "value": "Arrosage automatique info",
+                "configuration":{
+					"updateCmdId":"Arrosage automatique info"
+				},
+                "template": {
+					"dashboard": "custom::IconAction",
+					"mobile": "custom::IconAction"
+				},
+				"display": {
+					"parameters": {
+						"type":"arrosage",
+						"largeurDesktop":50,
+						"largeurMobile":50
+					}
+				}
+            },
+            {
+                "name": "Cycle arrosage info",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "cycleSpray",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-recycle\"><\/i>",
+					"forceReturnLineBefore": 1
+				}
+            },
+            {
+                "name": "Cycle arrosage jours",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,value:day,action:cycleSpray",
+                "value": "Cycle arrosage info",
+                "configuration":{
+					"updateCmdId":"Cycle arrosage info",
+					"updateCmdToValue":"jour"
+				},
+                "display": {
+                	"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-recycle\"><\/i>",
+					"forceReturnLineBefore": 1,
+					"parameters": {
+						"type":"defaut",
+						"largeurDesktop":50,
+						"largeurMobile":50
+					}
+				}
+            },
+            {
+                "name": "Cycle Arrosage hebdomadaire",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,value:week,action:cycleSpray",
+                "value": "Cycle arrosage info",
+                "configuration":{
+					"updateCmdId":"Cycle arrosage info",
+					"updateCmdToValue":"semaine"
+				},
+                "display": {
+                	"showIconAndNamedashboard":1,
+                	"icon": "<i class=\"fas fa-recycle\"><\/i>",
+                	"forceReturnLineBefore": 1,
+					"parameters": {
+						"type":"defaut",
+						"largeurDesktop":50,
+						"largeurMobile":50
+					}
+				}
+            },
+            {
+                "name": "Fréquence arrosage (jour) info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "jour",
+                "logicalId": "dayCycleSpray",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"30"
+				}
+            },
+            {	
+				"name": "Fréquence arrosage (jour)",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "jour",
+                "logicalId": "name:aqualin,value:#slider#,action:dayCycleSpray",
+                "value": "Fréquence arrosage (jour) info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"30",
+					"updateCmdId":"Fréquence arrosage (jour) info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fa fa-calendar-day\"><\/i>",
+					"parameters": {
+						"formatIn":"DD"
+					}
+				}
+            },
+            {
+                "name": "Journées avec arrosage info",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "weekdaysCycleSpray",
+             	"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fa fa-calendar-day\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+            {
+                "name": "Journées avec arrosage",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,value:#slider#,action:weekdaysCycleSpray",
+				"value": "Journées avec arrosage info",
+				"configuration":{
+					"updateCmdId":"Journées avec arrosage info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::weekdays",
+					"mobile": "blea::weekdays"
+				},
+				"display": {
+                	"forceReturnLineBefore": 1,
+                	"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fa fa-calendar-week\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+            {
+                "name": "Durée arrosage info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "min",
+                "logicalId": "durationSpray",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"30"
+				}
+            },
+            {	
+				"name": "Durée arrosage",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "min",
+                "logicalId": "name:aqualin,value:#slider#,action:durationSpray",
+                "value": "Durée arrosage info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"30",
+					"updateCmdId":"Durée arrosage info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-stopwatch\"><\/i>",
+					"parameters": {
+						"formatIn":"MMMM"
+					}
+				}
+            },
+            {
+                "name": "Séquence 1 info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "start1Spray"
+            },
+            {	
+				"name": "Séquence 1",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:start1Spray",
+                "value": "Séquence 1 info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Séquence 1 info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Séquence 2 info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "start2Spray"
+			},
+            {	
+				"name": "Séquence 2",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:start2Spray",
+                "value": "Séquence 2 info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Séquence 2 info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Suspension arrosage info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "jour",
+                "logicalId": "rainDelaySpray",
+                "configuration":{
+					"minValue":"0",
+					"maxValue":"30"
+				},
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {	
+				"name": "Suspension arrosage (jour)",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "jour",
+                "logicalId": "name:aqualin,value:#slider#,action:rainDelaySpray",
+                "value": "Suspension arrosage info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"30",
+					"updateCmdId":"Suspension arrosage info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"forceReturnLineAfter": 1,
+					"showIconAndNamedashboard": 1,
+					"icon": "<i class=\"far fa-pause-circle\"><\/i>",
+					"parameters": {"formatIn":"DD"}
+				}
+            },
+            {
+                "name": "Statut (brumisateur)",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "activeMist",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Brumisateur automatique info",
+                "type": "info",
+                "subtype": "binary",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "autoMist",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Brumisateur automatique on",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,action:autoOnMist",
+                "value": "Brumisateur automatique info",
+                "configuration":{
+					"updateCmdId":"Brumisateur automatique info"
+				},
+				"template": {
+					"dashboard": "custom::IconAction",
+					"mobile": "custom::IconAction"
+				},
+				"display": {
+					"forceReturnLineAfter": 1,
+					"parameters": {
+						"type":"brumisateur",
+						"largeurDesktop":50,
+						"largeurMobile":50}
+				}
+            },
+            {
+                "name": "Brumisateur automatique off",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,action:autoOffMist",
+                "value": "Brumisateur automatique info",
+                "configuration":{
+					"updateCmdId":"Brumisateur automatique info"
+				},
+				"template": {
+					"dashboard": "custom::IconAction",
+					"mobile": "custom::IconAction"
+				},
+				"display": {
+					"forceReturnLineAfter": 1,
+					"parameters": {
+						"type":"brumisateur",
+						"largeurDesktop":50,
+						"largeurMobile":50}
+				}
+            },
+            {
+                "name": "Durée brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "durationMist"
+            },
+            {	
+				"name": "Durée brumisateur",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute seconde",
+                "logicalId": "name:aqualin,value:#slider#,action:durationMist",
+                "value": "Durée brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"235959",
+					"updateCmdId":"Durée brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-stopwatch\"><\/i>",
+					"forceReturnLineAfter": 1,
+					"parameters": {"formatIn":"HHMMSS"}
+				}
+            },
+            {
+                "name": "Pause brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "intervalMist"
+            },
+            {	
+				"name": "Pause brumisateur",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute seconde",
+                "logicalId": "name:aqualin,value:#slider#,action:intervalMist",
+                "value": "Pause brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"235959",
+					"updateCmdId":"Pause brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-pause-circle\"><\/i>",
+					"forceReturnLineAfter": 1,
+					"parameters": {"formatIn":"HHMMSS"}
+				}
+            },
+            {
+                "name": "Journées de brumisateur info",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "weekdaysCycleMist",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-recycle\"><\/i>"
+				}
+            },
+            {
+                "name": "Journées de brumisateur",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "name:aqualin,value:#slider#,action:weekdaysCycleMist",
+				"value": "Journées de brumisateur info",
+				"configuration":{
+					"updateCmdId":"Journées de brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::weekdays",
+					"mobile": "blea::weekdays"
+				},
+				"display": {
+                	"forceReturnLineBefore": 1,
+                	"forceReturnLineAfter": 1,
+                	"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fa fa-calendar-week\"><\/i>",
+					"generic_type": "DONT"
+				}
+            },
+            {
+                "name": "Séquence 1 début brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "start1Mist"
+            },
+            {	
+				"name": "Plage 1 début",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:start1Mist",
+                "value": "Séquence 1 début brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Séquence 1 début brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Séquence 2 début brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "start2Mist"
+            },
+            {	
+				"name": "Plage 2 début",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:start2Mist",
+                "value": "Séquence 2 début brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Séquence 2 début brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineAfter": 1,
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Séquence 1 fin brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "end1Mist"
+            },
+            {	
+				"name": "Plage 1 fin",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:end1Mist",
+                "value": "Séquence 1 fin brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Plage 1 fin",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Séquence 2 fin brumisateur info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "end2Mist"
+            },
+            {	
+				"name": "Plage 2 fin",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "heure minute",
+                "logicalId": "name:aqualin,value:#slider#,action:end2Mist",
+                "value": "Séquence 2 fin brumisateur info",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"2359",
+					"updateCmdId":"Séquence 2 fin brumisateur info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineAfter": 1,
+					"parameters": {"formatIn":"HHMM"}
+				}
+            },
+            {
+                "name": "Durée restante",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "min",
+                "logicalId": "remainingDuration",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-stopwatch\"><\/i>",
+					"forceReturnLineAfter": 1
+				}
+            },
+            {
+                "name": "Durée manuelle info",
+                "type": "info",
+                "subtype": "numeric",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "min",
+                "logicalId": "duration",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-stopwatch\"><\/i>",
+					"forceReturnLineAfter": 1
+				}
+            },
+            {	
+				"name": "Durée manuelle",
+                "type": "action",
+                "subtype": "slider",
+                "isVisible": 1,
+                "unite": "min",
+                "logicalId": "name:aqualin,value:#slider#,action:on",
+                "value": "Durée manuelle info",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"30",
+					"updateCmdId":"Durée manuelle info",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"forceReturnLineBefore": 1,
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"fas fa-stopwatch\"><\/i>",
+					"parameters": {
+						"formatIn":"MMMM"
+					}
+				}
+            },
+			{	
+				"name": "2 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:2,action:on",
+                "value": "Durée manuelle info",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"30",
+					"updateCmdId":"Durée manuelle info",
+					"updateCmdToValue":"#slider#"
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-play-circle\"><\/i>"
+				}
+            },
+			{	
+				"name": "5 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:5,action:on",
+                "value": "Durée manuelle info",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"30",
+					"updateCmdId":"Durée manuelle info",
+					"updateCmdToValue":5
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-play-circle\"><\/i>"
+				}
+            },
+			{	
+				"name": "10 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:10,action:on",
+                "value": "Durée manuelle info",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"30",
+					"updateCmdId":"Durée manuelle info",
+					"updateCmdToValue":10
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-play-circle\"><\/i>"
+				}
+            },
+			{	
+				"name": "15 Min",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,value:15,action:on",
+                "value": "Durée manuelle info",
+				"configuration":{
+					"minValue":"1",
+					"maxValue":"30",
+					"updateCmdId":"Durée manuelle info",
+					"updateCmdToValue":15
+				},
+				"display": {
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-play-circle\"><\/i>"
+				}
+            },
+			{	
+				"name": "Arret",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "unite": "",
+                "logicalId": "name:aqualin,action:off",
+                "display": {
+					"forceReturnLineBefore": 1,
+					"showIconAndNamedashboard":1,
+					"icon": "<i class=\"far fa-stop-circle\"><\/i>"
+				}
+            },
+            {
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Aqualin",
+                "name": "Bluetooth valve drip",
+				"doc": "",
+				"type": "Plante",
+				"ref" : "https://fr.aliexpress.com/item/32721563635.html?spm=a2g0o.store_home.productList_2649067.pic_12",
+				"comlink": "",
+				"remark": "",
+				"battery_type" : "2x1,5V AA",
+				"inclusion" : "Mode inclusion",
+				"imglink": "aqualin"
+            }
+        ]
+    }
+}

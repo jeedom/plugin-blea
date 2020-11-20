@@ -170,7 +170,7 @@ class blea extends eqLogic {
 			} elseif ($eqLogic->getStatus('battery') > 60 && $eqLogic->getStatus('battery') != '') {
 				$battery_status = '<span style="font-size : 1em;color:green">' . $eqLogic->getStatus('battery') . '%</span>';
 			} else {
-				$battery_status = '<span style="font-size : 1em;color:grey" title="{{Secteur}}"><i class="fa fa-plug"></i></span>';
+				$battery_status = '<span style="font-size : 1em;color:grey" title="{{Secteur}}"><i class="fas fa-plug"></i></span>';
 			}
 			$health .= '<td>' . $battery_status . '</td>';
 			$present = 0;
@@ -179,9 +179,9 @@ class blea extends eqLogic {
 				$present = $presentcmd->execCmd();
 			}
 			if ($present == 1){
-				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fa fa-check"></i></span>';
+				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fas fa-check"></i></span>';
 			} else {
-				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fa fa-times"></i></span>';
+				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fas fa-times"></i></span>';
 			}
 			$health .= '<td>' . $present . '</td>';
 			$health .= '<td><span style="font-size : 0.8em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
@@ -281,10 +281,10 @@ class blea extends eqLogic {
 		$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead']);
 		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','/home/'.$user.'/folder-blea.tar.gz')) {
 			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
-			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm /home/'.$user.'/folder-blea.tar.gz']);
+			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm -f /home/'.$user.'/folder-blea.tar.gz']);
 		}
 		log::add('blea','info',__('Suppression du zip local',__FILE__));
-		exec('rm /tmp/folder-blea.tar.gz');
+		exec('rm -f /tmp/folder-blea.tar.gz');
 		log::add('blea','info',__('Finie',__FILE__));
 		return $result;
 	}
@@ -294,7 +294,7 @@ class blea extends eqLogic {
 		$name = $remoteObject->getRemoteName();
 		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name).$_dependancy;
 		log::add('blea','info','Suppression de la log ' . $local);
-		exec('rm '. $local);
+		exec('rm -f '. $local);
 		log::add('blea','info',__('Récupération de la log distante',__FILE__));
 		if ($remoteObject->getFiles($local,'/tmp/blea'.$_dependancy)) {
 			$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
@@ -886,33 +886,8 @@ class blea extends eqLogic {
 	}
 
 	public function applyModuleConfiguration() {
-	$device = self::devicesParameters($this->getConfiguration('device'));
-	if (!is_array($device)) {
-		return true;
-	}
-		if ($this->getConfiguration('applyDevice') == $this->getConfiguration('device')){
-			$model=$this->getConfiguration('iconModel','');
-			if (isset($device['models'])) {
-				if (isset($device['models'][$model])) {
-					foreach ($device['models'][$model]['configuration'] as $key => $value) {
-						$this->setConfiguration($key, $value);
-					}
-				} else {
-					if (isset($device['configuration'])) {
-						foreach ($device['configuration'] as $key => $value) {
-							$this->setConfiguration($key, $value);
-						}
-					}
-				}
-			} else {
-				if (isset($device['configuration'])) {
-					foreach ($device['configuration'] as $key => $value) {
-						$this->setConfiguration($key, $value);
-					}
-				}
-			}
-			$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
-			$this->save();
+		$device = self::devicesParameters($this->getConfiguration('device'));
+		if (!is_array($device)) {
 			return true;
 		}
 		$this->setConfiguration('canbelocked',0);
@@ -947,6 +922,14 @@ class blea extends eqLogic {
 		if (isset($device['category'])) {
 			foreach ($device['category'] as $key => $value) {
 				$this->setCategory($key, $value);
+			}
+		}
+		$model=$this->getConfiguration('iconModel','');
+		if (isset($device['models'])) {
+			if (isset($device['models'][$model])) {
+				foreach ($device['models'][$model]['configuration'] as $key => $value) {
+					$this->setConfiguration($key, $value);
+				}
 			}
 		}
 		$cmd_order = 0;
@@ -1250,12 +1233,12 @@ class blea_remote {
 		cache::set('eqLogicCacheAttr' . $this->getId(), utils::setJsonAttr(cache::byKey('eqLogicCacheAttr' . $this->getId())->getValue(), $_key, $_value));
 	}
 
-	public function getCacheRemotes($_key = '', $_default = '') {
+	public static function getCacheRemotes($_key = '', $_default = '') {
 		$cache = cache::byKey('BleaPluginRemotes')->getValue();
 		return utils::getJsonAttr($cache, $_key, $_default);
 	}
 
-	public function setCacheRemotes($_key, $_value = null) {
+	public static function setCacheRemotes($_key, $_value = null) {
 		cache::set('BleaPluginRemotes', utils::setJsonAttr(cache::byKey('BleaPluginRemotes')->getValue(), $_key, $_value));
 	}
 

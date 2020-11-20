@@ -30,7 +30,7 @@
                 "isHistorized": 0,
                 "unite": "%",
 				"display": {
-					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
 					"generic_type": "DONT"
 				},
                 "logicalId": "battery",

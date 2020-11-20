@@ -56,16 +56,18 @@ class jeedom_com():
 			changes = self.changes
 			self.changes = {}
 			logging.debug('Send to jeedom : '+str(changes))
-			i=0
-			while i < self.retry:
+			i = 1
+			bad_status_code = True
+			while i <= self.retry:
 				try:
-					r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5, 120), verify=False)
+					r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5*i, 120), verify=False)
 					if r.status_code == requests.codes.ok:
+						bad_status_code = False
 						break
 				except Exception as error:
 					logging.error('Error on send request to jeedom ' + str(error)+' retry : '+str(i)+'/'+str(self.retry))
 				i = i + 1
-			if r.status_code != requests.codes.ok:
+			if bad_status_code:
 				logging.error('Error on send request to jeedom, return code %s' % (str(r.status_code),))
 			dt = datetime.datetime.now() - start_time
 			ms = (dt.days * 24 * 60 * 60 + dt.seconds) * 1000 + dt.microseconds / 1000.0
@@ -106,10 +108,10 @@ class jeedom_com():
 
 	def thread_change(self,change):
 		logging.debug('Send to jeedom :  %s' % (str(change),))
-		i=0
-		while i < self.retry:
+		i = 1
+		while i <= self.retry:
 			try:
-				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=False)
+				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5*i, 120), verify=False)
 				if r.status_code == requests.codes.ok:
 					break
 			except Exception as error:
