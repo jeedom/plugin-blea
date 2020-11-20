@@ -14,6 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+  $('#bt_resetSearch').off('click').on('click', function () {
+     $('#in_searchEqlogic').val('')
+     $('#in_searchEqlogic').keyup();
+ })
+ 
  $('.changeIncludeState').on('click', function () {
 	var mode = $(this).attr('data-mode');
 	var state = $(this).attr('data-state');

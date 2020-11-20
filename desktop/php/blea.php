@@ -55,7 +55,12 @@ if (config::byKey('include_mode', 'blea', 0) == 1) {
 	</div>
 </div>
 <legend><i class="fas fa-table"></i>  {{Mes devices Blea Connus}}</legend>
-<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+<div class="input-group" style="margin:5px;">
+		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>
+		<div class="input-group-btn">
+			<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
+		</div>
+	</div>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
@@ -116,26 +121,28 @@ foreach ($eqLogics as $eqLogic) {
             <div role="tabpanel" class="tab-pane active" id="eqlogictab">
                 <br/>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-lg-7">
                         <form class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">{{Nom du device}}</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-7">
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">{{Objet parent}}</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-7">
                                         <select class="eqLogicAttr form-control" data-l1key="object_id">
                                             <option value="">Aucun</option>
-                                            <?php
-                                            foreach (jeeObject::all() as $object) {
-                                                echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-                                            }
-                                            ?>
+                                           <?php
+											$options = '';
+											foreach ((jeeObject::buildTree(null, false)) as $object) {
+											$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
+											}
+											echo $options;
+											?>
                                         </select>
                                     </div>
                                 </div>
@@ -153,7 +160,7 @@ foreach ($eqLogics as $eqLogic) {
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-7">
                                         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
                                         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
                                     </div>
@@ -161,14 +168,14 @@ foreach ($eqLogics as $eqLogic) {
                                 <br/>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">{{Mac}}</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-7">
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID"/>
                                     </div>
                                 </div>
                             </fieldset>
                         </form>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-lg-5">
                         <form class="form-horizontal">
                             <fieldset>
                                 <div class="form-group">
