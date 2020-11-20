@@ -121,4 +121,6 @@ Si il n'y a pas eu d'erreur et que votre antenne est bien créée dans le plugin
 
 # Liste des équipements compatibles
 
+Certains équipements comme le lywsd03 nécessitent d'être ajouté a mihome au moins une fois avant d'être actif
+
 Vous pouvez trouver [ici](https://doc.jeedom.com/fr_FR/blea/equipement.compatible) la liste des équipements compatibles
