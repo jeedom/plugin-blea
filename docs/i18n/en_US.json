@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Changelog Bluetooth Advertisement",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
+        "20\/11\/2020": "20\/11\/2020",
+        "Optimisations générales": "General optimizations",
+        "Nouvelle présentation de la liste des objets": "New presentation of the list of objects",
+        "Ajout du tag \"Compatibilité V4": "Addition of the tag \"V4 compatibility",
         "30\/08\/2019": "08\/30\/2019",
         "Rajout d'une gestion d'exception": "Addition of exceptional management",
         "22\/08\/2019": "08\/22\/2019",
@@ -181,6 +185,7 @@
         "activez la gestion automatique du démon en cliquant sur le bouton correspondant": "activate the automatic management of the daemon by clicking on the corresponding button",
         "Cela fera en sorte que le plugin tentera de relancer automatiquement le démon distant en cas de perte de connexion (pratique si votre pi distant a été temporairement débranché du secteur ou qu'il a été redémarré suite à des mises à jours": "This will cause the plugin to automatically try to restart the remote daemon in the event of a connection loss (useful if your remote pi has been temporarily disconnected from the mains or has been restarted following updates",
         "Liste des équipements compatibles": "List of compatible equipment",
+        "Certains équipements comme le lywsd03 nécessitent d'être ajouté a mihome au moins une fois avant d'être actif": "Some equipment like the lywsd03 needs to be added to mihome at least once before being active",
         "Vous pouvez trouver": "You can find",
         "la liste des équipements compatibles": "the list of compatible equipment",
         " Tip.": " Tip.",
