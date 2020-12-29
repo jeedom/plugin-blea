@@ -26,7 +26,6 @@ class YeelightCandela():
 		logging.debug('action for yeelight_candela received')
 		type =''
 		mac = message['device']['id']
-		handle = message['command']['handle']
 		value = message['command']['value']
 		if 'type' in message['command']:
 			type = message['command']['type']
@@ -45,10 +44,13 @@ class YeelightCandela():
 		if type == 'pair':
 			conn.writeCharacteristic('0x001f','4367'+self.key)
 			time.sleep(5)
-		if type == 'switch':
-			conn.writeCharacteristic('0x001f','4340'+value)
+		if type == 'on':
+			conn.writeCharacteristic('0x001f','434001')
+		if type == 'off':
+			conn.writeCharacteristic('0x001f','434002')
 		if type == 'brightness':
-			conn.writeCharacteristic('0x001f','4342'+str(int(value)))
+			value = min(64, max(0, int(float(message['command']['value']))))
+			conn.writeCharacteristic('0x001f','4342'+str(value).rjust(2, '0'))
 		conn.disconnect()
 		return
 	
