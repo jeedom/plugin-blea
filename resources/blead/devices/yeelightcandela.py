@@ -26,7 +26,6 @@ class YeelightCandela():
 		logging.debug('action for yeelight_candela received')
 		type =''
 		mac = message['device']['id']
-		value = message['command']['value']
 		if 'type' in message['command']:
 			type = message['command']['type']
 		if mac in globals.KEEPED_CONNECTION:
