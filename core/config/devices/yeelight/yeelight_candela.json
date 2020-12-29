@@ -9,7 +9,7 @@
 			"canbelocked" : 1
 		},
 		"commands": [
-			{	
+			{
 				"name": "On",
 				"type": "action",
 				"subtype": "other",
@@ -20,7 +20,7 @@
 					"icon": "<i class=\"icon jeedom2-light-bulb2\"><\/i>"
 				}
 			},
-			{	
+			{
 				"name": "Off",
 				"type": "action",
 				"subtype": "other",
@@ -30,14 +30,6 @@
 				"display": {
 					"icon": "<i class=\"icon jeedom2-light-bulb7\"><\/i>"
 				}
-			},
-			{	
-				"name": "Pair",
-				"type": "action",
-				"subtype": "other",
-				"isVisible": 0,
-				"unite": "",
-				"logicalId": "name:yeelight_candela,type:pair"
 			},
 			{
 				"name": "Luminosité",

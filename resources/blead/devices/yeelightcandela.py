@@ -30,19 +30,18 @@ class YeelightCandela():
 			type = message['command']['type']
 		if mac in globals.KEEPED_CONNECTION:
 			logging.debug('Already a connection for ' + mac + ' use it')
-			conn = globals.KEEPED_CONNECTION[mac]
+			conn = globals.KEEPED_CONNECTION[mac.upper()]
 		else:
 			logging.debug('Creating a new connection for ' + mac)
 			conn = Connector(mac)
-			globals.KEEPED_CONNECTION[mac]=conn
-			conn.connect()
 		if not conn.isconnected:
 			conn.connect()
-			if not conn.isconnected:
+			if conn.isconnected:
+				if conn.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[conn.mac.upper()]['islocked'] == 1:
+					# Pair
+					conn.writeCharacteristic('0x001f','4367'+self.key)
+			else:
 				return
-		if type == 'pair':
-			conn.writeCharacteristic('0x001f','4367'+self.key)
-			time.sleep(5)
 		if type == 'on':
 			conn.writeCharacteristic('0x001f','434001')
 		if type == 'off':
