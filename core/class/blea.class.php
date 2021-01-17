@@ -368,7 +368,7 @@ class blea extends eqLogic {
 		$value = json_encode($value);
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 		if ($socket) {
-			if (socket_connect($socket, $ip, config::byKey('socketport', 'blea'))) {
+			if (@socket_connect($socket, $ip, config::byKey('socketport', 'blea'))) {
 				socket_write($socket, $value, strlen($value));
 				socket_close($socket);
 			}
