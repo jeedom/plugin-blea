@@ -1247,7 +1247,7 @@ class blea_remote {
 		$port = $this->getConfiguration('remotePort');
 		$user = $this->getConfiguration('remoteUser');
 		$pass = $this->getConfiguration('remotePassword');
-		if (!$connection = ssh2_connect($ip, $port)) {
+		if (!$connection = @ssh2_connect($ip, $port)) {
 			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
 				return false;
 		} else {
@@ -1326,7 +1326,7 @@ class blea_remote {
 		$port = $this->getConfiguration('remotePort');
 		$user = $this->getConfiguration('remoteUser');
 		$pass = $this->getConfiguration('remotePassword');
-		if (!$connection = ssh2_connect($ip, $port)) {
+		if (!$connection = @ssh2_connect($ip, $port)) {
 			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
 				return false;
 		} else {
