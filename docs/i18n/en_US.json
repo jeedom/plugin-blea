@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Changelog Bluetooth Advertisement",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text",
+        "06\/04\/2021": "04\/06\/2021",
+        "Suppression du check de la version de bluepy": "Removed bluepy version check",
         "20\/11\/2020": "20\/11\/2020",
         "Optimisations générales": "General optimizations",
         "Nouvelle présentation de la liste des objets": "New presentation of the list of objects",

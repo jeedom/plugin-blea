@@ -4,6 +4,10 @@
 >
 >Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt
 
+# 04/06/2021
+
+- Bluepy-Versionsprüfung entfernt
+
 # 20/11/2020
 
 - Allgemeine Optimierungen

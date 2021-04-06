@@ -4,6 +4,10 @@
 >
 >Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto
 
+# 06/04/2021
+
+- Verificação da versão bluepy removida
+
 # 20/11/2020
 
 - Otimizações gerais
