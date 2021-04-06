@@ -2,6 +2,10 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Changelog Bluetooth Werbung",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Zur Erinnerung: Wenn keine Informationen zum Update vorhanden sind, bedeutet dies, dass es sich nur um die Aktualisierung von Dokumentation, Übersetzung oder Text handelt",
+        "20\/11\/2020": "20\/11\/2020",
+        "Optimisations générales": "Allgemeine Optimierungen",
+        "Nouvelle présentation de la liste des objets": "Neue Darstellung der Objektliste",
+        "Ajout du tag \"Compatibilité V4": "Hinzufügung des Tags \"V4-Kompatibilität",
         "30\/08\/2019": "30.08.2019",
         "Rajout d'une gestion d'exception": "Hinzufügung eines außergewöhnlichen Managements",
         "22\/08\/2019": "22.08.2019",
@@ -181,6 +185,7 @@
         "activez la gestion automatique du démon en cliquant sur le bouton correspondant": "Aktivieren Sie die automatische Verwaltung des Dämons, indem Sie auf die entsprechende Schaltfläche klicken",
         "Cela fera en sorte que le plugin tentera de relancer automatiquement le démon distant en cas de perte de connexion (pratique si votre pi distant a été temporairement débranché du secteur ou qu'il a été redémarré suite à des mises à jours": "Dies führt dazu, dass das Plugin bei einem Verbindungsverlust automatisch versucht, den Remote-Daemon neu zu starten (nützlich, wenn Ihr Remote-Pi vorübergehend vom Stromnetz getrennt oder nach Aktualisierungen neu gestartet wurde",
         "Liste des équipements compatibles": "Liste der kompatiblen Geräte",
+        "Certains équipements comme le lywsd03 nécessitent d'être ajouté a mihome au moins une fois avant d'être actif": "Einige Geräte wie das lywsd03 müssen mindestens einmal zu mihome hinzugefügt werden, bevor sie aktiv sind",
         "Vous pouvez trouver": "Sie können finden",
         "la liste des équipements compatibles": "die Liste der kompatiblen Geräte",
         " Tip.": " Spitze.",
