@@ -25,7 +25,7 @@ sudo pip3 install bluepy
 echo 60 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
-sudo git clone https://github.com/sarakha63/bluepy.git
+sudo git clone https://github.com/IanHarvey/bluepy.git
 cd /tmp/bluepy
 sudo python3 setup.py build
 sudo python3 setup.py install
