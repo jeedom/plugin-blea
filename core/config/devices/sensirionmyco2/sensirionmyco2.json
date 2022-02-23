@@ -1,0 +1,93 @@
+{
+    "sensirionmyco2": {
+        "name": "Sensirion SCD4x CO2 Gadget",
+        "groupe": "Capteurs",
+        "configuration": {
+            "name": "sensirionmyco2",
+            "needsrefresh": 0
+        },
+        "commands": [
+            {
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
+                    "generic_type": "TEMPERATURE"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temperature",
+                "template": {
+                    "dashboard": "line",
+                    "mobile": "line"
+                }
+            },
+            {
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fas fa-tint\"><\/i>",
+                    "generic_type": "HUMIDITY"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "minValue": "0",
+                "maxValue": "100",
+                "logicalId": "moisture",
+                "template": {
+                    "dashboard": "line",
+                    "mobile": "line"
+                }
+            },
+            {
+                "name": "CO2",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fas fa-leaf\"><\/i>",
+                    "generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "ppm",
+                "minValue": "0",
+                "maxValue": "4000",
+                "logicalId": "co2",
+                "template": {
+                    "dashboard": "line",
+                    "mobile": "line"
+                }
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "icon": "<i class=\"fas fa-sync\"><\/i>",
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+        "compatibility": [
+            {
+                "manufacturer": "Sensirion",
+                "name": "SCD4x CO2 Gadget",
+                "doc": "",
+                "type": "Capteurs",
+                "ref": "",
+                "comlink": "",
+                "remark": "Capteurs CO2",
+                "inclusion": "",
+                "imglink": "sensirionmyco2"
+            }
+        ]
+    }
+}
