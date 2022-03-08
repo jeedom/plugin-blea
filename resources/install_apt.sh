@@ -39,7 +39,9 @@ sudo hciconfig hci2 up >/dev/null 2>&1
 sudo rm -R /tmp/bluepy
 cd /tmp
 echo 85 > ${PROGRESS_FILE}
-sudo pip3 install cryptography
+sudo apt-get remove -y python3-cryptography
+sudo pip3 uninstall -y cryptography
+sudo pip3 install cryptography==2.6.1
 echo 90 > ${PROGRESS_FILE}
 sudo pip3 install pycrypto
 echo 100 > ${PROGRESS_FILE}
