@@ -82,6 +82,11 @@
 	}
 });
 
+$("#bt_addVirtualInfo").on('click', function (event) {
+  addCmdToTable({type: 'info'});
+  modifyWithoutSave = true;
+});
+
  $('#bt_healthblea').on('click', function () {
     $('#md_modal').dialog({title: "{{Santé BLEA}}"});
     $('#md_modal').load('index.php?v=d&plugin=blea&modal=health').dialog('open');
