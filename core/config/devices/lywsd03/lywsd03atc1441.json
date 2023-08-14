@@ -1,0 +1,93 @@
+{
+    "lywsd03atc1441": {
+        "name": "Xiaomi Lywsd03 atc1441",
+        "groupe" : "Température",
+		"configuration" : {
+			"needsrefresh" : 0,
+			"name" : "lywsd03atc1441",
+			"battery_type" : "1x3V CR2032",
+			"xiaomi" : 1,
+			"delay" : 900,
+			"cancontrol" : 0
+		},
+        "commands": [
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°C",
+                "logicalId": "temperature",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fas fa-tint\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "moisture",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Xiaomi",
+                "name": "Température Humidité",
+				"doc": "",
+				"type": "Capteurs",
+				"battery_type": "1x3V CR2032",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Capteurs de Température Humidité avec écran (Lywsd03)",
+				"inclusion" : "Mode inclusion, le module doit avoir été flashé avec le framework atc1441 ATC_MiThermometer pour fonctionner.",
+				"imglink": "xiaomiht"
+            }
+        ]
+    }
+}
