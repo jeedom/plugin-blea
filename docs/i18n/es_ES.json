@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Anuncio de registro de cambios de Bluetooth",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto",
+        "29\/06\/2024": "29\/06\/2024",
+        "Correction d'un bug sur la fonction d'execption ajax": "Se corrigió un error en la función de excepción ajax",
         "06\/04\/2021": "06\/04\/2021",
         "Suppression du check de la version de bluepy": "Se eliminó la verificación de la versión bluepy",
         "20\/11\/2020": "20\/11\/2020",
