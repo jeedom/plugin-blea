@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Anuncio de registro de cambios de Bluetooth",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como recordatorio si no hay información sobre la actualización, significa que solo se refiere a la actualización de documentación, traducción o texto",
+        "02\/09\/2024": "09\/02\/2024",
+        "Ajout d'un redemarrage du demon la nuit (pour limiter les soucis mémoire": "Se agregó un reinicio del demonio por la noche (para limitar los problemas de memoria)",
         "29\/06\/2024": "29\/06\/2024",
         "Correction d'un bug sur la fonction d'execption ajax": "Se corrigió un error en la función de excepción ajax",
         "06\/04\/2021": "06\/04\/2021",
