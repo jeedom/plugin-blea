@@ -52,7 +52,7 @@
     },
     "plugins\/blea\/desktop\/modal\/blea.dotti.all.php": {
         "Annuler": "Cancelar",
-        "Continuer": "Seguir",
+        "Continuer": "Continuar",
         "Votre Collection": "Su colección"
     },
     "plugins\/blea\/desktop\/modal\/health.php": {
@@ -89,7 +89,7 @@
         "Afficher sur le Divoom": "Ver en Divoom",
         "Votre Collection": "Su colección",
         "Annuler": "Cancelar",
-        "Continuer": "Seguir"
+        "Continuer": "Continuar"
     },
     "plugins\/blea\/desktop\/modal\/blea.dotti.php": {
         "L\\'id de l\\'équipement ne peut etre vide : ": "La identificación del equipo no puede estar vacía:",
@@ -131,13 +131,13 @@
         "Afficher sur le Divoom": "Ver en Divoom",
         "Votre Collection": "Su colección",
         "Annuler": "Cancelar",
-        "Continuer": "Seguir"
+        "Continuer": "Continuar"
     },
     "plugins\/blea\/desktop\/modal\/blea.divoomtimeboxmini.all.php": {
         "Fichier(s) ajouté(s) avec succès": "Archivo(s) añadido(s) con éxito",
         "Votre Collection": "Su colección",
         "Annuler": "Cancelar",
-        "Continuer": "Seguir"
+        "Continuer": "Continuar"
     },
     "plugins\/blea\/desktop\/modal\/syncconf.blea.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
@@ -171,7 +171,7 @@
         "Nom de l'antenne": "Nombre de la antena",
         "Ip": "IP",
         "Port": "Puerto",
-        "User": "Desgaste",
+        "User": "Usuario",
         "Password": "Contraseña",
         "Device": "Device",
         "ex : hci0": "ex : hci0",
@@ -212,7 +212,7 @@
         "Fichier(s) ajouté(s) avec succès": "Archivo(s) añadido(s) con éxito",
         "Votre Collection": "Su colección",
         "Annuler": "Cancelar",
-        "Continuer": "Seguir"
+        "Continuer": "Continuar"
     },
     "plugins\/blea\/desktop\/php\/blea.php": {
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Estás en modo de escaneo. Haga clic nuevamente en el botón de escaneo para salir de este modo (de lo contrario, el modo permanecerá activo durante un minuto)",

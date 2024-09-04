@@ -11,6 +11,7 @@ sudo apt-get update
 echo 20 > ${PROGRESS_FILE}
 sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev libopenjp2-7 libtiff5 libatlas-base-dev rfkill
 sudo apt-get install -y python3 bluez python3-pip --reinstall
+sudo pip3 install wheel
 sudo pip3 install -U setuptools
 echo 40 > ${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
@@ -25,7 +26,7 @@ sudo pip3 install bluepy
 echo 60 > ${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
-sudo git clone https://github.com/sarakha63/bluepy.git
+sudo git clone https://github.com/IanHarvey/bluepy.git
 cd /tmp/bluepy
 sudo python3 setup.py build
 sudo python3 setup.py install
@@ -39,7 +40,9 @@ sudo hciconfig hci2 up >/dev/null 2>&1
 sudo rm -R /tmp/bluepy
 cd /tmp
 echo 85 > ${PROGRESS_FILE}
-sudo pip3 install cryptography
+sudo apt-get remove -y python3-cryptography
+sudo pip3 uninstall -y cryptography
+sudo pip3 install cryptography==2.6.1
 echo 90 > ${PROGRESS_FILE}
 sudo pip3 install pycrypto
 echo 100 > ${PROGRESS_FILE}

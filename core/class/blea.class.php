@@ -22,6 +22,12 @@ class blea extends eqLogic {
 	public static $_widgetPossibility = array('custom' => true);
 	public static $_version = '2.9';
 	public static $_bluepy_version = '1.1.4';
+
+	public static function cronDaily(){
+		self::deamon_stop();
+		self::deamon_start();
+	}
+
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
