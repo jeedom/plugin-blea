@@ -1,0 +1,196 @@
+# coding: utf-8
+from bluepy import btle
+import time
+import logging
+import globals
+import struct
+#from multiconnect import Connector  #use a custom Connector
+#from notification import Notification #use a custom Notification
+import threading
+
+class Connector():
+    def __init__(self,mac):
+        self.name = 'connector'
+        self.mac = mac
+        self.conn = ''
+        self.isconnected = False
+
+    def connect(self,retry=3,type='public'):
+        logging.debug('CONNECTOR------Connecting : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE))
+        i=0
+        timeout = time.time() + 15
+        while time.time()<timeout:
+            i = i + 1
+            try:
+                globals.PENDING_ACTION = True
+                globals.PENDING_TIME = int(time.time())
+                if type == 'public':
+                    connection = btle.Peripheral(self.mac,iface=globals.IFACE_DEVICE)
+                    self.isconnected = True
+                    break
+                else:
+                    connection = btle.Peripheral(self.mac,addrType = btle.ADDR_TYPE_RANDOM,iface=globals.IFACE_DEVICE)
+                    self.isconnected = True
+                    break
+            except Exception as e:
+                logging.debug('CONNECTOR------'+str(e) + ' attempt ' + str(i) )
+                if i >= retry:
+                    self.isconnected = False
+                    if self.mac in globals.KEEPED_CONNECTION:
+                        del globals.KEEPED_CONNECTION[self.mac]
+                    logging.debug('CONNECTOR------Issue connecting to : '+str(self.mac) + ' with bluetooth ' + str(globals.IFACE_DEVICE) + ' the device is busy or too far')
+                    globals.PENDING_ACTION = False
+                    globals.PENDING_TIME = int(time.time())
+                    return
+                time.sleep(1)
+        if self.isconnected:
+            self.conn = connection
+            globals.PENDING_ACTION = False
+            globals.PENDING_TIME = int(time.time())
+            logging.debug('CONNECTOR------Connected... ' + str(self.mac))
+        return
+
+    def disconnect(self,force=False):
+        globals.PENDING_ACTION = False
+        globals.PENDING_TIME = int(time.time())
+        if self.mac.upper() in globals.KNOWN_DEVICES and globals.KNOWN_DEVICES[self.mac.upper()]['islocked'] == 1 and globals.KNOWN_DEVICES[self.mac.upper()]['emitterallowed'] in [globals.daemonname,'all'] and force==False:
+            logging.debug('CONNECTOR------Not Disconnecting I\'m configured to keep connection with this device... ' + str(self.mac))
+            globals.KEEPED_CONNECTION[self.mac]=self
+            return
+        logging.debug('CONNECTOR------Disconnecting... ' + str(self.mac))
+        i=0
+        while True:
+            i = i + 1
+            try:
+                self.conn.disconnect()
+                break
+            except Exception as e:
+                if 'str' in str(e) and 'has no attribute' in str(e):
+                    logging.debug('CONNECTOR------'+str(e))
+                    self.isconnected = False
+                    if self.mac in globals.KEEPED_CONNECTION:
+                        del globals.KEEPED_CONNECTION[self.mac]
+                    return
+                logging.debug('CONNECTOR------'+str(e) + ' attempt ' + str(i) )
+                if i >= 2:
+                    self.isconnected = False
+                    if self.mac in globals.KEEPED_CONNECTION:
+                        del globals.KEEPED_CONNECTION[self.mac]
+                    return
+        if self.mac in globals.KEEPED_CONNECTION:
+            del globals.KEEPED_CONNECTION[self.mac]
+        self.isconnected = False
+        logging.debug('CONNECTOR------Disconnected...'+ str(self.mac))
+
+    def writeCharacteristic(self):
+        logging.debug('CONNECTOR------Writing Characteristic... ' + str(self.mac))
+        self.conn.writeCharacteristic(0x0038, b'\x01\x00', response=True) # enable notifications of Temperature, Humidity and Battery voltage
+        self.conn.writeCharacteristic(0x0046, b'\xf4\x01\x00', response=True)
+        logging.debug('CONNECTOR------Characteristic written... ' + str(self.mac))
+        return True
+
+class Notification():
+    def __init__(self,mac,conn,classname,action={}):
+        self.mac = mac # = self.conn.mac
+        self.name = 'notification'
+        self.conn = conn
+        self.classname = classname
+        self.action = action
+
+    def subscribe(self,timer=0,disconnect=True):
+        try:
+            logging.debug('Subscribing to notification : '+str(self.mac))
+            delegate = NotificationDelegate(self.mac,self.conn,self.classname,self.action)
+            self.conn.conn.setDelegate(delegate)
+            logging.debug('Delegated')
+            threading.Thread( target=self.waiter, args=(timer,disconnect,)).start()
+        except Exception as e:
+            logging.debug(str(e))
+            self.conn.disconnect(True)
+
+    def waiter(self,timer=0,disconnect=True):
+        try:
+            if timer!=0:
+                logging.debug('Subscribing for ' +str(timer) + 's')
+                timeout = time.time() + timer
+                while time.time()<timeout:
+                    self.conn.conn.waitForNotifications(0.5)
+                    time.sleep(0.03)
+                self.conn.disconnect()
+            else:
+                while True:
+                    self.conn.conn.waitForNotifications(0.5)
+                    time.sleep(0.03)
+        except Exception as e:
+            self.conn.disconnect(True)
+            logging.debug(str(e))
+
+class NotificationDelegate(btle.DefaultDelegate):
+    def __init__(self,mac,conn,classname,action={}):
+        btle.DefaultDelegate.__init__(self)
+        self.mac = mac # = self.conn.mac
+        self.conn = conn
+        self.classname = classname
+        self.action = action
+
+    def handleNotification(self, cHandle, data):
+        logging.debug('Received Notification for ' + (self.mac) + ' ' + self.classname().name +' (LYWSD03) ' )
+        print('Print Received Notification for ' + (self.mac) + ' ' + self.classname().name +' (LYWSD03) ' )
+        result={}
+        temp=int.from_bytes(data[0:2],byteorder='little',signed=True)/100
+        logging.debug('LYWSD03 Temperature: ' + str(temp))  #check where it can be seen
+        humidity=int.from_bytes(data[2:3],byteorder='little')
+        logging.debug('LYWSD03 Humidity: ' + str(humidity)) #check where it can be seen
+        voltage=int.from_bytes(data[3:5],byteorder='little') / 1000.
+        logging.debug('LYWSD03 Battery voltage: ',voltage) #check where it can be seen
+        batteryLevel = min(int(round((voltage - 2.1),2) * 100), 100) #3.1 or above --> 100% 2.1 --> 0 %
+        logging.debug('LYWSD03 Battery level: ',batteryLevel) #check where it can be seen
+        result['moisture'] = humidity
+        result['temperature'] = temp
+        result['battery'] = batteryLevel
+        result['id'] = self.mac
+        result['source'] = globals.daemonname
+        self.classname().handlenotification(self.mac,result)
+
+class Lywsd03():
+    def __init__(self):
+        self.name = 'lywsd03'
+        self.ignoreRepeat = False
+
+    def isvalid(self, name, manuf='', data='', mac=''):
+        if name.lower() in [self.name]:
+            return True
+        if data.lower().startswith("95fe") and (mac.lower().startswith("a4:c1:38")):
+            # broadcasted advertising data
+            return True
+
+    def parse(self, data, mac, name, manuf):
+        # no need to parse see NotificationDelegate class, handleNotification function
+        action={}
+        logging.debug('LYWSD03 parse ' + str(data))
+        return action
+
+    def read(self, mac):
+        result={}
+        try:
+            conn = Connector(mac)
+            conn.connect()
+            if not conn.isconnected:
+                conn.connect()
+                if not conn.isconnected:
+                    return
+            notification = Notification(mac,conn,Lywsd03)
+            notification.subscribe(20)
+            result['id'] = mac
+            logging.debug('LYWSD03 READ------'+str(result))
+            return result
+        except Exception as e:
+            logging.error(str(e))
+        return result
+
+    def handlenotification(self, mac, result={}):
+        logging.debug('LYWSD03 handlenotification mac:' + mac + ' result:'+str(result))
+        globals.JEEDOM_COM.add_changes('devices::'+mac,result)
+
+
+globals.COMPATIBILITY.append(Lywsd03)
