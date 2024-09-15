@@ -7,6 +7,8 @@ import struct
 from multiconnect import Connector
 from notification import Notification
 
+UUID_BATTERY = 'EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6'
+
 class Lywsd02():
 	def __init__(self):
 		self.name = 'lywsd02'
@@ -31,7 +33,7 @@ class Lywsd02():
 			if val_type in ['04']:	 # type: temperature
 				t_data = val_data[2:4] + val_data[0:2]
 				temp = int(t_data,16)/10.0
-				logging.debug('Lywsd02------ Advertising Data=> Temp' + str(temp))
+				logging.debug('Lywsd02------ Advertising Data=> Temp: ' + str(temp))
 				action['temperature'] = temp
 			elif val_type in ['06']: # type: moisture
 				h_data = val_data[2:4] + val_data[0:2]
@@ -63,16 +65,16 @@ class Lywsd02():
 				if not conn.isconnected:
 					return
 			Firm = bytearray(conn.readCharacteristic('0x24'))
-			batt = bytearray(conn.readCharacteristic('0x18'))
-			battery = batt[0]
+			ch = conn.conn.getCharacteristics(uuid=UUID_BATTERY)[0]
+			battery = ord(ch.read())
 			firmware = "".join(map(chr, Firm))
-			notification = Notification(conn,XiaomiHT)
+			notification = Notification(conn,Lywsd02)
 			conn.writeCharacteristic('0x10','0100',response=True)
 			notification.subscribe(2)
 			result['battery'] = battery
 			result['firmware'] = firmware
 			result['id'] = mac
-			logging.debug('XIAOMIHT------'+str(result))
+			logging.debug('Lywsd02------ Result: '+str(result))
 			return result
 		except Exception as e:
 			logging.error(str(e))
