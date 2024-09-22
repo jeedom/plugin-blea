@@ -2,6 +2,8 @@
     "changelog.md": {
         "Changelog Bluetooth Advertisement": "Changelog Bluetooth Anúncio",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "Como lembrete, se não houver informações sobre a atualização, isso significa que se trata apenas da atualização da documentação, tradução ou texto",
+        "22\/09\/2024": "22\/09\/2024",
+        "Correction d'un soucis lors du redemarrage du démon la nuit qui pouvait ne pas toujours redemarrer correctement": "Corrigido um problema ao reiniciar o daemon à noite, que nem sempre reiniciava corretamente",
         "02\/09\/2024": "09\/02\/2024",
         "Ajout d'un redemarrage du demon la nuit (pour limiter les soucis mémoire": "Adicionado um reinício do daemon à noite (para limitar problemas de memória",
         "29\/06\/2024": "29\/06\/2024",
