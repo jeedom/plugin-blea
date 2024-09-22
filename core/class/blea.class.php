@@ -25,6 +25,7 @@ class blea extends eqLogic {
 
 	public static function cronDaily(){
 		self::deamon_stop();
+		sleep(60);
 		self::deamon_start();
 	}
 
