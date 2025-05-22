@@ -245,7 +245,7 @@
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "Antenna that will take the info, be careful not to put on button type devices to avoid repeating the info (unless this is what you want). However presence and rssi will be systematically taken into account by all the antennas",
         "Antenne de réception": "Reception antenna",
         "Local": "Local",
-        "Remote : ' . $remote->getRemoteName() .": "Remote: '. $ remote-> getRemoteName ()",
+        "Remote : ' . $remote->getRemoteName() . ": "Remote: '. $ remote-> getRemoteName ()",
         "Tous": "All",
         "Utile pour savoir quelle antenne contrôlera l'équipement. Choisir Tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes": "Useful for knowing which antenna will control the equipment. Choosing All will have the consequence of potentially triggering the action as many times as there are antennas",
         "Antenne d'émission": "Transmitting antenna",
@@ -298,8 +298,8 @@
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "No equipment found for:",
-        "Rssi '. $datas['source']": "Rssi '. $ datas ['source']",
-        "Present '. $datas['source']": "Present '. $ datas ['source']"
+        "Rssi ' . $datas['source']": "Rssi ' . $datas['source']",
+        "Present ' . $datas['source']": "Present ' . $datas['source']"
     },
     "plugins\/blea\/core\/config\/devices\/miscale\/class\/miscale.class.php": {
         "Poids ' . $user['name']": "Weight '. $ user ['name']",
@@ -352,7 +352,7 @@
     "plugins\/blea\/core\/class\/blea.class.php": {
         "Nouveau module detecté ' . $_def['type']": "New module detected '. $ _def ['type']",
         "Information manquante pour ajouter l\\'équipement. Inclusion impossible": "Missing information to add equipment. Impossible to include",
-        "Module inclu avec succès ' .$_def['name'].' ' . $_def['id']": "Module successfully included '. $ _ Def [' name '].' '. $ _def ['id']",
+        "Module inclu avec succès ' . $_def['name'] . ' ' . $_def['id']": "Module inclu avec succès ' . $_def['name'] . ' ' . $_def['id']",
         "Nombre d\\'antennes": "Number of antennas",
         "Vérifier le démon sur votre antenne": "Check the daemon on your antenna",
         "Démon ' . $name": "Devil ' . $Name",

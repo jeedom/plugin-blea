@@ -245,7 +245,7 @@
         "Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.": "Antena que tomará la información, tenga cuidado de no poner dispositivos tipo botón para evitar repetir la información (a menos que esto sea lo que desea). Sin embargo, todas las antenas tendrán en cuenta sistemáticamente la presencia y el rssi",
         "Antenne de réception": "Antena de recepcion",
         "Local": "Local",
-        "Remote : ' . $remote->getRemoteName() .": "Remoto: '. $ remote-> getRemoteName ()",
+        "Remote : ' . $remote->getRemoteName() . ": "Remoto: '. $ remote-> getRemoteName ()",
         "Tous": "Todos",
         "Utile pour savoir quelle antenne contrôlera l'équipement. Choisir Tous aura la conséquence de déclencher potentiellement l'action autant de fois qu'il y a d'antennes": "Útil para saber qué antena controlará el equipo. Elegir Todos tendrá la consecuencia de desencadenar la acción tantas veces como haya antenas",
         "Antenne d'émission": "Antena transmisora",
@@ -298,8 +298,8 @@
     },
     "plugins\/blea\/core\/php\/jeeBlea.php": {
         "Aucun équipement trouvé pour : ": "No se encontraron equipos para:",
-        "Rssi '. $datas['source']": "Rssi '. $ datas ['fuente']",
-        "Present '. $datas['source']": "Presente '. $ datas ['fuente']"
+        "Rssi ' . $datas['source']": "Rssi ' . $datas['source']",
+        "Present ' . $datas['source']": "Present ' . $datas['source']"
     },
     "plugins\/blea\/core\/config\/devices\/miscale\/class\/miscale.class.php": {
         "Poids ' . $user['name']": "Peso '. $ usuario ['nombre']",
@@ -352,7 +352,7 @@
     "plugins\/blea\/core\/class\/blea.class.php": {
         "Nouveau module detecté ' . $_def['type']": "Nuevo módulo detectado '. $ _def ['tipo']",
         "Information manquante pour ajouter l\\'équipement. Inclusion impossible": "Falta información para agregar equipo. Imposible incluir",
-        "Module inclu avec succès ' .$_def['name'].' ' . $_def['id']": "El módulo incluyó correctamente '. $ _ Def [' nombre '].' '. $ _def ['id']",
+        "Module inclu avec succès ' . $_def['name'] . ' ' . $_def['id']": "Module inclu avec succès ' . $_def['name'] . ' ' . $_def['id']",
         "Nombre d\\'antennes": "Numero de antenas",
         "Vérifier le démon sur votre antenne": "Comprueba el demonio en tu antena",
         "Démon ' . $name": "Demonio $ nombre",
