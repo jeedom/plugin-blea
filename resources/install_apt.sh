@@ -3,27 +3,26 @@ if [ ! -z $1 ]; then
 	PROGRESS_FILE=$1
 fi
 touch ${PROGRESS_FILE}
-echo 0 > ${PROGRESS_FILE}
+echo 0 >${PROGRESS_FILE}
 echo "********************************************************"
 echo "*			 Installation des dépendances			 *"
 echo "********************************************************"
 sudo apt-get update
-echo 20 > ${PROGRESS_FILE}
-sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial python3-pyudev bluetooth libffi-dev libssl-dev libbluetooth-dev libopenjp2-7 libtiff5 libatlas-base-dev rfkill
+echo 20 >${PROGRESS_FILE}
+sudo apt-get install -y python3-dev build-essential python3-requests python3-setuptools python3-serial bluetooth libffi-dev libssl-dev libbluetooth-dev libopenjp2-7 libtiff5 libatlas-base-dev rfkill
 sudo apt-get install -y python3 bluez python3-pip --reinstall
 sudo pip3 install wheel
 sudo pip3 install -U setuptools
-echo 40 > ${PROGRESS_FILE}
+echo 40 >${PROGRESS_FILE}
 sudo apt-get install -y libglib2.0-dev git
-echo 50 > ${PROGRESS_FILE}
-sudo pip3 install pyudev
+echo 50 >${PROGRESS_FILE}
 sudo pip3 install pyserial
 sudo pip3 install requests
 sudo pip3 install pybluez
 sudo pip3 install pillow
 sudo pip3 install numpy
 sudo pip3 install bluepy
-echo 60 > ${PROGRESS_FILE}
+echo 60 >${PROGRESS_FILE}
 cd /tmp
 sudo rm -R /tmp/bluepy >/dev/null 2>&1
 sudo git clone https://github.com/IanHarvey/bluepy.git
@@ -39,13 +38,13 @@ sudo hciconfig hci1 up >/dev/null 2>&1
 sudo hciconfig hci2 up >/dev/null 2>&1
 sudo rm -R /tmp/bluepy
 cd /tmp
-echo 85 > ${PROGRESS_FILE}
+echo 85 >${PROGRESS_FILE}
 sudo apt-get remove -y python3-cryptography
 sudo pip3 uninstall -y cryptography
 sudo pip3 install cryptography==2.6.1
-echo 90 > ${PROGRESS_FILE}
+echo 90 >${PROGRESS_FILE}
 sudo pip3 install pycrypto
-echo 100 > ${PROGRESS_FILE}
+echo 100 >${PROGRESS_FILE}
 echo "********************************************************"
 echo "*			 Installation terminée					*"
 echo "********************************************************"
