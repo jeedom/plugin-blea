@@ -1,114 +1,114 @@
 <?php
 if (!isConnect('admin')) {
-	throw new Exception('Error 401 Unauthorized');
+    throw new Exception('Error 401 Unauthorized');
 }
 $plugin = plugin::byId('blea');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 function sortByOption($a, $b) {
-	return strcmp($a['name'], $b['name']);
+    return strcmp($a['name'], $b['name']);
 }
 if (config::byKey('include_mode', 'blea', 0) == 1) {
-	echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}</div>';
+    echo '<div class="alert jqAlert alert-warning" id="div_inclusionAlert" style="margin : 0px 5px 15px 15px; padding : 7px 35px 7px 15px;">{{Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)}}</div>';
 } else {
-	echo '<div id="div_inclusionAlert"></div>';
+    echo '<div id="div_inclusionAlert"></div>';
 }
 ?>
 <div class="row row-overflow">
- <div class="col-lg-12 eqLogicThumbnailDisplay">
-   <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
-   <div class="eqLogicThumbnailContainer">
-    <?php
-if (config::byKey('include_mode', 'blea', 0) == 1) {
-	echo '<div class="cursor changeIncludeState include card logoPrimary" data-mode="1" data-state="0" >';
-	echo '<i class="fas fa-spinner fa-pulse"></i>';
-	echo '<br/>';
-	echo '<span>{{Arrêter Scan}}</span>';
-	echo '</div>';
-} else {
-	echo '<div class="cursor changeIncludeState include card logoPrimary " data-mode="1" data-state="1">';
-	echo '<i class="fas fa-bullseye"></i>';
-	echo '<br/>';
-	echo '<span>{{Lancer Scan}}</span>';
-	echo '</div>';
-}
-?>
-   <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
-      <i class="fas fa-wrench"></i>
-	<br/>
-    <span>{{Configuration}}</span>
-  </div>
-  <div class="cursor logoSecondary" id="bt_healthblea">
-      <i class="fas fa-medkit"></i>
-	<br/>
-    <span>{{Santé}}</span>
-  </div>
-  <div class="cursor logoSecondary" id="bt_graphblea">
-	<i class="fas fa-asterisk"></i>
-	<br/>
-	<span>{{Réseau}}</span>
-	</div>
-  <div class="cursor logoSecondary" id="bt_remoteblea">
-	<i class="fab fa-bluetooth"></i>
-	<br/>
-	<span>{{Antennes}}</span>
-	</div>
-</div>
-<legend><i class="fas fa-table"></i>  {{Mes devices Blea Connus}}</legend>
-<div class="input-group" style="margin:5px;">
-		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>
-		<div class="input-group-btn">
-			<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
-		</div>
-	</div>
-<div class="eqLogicThumbnailContainer">
-  <?php
-foreach ($eqLogics as $eqLogic) {
-	if ($eqLogic->getConfiguration('device','') != 'default') {
-		$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-		echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-		$alternateImg = $eqLogic->getConfiguration('iconModel');
-		if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
-			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
-		} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
-			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
-		} else {
-			echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
-		}
-		echo '<br/>';
-		echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-		echo '</div>';
-	}
-}
-?>
-</div>
-<legend><i class="fas fa-table"></i>  {{Mes devices Blea Inconnus}} <i class="deleteUnknown cursor fas fa-trash"></i></legend>
-<div class="eqLogicThumbnailContainer">
-  <?php
-foreach ($eqLogics as $eqLogic) {
-	if ($eqLogic->getConfiguration('device','') == 'default') {
-		$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-		echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-		$alternateImg = $eqLogic->getConfiguration('iconModel');
-		if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
-			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
-		} elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
-			echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
-		} else {
-			echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
-		}
-		echo '<br/>';
-		echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-		echo '</div>';
-	}
-}
-?>
-</div>
-</div>
+    <div class="col-lg-12 eqLogicThumbnailDisplay">
+        <legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
+        <div class="eqLogicThumbnailContainer">
+            <?php
+            if (config::byKey('include_mode', 'blea', 0) == 1) {
+                echo '<div class="cursor changeIncludeState include card logoPrimary" data-mode="1" data-state="0" >';
+                echo '<i class="fas fa-spinner fa-pulse"></i>';
+                echo '<br/>';
+                echo '<span>{{Arrêter Scan}}</span>';
+                echo '</div>';
+            } else {
+                echo '<div class="cursor changeIncludeState include card logoPrimary " data-mode="1" data-state="1">';
+                echo '<i class="fas fa-bullseye"></i>';
+                echo '<br/>';
+                echo '<span>{{Lancer Scan}}</span>';
+                echo '</div>';
+            }
+            ?>
+            <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+                <i class="fas fa-wrench"></i>
+                <br />
+                <span>{{Configuration}}</span>
+            </div>
+            <div class="cursor logoSecondary" id="bt_healthblea">
+                <i class="fas fa-medkit"></i>
+                <br />
+                <span>{{Santé}}</span>
+            </div>
+            <div class="cursor logoSecondary" id="bt_graphblea">
+                <i class="fas fa-asterisk"></i>
+                <br />
+                <span>{{Réseau}}</span>
+            </div>
+            <div class="cursor logoSecondary" id="bt_remoteblea">
+                <i class="fab fa-bluetooth"></i>
+                <br />
+                <span>{{Antennes}}</span>
+            </div>
+        </div>
+        <legend><i class="fas fa-table"></i> {{Mes devices Blea Connus}}</legend>
+        <div class="input-group" style="margin:5px;">
+            <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+            <div class="input-group-btn">
+                <a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+        <div class="eqLogicThumbnailContainer">
+            <?php
+            foreach ($eqLogics as $eqLogic) {
+                if ($eqLogic->getConfiguration('device', '') != 'default') {
+                    $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                    echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+                    $alternateImg = $eqLogic->getConfiguration('iconModel');
+                    if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
+                        echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
+                    } elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+                        echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
+                    } else {
+                        echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    }
+                    echo '<br/>';
+                    echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                    echo '</div>';
+                }
+            }
+            ?>
+        </div>
+        <legend><i class="fas fa-table"></i> {{Mes devices Blea Inconnus}} <i class="deleteUnknown cursor fas fa-trash"></i></legend>
+        <div class="eqLogicThumbnailContainer">
+            <?php
+            foreach ($eqLogics as $eqLogic) {
+                if ($eqLogic->getConfiguration('device', '') == 'default') {
+                    $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                    echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+                    $alternateImg = $eqLogic->getConfiguration('iconModel');
+                    if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $alternateImg . '.jpg')) {
+                        echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg"/>';
+                    } elseif (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
+                        echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg"/>';
+                    } else {
+                        echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+                    }
+                    echo '<br/>';
+                    echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                    echo '</div>';
+                }
+            }
+            ?>
+        </div>
+    </div>
     <div class="col-lg-12 eqLogic" style="display: none;">
         <div class="input-group pull-right" style="display:inline-flex">
             <span class="input-group-btn">
-                <a class="btn btn-danger btn-sm roundedLeft" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-warning btn-sm specificmodal" id="bt_specificmodal" style="display:none"><i class="fas fa-cogs"></i> {{Configuration spécifique}}</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+                <a class="btn btn-danger btn-sm roundedLeft" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i> {{Recréer les commandes}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-warning btn-sm specificmodal" id="bt_specificmodal" style="display:none"><i class="fas fa-cogs"></i> {{Configuration spécifique}}</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
             </span>
         </div>
         <ul class="nav nav-tabs" role="tablist">
@@ -119,7 +119,7 @@ foreach ($eqLogics as $eqLogic) {
         </ul>
         <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
             <div role="tabpanel" class="tab-pane active" id="eqlogictab">
-                <br/>
+                <br />
                 <div class="row">
                     <div class="col-lg-7">
                         <form class="form-horizontal">
@@ -128,7 +128,7 @@ foreach ($eqLogics as $eqLogic) {
                                     <label class="col-sm-3 control-label">{{Nom du device}}</label>
                                     <div class="col-sm-7">
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-                                        <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA"/>
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="Nom de l'équipement BLEA" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -136,13 +136,13 @@ foreach ($eqLogics as $eqLogic) {
                                     <div class="col-sm-7">
                                         <select class="eqLogicAttr form-control" data-l1key="object_id">
                                             <option value="">Aucun</option>
-                                           <?php
-											$options = '';
-											foreach ((jeeObject::buildTree(null, false)) as $object) {
-											$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
-											}
-											echo $options;
-											?>
+                                            <?php
+                                            $options = '';
+                                            foreach ((jeeObject::buildTree(null, false)) as $object) {
+                                                $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
+                                            }
+                                            echo $options;
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -161,15 +161,15 @@ foreach ($eqLogics as $eqLogic) {
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"></label>
                                     <div class="col-sm-7">
-                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked />{{Activer}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked />{{Visible}}</label>
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">{{Mac}}</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID"/>
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Logical ID" />
                                     </div>
                                 </div>
                             </fieldset>
@@ -225,11 +225,11 @@ foreach ($eqLogics as $eqLogic) {
                                     </div>
                                 </div>
                                 <center>
-                                    <img src="core/img/no_image.gif" data-original=".jpg" id="img_device" class="img-responsive" style="max-height : 250px;"  onerror="this.src='plugins/openenocean/doc/images/openenocean_icon.png'"/>
+                                    <img src="core/img/no_image.gif" data-original=".jpg" id="img_device" class="img-responsive" style="max-height : 250px;" onerror="this.src='plugins/openenocean/doc/images/openenocean_icon.png'" />
                                 </center>
                             </fieldset>
                         </form>
-                        <br/>
+                        <br />
                         <div class="alert alert-info globalRemark" style="display:none"></div>
                     </div>
                 </div>
@@ -239,24 +239,23 @@ foreach ($eqLogics as $eqLogic) {
                     <div class="col-sm-6">
                         <form class="form-horizontal">
                             <fieldset>
-                                <legend><i class="fab fa-bluetooth"></i>  {{Antennes}}</legend>
+                                <legend><i class="fab fa-bluetooth"></i> {{Antennes}}</legend>
                                 <div class="form-group">
                                     <label class="col-sm-6 control-label help" data-help="{{Antenne qui prendra les infos, attention ne pas mettre sur les devices de type boutons pour éviter la répétition des infos (sauf si c'est ce que vous souhaitez). Cependant presence et rssi sera systematiquement pris en compte par toutes les antennes.}}">{{Antenne de réception}}</label>
                                     <div class="col-sm-4">
                                         <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antennareceive">
                                             <?php
-                                            if (config::byKey('noLocal', 'blea', 0) == 0){
+                                            if (config::byKey('noLocal', 'blea', 0) == 0) {
                                                 echo '<option value="local">{{Local}}</option>';
                                             }
-                                            try{
+                                            try {
                                                 $hasblea = plugin::byId('blea');
                                             } catch (Exception $e) {
-                                                
                                             }
-                                            if ($hasblea != '' && $hasblea->isActive()){
+                                            if ($hasblea != '' && $hasblea->isActive()) {
                                                 $remotes = blea_remote::all();
                                                 foreach ($remotes as $remote) {
-                                                    echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+                                                    echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() . '}}</option>';
                                                 }
                                             }
                                             ?>
@@ -269,18 +268,17 @@ foreach ($eqLogics as $eqLogic) {
                                     <div class="col-sm-4">
                                         <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="antenna">
                                             <?php
-                                            if (config::byKey('noLocal', 'blea', 0) == 0){
+                                            if (config::byKey('noLocal', 'blea', 0) == 0) {
                                                 echo '<option value="local">{{Local}}</option>';
                                             }
-                                            try{
+                                            try {
                                                 $hasblea = plugin::byId('blea');
                                             } catch (Exception $e) {
-                                                
                                             }
-                                            if ($hasblea != '' && $hasblea->isActive()){
+                                            if ($hasblea != '' && $hasblea->isActive()) {
                                                 $remotes = blea_remote::all();
                                                 foreach ($remotes as $remote) {
-                                                    echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() .'}}</option>';
+                                                    echo '<option value="' . $remote->getId() . '">{{Remote : ' . $remote->getRemoteName() . '}}</option>';
                                                 }
                                             }
                                             ?>
@@ -288,18 +286,18 @@ foreach ($eqLogics as $eqLogic) {
                                         </select>
                                     </div>
                                 </div>
-                                <legend><i class="fas fa-sync"></i>  {{Refresh}}</legend>
+                                <legend><i class="fas fa-sync"></i> {{Refresh}}</legend>
                                 <div class="form-group">
                                     <label class="col-sm-6 control-label help" data-help="{{Demandera les infos en forcé. A éviter absolument sauf si nécessaire et si le device le permet}}">{{Refresh Forcé}}</label>
                                     <div class="col-sm-4">
                                         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr canberefreshed" data-l1key="configuration" data-l2key="needsrefresh" /></label>
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="form-group refreshdelay">
                                     <label class="col-sm-6 control-label help" data-help="{{Inutile de mettre des valeurs trop faibles, si les valeurs sont identiques aux précédentes, il n'y aura pas de mise à jour et cela peut engendrer un blocage du scan}}">{{Refresh des infos (en s)}}</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Délai en secondes"/>
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay" placeholder="Délai en secondes" />
                                     </div>
                                 </div>
                                 <div class="form-group canbelocked">
@@ -308,11 +306,11 @@ foreach ($eqLogics as $eqLogic) {
                                         <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="islocked" /></label>
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="form-group">
                                     <label class="col-sm-6 control-label help" data-help="{{Nombre de scans où le device est invisible pour le déclarer non présent sur l'antenne (spécifique au device, sinon la valeur globale du plugin est utilisée}}">{{Nombre de scans}}</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="absent" placeholder="Nombre de scans (3 ou 4 est un bon chiffre)"/>
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="absent" placeholder="Nombre de scans (3 ou 4 est un bon chiffre)" />
                                     </div>
                                 </div>
                             </fieldset>
@@ -322,7 +320,7 @@ foreach ($eqLogics as $eqLogic) {
             </div>
             <div role="tabpanel" class="tab-pane" id="commandtab">
                 <a class="btn btn-default btn-sm pull-right" id="bt_addVirtualInfo" style="margin-top:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une commande}}</a>
-                <br/><br/>
+                <br /><br />
                 <table id="table_cmd" class="table table-bordered table-condensed">
                     <thead>
                         <tr>
@@ -335,7 +333,7 @@ foreach ($eqLogics as $eqLogic) {
                         </tr>
                     </thead>
                     <tbody>
-                    
+
                     </tbody>
                 </table>
             </div>
@@ -343,6 +341,6 @@ foreach ($eqLogics as $eqLogic) {
     </div>
 </div>
 <?php
-    include_file('desktop', 'blea', 'js', 'blea');
-    include_file('core', 'plugin.template', 'js');
+include_file('desktop', 'blea', 'js', 'blea');
+include_file('core', 'plugin.template', 'js');
 ?>
