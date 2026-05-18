@@ -54,22 +54,21 @@ sendVarToJS('id', init('id'));
 	<div class="col-lg-6">
 		<center>
 			<?php
-$i = 1;
-while ($i < 122) {
-	$j = 1;
-	while ($j < 12) {
-		$notfirstline = ' pixelFirstLine';
-		if ($i >= 12){
-			$notfirstline = ' pixelNotFirstLine';
-		}
-		echo '<label class="fas fa-square pixel' . $notfirstline .'" data-pixel="' . $i . '" style="color : #000000;font-size:2em; margin-top:0px;margin-left:6px; cursor: pointer;border-radius:0"></label>  ';
-		$j++;
-		$i++;
-
-	}
-	echo '<br/>';
-}
-?>
+			$i = 1;
+			while ($i < 122) {
+				$j = 1;
+				while ($j < 12) {
+					$notfirstline = ' pixelFirstLine';
+					if ($i >= 12) {
+						$notfirstline = ' pixelNotFirstLine';
+					}
+					echo '<label class="fas fa-square pixel' . $notfirstline . '" data-pixel="' . $i . '" style="color : #000000;font-size:2em; margin-top:0px;margin-left:6px; cursor: pointer;border-radius:0"></label>  ';
+					$j++;
+					$i++;
+				}
+				echo '<br/>';
+			}
+			?>
 		</center>
 	</div>
 	<div class="col-lg-4">
@@ -82,7 +81,7 @@ while ($i < 122) {
 		</div>
 		<div class="form-group">
 			<div class="input-group">
-				<input class="namedivoomtimeboxminiScreen form-control" id="texte" type='text'/>
+				<input class="namedivoomtimeboxminiScreen form-control" id="texte" type='text' />
 				<span class="input-group-btn">
 					<a class="btn btn-success" id="bt_saveImage"><i class="fas fa-save"></i></a>
 				</span>
@@ -97,7 +96,7 @@ while ($i < 122) {
 			</div>
 		</div>
 		<div class="form-group">
-			<textarea class="imagedivoomtimeboxmini form-control" style="display:none" rows="20"></textarea><br/>
+			<textarea class="imagedivoomtimeboxmini form-control" style="display:none" rows="20"></textarea><br />
 			<a class="btn btn-success uploadimagedivoomtimeboxmini" id="bt_upload" style="display:none"><i class="fas fa-check"></i></a>
 			<a class="btn btn-danger closeimagedivoomtimeboxmini" id="bt_close" style="display:none"><i class="fas fa-times"></i></a>
 		</div>
@@ -105,133 +104,152 @@ while ($i < 122) {
 </div>
 <script>
 	loadMemoryList();
-	setTimeout(function() { loadImage()}, 200);
+	setTimeout(function() {
+		loadImage()
+	}, 200);
 	var pencil = 0;
 	var erase = 0;
 	var replace = 0;
-	$('.realimage').on('change', function () {
-		if ($(this).is(':checked')){
-			$('.pixelNotFirstLine').css('margin-top' , '-17px');
-			$('.pixel').css('margin-left' , '-6px');
+	$('.realimage').on('change', function() {
+		if ($(this).is(':checked')) {
+			$('.pixelNotFirstLine').css('margin-top', '-17px');
+			$('.pixel').css('margin-left', '-6px');
 			$('.pixelFirstLine').attr('class', 'fas fa-stop pixel pixelFirstLine');
 			$('.pixelNotFirstLine').attr('class', 'fas fa-stop pixel pixelNotFirstLine');
 		} else {
-			$('.pixel').css('margin-top' , '10px');
-			$('.pixel').css('margin-left' , '15px');
+			$('.pixel').css('margin-top', '10px');
+			$('.pixel').css('margin-left', '15px');
 			$('.pixelFirstLine').attr('class', 'fas fa-square pixel pixelFirstLine');
 			$('.pixelNotFirstLine').attr('class', 'fas fa-square pixel pixelNotFirstLine');
 		}
 	});
-	$('#bt_erase').on('click', function () {
-		if (erase == 0){
+	$('#bt_erase').on('click', function() {
+		if (erase == 0) {
 			erase = 1;
 			pencil = 0;
 			replace = 0;
-			$('.erasecolor').css('color' , '#000080');
-			$('.replacecolor').css('color' , '');
-			$('.copycolor').css('color' , '');
+			$('.erasecolor').css('color', '#000080');
+			$('.replacecolor').css('color', '');
+			$('.copycolor').css('color', '');
 			$('.eventDisplay').hideAlert();
-			$('.eventDisplay').showAlert({message:  'Vous êtes en mode gomme. Effacer les pixels que vous voulez puis recliquez sur Gommer pour sortir du mode',level: 'danger'});
+			$('.eventDisplay').showAlert({
+				message: 'Vous êtes en mode gomme. Effacer les pixels que vous voulez puis recliquez sur Gommer pour sortir du mode',
+				level: 'danger'
+			});
 		} else {
 			erase = 0;
-			$('.erasecolor').css('color' , '');
+			$('.erasecolor').css('color', '');
 			$('.eventDisplay').hideAlert();
 		}
 	});
-	$('#bt_replace').on('click', function () {
-		if (replace == 0){
+	$('#bt_replace').on('click', function() {
+		if (replace == 0) {
 			replace = 1;
 			pencil = 0;
 			erase = 0;
-			$('.replacecolor').css('color' , '#000080');
-			$('.erasecolor').css('color' , '');
-			$('.copycolor').css('color' , '');
+			$('.replacecolor').css('color', '#000080');
+			$('.erasecolor').css('color', '');
+			$('.copycolor').css('color', '');
 			$('.eventDisplay').hideAlert();
-			$('.eventDisplay').showAlert({message:  'Vous êtes en mode pot de peinture. Cliquez sur une couleur à remplacer',level: 'warning'});
+			$('.eventDisplay').showAlert({
+				message: 'Vous êtes en mode pot de peinture. Cliquez sur une couleur à remplacer',
+				level: 'warning'
+			});
 		} else {
 			replace = 0;
-			$('.replacecolor').css('color' , '');
+			$('.replacecolor').css('color', '');
 			$('.eventDisplay').hideAlert();
 		}
 	});
-	$('#bt_copyColor').on('click', function () {
-		if (pencil == 0){
+	$('#bt_copyColor').on('click', function() {
+		if (pencil == 0) {
 			pencil = 1;
-			erase =0;
+			erase = 0;
 			replace = 0;
-			$('.copycolor').css('color' , '#000080');
-			$('.replacecolor').css('color' , '');
-			$('.erasecolor').css('color' , '');
+			$('.copycolor').css('color', '#000080');
+			$('.replacecolor').css('color', '');
+			$('.erasecolor').css('color', '');
 			$('.eventDisplay').hideAlert();
-			$('.eventDisplay').showAlert({message:  'Vous êtes en mode pipette. Choisissez la couleur ou sortez du mode en recliquant sur Pipette',level: 'warning'});
+			$('.eventDisplay').showAlert({
+				message: 'Vous êtes en mode pipette. Choisissez la couleur ou sortez du mode en recliquant sur Pipette',
+				level: 'warning'
+			});
 		} else {
 			pencil = 0;
 			$('.eventDisplay').hideAlert();
-			$('.copycolor').css('color' , '');
+			$('.copycolor').css('color', '');
 		}
 	});
-	$('#bt_displayExport').on('click', function () {
+	$('#bt_displayExport').on('click', function() {
 		$('.imagedivoomtimeboxmini').show();
 		$('.closeimagedivoomtimeboxmini').show();
 		$('.uploadimagedivoomtimeboxmini').hide();
 		getImageCode();
 	});
 
-	$('.biblioNumber').on('click', function () {
-    $('#md_modal2').dialog({title: "{{Votre Collection}}"});
-    $('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoomtimeboxmini.all').dialog('open');
-});
+	$('.biblioNumber').on('click', function() {
+		$('#md_modal2').dialog({
+			title: "{{Votre Collection}}"
+		});
+		$('#md_modal2').load('index.php?v=d&plugin=blea&modal=blea.divoomtimeboxmini.all').dialog('open');
+	});
 
-	function autoLoadJson(){
+	function autoLoadJson() {
 		try {
 			data = json_decode($('.imagedivoomtimeboxmini').val());
-			for(var pixelId in data){
-				$('[data-pixel="'+ pixelId +'"]').css('color', data[pixelId]);
+			for (var pixelId in data) {
+				$('[data-pixel="' + pixelId + '"]').css('color', data[pixelId]);
 			}
-		}catch (e) {
-		}
+		} catch (e) {}
 	}
 
-	$('.imagedivoomtimeboxmini').on('change',function(){
+	$('.imagedivoomtimeboxmini').on('change', function() {
 		autoLoadJson();
 	});
 
-	$('#bt_Import').on('click', function () {
+	$('#bt_Import').on('click', function() {
 		$('.imagedivoomtimeboxmini').show();
 		$('.closeimagedivoomtimeboxmini').show();
 		$('.uploadimagedivoomtimeboxmini').show();
 		$('.imagedivoomtimeboxmini').val('');
 	});
-	$('#bt_close').on('click', function () {
+	$('#bt_close').on('click', function() {
 		$('.imagedivoomtimeboxmini').hide();
 		$('.closeimagedivoomtimeboxmini').hide();
 		$('.uploadimagedivoomtimeboxmini').hide();
 	});
 
-	$('#bt_saveImage').on('click', function () {
+	$('#bt_saveImage').on('click', function() {
 		var array = {};
-		$('.pixel').each(function( index ) {
+		$('.pixel').each(function(index) {
 			array[$(this).attr('data-pixel')] = hexc($(this).css('color'));
 		});
-		if ($('.namedivoomtimeboxminiScreen').val() == ''){
-			$('.eventDisplay').showAlert({message:  'Vous devez spécifier un nom pour sauver une image',level: 'danger'});
-			setTimeout(function() { deleteAlert()}, 2000);
+		if ($('.namedivoomtimeboxminiScreen').val() == '') {
+			$('.eventDisplay').showAlert({
+				message: 'Vous devez spécifier un nom pour sauver une image',
+				level: 'danger'
+			});
+			setTimeout(function() {
+				deleteAlert()
+			}, 2000);
 			return;
 		}
 		bootbox.dialog({
 			title: 'Etes-vous sur ?',
-			message: 'Vous allez sauver l\'image avec le nom "' +$('.namedivoomtimeboxminiScreen').val() +'" ! Voulez-vous continuer ?',
+			message: 'Vous allez sauver l\'image avec le nom "' + $('.namedivoomtimeboxminiScreen').val() + '" ! Voulez-vous continuer ?',
 			buttons: {
 				"{{Annuler}}": {
 					className: "btn-danger",
-					callback: function () {
-					}
+					callback: function() {}
 				},
 				success: {
 					label: "{{Continuer}}",
 					className: "btn-success",
-					callback: function () {
-						$('.eventDisplay').showAlert({message:  'Affichage sur le divoomtimeboxmini en cours ...',level: 'warning'});
+					callback: function() {
+						$('.eventDisplay').showAlert({
+							message: 'Affichage sur le divoomtimeboxmini en cours ...',
+							level: 'warning'
+						});
 						$.ajax({
 							type: "POST",
 							url: "plugins/blea/core/config/devices/divoomtimeboxmini/ajax/divoomtimeboxmini.ajax.php",
@@ -239,22 +257,32 @@ while ($i < 122) {
 								action: "saveImage",
 								id: id,
 								name: $('.namedivoomtimeboxminiScreen').val(),
-								data : array
+								data: array
 							},
-							global : false,
+							global: false,
 							dataType: 'json',
 							error: function(request, status, error) {
 								handleAjaxError(request, status, error);
 							},
 							success: function(data) {
 								if (data.state != 'ok') {
-									$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-									setTimeout(function() { deleteAlert()}, 2000);
+									$('.eventDisplay').showAlert({
+										message: data.result,
+										level: 'danger'
+									});
+									setTimeout(function() {
+										deleteAlert()
+									}, 2000);
 									return;
 								}
-								$('.eventDisplay').showAlert({message:  'Sauvegarde effectuée' ,level: 'success'});
-								setTimeout(function() { deleteAlert() }, 2000);
-								modifyWithoutSave=false;
+								$('.eventDisplay').showAlert({
+									message: 'Sauvegarde effectuée',
+									level: 'success'
+								});
+								setTimeout(function() {
+									deleteAlert()
+								}, 2000);
+								modifyWithoutSave = false;
 								loadMemoryList();
 							}
 						});
@@ -264,28 +292,29 @@ while ($i < 122) {
 		});
 	});
 
-	$('.memoryload').on('change', function () {
+	$('.memoryload').on('change', function() {
 		getImageCode();
 		loadImage();
-		if ($('.realtime').is(':checked')){
-			setTimeout(function() { sendAll() }, 500);
+		if ($('.realtime').is(':checked')) {
+			setTimeout(function() {
+				sendAll()
+			}, 500);
 		}
 	});
 
-	$('#bt_delImage').on('click', function () {
+	$('#bt_delImage').on('click', function() {
 		bootbox.dialog({
 			title: 'Etes-vous sur ?',
-			message: 'Vous allez supprimer l\'image avec le nom "' +$('.memoryload').find('option:selected').text() +'" ! Voulez-vous continuer ?',
+			message: 'Vous allez supprimer l\'image avec le nom "' + $('.memoryload').find('option:selected').text() + '" ! Voulez-vous continuer ?',
 			buttons: {
 				"{{Annuler}}": {
 					className: "btn-danger",
-					callback: function () {
-					}
+					callback: function() {}
 				},
 				success: {
 					label: "{{Continuer}}",
 					className: "btn-success",
-					callback: function () {
+					callback: function() {
 						$.ajax({
 							type: "POST",
 							url: "plugins/blea/core/config/devices/divoomtimeboxmini/ajax/divoomtimeboxmini.ajax.php",
@@ -293,21 +322,31 @@ while ($i < 122) {
 								action: "delImage",
 								name: $('.memoryload').val()
 							},
-							global : false,
+							global: false,
 							dataType: 'json',
 							error: function(request, status, error) {
 								handleAjaxError(request, status, error);
 							},
 							success: function(data) {
 								if (data.state != 'ok') {
-									$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-									setTimeout(function() { deleteAlert() }, 2000);
+									$('.eventDisplay').showAlert({
+										message: data.result,
+										level: 'danger'
+									});
+									setTimeout(function() {
+										deleteAlert()
+									}, 2000);
 									return;
 								}
-								$('.eventDisplay').showAlert({message:  'Suppression effectuée' ,level: 'success'});
-								setTimeout(function() { deleteAlert() }, 2000);
+								$('.eventDisplay').showAlert({
+									message: 'Suppression effectuée',
+									level: 'success'
+								});
+								setTimeout(function() {
+									deleteAlert()
+								}, 2000);
 								loadMemoryList();
-								modifyWithoutSave=false;
+								modifyWithoutSave = false;
 							}
 						});
 					}
@@ -319,39 +358,39 @@ while ($i < 122) {
 	$('.pixel').on('click', function() {
 		var pixelId = $(this).attr('data-pixel');
 		var color = $('.pixelCircle').css('color');
-		if (erase == 1){
-			color ='rgb(0, 0, 0)';
+		if (erase == 1) {
+			color = 'rgb(0, 0, 0)';
 		}
-		if (pencil == 1){
+		if (pencil == 1) {
 			$('.pixelCircle').css('color', $(this).css('color'));
 			$('.pixelcolor').val(hexc($(this).css('color')));
 			pencil = 0;
 			$('.eventDisplay').hideAlert();
-			$('.copycolor').css('color' , '');
+			$('.copycolor').css('color', '');
 			return;
 		}
-		if (replace ==1){
-			var array ={};
+		if (replace == 1) {
+			var array = {};
 			var colortoreplace = $(this).css('color');
-			$('.pixel').each(function( index ) {
-				if ($(this).css('color') == colortoreplace ){
+			$('.pixel').each(function(index) {
+				if ($(this).css('color') == colortoreplace) {
 					array[$(this).attr('data-pixel')] = hexc(color);
 					$(this).css('color', color);
 				}
 			});
 			replace = 0;
 			$('.eventDisplay').hideAlert();
-			$('.replacecolor').css('color' , '');
-			if ($('.realtime').is(':checked')){
-				sendPixelArray(array,id);
+			$('.replacecolor').css('color', '');
+			if ($('.realtime').is(':checked')) {
+				sendPixelArray(array, id);
 			}
 			return;
 		}
 		$(this).css('color', color);
-		if ($('.realtime').is(':checked')){
+		if ($('.realtime').is(':checked')) {
 			var array = {};
 			array[pixelId.toString()] = hexc(color);
-			sendPixelArray(array,id,false);
+			sendPixelArray(array, id, false);
 		}
 	})
 
@@ -360,28 +399,28 @@ while ($i < 122) {
 	})
 
 	$('#bt_fill').on('click', function() {
-		$('.pixel').each(function( index ) {
+		$('.pixel').each(function(index) {
 			$(this).css('color', $('.pixelCircle').css('color'));
 		});
-		if ($('.realtime').is(':checked')){
+		if ($('.realtime').is(':checked')) {
 			var array = {};
-			$('.pixel').each(function( index ) {
+			$('.pixel').each(function(index) {
 				array[$(this).attr('data-pixel')] = hexc($(this).css('color'));
 			});
-			sendPixelArray(array,id);
+			sendPixelArray(array, id);
 		}
 	})
 
 	$('#bt_fillblack').on('click', function() {
-		$('.pixel').each(function( index ) {
+		$('.pixel').each(function(index) {
 			$(this).css('color', '#000000');
 		});
-		if ($('.realtime').is(':checked')){
+		if ($('.realtime').is(':checked')) {
 			var array = {};
-			$('.pixel').each(function( index ) {
+			$('.pixel').each(function(index) {
 				array[$(this).attr('data-pixel')] = '#000000';
 			});
-			sendPixelArray(array,id);
+			sendPixelArray(array, id);
 		}
 	})
 
@@ -391,10 +430,10 @@ while ($i < 122) {
 
 	function sendAll() {
 		var array = {};
-		$('.pixel').each(function( index ) {
+		$('.pixel').each(function(index) {
 			array[$(this).attr('data-pixel')] = hexc($(this).css('color'));
 		});
-		sendPixelArray(array,id);
+		sendPixelArray(array, id);
 	}
 
 	function hexc(colorval) {
@@ -408,9 +447,12 @@ while ($i < 122) {
 		return color;
 	}
 
-	function sendPixelArray(_array,_id,_displaymess = true) {
-		if (_displaymess){
-			$('.eventDisplay').showAlert({message:  'Affichage sur le divoomtimeboxmini en cours ...' ,level: 'warning'});
+	function sendPixelArray(_array, _id, _displaymess = true) {
+		if (_displaymess) {
+			$('.eventDisplay').showAlert({
+				message: 'Affichage sur le divoomtimeboxmini en cours ...',
+				level: 'warning'
+			});
 		}
 		$.ajax({
 			type: "POST",
@@ -427,15 +469,27 @@ while ($i < 122) {
 			},
 			success: function(data) {
 				if (data.state != 'ok') {
-					$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-					setTimeout(function() { deleteAlert() }, 2000);
+					$('.eventDisplay').showAlert({
+						message: data.result,
+						level: 'danger'
+					});
+					setTimeout(function() {
+						deleteAlert()
+					}, 2000);
 					return;
 				}
-				if (_displaymess){
-					setTimeout(function() { $('.eventDisplay').showAlert({message:  'Affichage effectué' ,level: 'success'}); }, 2000);
-					setTimeout(function() { deleteAlert() }, 4000);
+				if (_displaymess) {
+					setTimeout(function() {
+						$('.eventDisplay').showAlert({
+							message: 'Affichage effectué',
+							level: 'success'
+						});
+					}, 2000);
+					setTimeout(function() {
+						deleteAlert()
+					}, 4000);
 				}
-				modifyWithoutSave=false;
+				modifyWithoutSave = false;
 			}
 		});
 	}
@@ -451,29 +505,35 @@ while ($i < 122) {
 			data: {
 				action: "loadMemoryList"
 			},
-			global:false,
+			global: false,
 			dataType: 'json',
 			error: function(request, status, error) {
 				handleAjaxError(request, status, error);
 			},
 			success: function(data) {
 				if (data.state != 'ok') {
-					$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-					setTimeout(function() { deleteAlert() }, 2000);
+					$('.eventDisplay').showAlert({
+						message: data.result,
+						level: 'danger'
+					});
+					setTimeout(function() {
+						deleteAlert()
+					}, 2000);
 					return;
 				}
-				modifyWithoutSave=false;
-				if (data.result){
+				modifyWithoutSave = false;
+				if (data.result) {
 					console.log(data.result);
 					$('.memoryload').empty().append(data.result[0]);
-					$('.biblioNumber').empty().append(data.result[0].split('<option').length-1+data.result[1]+ ' icônes');
+					$('.biblioNumber').empty().append(data.result[0].split('<option').length - 1 + data.result[1] + ' icônes');
 				} else {
 					$('.memoryload').empty();
 				}
 			}
 		});
 	}
-	function loadImage(){
+
+	function loadImage() {
 		$.ajax({
 			type: "POST",
 			url: "plugins/blea/core/config/devices/divoomtimeboxmini/ajax/divoomtimeboxmini.ajax.php",
@@ -488,22 +548,27 @@ while ($i < 122) {
 			},
 			success: function(data) {
 				if (data.state != 'ok') {
-					$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-					setTimeout(function() { deleteAlert() }, 2000);
+					$('.eventDisplay').showAlert({
+						message: data.result,
+						level: 'danger'
+					});
+					setTimeout(function() {
+						deleteAlert()
+					}, 2000);
 					return;
 				}
-				if (!$.isEmptyObject(data.result)){
-					for(var pixelId in data.result){
-						$('[data-pixel="'+ pixelId.toString() +'"]').css('color', data.result[pixelId]);
+				if (!$.isEmptyObject(data.result)) {
+					for (var pixelId in data.result) {
+						$('[data-pixel="' + pixelId.toString() + '"]').css('color', data.result[pixelId]);
 					}
 				}
 				$('.namedivoomtimeboxminiScreen').val($('.memoryload').find('option:selected').text());
-				modifyWithoutSave=false;
+				modifyWithoutSave = false;
 			}
 		});
 	}
 
-	function getImageCode(){
+	function getImageCode() {
 		$('.imagedivoomtimeboxmini').val('');
 		$.ajax({
 			type: "POST",
@@ -519,14 +584,19 @@ while ($i < 122) {
 			},
 			success: function(data) {
 				if (data.state != 'ok') {
-					$('.eventDisplay').showAlert({message:  data.result,level: 'danger'});
-					setTimeout(function() { deleteAlert()}, 2000);
+					$('.eventDisplay').showAlert({
+						message: data.result,
+						level: 'danger'
+					});
+					setTimeout(function() {
+						deleteAlert()
+					}, 2000);
 					return;
 				}
 				$('.imagedivoomtimeboxmini').off('change');
 				$('.imagedivoomtimeboxmini').val(data.result);
 				autoLoadJson();
-				modifyWithoutSave=false;
+				modifyWithoutSave = false;
 			}
 		});
 	}

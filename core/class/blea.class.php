@@ -23,11 +23,6 @@ class blea extends eqLogic {
 	public static $_version = '2.9';
 	public static $_bluepy_version = '1.1.4';
 
-	public static function cronDaily(){
-		self::deamon_stop();
-		self::deamon_start();
-	}
-
 	public static function createFromDef($_def) {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
@@ -55,16 +50,16 @@ class blea extends eqLogic {
 		$eqLogic->setIsVisible(1);
 		$eqLogic->setConfiguration('device', $_def['type']);
 		$eqLogic->setConfiguration('antenna', 'local');
-		$eqLogic->setConfiguration('antennareceive','local');
-		$eqLogic->setConfiguration('canbelocked',0);
-		$eqLogic->setConfiguration('islocked',0);
-		$eqLogic->setConfiguration('cancontrol',0);
-		$eqLogic->setConfiguration('resetRssis',1);
-		$eqLogic->setConfiguration('name','0');
-		$eqLogic->setConfiguration('refreshlist',array());
-		$eqLogic->setConfiguration('specificclass',0);
-		$eqLogic->setConfiguration('needsrefresh',0);
-		$eqLogic->setConfiguration('specificwidgets',0);
+		$eqLogic->setConfiguration('antennareceive', 'local');
+		$eqLogic->setConfiguration('canbelocked', 0);
+		$eqLogic->setConfiguration('islocked', 0);
+		$eqLogic->setConfiguration('cancontrol', 0);
+		$eqLogic->setConfiguration('resetRssis', 1);
+		$eqLogic->setConfiguration('name', '0');
+		$eqLogic->setConfiguration('refreshlist', array());
+		$eqLogic->setConfiguration('specificclass', 0);
+		$eqLogic->setConfiguration('needsrefresh', 0);
+		$eqLogic->setConfiguration('specificwidgets', 0);
 		$model = $eqLogic->getModelListParam();
 		if (count($model) > 0) {
 			$eqLogic->setConfiguration('iconModel', array_keys($model[0])[0]);
@@ -74,70 +69,70 @@ class blea extends eqLogic {
 		event::add('jeedom::alert', array(
 			'level' => 'warning',
 			'page' => 'blea',
-			'message' => __('Module inclu avec succès ' .$_def['name'].' ' . $_def['id'], __FILE__),
+			'message' => __('Module inclu avec succès ' . $_def['name'] . ' ' . $_def['id'], __FILE__),
 		));
 		return $eqLogic;
 	}
 
 	public static function cron() {
-		$remotes = blea_remote::getCacheRemotes('allremotes',array());
+		$remotes = blea_remote::getCacheRemotes('allremotes', array());
 		$allEqlogic = eqLogic::byType('blea');
 		foreach ($remotes as $remote) {
-			$last = $remote->getCache('lastupdate','0');
-			if (($last == '0' or time() - strtotime($last)>65)) {
-				$auto = $remote->getConfiguration('remoteDaemonAuto','0');
-				foreach ($allEqlogic as $eqLogic){
+			$last = $remote->getCache('lastupdate', '0');
+			if (($last == '0' or time() - strtotime($last) > 65)) {
+				$auto = $remote->getConfiguration('remoteDaemonAuto', '0');
+				foreach ($allEqlogic as $eqLogic) {
 					$rssicmd = $eqLogic->getCmd(null, 'rssi' . $remote->getRemoteName());
 					$presentcmd = $eqLogic->getCmd(null, 'present' . $remote->getRemoteName());
 					$eqLogic->checkAndUpdateCmd($presentcmd, 0);
 					$eqLogic->checkAndUpdateCmd($rssicmd, -200);
-					$eqLogic->setCache('rssi' . $remote->getRemoteName(),-200);
+					$eqLogic->setCache('rssi' . $remote->getRemoteName(), -200);
 					$eqLogic->computePresence();
 				}
-				if ($auto == 1){
-					log::add('blea','info','Restarting daemon on remote ' . $remote->getRemoteName());
+				if ($auto == 1) {
+					log::add('blea', 'info', 'Restarting daemon on remote ' . $remote->getRemoteName());
 					blea::launchremote($remote->getId());
 				}
 			}
 		}
 		$deamon_info = self::deamon_info();
-		if ($deamon_info['state'] != 'ok'){
-			foreach ($allEqlogic as $eqLogic){
+		if ($deamon_info['state'] != 'ok') {
+			foreach ($allEqlogic as $eqLogic) {
 				$rssicmd = $eqLogic->getCmd(null, 'rssilocal');
 				$presentcmd = $eqLogic->getCmd(null, 'presentlocal');
 				$eqLogic->checkAndUpdateCmd($presentcmd, 0);
 				$eqLogic->checkAndUpdateCmd($rssicmd, -200);
-				$eqLogic->setCache('rssilocal',-200);
+				$eqLogic->setCache('rssilocal', -200);
 				$eqLogic->computePresence();
 			}
 		}
 	}
 
 	public static function cron15() {
-		$remotes = blea_remote::getCacheRemotes('allremotes',array());
-		$availremote= array();
+		$remotes = blea_remote::getCacheRemotes('allremotes', array());
+		$availremote = array();
 		foreach ($remotes as $remote) {
 			self::getRemoteLog($remote->getId());
 			$availremote[] = $remote->getRemoteName();
 		}
-		foreach (eqLogic::byType('blea') as $eqLogic){
+		foreach (eqLogic::byType('blea') as $eqLogic) {
 			foreach ($eqLogic->getCmd('info') as $cmd) {
 				$logicalId = $cmd->getLogicalId();
-				if (substr($logicalId,0,4) == 'rssi'){
-					$remotename= substr($logicalId,4);
-					if ($remotename != 'local' && $remotename != 'local' && !(in_array($remotename,$availremote))){
+				if (substr($logicalId, 0, 4) == 'rssi') {
+					$remotename = substr($logicalId, 4);
+					if ($remotename != 'local' && $remotename != 'local' && !(in_array($remotename, $availremote))) {
 						$cmd->remove();
 					} else if ($remotename == 'local') {
-						if (config::byKey('noLocal', 'blea', 0) == 1){
+						if (config::byKey('noLocal', 'blea', 0) == 1) {
 							$cmd->remove();
 						}
 					}
-				} else if (substr($logicalId,0,7) == 'present' && $logicalId!= 'present') {
-					$remotename= substr($logicalId,7);
-					if ($remotename != 'local' && !(in_array($remotename,$availremote))){
+				} else if (substr($logicalId, 0, 7) == 'present' && $logicalId != 'present') {
+					$remotename = substr($logicalId, 7);
+					if ($remotename != 'local' && !(in_array($remotename, $availremote))) {
 						$cmd->remove();
 					} else if ($remotename == 'local') {
-						if (config::byKey('noLocal', 'blea', 0) == 1){
+						if (config::byKey('noLocal', 'blea', 0) == 1) {
 							$cmd->remove();
 						}
 					}
@@ -148,14 +143,14 @@ class blea extends eqLogic {
 
 	public static function childrenCronDispatcher($_params) {
 		$child = $_params['childclass'];
-		require_once dirname(__FILE__) . '/../config/devices/'.$child.'/class/'.$child.'.class.php';
-		$class= $child.'blea';
+		require_once dirname(__FILE__) . '/../config/devices/' . $child . '/class/' . $child . '.class.php';
+		$class = $child . 'blea';
 		$childrenclass = new $class();
 		$childrenclass->cronDispatcher($_params);
 	}
 
 	public static function getMobileHealth() {
-		$health='';
+		$health = '';
 		$eqLogics = blea::byType('blea');
 		foreach ($eqLogics as $eqLogic) {
 			$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
@@ -167,7 +162,7 @@ class blea extends eqLogic {
 			} else {
 				$img = '<img class="lazy" src="plugins/blea/doc/images/blea_icon.png" height="30" width="30" style="' . $opacity . '"/>';
 			}
-			$health .= '<tr><td>' . $img . '</td><td><span class="label label-success" style="font-size : 0.8em;">'. $eqLogic->getHumanName(true) . '</span></td>';
+			$health .= '<tr><td>' . $img . '</td><td><span class="label label-success" style="font-size : 0.8em;">' . $eqLogic->getHumanName(true) . '</span></td>';
 			$battery_status = '<span class="label label-success" style="font-size : 1em;">{{OK}}</span>';
 			if ($eqLogic->getStatus('battery') < 20 && $eqLogic->getStatus('battery') != '') {
 				$battery_status = '<span style="font-size : 1em;color:red">' . $eqLogic->getStatus('battery') . '%</span>';
@@ -184,7 +179,7 @@ class blea extends eqLogic {
 			if (is_object($presentcmd)) {
 				$present = $presentcmd->execCmd();
 			}
-			if ($present == 1){
+			if ($present == 1) {
 				$present = '<span style="font-size : 1em;color:green" title="{{Présent}}"><i class="fas fa-check"></i></span>';
 			} else {
 				$present = '<span style="font-size : 1em;color:red" title="{{Absent}}"><i class="fas fa-times"></i></span>';
@@ -196,68 +191,68 @@ class blea extends eqLogic {
 	}
 
 	public static function getMobileGraph() {
-		$remotes = blea_remote::getCacheRemotes('allremotes',array());
+		$remotes = blea_remote::getCacheRemotes('allremotes', array());
 		$eqLogics = array();
 		$antennas = array();
-		foreach ($remotes as $remote){
+		foreach ($remotes as $remote) {
 			$info = array();
 			$name = $remote->getRemoteName();
-			$info['x'] = $remote->getConfiguration('positionx',999);
-			$info['y'] = $remote->getConfiguration('positiony',999);
+			$info['x'] = $remote->getConfiguration('positionx', 999);
+			$info['y'] = $remote->getConfiguration('positiony', 999);
 			$last = $remote->getCache('lastupdate', '0');
-			$info['dead'] = ( ($last == '0') or (time() - strtotime($last)>65) );
-			$antennas[$name]=$info;
-			$availremotename[]=$name;
+			$info['dead'] = (($last == '0') or (time() - strtotime($last) > 65));
+			$antennas[$name] = $info;
+			$availremotename[] = $name;
 		}
-		$availremotename[]='local';
-		if (config::byKey('noLocal', 'blea', 0) == 0){
-			$infolocal=array();
+		$availremotename[] = 'local';
+		if (config::byKey('noLocal', 'blea', 0) == 0) {
+			$infolocal = array();
 			$infolocal['x'] = config::byKey('positionx', 'blea', 999);
 			$infolocal['y'] = config::byKey('positiony', 'blea', 999);
-			$antennas['local']=$infolocal;
+			$antennas['local'] = $infolocal;
 		}
-		foreach (eqLogic::byType('blea') as $eqLogic){
-			$info =array();
+		foreach (eqLogic::byType('blea') as $eqLogic) {
+			$info = array();
 			$object = $eqLogic->getObject();
 			if (is_null($object)) {
 				$object = 'Aucun';
 			} else {
 				$object = $object->getName();
 			}
-			$info['name'] = $eqLogic->getName().' ['.$object.']';
+			$info['name'] = $eqLogic->getName() . ' [' . $object . ']';
 			$info['icon'] = $eqLogic->getConfiguration('iconModel');
 			$info['rssi'] = array();
 			foreach ($eqLogic->getCmd('info') as $cmd) {
 				$logicalId = $cmd->getLogicalId();
-				if (substr($logicalId,0,4) == 'rssi'){
-					$remotename= substr($logicalId,4);
+				if (substr($logicalId, 0, 4) == 'rssi') {
+					$remotename = substr($logicalId, 4);
 					$remoterssi = $cmd->execCmd();
-					if (in_array($remotename,$availremotename)){
+					if (in_array($remotename, $availremotename)) {
 						$info['rssi'][$remotename] = $remoterssi;
 					}
 				}
 			}
-		$eqLogics[$eqLogic->getName().' ['.$object.']']=$info;
+			$eqLogics[$eqLogic->getName() . ' [' . $object . ']'] = $info;
 		}
-		return [$eqLogics,$antennas];
+		return [$eqLogics, $antennas];
 	}
 
 	public static function health() {
-        $return = array();
-		$remotes = blea_remote::getCacheRemotes('allremotes',array());
-		if (count($remotes) !=0){
+		$return = array();
+		$remotes = blea_remote::getCacheRemotes('allremotes', array());
+		if (count($remotes) != 0) {
 			$return[] = array(
 				'test' => __('Nombre d\'antennes', __FILE__),
 				'result' => count($remotes),
 				'advice' =>  '',
 				'state' => True,
 			);
-			foreach ($remotes as $remote){
-				$last = $remote->getCache('lastupdate','0');
+			foreach ($remotes as $remote) {
+				$last = $remote->getCache('lastupdate', '0');
 				$name = $remote->getRemoteName();
-				if ($last == '0' or time() - strtotime($last)>60){
+				if ($last == '0' or time() - strtotime($last) > 60) {
 					$result = 'NOK';
-					$advice = __('Vérifier le démon sur votre antenne',__FILE__);
+					$advice = __('Vérifier le démon sur votre antenne', __FILE__);
 					$state = False;
 				} else {
 					$result = 'OK';
@@ -268,42 +263,42 @@ class blea extends eqLogic {
 					'test' => __('Démon ' . $name, __FILE__),
 					'result' => $result,
 					'advice' =>  $advice,
-					'state' =>$state,
+					'state' => $state,
 				);
 			}
 		}
-        return $return;
-    }
+		return $return;
+	}
 
 	public static function sendRemoteFiles($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
-		$user=$remoteObject->getConfiguration('remoteUser');
+		$user = $remoteObject->getConfiguration('remoteUser');
 		$script_path = dirname(__FILE__) . '/../../resources/';
-		log::add('blea','info','Compression du dossier local');
+		log::add('blea', 'info', 'Compression du dossier local');
 		exec('tar -zcvf /tmp/folder-blea.tar.gz ' . $script_path);
-		log::add('blea','info','Envoie du fichier  /tmp/folder-blea.tar.gz');
+		log::add('blea', 'info', 'Envoie du fichier  /tmp/folder-blea.tar.gz');
 		$result = false;
-		$result = $remoteObject->execCmd(['rm -Rf /home/'.$user.'/blead','mkdir -p /home/'.$user.'/blead']);
-		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz','/home/'.$user.'/folder-blea.tar.gz')) {
-			log::add('blea','info',__('Décompression du dossier distant',__FILE__));
-			$result = $remoteObject->execCmd(['tar -zxf /home/'.$user.'/folder-blea.tar.gz -C /home/'.$user.'/blead','rm -f /home/'.$user.'/folder-blea.tar.gz']);
+		$result = $remoteObject->execCmd(['rm -Rf /home/' . $user . '/blead', 'mkdir -p /home/' . $user . '/blead']);
+		if ($remoteObject->sendFiles('/tmp/folder-blea.tar.gz', '/home/' . $user . '/folder-blea.tar.gz')) {
+			log::add('blea', 'info', __('Décompression du dossier distant', __FILE__));
+			$result = $remoteObject->execCmd(['tar -zxf /home/' . $user . '/folder-blea.tar.gz -C /home/' . $user . '/blead', 'rm -f /home/' . $user . '/folder-blea.tar.gz']);
 		}
-		log::add('blea','info',__('Suppression du zip local',__FILE__));
+		log::add('blea', 'info', __('Suppression du zip local', __FILE__));
 		exec('rm -f /tmp/folder-blea.tar.gz');
-		log::add('blea','info',__('Finie',__FILE__));
+		log::add('blea', 'info', __('Finie', __FILE__));
 		return $result;
 	}
 
-	public static function getRemoteLog($_remoteId,$_dependancy='') {
+	public static function getRemoteLog($_remoteId, $_dependancy = '') {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$name = $remoteObject->getRemoteName();
-		$local = dirname(__FILE__) . '/../../../../log/blea_'.str_replace(' ','-',$name).$_dependancy;
-		log::add('blea','info','Suppression de la log ' . $local);
-		exec('rm -f '. $local);
-		log::add('blea','info',__('Récupération de la log distante',__FILE__));
-		if ($remoteObject->getFiles($local,'/tmp/blea'.$_dependancy)) {
-			$remoteObject->execCmd(['cat /dev/null > /tmp/blea'.$_dependancy]);
+		$local = dirname(__FILE__) . '/../../../../log/blea_' . str_replace(' ', '-', $name) . $_dependancy;
+		log::add('blea', 'info', 'Suppression de la log ' . $local);
+		exec('rm -f ' . $local);
+		log::add('blea', 'info', __('Récupération de la log distante', __FILE__));
+		if ($remoteObject->getFiles($local, '/tmp/blea' . $_dependancy)) {
+			$remoteObject->execCmd(['cat /dev/null > /tmp/blea' . $_dependancy]);
 			return true;
 		}
 		return false;
@@ -312,20 +307,20 @@ class blea extends eqLogic {
 	public static function dependancyRemote($_remoteId) {
 		blea::stopremote($_remoteId);
 		$remoteObject = blea_remote::byId($_remoteId);
-		$user=$remoteObject->getConfiguration('remoteUser');
-		log::add('blea','info',__('Installation des dépendances',__FILE__));
-		return $remoteObject->execCmd(['bash /home/'.$user.'/blead/resources/install_apt.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
+		$user = $remoteObject->getConfiguration('remoteUser');
+		log::add('blea', 'info', __('Installation des dépendances', __FILE__));
+		return $remoteObject->execCmd(['bash /home/' . $user . '/blead/resources/install_apt.sh  >> ' . '/tmp/blea_dependancy' . ' 2>&1 &']);
 	}
 
 	public static function launchremote($_remoteId) {
-		log::add('blea','info',__('Lancement du démon distant',__FILE__));
+		log::add('blea', 'info', __('Lancement du démon distant', __FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
-		$last = $remoteObject->getCache('lastupdate','0');
+		$last = $remoteObject->getCache('lastupdate', '0');
 		blea::stopremote($_remoteId);
 		sleep(5);
-		$user=$remoteObject->getConfiguration('remoteUser');
-		$device=$remoteObject->getConfiguration('remoteDevice');
-		$script_path = '/home/'.$user.'/blead/resources/blead';
+		$user = $remoteObject->getConfiguration('remoteUser');
+		$device = $remoteObject->getConfiguration('remoteDevice');
+		$script_path = '/home/' . $user . '/blead/resources/blead';
 		$cmd = '/usr/bin/python3 ' . $script_path . '/blead.py';
 		$cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('blea'));
 		$cmd .= ' --device ' . $device;
@@ -338,25 +333,25 @@ class blea extends eqLogic {
 		$cmd .= ' --scaninterval ' . config::byKey('scaninterval', 'blea', 29);
 		$cmd .= ' --scanmode ' . config::byKey('scanmode', 'blea', 'passive');
 		$cmd .= ' >> ' . '/tmp/blea' . ' 2>&1 &';
-		log::add('blea','info','Lancement du démon distant ' . $cmd);
-		blea_remote::setCacheRemotes('allremotes',blea_remote::all());
+		log::add('blea', 'info', 'Lancement du démon distant ' . $cmd);
+		blea_remote::setCacheRemotes('allremotes', blea_remote::all());
 		config::save('include_mode', 0, 'blea');
 		return $remoteObject->execCmd([$cmd]);
 	}
 
-	public static function remotelearn($_remoteId,$_state) {
+	public static function remotelearn($_remoteId, $_state) {
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
-		if ($_state == '1'){
+		if ($_state == '1') {
 			$allowAll = config::byKey('allowAllinclusion', 'blea');
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll);
 		} else {
 			$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout');
 		}
 		$value = json_encode($value);
-		$last = $remoteObject->getCache('lastupdate','0');
-		if ($last == '0' or time() - strtotime($last)>65){
-				return;
+		$last = $remoteObject->getCache('lastupdate', '0');
+		if ($last == '0' or time() - strtotime($last) > 65) {
+			return;
 		} else {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
@@ -367,7 +362,7 @@ class blea extends eqLogic {
 	}
 
 	public static function stopremote($_remoteId) {
-		log::add('blea','info',__('Arret du démon distant',__FILE__));
+		log::add('blea', 'info', __('Arret du démon distant', __FILE__));
 		$remoteObject = blea_remote::byId($_remoteId);
 		$ip = $remoteObject->getConfiguration('remoteIp');
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'stop');
@@ -381,9 +376,12 @@ class blea extends eqLogic {
 		}
 		$remoteObject->execCmd(['fuser -k 55008/tcp >> /dev/null 2>&1 &']);
 		config::save('include_mode', 0, 'blea');
-		event::add('blea::includeState', array(
-		'mode' => 'learn',
-		'state' => 0)
+		event::add(
+			'blea::includeState',
+			array(
+				'mode' => 'learn',
+				'state' => 0
+			)
 		);
 		return True;
 	}
@@ -403,7 +401,6 @@ class blea extends eqLogic {
 						$return += json_decode($content, true);
 					}
 				} catch (Exception $e) {
-
 				}
 			}
 		}
@@ -420,7 +417,7 @@ class blea extends eqLogic {
 		$return = array();
 		$return['log'] = 'blea';
 		$return['state'] = 'nok';
-		if (config::byKey('noLocal', 'blea', 0) == 1){
+		if (config::byKey('noLocal', 'blea', 0) == 1) {
 			$return['state'] = 'ok';
 			$return['launchable'] = 'ok';
 			return $return;
@@ -467,10 +464,10 @@ class blea extends eqLogic {
 			throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
 		}
 		$unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
-		if (config::byKey('port', 'blea','none') == 'none') {
+		if (config::byKey('port', 'blea', 'none') == 'none') {
 			foreach (jeedom::getBluetoothMapping() as $name => $value) {
-				config::save('port', $name ,'blea');
-			break;
+				config::save('port', $name, 'blea');
+				break;
 			}
 		}
 		$port = jeedom::getBluetoothMapping(config::byKey('port', 'blea'));
@@ -499,10 +496,10 @@ class blea extends eqLogic {
 			$i++;
 		}
 		if ($i >= 30) {
-			log::add('blea', 'error', __('Impossible de lancer le démon blea, vérifiez la log',__FILE__), 'unableStartDeamon');
+			log::add('blea', 'error', __('Impossible de lancer le démon blea, vérifiez la log', __FILE__), 'unableStartDeamon');
 			return false;
 		}
-		blea_remote::setCacheRemotes('allremotes',blea_remote::all());
+		blea_remote::setCacheRemotes('allremotes', blea_remote::all());
 		blea::launch_allremotes();
 		message::removeAll('blea', 'unableStartDeamon');
 		config::save('include_mode', 0, 'blea');
@@ -531,11 +528,11 @@ class blea extends eqLogic {
 		}
 		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'ready'));
 		log::add('blea', 'info', 'Sending ready to daemons');
-		self::socket_connection($value,True);
+		self::socket_connection($value, True);
 	}
 
-	public function launch_allremotes(){
-		log::add('blea','info','Launching remotes ...');
+	public function launch_allremotes() {
+		log::add('blea', 'info', 'Launching remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::launchremote($remote->getId());
@@ -543,8 +540,8 @@ class blea extends eqLogic {
 		}
 	}
 
-	public function send_allremotes(){
-		log::add('blea','info','Updating files on remotes ...');
+	public function send_allremotes() {
+		log::add('blea', 'info', 'Updating files on remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::sendRemoteFiles($remote->getId());
@@ -552,8 +549,8 @@ class blea extends eqLogic {
 		}
 	}
 
-	public function update_allremotes(){
-		log::add('blea','info','Updating remotes ...');
+	public function update_allremotes() {
+		log::add('blea', 'info', 'Updating remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::dependancyRemote($remote->getId());
@@ -561,29 +558,29 @@ class blea extends eqLogic {
 		}
 	}
 
-	public function stop_allremotes(){
-		log::add('blea','info','Stopping remotes ...');
+	public function stop_allremotes() {
+		log::add('blea', 'info', 'Stopping remotes ...');
 		$remotes = blea_remote::all();
 		foreach ($remotes as $remote) {
 			blea::stopremote($remote->getId());
 		}
 	}
 
-	public static function saveAntennaPosition($_antennas, $_type = ''){
+	public static function saveAntennaPosition($_antennas, $_type = '') {
 		$remotes = blea_remote::all();
 		$antennas = json_decode($_antennas, true);
 		foreach ($antennas as $antenna => $position) {
 			$name = $antenna;
-			$x= explode('|',$position)[0];
-			$y= explode('|',$position)[1];
-			if ($name == 'local'){
-				config::save('positionx'.$_type, $x, 'blea');
-				config::save('positiony'.$_type, $y, 'blea');
+			$x = explode('|', $position)[0];
+			$y = explode('|', $position)[1];
+			if ($name == 'local') {
+				config::save('positionx' . $_type, $x, 'blea');
+				config::save('positiony' . $_type, $y, 'blea');
 			} else {
 				foreach ($remotes as $remote) {
-					if (is_object($remote) && $name == $remote->getRemoteName()){
-						$remote->setConfiguration('positionx'.$_type,$x);
-						$remote->setConfiguration('positiony'.$_type,$y);
+					if (is_object($remote) && $name == $remote->getRemoteName()) {
+						$remote->setConfiguration('positionx' . $_type, $x);
+						$remote->setConfiguration('positiony' . $_type, $y);
 						$remote->save();
 						break;
 					}
@@ -592,19 +589,19 @@ class blea extends eqLogic {
 		}
 	}
 
-	public static function socket_connection($_value,$_allremotes = False) {
+	public static function socket_connection($_value, $_allremotes = False) {
 		if (config::byKey('port', 'blea', 'none') != 'none') {
 			$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 			socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'blea'));
 			socket_write($socket, $_value, strlen($_value));
 			socket_close($socket);
 		}
-		if ($_allremotes){
-			$remotes = blea_remote::getCacheRemotes('allremotes',array());
+		if ($_allremotes) {
+			$remotes = blea_remote::getCacheRemotes('allremotes', array());
 			foreach ($remotes as $remote) {
 				$ip = $remote->getConfiguration('remoteIp');
-				$last = $remote->getCache('lastupdate','0');
-				if ($last == '0' or time() - strtotime($last)>65){
+				$last = $remote->getCache('lastupdate', '0');
+				if ($last == '0' or time() - strtotime($last) > 65) {
 					continue;
 				} else {
 					$socket = socket_create(AF_INET, SOCK_STREAM, 0);
@@ -619,7 +616,7 @@ class blea extends eqLogic {
 	public static function changeLogLive($_level) {
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $_level);
 		$value = json_encode($value);
-		self::socket_connection($value,True);
+		self::socket_connection($value, True);
 	}
 
 	public static function deamon_stop() {
@@ -638,32 +635,32 @@ class blea extends eqLogic {
 			if ($_state == 1) {
 				$allowAll = config::byKey('allowAllinclusion', 'blea');
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnin', 'allowAll' => $allowAll, 'type' => $_type));
-				self::socket_connection($value,True);
+				self::socket_connection($value, True);
 			} else {
 				$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'learnout'));
-				self::socket_connection($value,True);
+				self::socket_connection($value, True);
 			}
 		}
 	}
 	public static function getTintedColor($hex, $lum) {
 		$initColor = $hex;
-		$hex = str_replace('#','',$hex);
-		$lum = -((100-$lum)/100);
-		if ($lum==0){
+		$hex = str_replace('#', '', $hex);
+		$lum = - ((100 - $lum) / 100);
+		if ($lum == 0) {
 			return $initColor;
 		}
-		log::add('blea','debug',$hex . ' ' . $lum);
+		log::add('blea', 'debug', $hex . ' ' . $lum);
 		$rgb = "#";
-		foreach (range(0,2) as $i) {
-			$c = intval(substr($hex,$i*2,2), 16);
+		foreach (range(0, 2) as $i) {
+			$c = intval(substr($hex, $i * 2, 2), 16);
 			$c = strval(round(min(max(0, $c + ($c * $lum)), 255)));
 
-			$rgb = $rgb . str_pad(dechex($c),2,'0',STR_PAD_LEFT);
+			$rgb = $rgb . str_pad(dechex($c), 2, '0', STR_PAD_LEFT);
 		}
-			return $rgb;
+		return $rgb;
 	}
 
-/*     * *********************Methode d'instance************************* */
+	/*     * *********************Methode d'instance************************* */
 	public function getModelListParam($_conf = '') {
 		if ($_conf == '') {
 			$_conf = $this->getConfiguration('device');
@@ -708,38 +705,38 @@ class blea extends eqLogic {
 			}
 		}
 		$needsrefresh = false;
-		if ($this->getConfiguration('needsrefresh',0) != 0) {
+		if ($this->getConfiguration('needsrefresh', 0) != 0) {
 			$needsrefresh = true;
 		}
 		$remark = false;
 		$json = self::devicesParameters($_conf);
 		if (isset($json['compatibility'])) {
-			foreach ($json['compatibility'] as $compatibility){
-				if ($compatibility['imglink'] == explode('/',$this->getConfiguration('iconModel'))[1]){
+			foreach ($json['compatibility'] as $compatibility) {
+				if ($compatibility['imglink'] == explode('/', $this->getConfiguration('iconModel'))[1]) {
 					$remark = $compatibility['remark'] . ' | ' . $compatibility['inclusion'];
 					break;
 				}
 			}
 		}
 		$specificmodal = false;
-		if ($this->getConfiguration('specificmodal',0) != 0) {
+		if ($this->getConfiguration('specificmodal', 0) != 0) {
 			$specificmodal = 'blea.' . $this->getConfiguration('device');
 		}
 		$cancontrol = false;
-		if ($this->getConfiguration('cancontrol',0) != 0) {
+		if ($this->getConfiguration('cancontrol', 0) != 0) {
 			$cancontrol = true;
 		}
 		$canbelocked = false;
-		if ($this->getConfiguration('canbelocked',0) != 0) {
+		if ($this->getConfiguration('canbelocked', 0) != 0) {
 			$canbelocked = true;
 		}
-		return [$modelList, $needsrefresh,$remark,$specificmodal,$cancontrol,$canbelocked];
+		return [$modelList, $needsrefresh, $remark, $specificmodal, $cancontrol, $canbelocked];
 	}
 
 	public function preSave() {
 		$device = self::devicesParameters($this->getConfiguration('device'));
 		if (isset($device['configuration']['name'])) {
-				$this->setConfiguration('name', $device['configuration']['name']);
+			$this->setConfiguration('name', $device['configuration']['name']);
 		}
 	}
 
@@ -748,10 +745,10 @@ class blea extends eqLogic {
 			$this->applyModuleConfiguration();
 		} else {
 			$this->allowDevice();
-			if ($this->getConfiguration('specificclass',0) == 1) {
-				$device= $this->getConfiguration('device');
-				require_once dirname(__FILE__) . '/../config/devices/'.$device.'/class/'.$device.'.class.php';
-				$class= $device.'blea';
+			if ($this->getConfiguration('specificclass', 0) == 1) {
+				$device = $this->getConfiguration('device');
+				require_once dirname(__FILE__) . '/../config/devices/' . $device . '/class/' . $device . '.class.php';
+				$class = $device . 'blea';
 				$childrenclass = new $class();
 				$childrenclass->postSaveChild($this);
 			}
@@ -765,12 +762,12 @@ class blea extends eqLogic {
 	public function closestAntenna() {
 		$closest = 'local';
 		$rssicompare = -200;
-		foreach ($this->getCmd() as $cmd){
-			if (substr($cmd->getLogicalId(),0,4) == 'rssi'){
+		foreach ($this->getCmd() as $cmd) {
+			if (substr($cmd->getLogicalId(), 0, 4) == 'rssi') {
 				$rssi = $cmd->execCmd();
 				if ($rssi > $rssicompare) {
 					$rssicompare = $rssi;
-					$closest = substr($cmd->getLogicalId(),4);
+					$closest = substr($cmd->getLogicalId(), 4);
 				}
 			}
 		}
@@ -788,18 +785,18 @@ class blea extends eqLogic {
 			$presentcmd->setName(__('Present', __FILE__));
 			$presentcmd->setType('info');
 			$presentcmd->setSubType('binary');
-			$presentcmd->setTemplate('dashboard','line');
-			$presentcmd->setTemplate('mobile','line');
+			$presentcmd->setTemplate('dashboard', 'line');
+			$presentcmd->setTemplate('mobile', 'line');
 			$presentcmd->setEqLogic_id($this->getId());
 			$presentcmd->save();
 		}
-		if ($presentcmd->getConfiguration('returnStateValue') == 0 || $presentcmd->getConfiguration('returnStateTime') == 2){
-			$presentcmd->setConfiguration('returnStateValue','');
-			$presentcmd->setConfiguration('returnStateTime','');
+		if ($presentcmd->getConfiguration('returnStateValue') == 0 || $presentcmd->getConfiguration('returnStateTime') == 2) {
+			$presentcmd->setConfiguration('returnStateValue', '');
+			$presentcmd->setConfiguration('returnStateTime', '');
 			$presentcmd->save();
 		}
 		foreach ($this->getCmd('info') as $cmd) {
-			if (substr($cmd->getLogicalId(),0,7) == 'present' && $cmd->getLogicalId()!= 'present'){
+			if (substr($cmd->getLogicalId(), 0, 7) == 'present' && $cmd->getLogicalId() != 'present') {
 				$globalPresence += $cmd->execCmd();
 			}
 		}
@@ -812,68 +809,68 @@ class blea extends eqLogic {
 
 	public function allowDevice() {
 		$value = array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'add');
-		$islocked =0;
+		$islocked = 0;
 		$emitter = 'local';
-		if ($this->getConfiguration('islocked',0)==1){
-			if ($this->getConfiguration('antenna','local') == 'all'){
+		if ($this->getConfiguration('islocked', 0) == 1) {
+			if ($this->getConfiguration('antenna', 'local') == 'all') {
 				$islocked = 0;
 				$emitter = 'all';
-			} else if ($this->getConfiguration('antenna','local') == 'local'){
+			} else if ($this->getConfiguration('antenna', 'local') == 'local') {
 				$islocked = 1;
 				$emitter = 'local';
 			} else {
 				$islocked = 1;
-				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna','local'));
-				if (is_object($emitterAntenna)){
+				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna', 'local'));
+				if (is_object($emitterAntenna)) {
 					$emitter = $emitterAntenna->getRemoteName();
 				} else {
-					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
+					log::add('blea', 'error', 'Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
 					$emitter = 'unknown';
 				}
 			}
 		} else {
-			if ($this->getConfiguration('antenna','local') == 'all'){
+			if ($this->getConfiguration('antenna', 'local') == 'all') {
 				$emitter = 'all';
-			} else if ($this->getConfiguration('antenna','local') == 'local'){
+			} else if ($this->getConfiguration('antenna', 'local') == 'local') {
 				$emitter = 'local';
 			} else {
-				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna','local'));
-				if (is_object($emitterAntenna)){
+				$emitterAntenna = blea_remote::byId($this->getConfiguration('antenna', 'local'));
+				if (is_object($emitterAntenna)) {
 					$emitter = $emitterAntenna->getRemoteName();
 				} else {
-					log::add('blea','error','Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
+					log::add('blea', 'error', 'Attention l\'antenne définie en émission pour ' . $this->getHumanName() . ' n\'existe plus.');
 					$emitter = 'unknown';
 				}
 			}
 		}
-		if ($this->getConfiguration('antennareceive','local') == 'local' || $this->getConfiguration('antennareceive','local') == 'all'){
-			$refresher = $this->getConfiguration('antennareceive','local');
+		if ($this->getConfiguration('antennareceive', 'local') == 'local' || $this->getConfiguration('antennareceive', 'local') == 'all') {
+			$refresher = $this->getConfiguration('antennareceive', 'local');
 		} else {
-			$refresherAntenna = blea_remote::byId($this->getConfiguration('antennareceive','local'));
-			if (is_object($refresherAntenna)){
+			$refresherAntenna = blea_remote::byId($this->getConfiguration('antennareceive', 'local'));
+			if (is_object($refresherAntenna)) {
 				$refresher = $refresherAntenna->getRemoteName();
 			} else {
-				log::add('blea','error','Attention l\'antenne définie en réception pour ' . $this->getHumanName() . ' n\'existe plus.');
+				log::add('blea', 'error', 'Attention l\'antenne définie en réception pour ' . $this->getHumanName() . ' n\'existe plus.');
 				$refresher = 'unknown';
 			}
 		}
 		if ($this->getLogicalId() != '') {
 			$value['device'] = array(
 				'id' => $this->getLogicalId(),
-				'delay' => intval($this->getConfiguration('delay',0)),
-				'needsrefresh' => intval($this->getConfiguration('needsrefresh',0)),
-				'name' => $this->getConfiguration('name','0'),
-				'refreshlist' => $this->getConfiguration('refreshlist',array()),
+				'delay' => intval($this->getConfiguration('delay', 0)),
+				'needsrefresh' => intval($this->getConfiguration('needsrefresh', 0)),
+				'name' => $this->getConfiguration('name', '0'),
+				'refreshlist' => $this->getConfiguration('refreshlist', array()),
 				'islocked' => $islocked,
 				'emitterallowed' => $emitter,
 				'refresherallowed' => $refresher,
-				'specificconfiguration' => $this->getConfiguration('specificconfiguration',array()),
-				'absent' => $this->getConfiguration('absent',''),
-				'type' => $this->getConfiguration('type',''),
-				'model' => $this->getConfiguration('iconModel',''),
+				'specificconfiguration' => $this->getConfiguration('specificconfiguration', array()),
+				'absent' => $this->getConfiguration('absent', ''),
+				'type' => $this->getConfiguration('type', ''),
+				'model' => $this->getConfiguration('iconModel', ''),
 			);
 			$value = json_encode($value);
-			self::socket_connection($value,True);
+			self::socket_connection($value, True);
 		}
 	}
 
@@ -882,7 +879,7 @@ class blea extends eqLogic {
 			return;
 		}
 		$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
-		self::socket_connection($value,True);
+		self::socket_connection($value, True);
 	}
 
 	public function applyModuleConfiguration() {
@@ -890,16 +887,16 @@ class blea extends eqLogic {
 		if (!is_array($device)) {
 			return true;
 		}
-		$this->setConfiguration('canbelocked',0);
-		$this->setConfiguration('cancontrol',0);
-		$this->setConfiguration('islocked',0);
-		$this->setConfiguration('name','0');
-		$this->setConfiguration('refreshlist',array());
-		$this->setConfiguration('specificmodal',0);
-		$this->setConfiguration('specificclass',0);
-		$this->setConfiguration('needsrefresh',0);
-		$this->setConfiguration('resetRssis',1);
-		$this->setConfiguration('specificwidgets',0);
+		$this->setConfiguration('canbelocked', 0);
+		$this->setConfiguration('cancontrol', 0);
+		$this->setConfiguration('islocked', 0);
+		$this->setConfiguration('name', '0');
+		$this->setConfiguration('refreshlist', array());
+		$this->setConfiguration('specificmodal', 0);
+		$this->setConfiguration('specificclass', 0);
+		$this->setConfiguration('needsrefresh', 0);
+		$this->setConfiguration('resetRssis', 1);
+		$this->setConfiguration('specificwidgets', 0);
 		$this->setConfiguration('applyDevice', $this->getConfiguration('device'));
 		$this->setConfiguration('applyModel', $this->getConfiguration('iconModel'));
 		$this->save();
@@ -924,7 +921,7 @@ class blea extends eqLogic {
 				$this->setCategory($key, $value);
 			}
 		}
-		$model=$this->getConfiguration('iconModel','');
+		$model = $this->getConfiguration('iconModel', '');
 		if (isset($device['models'])) {
 			if (isset($device['models'][$model])) {
 				foreach ($device['models'][$model]['configuration'] as $key => $value) {
@@ -955,12 +952,11 @@ class blea extends eqLogic {
 					$arrayToRemove[] = $eqLogic_cmd;
 				}
 			}
-			if (!(in_array($this->getConfiguration('device'), array('miscale','miscale2')))){
+			if (!(in_array($this->getConfiguration('device'), array('miscale', 'miscale2')))) {
 				foreach ($arrayToRemove as $cmdToRemove) {
 					try {
 						$cmdToRemove->remove();
 					} catch (Exception $e) {
-
 					}
 				}
 			}
@@ -968,7 +964,8 @@ class blea extends eqLogic {
 				$cmd = null;
 				foreach ($this->getCmd() as $liste_cmd) {
 					if ((isset($command['logicalId']) && $liste_cmd->getLogicalId() == $command['logicalId'])
-						|| (isset($command['name']) && $liste_cmd->getName() == $command['name'])) {
+						|| (isset($command['name']) && $liste_cmd->getName() == $command['name'])
+					) {
 						$cmd = $liste_cmd;
 						break;
 					}
@@ -995,7 +992,6 @@ class blea extends eqLogic {
 					}
 					$cmd_order++;
 				} catch (Exception $exc) {
-
 				}
 			}
 		}
@@ -1043,7 +1039,6 @@ class blea extends eqLogic {
 				}
 				sleep(1);
 			}
-
 		}
 		sleep(2);
 		event::add('jeedom::alert', array(
@@ -1054,13 +1049,13 @@ class blea extends eqLogic {
 	}
 
 	public function toHtml($_version = 'dashboard') {
-		if ($this->getConfiguration('specificwidgets',0) == 1) {
-			if ($this->getConfiguration('specificclass',0) == 1) {
-				$device= $this->getConfiguration('device');
-				require_once dirname(__FILE__) . '/../config/devices/'.$device.'/class/'.$device.'.class.php';
-				$class= $device.'blea';
+		if ($this->getConfiguration('specificwidgets', 0) == 1) {
+			if ($this->getConfiguration('specificclass', 0) == 1) {
+				$device = $this->getConfiguration('device');
+				require_once dirname(__FILE__) . '/../config/devices/' . $device . '/class/' . $device . '.class.php';
+				$class = $device . 'blea';
 				$childrenclass = new $class();
-				return $childrenclass->convertHtml($this,$_version);
+				return $childrenclass->convertHtml($this, $_version);
 			} else {
 				$replace = $this->preToHtml($_version);
 				if (!is_array($replace)) {
@@ -1086,7 +1081,6 @@ class blea extends eqLogic {
 			return parent::toHtml($_version);
 		}
 	}
-
 }
 
 class bleaCmd extends cmd {
@@ -1101,10 +1095,10 @@ class bleaCmd extends cmd {
 			return;
 		}
 		$eqLogic = $this->getEqLogic();
-		if ($eqLogic->getConfiguration('specificclass',0) != 0) {
-			$device= $eqLogic->getConfiguration('device');
-			require_once dirname(__FILE__) . '/../config/devices/'.$device.'/class/'.$device.'.class.php';
-			$class= $device.'blea';
+		if ($eqLogic->getConfiguration('specificclass', 0) != 0) {
+			$device = $eqLogic->getConfiguration('device');
+			require_once dirname(__FILE__) . '/../config/devices/' . $device . '/class/' . $device . '.class.php';
+			$class = $device . 'blea';
 			$childrenclass = new $class();
 		}
 		$values = explode(',', $this->getLogicalId());
@@ -1116,7 +1110,7 @@ class bleaCmd extends cmd {
 						$data[trim($value[0])] = trim(str_replace('#slider#', $_options['slider'], $value[1]));
 						break;
 					case 'color':
-						$data[trim($value[0])] = str_replace('#','',trim(str_replace('#color#', $_options['color'], $value[1])));
+						$data[trim($value[0])] = str_replace('#', '', trim(str_replace('#color#', $_options['color'], $value[1])));
 						break;
 					case 'select':
 						$data[trim($value[0])] = trim(str_replace('#listValue#', $_options['select'], $value[1]));
@@ -1130,41 +1124,41 @@ class bleaCmd extends cmd {
 				}
 			}
 		}
-		if (isset($data['secondary'])){
-			$data['secondary'] = $eqLogic->getCmd('info',$data['secondary'])->execCmd();
+		if (isset($data['secondary'])) {
+			$data['secondary'] = $eqLogic->getCmd('info', $data['secondary'])->execCmd();
 		}
-		if (isset($data['classlogical'])){
-			$data = $childrenclass->calculateOutputValue($eqLogic,$data,$_options);
+		if (isset($data['classlogical'])) {
+			$data = $childrenclass->calculateOutputValue($eqLogic, $data, $_options);
 		}
 		$data['device'] = array(
-				'id' => $eqLogic->getLogicalId(),
-				'delay' => $eqLogic->getConfiguration('delay',0),
-				'needsrefresh' => $eqLogic->getConfiguration('needsrefresh',0),
-				'name' => $eqLogic->getConfiguration('name','0'),
+			'id' => $eqLogic->getLogicalId(),
+			'delay' => $eqLogic->getConfiguration('delay', 0),
+			'needsrefresh' => $eqLogic->getConfiguration('needsrefresh', 0),
+			'name' => $eqLogic->getConfiguration('name', '0'),
 		);
 		if (count($data) == 0) {
 			return;
 		}
-		if ($this->getLogicalId() == 'refresh' || $this->getLogicalId() == 'helper' || $this->getLogicalId() == 'helperrandom'){
-			$data['name'] = $eqLogic->getConfiguration('name','0');
+		if ($this->getLogicalId() == 'refresh' || $this->getLogicalId() == 'helper' || $this->getLogicalId() == 'helperrandom') {
+			$data['name'] = $eqLogic->getConfiguration('name', '0');
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => $this->getLogicalId(), 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		} else {
 			$value = json_encode(array('apikey' => jeedom::getApiKey('blea'), 'cmd' => 'action', 'device' => array('id' => $eqLogic->getLogicalId()), 'command' => $data));
 		}
-		$sender = $eqLogic->getConfiguration('antenna','local');
-		if ($sender == 'local'){
-			log::add('blea','info','Envoi depuis local');
+		$sender = $eqLogic->getConfiguration('antenna', 'local');
+		if ($sender == 'local') {
+			log::add('blea', 'info', 'Envoi depuis local');
 			blea::socket_connection($value);
 		} elseif ($sender == 'all') {
 			$closest = $eqLogic->closestAntenna();
-			if ($closest == 'local'){
-				log::add('blea','info',__('Envoi depuis local car plus proche',__FILE__));
+			if ($closest == 'local') {
+				log::add('blea', 'info', __('Envoi depuis local car plus proche', __FILE__));
 				blea::socket_connection($value);
 			} else {
 				$remotes = blea_remote::all();
-				foreach ($remotes as $remote){
-					if (is_object($remote) && $remote->getRemoteName() == $closest){
-						log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName() . __(' car plus proche',__FILE__));
+				foreach ($remotes as $remote) {
+					if (is_object($remote) && $remote->getRemoteName() == $closest) {
+						log::add('blea', 'info', __('Envoi depuis ', __FILE__) . $remote->getRemoteName() . __(' car plus proche', __FILE__));
 						$ip = $remote->getConfiguration('remoteIp');
 						$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 						socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
@@ -1176,8 +1170,8 @@ class bleaCmd extends cmd {
 			}
 		} else {
 			$remote = blea_remote::byId($sender);
-			if (is_object($remote)){
-				log::add('blea','info',__('Envoi depuis ',__FILE__) . $remote->getRemoteName());
+			if (is_object($remote)) {
+				log::add('blea', 'info', __('Envoi depuis ', __FILE__) . $remote->getRemoteName());
 				$ip = $remote->getConfiguration('remoteIp');
 				$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 				socket_connect($socket, $ip, config::byKey('socketport', 'blea'));
@@ -1216,7 +1210,7 @@ class blea_remote {
 
 	public function save() {
 		DB::save($this);
-		self::setCacheRemotes('allremotes',self::all());
+		self::setCacheRemotes('allremotes', self::all());
 		return;
 	}
 
@@ -1249,14 +1243,14 @@ class blea_remote {
 		$pass = $this->getConfiguration('remotePassword');
 		if (!$connection = ssh2_connect($ip, $port)) {
 			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
-				return false;
+			return false;
 		} else {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
 				log::add('blea', 'error', 'Authentification SSH KO for ' . $this->remoteName);
 				return false;
 			} else {
-				foreach ($_cmd as $cmd){
-					log::add('blea', 'info', __('Commande par SSH ',__FILE__) . $cmd .  __(' sur ',__FILE__) . $ip);
+				foreach ($_cmd as $cmd) {
+					log::add('blea', 'info', __('Commande par SSH ', __FILE__) . $cmd .  __(' sur ', __FILE__) . $ip);
 					$execmd = "echo '" . $pass . "' | sudo -S " . $cmd;
 					$stream = ssh2_exec($connection, $execmd);
 					$errorStream = ssh2_fetch_stream($stream, SSH2_STREAM_STDERR);
@@ -1266,7 +1260,7 @@ class blea_remote {
 					fclose($stream);
 					fclose($errorStream);
 					if (trim($output) != '') {
-						log::add('blea','debug',$output);
+						log::add('blea', 'debug', $output);
 					}
 				}
 				$stream = ssh2_exec($connection, 'exit');
@@ -1277,7 +1271,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea', 'debug', $output);
 				}
 				return $output !== false;
 			}
@@ -1299,11 +1293,11 @@ class blea_remote {
 			} else {
 				log::add('blea', 'info', 'Envoie de fichier sur ' . $ip);
 				$result = ssh2_scp_send($connection, $_local, $_target, 0777);
-				if (!$result){
-					log::add('blea','error','Files could not be sent to ' . $ip);
+				if (!$result) {
+					log::add('blea', 'error', 'Files could not be sent to ' . $ip);
 					return false;
 				} else {
-					log::add('blea','info','Files successfully sent to ' . $ip);
+					log::add('blea', 'info', 'Files successfully sent to ' . $ip);
 				}
 				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
 				$stream = ssh2_exec($connection, $execmd);
@@ -1314,7 +1308,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea', 'debug', $output);
 				}
 			}
 		}
@@ -1328,13 +1322,13 @@ class blea_remote {
 		$pass = $this->getConfiguration('remotePassword');
 		if (!$connection = ssh2_connect($ip, $port)) {
 			log::add('blea', 'error', 'connexion SSH KO for ' . $this->remoteName);
-				return false;
+			return false;
 		} else {
 			if (!ssh2_auth_password($connection, $user, $pass)) {
 				log::add('blea', 'error', 'Authentification SSH KO for ' . $this->remoteName);
 				return false;
 			} else {
-				log::add('blea', 'info', __('Récupération de fichier depuis ',__FILE__) . $ip);
+				log::add('blea', 'info', __('Récupération de fichier depuis ', __FILE__) . $ip);
 				$result = ssh2_scp_recv($connection, $_target, $_local);
 				$execmd = "echo '" . $pass . "' | sudo -S " . 'exit';
 				$stream = ssh2_exec($connection, $execmd);
@@ -1345,7 +1339,7 @@ class blea_remote {
 				fclose($stream);
 				fclose($errorStream);
 				if (trim($output) != '') {
-					log::add('blea','debug',$output);
+					log::add('blea', 'debug', $output);
 				}
 			}
 		}
@@ -1380,5 +1374,4 @@ class blea_remote {
 		$this->configuration = utils::setJsonAttr($this->configuration, $_key, $_value);
 		return $this;
 	}
-
 }
