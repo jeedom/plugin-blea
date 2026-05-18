@@ -1,46 +1,45 @@
 {
-    "id": "blea",
-    "name": "Bluetooth Advertisement",
-    "description": {
-        "fr_FR": "Plugin pour la gestion de certains devices qui fonctionnent en bluetooth advertisement comme les NIUS de Nodon Pour les NIUS il permet de detecter les différents appuis. Pour certains autres devices il permet de faire de la présence. Aussi compatible avec les boutons ticatag (avec gestion des multiples appuis température et action pour le faire sonner) Compatible Mi flora, Mi scale , awox smartplug, playbulb, miband1 et 1s",
-        "en_US": "Plugin for the management of certain devices which work in bluetooth advertisement like the NIUS of Nodon For the NIUS it allows to detect the different supports. For some other devices it allows presence. Also compatible with ticatag buttons (with management of multiple temperature and action presses to make it ring) Compatible Mi flora, Mi scale, awox smartplug, playbulb, miband1 and 1s",
-        "es_ES": "Complemento para la gestión de ciertos dispositivos que funcionan en publicidad bluetooth como el NIUS de Nodon. Para el NIUS permite detectar los diferentes soportes. Para algunos otros dispositivos, permite la presencia. También compatible con botones ticatag (con gestión de múltiples prensas de temperatura y acción para que suene) Compatible Mi flora, Mi scale, awox smartplug, playbulb, miband1 y 1s"
-    },
-    "licence": "AGPL",
-    "author": "Jeedom SAS",
-    "require": "4.4",
-    "os": {
-        "min": 11,
-        "max": 11.99
-    },
-    "mobile": "blea",
-    "category": "automation protocol",
-    "maxDependancyInstallTime": 60,
-    "hasOwnDeamon": true,
-    "hasDependency": true,
-    "changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/changelog",
-    "documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/",
-    "language": [
-        "fr_FR",
-        "en_US",
-        "es_ES",
-        "de_DE",
-        "ru_RU",
-        "id_ID",
-        "it_IT",
-        "ja_JP",
-        "pt_PT",
-        "tr"
-    ],
-    "compatibility": [
-        "miniplus",
-        "smart",
-        "rpi",
-        "docker",
-        "diy",
-        "mobile",
-        "v4"
-    ],
-    "changelog_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/beta\/changelog",
-    "documentation_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automation protocol\/blea\/beta"
+	"id": "blea",
+	"name": "Bluetooth Advertisement",
+	"description": {
+		"fr_FR": "Plugin pour la gestion de certains devices qui fonctionnent en bluetooth advertisement comme les NIUS de Nodon Pour les NIUS il permet de detecter les différents appuis. Pour certains autres devices il permet de faire de la présence. Aussi compatible avec les boutons ticatag (avec gestion des multiples appuis température et action pour le faire sonner) Compatible Mi flora, Mi scale , awox smartplug, playbulb, miband1 et 1s",
+		"en_US": "Plugin for the management of certain devices which work in bluetooth advertisement like the NIUS of Nodon For the NIUS it allows to detect the different supports. For some other devices it allows presence. Also compatible with ticatag buttons (with management of multiple temperature and action presses to make it ring) Compatible Mi flora, Mi scale, awox smartplug, playbulb, miband1 and 1s",
+		"es_ES": "Complemento para la gestión de ciertos dispositivos que funcionan en publicidad bluetooth como el NIUS de Nodon. Para el NIUS permite detectar los diferentes soportes. Para algunos otros dispositivos, permite la presencia. También compatible con botones ticatag (con gestión de múltiples prensas de temperatura y acción para que suene) Compatible Mi flora, Mi scale, awox smartplug, playbulb, miband1 y 1s",
+		"de_DE": "Plugin zur Verwaltung bestimmter Geräte, die mit Bluetooth-Advertisement arbeiten, wie beispielsweise die NIUS von Nodon. Bei den NIUS ermöglicht es die Erkennung verschiedener Tastenbetätigungen. Bei einigen anderen Geräten ermöglicht es die Erkennung von Anwesenheit. Auch kompatibel mit Ticatag-Tasten (mit Verwaltung von Mehrfachbetätigungen, Temperatur und Aktion zum Auslösen eines Signaltons). Kompatibel mit Mi Flora, Mi Scale, Awox Smartplug, Playbulb, Mi Band 1 und 1S",
+		"it_IT": "Plugin per la gestione di alcuni dispositivi che funzionano con Bluetooth Advertisement, come i NIUS di Nodon. Per i NIUS, permette di rilevare i diversi tipi di pressione. Per alcuni altri dispositivi, consente di rilevare la presenza. Compatibile anche con i pulsanti Ticatag (con gestione di pressioni multiple, temperatura e azione per far suonare il dispositivo). Compatibile con Mi Flora, Mi Scale, Awox Smartplug, Playbulb, Mi Band 1 e 1S",
+		"pt_PT": "Plugin para a gestão de determinados dispositivos que funcionam com Bluetooth Advertisement, como os NIUS da Nodon. No caso dos NIUS, permite detetar os diferentes toques. Para alguns outros dispositivos, permite detetar a presença. Também compatível com os botões Ticatag (com gestão de pressões múltiplas, temperatura e ação para fazer soar). Compatível com Mi Flora, Mi Scale, Awox Smartplug, Playbulb, Mi Band 1 e 1S"
+	},
+	"licence": "AGPL",
+	"author": "Jeedom SAS",
+	"require": "4.4",
+	"os": {
+		"min": 11,
+		"max": 11.99
+	},
+	"mobile": "blea",
+	"category": "automation protocol",
+	"maxDependancyInstallTime": 60,
+	"hasOwnDeamon": true,
+	"hasDependency": true,
+	"changelog": "https://doc.jeedom.com/#language#/plugins/automation protocol/blea/changelog",
+	"documentation": "https://doc.jeedom.com/#language#/plugins/automation protocol/blea/",
+	"language": [
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
+	],
+	"compatibility": [
+		"miniplus",
+		"smart",
+		"rpi",
+		"docker",
+		"diy",
+		"mobile",
+		"v4"
+	],
+	"changelog_beta": "https://doc.jeedom.com/#language#/plugins/automation protocol/blea/beta/changelog",
+	"documentation_beta": "https://doc.jeedom.com/#language#/plugins/automation protocol/blea/beta"
 }
