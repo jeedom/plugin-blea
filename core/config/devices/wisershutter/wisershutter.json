@@ -1,0 +1,154 @@
+{
+    "wisershutter": {
+        "name": "Wiser Odace Volets roulants",
+		"groupe" : "Volets",
+        "configuration": {
+            "haspairing": 1,
+			"name" : "wisershutter",
+			"cancontrol" : 1,
+			"canbelocked" : 1
+        },
+        "commands": [
+			{
+                "name": "Bouton",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "button"
+            },{
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "",
+                "logicalId": "label"
+            },{
+				"name": "Position",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"isHistorized": 0,
+				"unite": "%",
+				"logicalId": "position",
+				"template": {
+					"dashboard": "shutter",
+					"mobile": "shutter"
+				}
+			},{
+				"name": "Positionnement",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"value": "Position",
+				"logicalId": "name:wisershutter,action:position,value:#slider#",
+				"configuration":{
+					"minValue":"0",
+					"maxValue":"100",
+					"updateCmdId":"Position",
+					"updateCmdToValue":"#slider#"
+				},
+				"template": {
+					"dashboard": "shutter", 
+					"mobile": "shutter"
+				}
+			},{
+				"name": "Temps de course",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 0,
+				"isHistorized": 0,
+				"unite": "mmss",
+				"value": 200,
+				"logicalId": "time_movement"
+			},{
+				"name": "Config Temps de course",
+				"type": "action",
+				"subtype": "slider",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "minutes secondes",
+				"logicalId": "name:wisershutter,action:time_movement,value:#slider#",
+				"value": "Temps de course",
+				"configuration":{
+					"minValue":"0005",
+					"maxValue":"0500",
+					"updateCmdId":"Temps de course",
+					"updateCmdToValue":"#slider#",
+					"actionConfirm":"1"
+				},
+				"template": {
+					"dashboard": "blea::heureminute",
+					"mobile": "blea::heureminute"
+				},
+				"display": {
+					"parameters": {"formatIn":"HHMM"}
+				}
+      		},{
+				"name": "Haut",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "name:wisershutter,action:up",
+				"display": {
+					"icon": "<i class=\"fas fa-arrow-up\"></i>",
+					"generic_type": "FLAP_UP"
+				}
+      		},{
+				"name": "Bas",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "name:wisershutter,action:down",
+				"display": {
+					"icon": "<i class=\"fas fa-arrow-down\"></i>",
+					"generic_type": "FLAP_DOWN"
+				}
+			},{
+				"name": "Stop",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "name:wisershutter,action:stop",
+				"display": {
+					"icon": "<i class=\"fa fa-stop\"></i>",
+					"generic_type": "FLAP_STOP"
+				}
+    		},{
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Schneider",
+                "name": "Wiser Odace Volets roulants",
+				"doc": "",
+				"type": "Volets",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Commande volets roulants Schneider Wiser",
+				"inclusion" : "",
+				"imglink": "wisershutter"
+            }
+        ]
+    }
+}
