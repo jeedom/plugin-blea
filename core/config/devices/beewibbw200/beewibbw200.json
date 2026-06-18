@@ -1,0 +1,92 @@
+{
+    "beewibbw200": {
+        "name": "BeeWi BBW200",
+        "groupe" : "Température",
+		"configuration" : {
+			"needsrefresh" : 0,
+			"name" : "beewibbw200",
+			"battery_type" : "2x1.5V AAA",
+			"delay" : 120,
+			"cancontrol" : 0
+		},
+  		"commands": [
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fas fa-thermometer-empty\"><\/i>",
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "°C",
+                "logicalId": "temperature",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fas fa-tint\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "%",
+                "logicalId": "moisture",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fas fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Refresh",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "",
+                "logicalId": "refresh"
+            }
+        ],
+		"compatibility": [
+            {
+                "manufacturer": "Otio",
+                "name": "Température Humidité",
+				"doc": "",
+				"type": "Capteurs",
+				"battery_type": "2x1.5V AAA",
+				"ref" : "",
+				"comlink": "",
+				"remark": "Capteurs de Température et Humidité (BBW200)",
+				"inclusion" : "",
+				"imglink": "beewibbw200"
+            }
+        ]
+    }
+}
